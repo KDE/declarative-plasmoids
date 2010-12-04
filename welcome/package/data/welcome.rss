@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<rss version="2.0">
+  
+  <channel>
+    <title>Greetings message for Did You Know Applet</title>
+    <link>http://localhost</link>
+    <description>Collection of greetings message for DiD You Know Applet</description>
+    <item>
+      <enclosure type="image/jpeg" url="http://localhost/kde.jpg" />
+      <title>The KDE is an international technology team...</title>
+      <description><![CDATA[ Kde is formed of: <br>
+	<ul>
+	  <li>Over 6 million lines of code. This does not include Qt</li>
+	  <li>More than 1800 contributors help develop KDE. About 20 new developers contribute their first code each month</li>
+	  <li>KDE is translated in over 108 languages</li>
+	  <li>KDE has more than 104 official FTP mirrors in over 34 countries</li>
+	  <li>The KDE community is the second largest Free Software community behind the Linux kernel community</li>
+	  </ul>
+	]]>
+      </description>      
+    </item>
+    
+    <item>
+      
+      <enclosure type="image/jpeg" url="http://localhost/kget.jpg" />
+      <title>Do you know... KGet?</title>
+      <pubDate></pubDate>
+      <link></link>
+      <description><![CDATA[
+	KGet helps you to download files from internet easily and completely transparent.<br> It's integrated with konqueror and it downloads from http, ftp and torrents reesources. You can embbed it into system tray and use it everytime you want.
+]]>
+      </description>      
+    </item>
+    
+    
+    <item>
+      <enclosure type="image/jpeg" url="http://localhost/kalzium.jpg" />
+      <title>Do you know... Kalzium?</title>
+      <pubDate></pubDate>
+      <link></link>
+      <description>
+	Kalzium is a database for atoms and molecules and it will show you some interesting facts about chemistry.
+      </description>      
+    </item>
+
+
+    <item>
+<enclosure type="image/jpeg" url="http://localhost/plasmadash.jpg" />
+      <title>Do you know... Plasma Dashboard?</title>
+      <pubDate></pubDate>
+      <link></link>
+      <description>
+	You can activate Plasma DashBoard with ctrl+F12
+      </description>      
+    </item>
+    
+    <item>
+<enclosure type="image/jpeg" url="http://localhost/plasmawork.jpg" />
+      <title>Do you know... KDE Plasma Workspace?</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description><![CDATA[
+      KDE offers a great selection of workspaces to style as you wish with plasma widget. You can simply choose a plasma widget by the plasma menu and carry it through workspace.<br>In addition to plasma widgets you can add Google Gadgets, Superkaramba, Englightment E17 Edje Contents and some MacOSX Dashboard Widgets.
+
+]]>
+    </description>      
+  </item>
+
+  <item>
+<enclosure type="image/jpeg" url="http://localhost/shortcout1.jpg" />
+    <title>Do you know... how to logout with keyboard?</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      You can logout with keyboard pressing ctrl+alt+del.
+    </description>      
+  </item>
+
+  <item>
+    <enclosure type="image/jpeg" url="http://localhost/menueditor.jpg" />
+    <title>Do you know... how to modify K menu?</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      You can call the menu editor by clicking with right button on K menu and selecting "Menu editor".
+    </description>      
+  </item>
+
+  
+  <item>
+    <enclosure type="image/jpeg" url="http://localhost/netbook.jpg" />
+    <title>Do you know... Plasma Netbook?</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      If you own a netbook you can use a proper KDE Workspace created for netbooks called Plasma Netbook. You can select it from System Settings, Workspace and selecting Netbook. Plasma Netbook permits to select applications quickly from the search bar and offers a workspace designed to insert widgets immediately.
+    </description>      
+  </item>
+  
+
+  <item>
+    <enclosure type="image/jpeg" url="http://localhost/tips2.jpg" />
+    <title>Do you know... how to switch between application</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      Press alt+tab and you'll switch between application windows forward or press alt+tab+shift to switch between application windows backward. You can also switch between application by writing in Run Command the application's name.
+    </description>      
+  </item>
+  
+
+  <item>
+    <enclosure type="image/jpeg" url="http://localhost/konsole.jpg" />
+    <title>Do you know... Konsole</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      Konsole is the default terminal emulator on KDE. Create a new window with ctrl+shift+n. Konsole supports also tabbed terminal, open a new one with ctrl+shift+t and close it with ctrl+shift+w.
+    </description>      
+  </item>
+  
+
+  <item>
+    <enclosure type="image/jpeg" url="http://localhost/desktopeffect.jpg" />
+    <title>Do you know... Desktop effects</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      Desktop effects are a set of effects that improve looks and productivity of desktop. You can choose them from System Settings, Desktops Effects. The are a lot of combinations you can choose and also you can select the speed of them.
+    </description>      
+  </item>
+  
+
+  <item>
+    <enclosure type="image/jpeg" url="http://localhost/appareance.jpg" />
+    <title>Do you know... how to modify KDE style</title>
+    <pubDate></pubDate>
+    <link></link>
+    <description>
+      You can modify KDE style in System Settings, Application Appareance. The modifiable elements are Window Style, Colors, Icons, Fonts and Emoticons.
+    </description>      
+  </item>
+  
+  
+  </channel>
+</rss>
