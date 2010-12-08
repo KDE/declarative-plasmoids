@@ -26,38 +26,73 @@ ListItem {
     property string text;
     property string date;
 
-    Column {
+    Row {
         id : delegateLayout
-        width: feedList.width
-        height: feedList.height
+        width: entryList.width
+        height: entryList.height
         spacing: 5
         anchors.left: listItem.padding.left
         anchors.right: listItem.padding.right
         anchors.top: listItem.padding.top
 
-        /*Text {
+        Text {
             id: title
+            clip:true
             width: delegateLayout.width - rightArrow.width
             height: delegateLayout.height
             color: theme.textColor
             textFormat: Text.RichText
             text: listItem.text
-        }*/
+        }
         /*Text {
             color: theme.textColor
             width: delegateLayout.width
             horizontalAlignment: Text.AlignRight
             text: '<em><small>'+listItem.date+'</em></small>&nbsp;'
         }*/
-        PlasmaWidgets.SvgWidget {
-            width: mainWindow.width
-            height: 50
-            elementID: "right"
-            svg: PlasmaCore.Svg {
-                id: headersvg
-                imagePath: "rssnow/right"
+        Column {
+            id: column
+            spacing: 5
+            PlasmaCore.SvgItem {
+                id: leftArrow
+                width: 20
+                height: 20
+                elementId: "left"
+                svg: PlasmaCore.Svg {
+                    imagePath: "rssnow/left"
+                }
+                /*MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+                        entryList.currentIndex = entryList.currentIndex - 1
+                    }
+                }*/
+            }
+            PlasmaCore.SvgItem {
+                id: rightArrow
+                width: 20
+                height: 20
+                elementId: "right"
+                svg: PlasmaCore.Svg {
+                    imagePath: "rssnow/right"
+                }
             }
         }
-
     }
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                if (mouse.x < delegateLayout.width && mouse.x > (delegateLayout.width - leftArrow.width)) {
+                    if (mouse.y > leftArrow.height)
+                        entryList.currentIndex = entryList.currentIndex + 1
+                    else
+                        entryList.currentIndex = entryList.currentIndex - 1
+                }
+            }
+        }
 }
+
+
+//mapFromItem ( Item item, real x, real y )

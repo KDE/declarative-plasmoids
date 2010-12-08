@@ -93,7 +93,7 @@ QGraphicsWidget {
 
             QGraphicsWidget {
                 id: feedListContainer
-                ListView {
+                /*ListView {
                     id: feedList
                     anchors.fill: feedListContainer
                     signal itemClicked;
@@ -111,23 +111,29 @@ QGraphicsWidget {
                             keyRoleFilter: "sources"
                         }
                     }
-                    delegate: ListView {
+                    delegate: */ListView {
                         id: entryList
-                        anchors.fill: feedList
+                        anchors.fill: feedListContainer
                         spacing: 5;
                         snapMode: ListView.SnapToItem
                         orientation: ListView.Horizontal
-                        width: feedList.width
+                        width: feedListContainer.width
                         height: 50
                         
                         clip: true
-                        model: /*PlasmaCore.SortFilterModel {
+                        model: PlasmaCore.SortFilterModel {
+                            filterRole: "feed_title"
+                            sourceModel: PlasmaCore.DataModel {
+                                dataSource: feedSource
+                                keyRoleFilter: "items"
+                            }
+                        } /*PlasmaCore.SortFilterModel {
                         filterRole: "feed_title"
                         sourceModel: PlasmaCore.DataModel {
                             dataSource: feedSource
                             keyRoleFilter: "sources"
                         }
-                    }*/ListModel {
+                    }*//*ListModel {
      id: fruitModel
 
      ListElement {
@@ -142,7 +148,7 @@ QGraphicsWidget {
          name: "Banana"
          cost: 1.95
      }
- } /*PlasmaCore.SortFilterModel {
+ }*/ /*PlasmaCore.SortFilterModel {
                             id: postTitleFilter
                             filterRole: "title"
                             sortRole: "time"
@@ -170,15 +176,11 @@ QGraphicsWidget {
                                           
                         delegate: ListItemEntry {
                             id: listEntry
-                            text: "bla"
+                            text: title
                             date: Utils.date(time)
-                                                    
-                            onClicked: {
-                                entryList.currentIndex = entryList.currentIndex + 1
-                            }
                         }
                     }
-                }
+                //}
             }
         }
 }
