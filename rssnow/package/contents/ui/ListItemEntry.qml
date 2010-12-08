@@ -43,6 +43,7 @@ ListItem {
             color: theme.textColor
             textFormat: Text.RichText
             text: listItem.text
+            wrapMode: Text.Wrap
         }
         /*Text {
             color: theme.textColor
