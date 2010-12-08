@@ -124,7 +124,7 @@ QGraphicsWidget {
                         model: PlasmaCore.SortFilterModel {
                         filterRole: "feed_title"
                         sourceModel: PlasmaCore.DataModel {
-                            dataSource: feedSource2
+                            dataSource: feedSource
                             keyRoleFilter: "sources"
                         }
                     }/*ListModel {
