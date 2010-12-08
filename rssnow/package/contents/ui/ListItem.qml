@@ -26,7 +26,7 @@ PlasmaCore.FrameSvgItem {
     imagePath: "widgets/frame"
     prefix: "plain"
 
-    width: list.width
+    width: feedList.width
     height: childrenRect.height
 
     property alias padding: paddingRectangle;

@@ -28,25 +28,35 @@ ListItem {
 
     Column {
         id : delegateLayout
-        width: list.width
-        height: list.height
+        width: feedList.width
+        height: feedList.height
         spacing: 5
         anchors.left: listItem.padding.left
         anchors.right: listItem.padding.right
         anchors.top: listItem.padding.top
 
-        Text {
-            width: delegateLayout.width
+        /*Text {
+            id: title
+            width: delegateLayout.width - rightArrow.width
             height: delegateLayout.height
             color: theme.textColor
             textFormat: Text.RichText
             text: listItem.text
-        }
-        Text {
+        }*/
+        /*Text {
             color: theme.textColor
             width: delegateLayout.width
             horizontalAlignment: Text.AlignRight
             text: '<em><small>'+listItem.date+'</em></small>&nbsp;'
+        }*/
+        PlasmaWidgets.SvgWidget {
+            width: mainWindow.width
+            height: 50
+            elementID: "right"
+            svg: PlasmaCore.Svg {
+                id: headersvg
+                imagePath: "rssnow/right"
+            }
         }
 
     }

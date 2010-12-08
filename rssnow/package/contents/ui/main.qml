@@ -83,11 +83,11 @@ QGraphicsWidget {
         PlasmaWidgets.SvgWidget {
             width: mainWindow.width
             height: 50
+            elementID: "RSSNOW"
             svg: PlasmaCore.Svg {
                 id: headersvg
                 imagePath: "rssnow/rssnow"
             }
-            elementID: "RSSNOW"
         }
 
 
@@ -112,7 +112,7 @@ QGraphicsWidget {
                         }
                     }
                     delegate: ListView {
-                        id: list
+                        id: entryList
                         anchors.fill: feedList
                         spacing: 5;
                         snapMode: ListView.SnapToItem
@@ -121,13 +121,13 @@ QGraphicsWidget {
                         height: 50
                         
                         clip: true
-                        model: PlasmaCore.SortFilterModel {
+                        model: /*PlasmaCore.SortFilterModel {
                         filterRole: "feed_title"
                         sourceModel: PlasmaCore.DataModel {
                             dataSource: feedSource
                             keyRoleFilter: "sources"
                         }
-                    }/*ListModel {
+                    }*/ListModel {
      id: fruitModel
 
      ListElement {
@@ -142,7 +142,7 @@ QGraphicsWidget {
          name: "Banana"
          cost: 1.95
      }
- } *//*PlasmaCore.SortFilterModel {
+ } /*PlasmaCore.SortFilterModel {
                             id: postTitleFilter
                             filterRole: "title"
                             sortRole: "time"
@@ -173,15 +173,9 @@ QGraphicsWidget {
                             text: "bla"
                             date: Utils.date(time)
                                                     
-                                                    
-                                                    /*onClicked: {
-                                                     *    BookKeeping.setArticleRead(link, feed_url);
-                                                     *    opacity = 0.5;
-                                                     * 
-                                                     *    listEntry.index = listEntry.index + 1
-                                                     *    bodyView.html = "<body style=\"background:#fff;\">"+description+"</body>"
-                                                     *    //mainView.currentIndex = 2
-                                                    }*/
+                            onClicked: {
+                                entryList.currentIndex = entryList.currentIndex + 1
+                            }
                         }
                     }
                 }
