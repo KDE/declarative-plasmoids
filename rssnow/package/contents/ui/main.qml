@@ -30,6 +30,7 @@ QGraphicsWidget {
 
     property string source
     property variant individualSources
+    property int scrollInterval
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -39,6 +40,7 @@ QGraphicsWidget {
     function configChanged()
     {
         source = plasmoid.readConfig("feeds")
+        scrollInterval = plasmoid.readConfig("interval")
         var sourceString = new String(source)
         print("Configuration changed: " + source);
         feedSource.connectedSources = source
@@ -108,6 +110,18 @@ QGraphicsWidget {
                         
                         onFlickEnded: {
                             currentIndex = contentX / contentWidth * count
+                        }
+                        Timer {
+                            id: flickTimer
+                            interval: scrollInterval * 1000
+                            running: true
+                            repeat: true
+                            onTriggered: {
+                                if (entryList.currentIndex == (entryList.count - 1))
+                                    entryList.currentIndex = 0
+                                else 
+                                    entryList.currentIndex = entryList.currentIndex + 1
+                            }
                         }
                     }
                 }
