@@ -25,21 +25,32 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 ListItem {
     id: listItem
     property string text;
-    property string date;
+    property string iconFile;
 
     Row {
         id : delegateLayout
         width: entryList.width
-        height: entryList.height
+        height: 50
         spacing: 5
         anchors.left: listItem.padding.left
         anchors.right: listItem.padding.right
         anchors.top: listItem.padding.top
 
+        Image {
+            id: image
+            source: iconFile
+            height: parent.height
+            width: parent.height / 2
+            anchors.horizontalCenter: width / 2
+            anchors.verticalCenter: height / 2
+            fillMode: Image.PreserveAspectFit
+            smooth:true
+            opacity: 0.8
+        }
         Text {
             id: title
             clip:true
-            width: delegateLayout.width - rightArrow.width
+            width: delegateLayout.width - rightArrow.width - image.width - parent.spacing * 2
             height: delegateLayout.height
             color: theme.textColor
             textFormat: Text.RichText

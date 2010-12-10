@@ -101,6 +101,7 @@ QGraphicsWidget {
                     delegate: ListItemEntry {
                         id: listEntry
                         text: title
+                        iconFile: icon
                     }
                 }
             //}
