@@ -91,6 +91,7 @@ QGraphicsWidget {
                     width: feedListContainer.width
                     height: 50
                     clip: true
+                    highlightMoveDuration: 300
                     model: PlasmaCore.SortFilterModel {
                         filterRole: "feed_title"
                         sourceModel: PlasmaCore.DataModel {
