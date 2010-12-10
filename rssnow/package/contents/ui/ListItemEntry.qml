@@ -108,9 +108,13 @@ ListItem {
                 leftArrow.opacity = 1
             }
         }
-        onExited: {
+        onEntered: {
             rightArrow.opacity = 1
             leftArrow.opacity = 1
+        }
+        onExited: {
+            rightArrow.opacity = 0
+            leftArrow.opacity = 0
         }
     }
 }
