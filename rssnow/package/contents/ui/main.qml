@@ -66,13 +66,17 @@ QGraphicsWidget {
 
     layout: GraphicsLayouts.QGraphicsLinearLayout {
         orientation: "Vertical"
-        PlasmaWidgets.SvgWidget {
-            width: mainWindow.width
-            height: 50
-            elementID: "RSSNOW"
-            svg: PlasmaCore.Svg {
-                id: headersvg
-                imagePath: "rssnow/rssnow"
+        QGraphicsWidget {
+            id: svgContainer
+            PlasmaCore.SvgItem {
+                id: svgItem
+                width: naturalSize.width / (naturalSize.height / svgContainer.height)
+                height: svgContainer.height
+                elementId: "RSSNOW"
+                svg: PlasmaCore.Svg {
+                    id: headersvg
+                    imagePath: "rssnow/rssnow"
+                }
             }
         }
 
