@@ -72,6 +72,7 @@ ListItem {
                 width: 20
                 height: 20
                 elementId: "left"
+                opacity: 0
                            
                 Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
@@ -83,6 +84,7 @@ ListItem {
                 width: 20
                 height: 20
                 elementId: "right"
+                opacity: 0
                            
                 Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
