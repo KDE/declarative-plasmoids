@@ -1,5 +1,6 @@
 /*
  *   Copyright 2010 Marco Martin <notmart@gmail.com>
+ *   Copyright 2010 Lukas Appelhans <l.appelhans@gmx.de>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -64,13 +65,6 @@ ListItem {
                 svg: PlasmaCore.Svg {
                     imagePath: "rssnow/left"
                 }
-                /*MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: {
-                        entryList.currentIndex = entryList.currentIndex - 1
-                    }
-                }*/
             }
             PlasmaCore.SvgItem {
                 id: rightArrow
