@@ -59,6 +59,8 @@ ListItem {
                 width: 20
                 height: 20
                 elementId: "left"
+                           
+                Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
                     imagePath: "rssnow/left"
                 }
@@ -75,24 +77,48 @@ ListItem {
                 width: 20
                 height: 20
                 elementId: "right"
+                           
+                Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
                     imagePath: "rssnow/right"
                 }
             }
         }
     }
-        MouseArea {
-            anchors.fill: parent
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
 
-            onClicked: {
-                if (mouse.x < delegateLayout.width && mouse.x > (delegateLayout.width - leftArrow.width)) {
-                    if (mouse.y > leftArrow.height)
-                        entryList.currentIndex = entryList.currentIndex + 1
-                    else
-                        entryList.currentIndex = entryList.currentIndex - 1
-                }
+        onClicked: {
+            if (mouse.x < delegateLayout.width && mouse.x > (delegateLayout.width - leftArrow.width)) {
+                if (mouse.y > leftArrow.height)
+                    entryList.currentIndex = entryList.currentIndex + 1
+                else
+                    entryList.currentIndex = entryList.currentIndex - 1
             }
         }
+        onPositionChanged: {
+            if (mouse.x < delegateLayout.width && mouse.x > (delegateLayout.width - leftArrow.width)) {
+                if (mouse.y > rightArrow.y && mouse.y < (rightArrow.y + rightArrow.height)) {
+                    rightArrow.opacity = 0.2
+                    leftArrow.opacity = 1
+                } else if (mouse.y > leftArrow.y && mouse.y < (leftArrow.y + leftArrow.height)) {
+                    leftArrow.opacity = 0.2
+                    rightArrow.opacity = 1
+                } else {
+                    rightArrow.opacity = 1
+                    leftArrow.opacity = 1
+                }
+            } else {
+                rightArrow.opacity = 1
+                leftArrow.opacity = 1
+            }
+        }
+        onExited: {
+            rightArrow.opacity = 1
+            leftArrow.opacity = 1
+        }
+    }
 }
 
 

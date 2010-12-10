@@ -93,6 +93,14 @@ QGraphicsWidget {
 
             QGraphicsWidget {
                 id: feedListContainer
+                        /*Repeater {
+            model: PlasmaCore.SortFilterModel {
+                filterRole: "feed_title"
+                sourceModel: PlasmaCore.DataModel {
+                    dataSource: feedSource
+                    keyRoleFilter: "sources"
+                }*/
+            //}
                 /*ListView {
                     id: feedList
                     anchors.fill: feedListContainer
@@ -182,5 +190,6 @@ QGraphicsWidget {
                     }
                 //}
             }
-        }
+        //}
+    }
 }
