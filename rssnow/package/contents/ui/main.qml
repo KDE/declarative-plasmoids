@@ -29,6 +29,7 @@ QGraphicsWidget {
     minimumSize: "200x200"
 
     property string source
+    property variant individualSources
     signal unreadCountChanged();
 
     Component.onCompleted: {
@@ -42,6 +43,9 @@ QGraphicsWidget {
         var sourceString = new String(source)
         print("Configuration changed: " + source);
         feedSource.connectedSources = source
+
+        individualSources = String(source).split(" ")
+        repeater.model = individualSources.length
     }
 
     Item {
@@ -74,38 +78,37 @@ QGraphicsWidget {
 
         QGraphicsWidget {
             id: feedListContainer
-                        /*Repeater {
-            model: PlasmaCore.SortFilterModel {
-                filterRole: "feed_title"
-                sourceModel: PlasmaCore.DataModel {
-                    dataSource: feedSource
-                    keyRoleFilter: "sources"
-                }*/
-            //}
-                ListView {
-                    id: entryList
-                    anchors.fill: feedListContainer
-                    spacing: 5;
-                    snapMode: ListView.SnapToItem
-                    orientation: ListView.Horizontal
-                    width: feedListContainer.width
-                    height: 50
-                    clip: true
-                    highlightMoveDuration: 300
-                    model: PlasmaCore.SortFilterModel {
-                        filterRole: "feed_title"
-                        sourceModel: PlasmaCore.DataModel {
-                            dataSource: feedSource
-                            keyRoleFilter: "items"
+            Column {
+                Repeater {
+                    id: repeater
+                
+                    ListView {
+                        id: entryList
+                        anchors.fill: feedListContainer
+                        spacing: 5;
+                        snapMode: ListView.SnapToItem
+                        orientation: ListView.Horizontal
+                        width: feedListContainer.width
+                        height: 50
+                        clip: true
+                        highlightMoveDuration: 300
+                        property int listIndex: index
+                        model: PlasmaCore.SortFilterModel {
+                            filterRole: "feed_url"
+                            filterRegExp: individualSources[listIndex]
+                            sourceModel: PlasmaCore.DataModel {
+                                dataSource: feedSource
+                                keyRoleFilter: "items"
+                            }
+                        }
+                        delegate: ListItemEntry {
+                            id: listEntry
+                            text: title+individualSources[listIndex]
+                            iconFile: icon
                         }
                     }
-                    delegate: ListItemEntry {
-                        id: listEntry
-                        text: title
-                        iconFile: icon
-                    }
                 }
-            //}
+            }
         }
     }
 }
