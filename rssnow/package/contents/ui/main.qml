@@ -23,10 +23,8 @@ import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
-QGraphicsWidget {
-    id: mainWindow;
-    preferredSize: "250x600"
-    minimumSize: "200x200"
+Item {
+    id: mainWindow
 
     property string source
     property variant individualSources
@@ -49,85 +47,72 @@ QGraphicsWidget {
         repeater.model = individualSources.length
     }
 
-    Item {
-        PlasmaCore.DataSource {
-            id: feedSource
-            engine: "rss"
-            interval: 50000
-            onDataChanged: {
-                plasmoid.busy = false
-            }
-        }
-
-        PlasmaCore.Theme {
-            id: theme
+    PlasmaCore.DataSource {
+        id: feedSource
+        engine: "rss"
+        interval: 50000
+        onDataChanged: {
+            plasmoid.busy = false
         }
     }
 
-    layout: GraphicsLayouts.QGraphicsLinearLayout {
-        orientation: "Vertical"
-        QGraphicsWidget {
-            id: svgContainer
-            PlasmaCore.SvgItem {
-                id: svgItem
-                width: naturalSize.width / (naturalSize.height / svgContainer.height)
-                height: svgContainer.height
-                elementId: "RSSNOW"
-                svg: PlasmaCore.Svg {
-                    id: headersvg
-                    imagePath: "rssnow/rssnow"
-                }
+    PlasmaCore.Theme {
+        id: theme
+    }
+
+    Column {
+        PlasmaCore.SvgItem {
+            id: svgItem
+            width: naturalSize.width / 1.5
+            height: naturalSize.height / 1.5
+            elementId: "RSSNOW"
+            svg: PlasmaCore.Svg {
+                id: headersvg
+                imagePath: "rssnow/rssnow"
             }
         }
 
-
-        QGraphicsWidget {
-            id: feedListContainer
-            Column {
-                Repeater {
-                    id: repeater
-                
-                    ListView {
-                        id: entryList
-                        anchors.fill: feedListContainer
-                        spacing: 5;
-                        snapMode: ListView.SnapToItem
-                        orientation: ListView.Horizontal
-                        width: feedListContainer.width
-                        height: 50
-                        clip: true
-                        highlightMoveDuration: 300
-                        property int listIndex: index
-                        model: PlasmaCore.SortFilterModel {
-                            filterRole: "feed_url"
-                            filterRegExp: individualSources[listIndex]
-                            sourceModel: PlasmaCore.DataModel {
-                                dataSource: feedSource
-                                keyRoleFilter: "items"
-                            }
-                        }
-                        delegate: ListItemEntry {
-                            id: listEntry
-                            text: title//+individualSources[listIndex]
-                            iconFile: icon
-                            feedUrl: link
-                        }
+        Repeater {
+            id: repeater
+        
+            ListView {
+                id: entryList
+                spacing: 5;
+                snapMode: ListView.SnapToItem
+                orientation: ListView.Horizontal
+                width: mainWindow.width
+                height: 50
+                clip: true
+                highlightMoveDuration: 300
+                property int listIndex: index
+                model: PlasmaCore.SortFilterModel {
+                    filterRole: "feed_url"
+                    filterRegExp: individualSources[listIndex]
+                    sourceModel: PlasmaCore.DataModel {
+                        dataSource: feedSource
+                        keyRoleFilter: "items"
+                    }
+                }
+                delegate: ListItemEntry {
+                    id: listEntry
+                    text: title//+individualSources[listIndex]
+                    iconFile: icon
+                    feedUrl: link
+                }
                         
-                        onFlickEnded: {
-                            currentIndex = contentX / contentWidth * count
-                        }
-                        Timer {
-                            id: flickTimer
-                            interval: scrollInterval * 1000
-                            running: true
-                            repeat: true
-                            onTriggered: {
-                                if (entryList.currentIndex == (entryList.count - 1))
-                                    entryList.currentIndex = 0
-                                else 
-                                    entryList.currentIndex = entryList.currentIndex + 1
-                            }
-                        }
+                onFlickEnded: {
+                    currentIndex = contentX / contentWidth * count
+                }
+                Timer {
+                    id: flickTimer
+                    interval: scrollInterval * 1000
+                    running: true
+                    repeat: true
+                    onTriggered: {
+                        if (entryList.currentIndex == (entryList.count - 1))
+                            entryList.currentIndex = 0
+                        else 
+                            entryList.currentIndex = entryList.currentIndex + 1
                     }
                 }
             }
