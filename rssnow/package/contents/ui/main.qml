@@ -30,7 +30,6 @@ QGraphicsWidget {
 
     property string source
     property variant individualSources
-    signal unreadCountChanged();
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -103,8 +102,12 @@ QGraphicsWidget {
                         }
                         delegate: ListItemEntry {
                             id: listEntry
-                            text: title+individualSources[listIndex]
+                            text: title//+individualSources[listIndex]
                             iconFile: icon
+                        }
+                        
+                        onFlickEnded: {
+                            currentIndex = contentX / contentWidth * count
                         }
                     }
                 }
