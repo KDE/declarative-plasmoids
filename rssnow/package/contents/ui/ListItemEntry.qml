@@ -96,10 +96,16 @@ ListItem {
 
         onClicked: {
             if (mouse.x < delegateLayout.width && mouse.x > (delegateLayout.width - leftArrow.width)) {
-                if (mouse.y > leftArrow.height)
-                    entryList.currentIndex = entryList.currentIndex + 1
-                else
-                    entryList.currentIndex = entryList.currentIndex - 1
+                if (mouse.y > leftArrow.height) {
+                    if (entryList.currentIndex == entryList.count)
+                        entryList.currentIndex = 0
+                    else 
+                        entryList.currentIndex = entryList.currentIndex + 1
+                } else
+                    if (entryList.currentIndex == 0)
+                        entryList.currentIndex = entryList.count
+                    else
+                        entryList.currentIndex = entryList.currentIndex - 1
             }
         }
         onPositionChanged: {
