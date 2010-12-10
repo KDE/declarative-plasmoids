@@ -1,6 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=RSSNow (QML)
+Name[pt]=RSSNow (QML)
+Name[sv]=RSSNow (QML)
+Name[uk]=RSSNow (QML)
+Name[x-test]=xxRSSNow (QML)xx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=akregator
