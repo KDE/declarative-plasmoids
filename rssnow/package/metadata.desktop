@@ -10,6 +10,7 @@ ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=akregator
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
+X-Plasma-RequiredExtensions=LaunchApp
 X-KDE-PluginInfo-Author=Lukas Appelhans
 X-KDE-PluginInfo-Email=l.appelhans@gmx.de
 X-KDE-PluginInfo-Name=org.kde.rssnow-qml

@@ -106,6 +106,7 @@ QGraphicsWidget {
                             id: listEntry
                             text: title//+individualSources[listIndex]
                             iconFile: icon
+                            feedUrl: url
                         }
                         
                         onFlickEnded: {

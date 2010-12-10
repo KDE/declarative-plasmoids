@@ -26,6 +26,7 @@ ListItem {
     id: listItem
     property string text;
     property string iconFile;
+    property string feedUrl;
 
     Row {
         id : delegateLayout
@@ -106,6 +107,8 @@ ListItem {
                         entryList.currentIndex = (entryList.count - 1)
                     else
                         entryList.currentIndex = entryList.currentIndex - 1
+            } else {
+                plasmoid.openUrl(feedUrl)
             }
         }
         onPositionChanged: {
