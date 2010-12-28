@@ -42,6 +42,7 @@ Item {
         //var sourceString = new String(source)
         //print("Configuration changed: " + source);
         feedSource.connectedSources = "Providers"
+        //feedSource.connectSource("Activities\\provider:https://api.opendesktop.org/v1/activity")
 
         //individualSources = String(source).split(" ")
         //repeater.model = individualSources.length
@@ -50,26 +51,54 @@ Item {
     PlasmaCore.DataSource {
         id: feedSource
         engine: "ocs"
-        interval: 50000
+        interval: 5000
         onDataChanged: {
             plasmoid.busy = false
+           // if (source = "Providers") {
+            //    connectSource("Activities\\provider:https://api.opendesktop.org/v1/activity")
+            //    print("Provider updated");
+            //}
             if (source = "Providers") {
                 for (var i in data) {
-                    connectedSources = connectedSources + data.key(i);
+                    connectSource("Activities\\provider:" + data.key(i));
                 }
             }
         }
     }
     
     
-    PlasmaCore.DataModel {
+    /*PlasmaCore.DataModel {
         id: dataModel
         dataSource: feedSource
         keyRoleFilter: "timestamp"
+    }*/
+    
+    ListModel {
+        id: dataModel
+        
+        ListElement {
+            message: "bla has visited your profile page"
+            userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/address-book-new.png"
+        }
     }
 
     PlasmaCore.Theme {
         id: theme
+    }
+    
+    ListView {
+        model: dataModel
+        delegate: Row {
+            spacing: 5
+            Image {
+                source: userAvatarUrl
+            }
+            Text {
+                height: parent.height
+                verticalAlignment: Text.AlignVCenter
+                text: message
+            }
+        }
     }
 
     /*Column {
