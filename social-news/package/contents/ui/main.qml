@@ -80,6 +80,10 @@ Item {
             message: "bla has visited your profile page"
             userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/address-book-new.png"
         }
+        ListElement {
+            message: "blub has visited your profile page"
+            userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/list-add.png"
+        }
     }
 
     PlasmaCore.Theme {
@@ -88,8 +92,12 @@ Item {
     
     ListView {
         model: dataModel
+        height: mainWindow.height
+        width: mainWindow.width
+        orientation: ListView.Vertical
         delegate: Row {
             spacing: 5
+            height: 35
             Image {
                 source: userAvatarUrl
             }
