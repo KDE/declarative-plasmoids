@@ -97,8 +97,10 @@ Item {
         orientation: ListView.Vertical
         delegate: Row {
             spacing: 5
-            height: 35
+            height: 50
             Image {
+                anchors.verticalCenter: parent.verticalCenter
+                fillMode: Image.PreserveAspectFit
                 source: userAvatarUrl
             }
             Text {
