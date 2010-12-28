@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Social News (QML)
+Type=Service
+ServiceTypes=Plasma/Applet,Plasma/PopupApplet
+Icon=akregator
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-Plasma-DefaultSize=300,200
+X-KDE-PluginInfo-Author=Lukas Appelhans
+X-KDE-PluginInfo-Email=l.appelhans@gmx.de
+X-KDE-PluginInfo-Name=org.kde.social-news-qml
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Website=http://plasma.kde.org/
+X-KDE-PluginInfo-Category=Examples
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
