@@ -52,7 +52,7 @@ Item {
     PlasmaCore.DataSource {
         id: feedSource
         engine: "ocs"
-        interval: 5000
+        interval: 50000
         connectedSources: [activeSource]
         onDataChanged: {
             plasmoid.busy = false
@@ -99,9 +99,12 @@ Item {
             width: parent.width
             Image {
                 id: image
+                width:50
+                height: 50
                 anchors.verticalCenter: parent.verticalCenter
                 fillMode: Image.PreserveAspectFit
-                source: userAvatarUrl
+                //model['user-AvatarUrl'] syntax used since dashes aren't normally allowed in properties names
+                source: model['user-AvatarUrl']
             }
             Text {
                 height: parent.height
