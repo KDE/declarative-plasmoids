@@ -58,22 +58,30 @@ Item {
             //    connectSource("Activities\\provider:https://api.opendesktop.org/v1/activity")
             //    print("Provider updated");
             //}
+            /*print("bla")
             if (source = "Providers") {
+                print("blub")
                 for (var i in data) {
-                    connectSource("Activities\\provider:" + data.key(i));
+                    connectSource("Activities\\provider:" + data[i][0]);
+                    print(data[i]);
                 }
-            }
+            }*/
+        }
+        onSourceAdded: {
+            print("bla")
+            print(source)
+            connectSource(source)
         }
     }
     
     
-    /*PlasmaCore.DataModel {
+    PlasmaCore.DataModel {
         id: dataModel
         dataSource: feedSource
         keyRoleFilter: "timestamp"
-    }*/
+    }
     
-    ListModel {
+    /*ListModel {
         id: dataModel
         
         ListElement {
@@ -84,7 +92,7 @@ Item {
             message: "blub has visited your profile page"
             userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/list-add.png"
         }
-    }
+    }*/
 
     PlasmaCore.Theme {
         id: theme
@@ -95,6 +103,7 @@ Item {
         height: mainWindow.height
         width: mainWindow.width
         orientation: ListView.Vertical
+        clip:true
         delegate: Row {
             spacing: 5
             height: 50
