@@ -75,13 +75,13 @@ Item {
     }
     
     
-    PlasmaCore.DataModel {
+    /*PlasmaCore.DataModel {
         id: dataModel
         dataSource: feedSource
         keyRoleFilter: "timestamp"
-    }
+    }*/
     
-    /*ListModel {
+    ListModel {
         id: dataModel
         
         ListElement {
@@ -92,7 +92,11 @@ Item {
             message: "blub has visited your profile page"
             userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/list-add.png"
         }
-    }*/
+        ListElement {
+            message: "blub has visited your profile page and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text"
+            userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/list-add.png"
+        }
+    }
 
     PlasmaCore.Theme {
         id: theme
@@ -107,14 +111,18 @@ Item {
         delegate: Row {
             spacing: 5
             height: 50
+            width: parent.width
             Image {
+                id: image
                 anchors.verticalCenter: parent.verticalCenter
                 fillMode: Image.PreserveAspectFit
                 source: userAvatarUrl
             }
             Text {
                 height: parent.height
+                width: parent.width - parent.spacing - image.width
                 verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.Wrap
                 text: message
             }
         }
