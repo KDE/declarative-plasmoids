@@ -29,6 +29,7 @@ Item {
     property string source
     //property variant individualSources
     //property int scrollInterval
+    property string activeSource: "Activities\\provider:https://api.opendesktop.org/v1/"
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -41,7 +42,7 @@ Item {
         //scrollInterval = plasmoid.readConfig("interval")
         //var sourceString = new String(source)
         //print("Configuration changed: " + source);
-        feedSource.connectedSources = "Providers"
+        //feedSource.connectedSources = ["Providers"]
         //feedSource.connectSource("Activities\\provider:https://api.opendesktop.org/v1/activity")
 
         //individualSources = String(source).split(" ")
@@ -52,6 +53,7 @@ Item {
         id: feedSource
         engine: "ocs"
         interval: 5000
+        connectedSources: [activeSource]
         onDataChanged: {
             plasmoid.busy = false
            // if (source = "Providers") {
@@ -67,37 +69,20 @@ Item {
                 }
             }*/
         }
-        onSourceAdded: {
-            print("bla")
+        /*onSourceAdded: {
+            print("--")
             print(source)
             connectSource(source)
-        }
+        }*/
     }
     
     
-    /*PlasmaCore.DataModel {
+    PlasmaCore.DataModel {
         id: dataModel
         dataSource: feedSource
-        keyRoleFilter: "timestamp"
-    }*/
-    
-    ListModel {
-        id: dataModel
-        
-        ListElement {
-            message: "bla has visited your profile page"
-            userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/address-book-new.png"
-        }
-        ListElement {
-            message: "blub has visited your profile page"
-            userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/list-add.png"
-        }
-        ListElement {
-            message: "blub has visited your profile page and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text and lots of other text"
-            userAvatarUrl: "/home/kde-devel/kde/share/icons/oxygen/32x32/actions/list-add.png"
-        }
+        keyRoleFilter: "[\\d]*"
     }
-
+    
     PlasmaCore.Theme {
         id: theme
     }
