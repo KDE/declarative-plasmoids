@@ -1,6 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Social News (QML)
+Name[pt]=Notícias Sociais (QML)
+Name[pt_BR]=Notícias sociais (QML)
+Name[sv]=Sociala nyheter (QML)
+Name[uk]=Соціальні новини (QML)
+Name[x-test]=xxSocial News (QML)xx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=akregator
