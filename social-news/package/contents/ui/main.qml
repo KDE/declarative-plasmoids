@@ -66,25 +66,37 @@ Item {
         width: mainWindow.width
         orientation: ListView.Vertical
         clip:true
-        delegate: Row {
-            spacing: 5
+        delegate: Item {
             height: 50
             width: parent.width
-            Image {
-                id: image
-                width:50
-                height: 50
-                anchors.verticalCenter: parent.verticalCenter
-                fillMode: Image.PreserveAspectFit
-                //model['user-AvatarUrl'] syntax used since dashes aren't normally allowed in properties names
-                source: model['user-AvatarUrl']
-            }
-            Text {
+            Row {
+                spacing: 5
                 height: parent.height
-                width: parent.width - parent.spacing - image.width
-                verticalAlignment: Text.AlignVCenter
-                wrapMode: Text.Wrap
-                text: message
+                width: parent.width
+                Image {
+                    id: image
+                    width:50
+                    height: 50
+                    anchors.verticalCenter: parent.verticalCenter
+                    fillMode: Image.PreserveAspectFit
+                    //model['user-AvatarUrl'] syntax used since dashes aren't normally allowed in properties names
+                    source: model['user-AvatarUrl']
+                }
+                Text {
+                    height: parent.height
+                    width: parent.width - parent.spacing - image.width
+                    verticalAlignment: Text.AlignVCenter
+                    wrapMode: Text.Wrap
+                    text: message
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    print("clicked" + model['link'])
+                    plasmoid.openUrl(model['link'])
+                }
             }
         }
     }
