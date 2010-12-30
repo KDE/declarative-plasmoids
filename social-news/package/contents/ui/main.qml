@@ -26,9 +26,6 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 Item {
     id: mainWindow
 
-    property string source
-    //property variant individualSources
-    //property int scrollInterval
     property string activeSource: "Activities\\provider:https://api.opendesktop.org/v1/"
 
     Component.onCompleted: {
@@ -38,15 +35,6 @@ Item {
 
     function configChanged()
     {
-        //source = plasmoid.readConfig("feeds")
-        //scrollInterval = plasmoid.readConfig("interval")
-        //var sourceString = new String(source)
-        //print("Configuration changed: " + source);
-        //feedSource.connectedSources = ["Providers"]
-        //feedSource.connectSource("Activities\\provider:https://api.opendesktop.org/v1/activity")
-
-        //individualSources = String(source).split(" ")
-        //repeater.model = individualSources.length
     }
 
     PlasmaCore.DataSource {
@@ -56,24 +44,9 @@ Item {
         connectedSources: [activeSource]
         onDataChanged: {
             plasmoid.busy = false
-           // if (source = "Providers") {
-            //    connectSource("Activities\\provider:https://api.opendesktop.org/v1/activity")
-            //    print("Provider updated");
-            //}
-            /*print("bla")
-            if (source = "Providers") {
-                print("blub")
-                for (var i in data) {
-                    connectSource("Activities\\provider:" + data[i][0]);
-                    print(data[i]);
-                }
-            }*/
+            print("dataChanged" + sources)
+            connectedSources = sources
         }
-        /*onSourceAdded: {
-            print("--")
-            print(source)
-            connectSource(source)
-        }*/
     }
     
     
@@ -115,63 +88,4 @@ Item {
             }
         }
     }
-
-    /*Column {
-        PlasmaCore.SvgItem {
-            id: svgItem
-            width: naturalSize.width / 1.5
-            height: naturalSize.height / 1.5
-            elementId: "RSSNOW"
-            svg: PlasmaCore.Svg {
-                id: headersvg
-                imagePath: "rssnow/rssnow"
-            }
-        }
-
-        Repeater {
-            id: repeater
-        
-            ListView {
-                id: entryList
-                spacing: 5;
-                snapMode: ListView.SnapToItem
-                orientation: ListView.Horizontal
-                width: mainWindow.width
-                height: 50
-                clip: true
-                highlightMoveDuration: 300
-                property int listIndex: index
-                model: PlasmaCore.SortFilterModel {
-                    filterRole: "feed_url"
-                    filterRegExp: individualSources[listIndex]
-                    sourceModel: PlasmaCore.DataModel {
-                        dataSource: feedSource
-                        keyRoleFilter: "items"
-                    }
-                }
-                delegate: ListItemEntry {
-                    id: listEntry
-                    text: title//+individualSources[listIndex]
-                    iconFile: icon
-                    feedUrl: link
-                }
-                        
-                onFlickEnded: {
-                    currentIndex = contentX / contentWidth * count
-                }
-                Timer {
-                    id: flickTimer
-                    interval: scrollInterval * 1000
-                    running: true
-                    repeat: true
-                    onTriggered: {
-                        if (entryList.currentIndex == (entryList.count - 1))
-                            entryList.currentIndex = 0
-                        else 
-                            entryList.currentIndex = entryList.currentIndex + 1
-                    }
-                }
-            }
-        }
-    }*/
 }
