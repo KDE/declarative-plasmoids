@@ -69,5 +69,10 @@ Item {
                 width: parent.width - icon.width - parent.spacing
             }
         }
+        Text {
+            id: textBrowser
+            wrapMode: Text.Wrap
+            text: "This is the dictionary plasmoid"
+        }
     }
 }
