@@ -43,6 +43,9 @@ Item {
         interval: 50000
         onDataChanged: {
             plasmoid.busy = false
+            print(data["text"] + "bla" + dataModel["text"])
+            print(data)
+            textBrowser.text = data["text"].toString
         }
     }
     
@@ -67,6 +70,9 @@ Item {
                 id: searchBox
                 clearButtonShown: true
                 width: parent.width - icon.width - parent.spacing
+                onTextChanged: {
+                    feedSource.connectedSources = text
+                }
             }
         }
         Text {
