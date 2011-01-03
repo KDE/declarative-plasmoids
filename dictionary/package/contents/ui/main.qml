@@ -26,11 +26,11 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 Item {
     id: mainWindow
 
-    property string activeSource: "Activities\\provider:https://api.opendesktop.org/v1/"
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
-        plasmoid.busy = true
+        //plasmoid.busy = true
+        icon.setIcon("accessories-dictionary")
     }
 
     function configChanged()
@@ -39,16 +39,12 @@ Item {
 
     PlasmaCore.DataSource {
         id: feedSource
-        engine: "ocs"
+        engine: "dict"
         interval: 50000
-        connectedSources: [activeSource]
         onDataChanged: {
             plasmoid.busy = false
-            print("dataChanged" + sources)
-            connectedSources = sources
         }
     }
-    
     
     PlasmaCore.DataModel {
         id: dataModel
@@ -60,43 +56,14 @@ Item {
         id: theme
     }
     
-    ListView {
-        model: dataModel
-        height: mainWindow.height
-        width: mainWindow.width
-        orientation: ListView.Vertical
-        clip:true
-        delegate: Item {
-            height: 50
-            width: parent.width
-            Row {
-                spacing: 5
-                height: parent.height
-                width: parent.width
-                Image {
-                    id: image
-                    width:50
-                    height: 50
-                    anchors.verticalCenter: parent.verticalCenter
-                    fillMode: Image.PreserveAspectFit
-                    //model['user-AvatarUrl'] syntax used since dashes aren't normally allowed in properties names
-                    source: model['user-AvatarUrl']
-                }
-                Text {
-                    height: parent.height
-                    width: parent.width - parent.spacing - image.width
-                    verticalAlignment: Text.AlignVCenter
-                    wrapMode: Text.Wrap
-                    text: message
-                }
+    Column {
+        Row {
+            PlasmaWidgets.IconWidget {
+                id: icon
             }
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    print("clicked" + model['link'])
-                    plasmoid.openUrl(model['link'])
-                }
+            PlasmaWidgets.LineEdit {
+                id: searchBox
+                clearButtonShown: true
             }
         }
     }
