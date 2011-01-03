@@ -57,13 +57,16 @@ Item {
     }
     
     Column {
+        width: mainWindow.width
         Row {
+            width: parent.width
             PlasmaWidgets.IconWidget {
                 id: icon
             }
             PlasmaWidgets.LineEdit {
                 id: searchBox
                 clearButtonShown: true
+                width: parent.width - icon.width - parent.spacing
             }
         }
     }
