@@ -40,25 +40,23 @@ Item {
     PlasmaCore.DataSource {
         id: feedSource
         engine: "dict"
-        interval: 50000
+        connectedSources: ["freedom"]
+        interval: 0
         onDataChanged: {
             plasmoid.busy = false
-            print(data["text"] + "bla" + dataModel["text"])
-            print(data)
-            textBrowser.text = data["text"].toString
         }
     }
-    
+
     PlasmaCore.DataModel {
         id: dataModel
         dataSource: feedSource
         keyRoleFilter: "[\\d]*"
     }
-    
+
     PlasmaCore.Theme {
         id: theme
     }
-    
+
     Column {
         width: mainWindow.width
         Row {
@@ -71,14 +69,24 @@ Item {
                 clearButtonShown: true
                 width: parent.width - icon.width - parent.spacing
                 onTextChanged: {
-                    feedSource.connectedSources = text
+                    timer.running = true
                 }
             }
         }
         Text {
             id: textBrowser
             wrapMode: Text.Wrap
-            text: "This is the dictionary plasmoid"
+            text: feedSource.data[searchBox.text]?feedSource.data[searchBox.text]["text"]:"This is the dictionary plasmoid"
         }
+    }
+    Timer {
+       id: timer
+       running: false
+       repeat: false
+       interval: 500
+       onTriggered: {
+            plasmoid.busy = true
+            feedSource.connectedSources = [searchBox.text]
+       }
     }
 }
