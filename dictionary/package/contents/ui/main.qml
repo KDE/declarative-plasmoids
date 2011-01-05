@@ -59,7 +59,9 @@ Item {
 
     Column {
         width: mainWindow.width
+        height: mainWindow.height
         Row {
+            id: searchRow
             width: parent.width
             PlasmaWidgets.IconWidget {
                 id: icon
@@ -73,12 +75,19 @@ Item {
                 }
             }
         }
-        Text {
-            id: textBrowser
-            wrapMode: Text.Wrap
-            width: parent.width
+        Flickable {
+            width: parent.width - parent.spacing
+            height: parent.height - searchRow.height - parent.spacing
+            contentWidth: childrenRect.width
+            contentHeight: textBrowser.height
             clip: true
-            text: feedSource.data[searchBox.text]?feedSource.data[searchBox.text]["text"]:"This is the dictionary plasmoid"
+            Text {
+                id: textBrowser
+                wrapMode: Text.Wrap
+                width: parent.parent.width
+                clip: true
+                text: feedSource.data[searchBox.text]?feedSource.data[searchBox.text]["text"]:"This is the dictionary plasmoid"
+            }
         }
     }
     Timer {
