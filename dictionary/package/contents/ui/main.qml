@@ -29,7 +29,7 @@ Item {
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
-        //plasmoid.busy = true
+        plasmoid.busy = true
         icon.setIcon("accessories-dictionary")
     }
 
@@ -76,6 +76,8 @@ Item {
         Text {
             id: textBrowser
             wrapMode: Text.Wrap
+            width: parent.width
+            clip: true
             text: feedSource.data[searchBox.text]?feedSource.data[searchBox.text]["text"]:"This is the dictionary plasmoid"
         }
     }
