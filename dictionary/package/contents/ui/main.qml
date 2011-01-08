@@ -25,7 +25,8 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 Item {
     id: mainWindow
-
+    
+    property bool listdictionaries: false;
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -65,6 +66,10 @@ Item {
             width: parent.width
             PlasmaWidgets.IconWidget {
                 id: icon
+                onClicked: {
+                    mainWindow.listdictionaries = true
+                    timer.running = true
+                }
             }
             PlasmaWidgets.LineEdit {
                 id: searchBox
@@ -72,6 +77,7 @@ Item {
                 width: parent.width - icon.width - parent.spacing
                 onTextChanged: {
                     timer.running = true
+                    mainWindow.listdictionaries = false
                 }
             }
         }
@@ -86,7 +92,21 @@ Item {
                 wrapMode: Text.Wrap
                 width: parent.parent.width
                 clip: true
-                text: feedSource.data[searchBox.text]?feedSource.data[searchBox.text]["text"]:"This is the dictionary plasmoid"
+                text: {
+                    if (mainWindow.listdictionaries) {
+                        var data = feedSource.data["list-dictionaries"]
+                        var temp = ""
+                        for (var line in data) {
+                            temp = temp + line + ":" + data[line] + "<br>"
+                        }
+                        temp
+                    } else {
+                        if (feedSource.data[searchBox.text])
+                            feedSource.data[searchBox.text]["text"]
+                        else
+                            "This is the dictionary plasmoid"
+                    }
+                }
             }
         }
     }
@@ -97,7 +117,11 @@ Item {
        interval: 500
        onTriggered: {
             plasmoid.busy = true
-            feedSource.connectedSources = [searchBox.text]
+            if (mainWindow.listdictionaries) {
+                feedSource.connectedSources = "list-dictionaries"
+            } else {
+                feedSource.connectedSources = [searchBox.text]
+            }
        }
     }
 }
