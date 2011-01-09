@@ -1,6 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Welcome
+Name[pt]=Bem-Vindo
+Name[pt_BR]=Bem-vindo
+Name[sv]=Välkommen
+Name[uk]=Вітаємо!
+Name[x-test]=xxWelcomexx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=ktip
