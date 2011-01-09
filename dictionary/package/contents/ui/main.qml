@@ -95,7 +95,7 @@ Item {
                 text: {
                     if (mainWindow.listdictionaries) {
                         var data = feedSource.data["list-dictionaries"]
-                        var temp = "<b>This is a list of Dictionaries. You can type '<dictionaryname>:' in front of your search term to pick from a certain one.</b><br><br>"
+                        var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br><br>")
                         for (var line in data) {
                             temp = temp + line + ": " + data[line] + "<br><br>"
                         }
@@ -104,7 +104,7 @@ Item {
                         if (feedSource.data[searchBox.text])
                             feedSource.data[searchBox.text]["text"]
                         else
-                            "This is the dictionary plasmoid"
+                            i18n("This is the dictionary plasmoid")
                     }
                 }
             }
