@@ -66,10 +66,15 @@ Item {
             dataSource: dataSource
             keyRoleFilter: "[\\d]*"
         }
-        delegate: Text {
-            text: model['Status']
+        delegate: ListItem {
             width: entryList.width
-            wrapMode: Text.WordWrap
+            Text {
+                anchors.left: padding.left
+                anchors.right: padding.right
+                anchors.top: padding.top
+                text: model['Status']
+                wrapMode: Text.WordWrap
+            }
         }
     }
 }
