@@ -22,11 +22,15 @@
 import Qt 4.7
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
+import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Item {
     width: 200
     height: 300
+
+    property string serviceUrl
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -35,10 +39,10 @@ Item {
 
     function configChanged()
     {
-        var serviceUrl = plasmoid.readConfig("serviceUrl")
+        serviceUrl = plasmoid.readConfig("serviceUrl")
         var userName = plasmoid.readConfig("userName")
         var password = plasmoid.readConfig("password")
-        dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl]
+        dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
         var service = dataSource.serviceForSource(dataSource.connectedSources[0])
         var operation = service.operationDescription("auth");
         operation.password = plasmoid.readConfig("password")
@@ -66,12 +70,30 @@ Item {
             dataSource: dataSource
             keyRoleFilter: "[\\d]*"
         }
-        delegate: ListItem {
+        delegate: PlasmaComponents.Frame {
             width: entryList.width
-            Text {
+            QtExtraComponents.QImageItem {
+                id: userIcon
+                smooth: true
                 anchors.left: padding.left
+                anchors.top: padding.top
+                width: 32
+                height: 32
+                image: dataSource.data["UserImages:"+serviceUrl][model['User']]
+            }
+            Text {
+                id: infoLabel
+                anchors.leftMargin: 5
+                anchors.left: userIcon.right
                 anchors.right: padding.right
                 anchors.top: padding.top
+                text: i18n("%1 from %2", model["User"], model["Source"])
+            }
+            Text {
+                anchors.leftMargin: 5
+                anchors.left: userIcon.right
+                anchors.right: padding.right
+                anchors.top: infoLabel.bottom
                 text: model['Status']
                 wrapMode: Text.WordWrap
             }
