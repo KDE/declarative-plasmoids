@@ -27,6 +27,7 @@ Item {
     height: 300
 
     property string serviceUrl
+    property string userName
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -36,7 +37,7 @@ Item {
     function configChanged()
     {
         serviceUrl = plasmoid.readConfig("serviceUrl")
-        var userName = plasmoid.readConfig("userName")
+        userName = plasmoid.readConfig("userName")
         var password = plasmoid.readConfig("password")
         dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
         var service = dataSource.serviceForSource(dataSource.connectedSources[0])
@@ -66,6 +67,35 @@ Item {
             dataSource: dataSource
             keyRoleFilter: "[\\d]*"
         }
-        delegate: MessageWidget {}
+        header: PlasmaComponents.Frame {
+            id: postWidget
+            width: entryList.width
+
+            QtExtraComponents.QImageItem {
+                id: profileIcon
+                smooth: true
+                anchors.left: padding.left
+                anchors.top: padding.top
+                width: 48
+                height: 48
+                image: dataSource.data["UserImages:"+serviceUrl][userName]
+            }
+
+            PlasmaComponents.Frame {
+                anchors.left: profileIcon.right
+                anchors.right: postWidget.padding.right
+                anchors.top: postWidget.padding.top
+                height: 90
+
+                prefix: "sunken"
+                TextEdit {
+                    anchors.fill: parent.padding
+                }
+            }
+        }
+
+        delegate: MessageWidget {
+            width: entryList.width
+        }
     }
 }
