@@ -88,6 +88,10 @@ Item {
                 height: 48
                 image: dataSource.data["UserImages:"+serviceUrl][userName]
             }
+            Text {
+                anchors.top: profileIcon.bottom
+                text: userName
+            }
 
             PlasmaComponents.Frame {
                 anchors.left: profileIcon.right
