@@ -72,6 +72,7 @@ Item {
         }
         delegate: PlasmaComponents.Frame {
             width: entryList.width
+
             QtExtraComponents.QImageItem {
                 id: userIcon
                 smooth: true
@@ -89,11 +90,27 @@ Item {
                 anchors.top: padding.top
                 text: i18n("%1 from %2", model["User"], model["Source"])
             }
+            PlasmaComponents.ToolButton {
+                id: replyButton
+                anchors.right: repeatButton.left
+                anchors.rightMargin: 5
+                text: "@"
+                width: 24
+                height: 24
+            }
+            PlasmaComponents.ToolButton {
+                id: repeatButton
+                anchors.right: parent.right
+                text: "RT"
+                width: 24
+                height: 24
+            }
             Text {
                 anchors.leftMargin: 5
                 anchors.left: userIcon.right
                 anchors.right: padding.right
-                anchors.top: infoLabel.bottom
+                anchors.top: repeatButton.bottom
+                anchors.bottomMargin: 5
                 text: model['Status']
                 wrapMode: Text.WordWrap
             }
