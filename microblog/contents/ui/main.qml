@@ -23,12 +23,16 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Item {
+    id: main
     width: 200
     height: 300
 
     property string serviceUrl
     property string userName
     property string password
+
+    signal replyAsked(string id, string message)
+    signal retweetAsked(string id, string message)
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -93,7 +97,11 @@ Item {
 
                 prefix: "sunken"
                 TextEdit {
+                    id: postTextEdit
                     anchors.fill: parent.padding
+                    wrapMode: TextEdit.WordWrap
+                    property string inReplyToStatusId: ""
+
                     onTextChanged: {
                         //yes, TextEdit doesn't have returnPressed sadly
                         if (text[text.length-1] == "\n") {
@@ -101,11 +109,25 @@ Item {
                             var operation = service.operationDescription("update");
                             operation.password = password
                             operation.status = text;
+                            operation.inReplyToStatusId = inReplyToStatusId
                             service.startOperationCall(operation);
                             text = ""
+                            inReplyToStatusId = ""
 
                             operation = service.operationDescription("refresh");
                             service.startOperationCall(operation);
+                        } else if (text.length == 0) {
+                            inReplyToStatusId = ""
+                        }
+                    }
+                    Connections {
+                        target: main
+                        onReplyAsked: {
+                            inReplyToStatusId = id
+                            postTextEdit.text = message
+                        }
+                        onRetweetAsked: {
+                            postTextEdit.text = message
                         }
                     }
                 }

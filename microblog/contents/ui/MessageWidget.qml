@@ -50,13 +50,19 @@ PlasmaComponents.Frame {
         text: "@"
         width: 24
         height: 24
+        onClicked: {
+            main.replyAsked(model["Id"], "@" + model["User"] + ": ");
+        }
     }
     PlasmaComponents.ToolButton {
         id: repeatButton
         anchors.right: parent.right
-        text: "RT"
+        text: "♻"
         width: 24
         height: 24
+        onClicked: {
+            main.retweetAsked(model["Id"], "♻ @" + model["User"] + ": " + model["Status"]);
+        }
     }
     Text {
         anchors.leftMargin: 5
