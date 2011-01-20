@@ -1,7 +1,5 @@
-// -*- coding: iso-8859-1 -*-
 /*
- *   Author: Marco Martin <mart@kde.org>
- *   Date: Sun Jan 16 2011, 15:51:18
+ *   Copyright 2011 Marco Martin <mart@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -20,10 +18,8 @@
  */
 
 import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Item {
@@ -70,50 +66,6 @@ Item {
             dataSource: dataSource
             keyRoleFilter: "[\\d]*"
         }
-        delegate: PlasmaComponents.Frame {
-            width: entryList.width
-
-            QtExtraComponents.QImageItem {
-                id: userIcon
-                smooth: true
-                anchors.left: padding.left
-                anchors.top: padding.top
-                width: 32
-                height: 32
-                image: dataSource.data["UserImages:"+serviceUrl][model['User']]
-            }
-            Text {
-                id: infoLabel
-                anchors.leftMargin: 5
-                anchors.left: userIcon.right
-                anchors.right: padding.right
-                anchors.top: padding.top
-                text: i18n("%1 from %2", model["User"], model["Source"])
-            }
-            PlasmaComponents.ToolButton {
-                id: replyButton
-                anchors.right: repeatButton.left
-                anchors.rightMargin: 5
-                text: "@"
-                width: 24
-                height: 24
-            }
-            PlasmaComponents.ToolButton {
-                id: repeatButton
-                anchors.right: parent.right
-                text: "RT"
-                width: 24
-                height: 24
-            }
-            Text {
-                anchors.leftMargin: 5
-                anchors.left: userIcon.right
-                anchors.right: padding.right
-                anchors.top: repeatButton.bottom
-                anchors.bottomMargin: 5
-                text: model['Status']
-                wrapMode: Text.WordWrap
-            }
-        }
+        delegate: MessageWidget {}
     }
 }
