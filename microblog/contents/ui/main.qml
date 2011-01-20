@@ -28,6 +28,7 @@ Item {
 
     property string serviceUrl
     property string userName
+    property string password
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -38,7 +39,10 @@ Item {
     {
         serviceUrl = plasmoid.readConfig("serviceUrl")
         userName = plasmoid.readConfig("userName")
-        var password = plasmoid.readConfig("password")
+        password = plasmoid.readConfig("password")
+
+        print("TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl)
+
         dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
         var service = dataSource.serviceForSource(dataSource.connectedSources[0])
         var operation = service.operationDescription("auth");
@@ -90,6 +94,20 @@ Item {
                 prefix: "sunken"
                 TextEdit {
                     anchors.fill: parent.padding
+                    onTextChanged: {
+                        //yes, TextEdit doesn't have returnPressed sadly
+                        if (text[text.length-1] == "\n") {
+                            var service = dataSource.serviceForSource(dataSource.connectedSources[0])
+                            var operation = service.operationDescription("update");
+                            operation.password = password
+                            operation.status = text;
+                            service.startOperationCall(operation);
+                            text = ""
+
+                            operation = service.operationDescription("refresh");
+                            service.startOperationCall(operation);
+                        }
+                    }
                 }
             }
         }
