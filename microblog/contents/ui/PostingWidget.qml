@@ -64,7 +64,7 @@ Item {
                         var operation = service.operationDescription("update");
                         operation.password = password
                         operation.status = text;
-                        operation.inReplyToStatusId = inReplyToStatusId
+                        operation.in_reply_to_status_id = inReplyToStatusId
                         print(inReplyToStatusId)
                         service.startOperationCall(operation);
                         text = ""
