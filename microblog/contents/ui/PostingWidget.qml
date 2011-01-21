@@ -22,64 +22,69 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
-PlasmaComponents.Frame {
-    id: postWidget
+Item {
     width: entryList.width
-
-    QtExtraComponents.QImageItem {
-        id: profileIcon
-        smooth: true
-        anchors.left: padding.left
-        anchors.top: padding.top
-        width: 48
-        height: 48
-        image: imagesDataSource.data["UserImages:"+serviceUrl][userName]
-    }
-    Text {
-        anchors.top: profileIcon.bottom
-        text: userName
-    }
-
+    height: postWidget.height + 5
     PlasmaComponents.Frame {
-        anchors.left: profileIcon.right
-        anchors.right: postWidget.padding.right
-        anchors.top: postWidget.padding.top
-        height: 90
+        id: postWidget
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-        prefix: "sunken"
-        TextEdit {
-            id: postTextEdit
-            anchors.fill: parent.padding
-            wrapMode: TextEdit.WordWrap
-            property string inReplyToStatusId: ""
+        QtExtraComponents.QImageItem {
+            id: profileIcon
+            smooth: true
+            anchors.left: padding.left
+            anchors.top: padding.top
+            width: 48
+            height: 48
+            image: imagesDataSource.data["UserImages:"+serviceUrl][userName]
+        }
+        Text {
+            anchors.top: profileIcon.bottom
+            text: userName
+        }
 
-            onTextChanged: {
-                //yes, TextEdit doesn't have returnPressed sadly
-                if (text[text.length-1] == "\n") {
-                    var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
-                    var operation = service.operationDescription("update");
-                    operation.password = password
-                    operation.status = text;
-                    operation.inReplyToStatusId = inReplyToStatusId
-                    print(inReplyToStatusId)
-                    service.startOperationCall(operation);
-                    text = ""
-                    inReplyToStatusId = ""
+        PlasmaComponents.Frame {
+            anchors.left: profileIcon.right
+            anchors.right: postWidget.padding.right
+            anchors.top: postWidget.padding.top
+            height: 90
 
-                    operation = service.operationDescription("refresh");
-                    service.startOperationCall(operation);
-                } else if (text.length == 0) {
-                    inReplyToStatusId = ""
+            prefix: "sunken"
+            TextEdit {
+                id: postTextEdit
+                anchors.fill: parent.padding
+                wrapMode: TextEdit.WordWrap
+                property string inReplyToStatusId: ""
+
+                onTextChanged: {
+                    //yes, TextEdit doesn't have returnPressed sadly
+                    if (text[text.length-1] == "\n") {
+                        var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+                        var operation = service.operationDescription("update");
+                        operation.password = password
+                        operation.status = text;
+                        operation.inReplyToStatusId = inReplyToStatusId
+                        print(inReplyToStatusId)
+                        service.startOperationCall(operation);
+                        text = ""
+                        inReplyToStatusId = ""
+
+                        operation = service.operationDescription("refresh");
+                        service.startOperationCall(operation);
+                    } else if (text.length == 0) {
+                        inReplyToStatusId = ""
+                    }
                 }
-            }
-            Connections {
-                target: main
-                onReplyAsked: {
-                    postTextEdit.inReplyToStatusId = id
-                    postTextEdit.text = message
-                }
-                onRetweetAsked: {
-                    postTextEdit.text = message
+                Connections {
+                    target: main
+                    onReplyAsked: {
+                        postTextEdit.inReplyToStatusId = id
+                        postTextEdit.text = message
+                    }
+                    onRetweetAsked: {
+                        postTextEdit.text = message
+                    }
                 }
             }
         }
