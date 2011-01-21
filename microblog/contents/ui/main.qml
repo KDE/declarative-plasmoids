@@ -45,10 +45,9 @@ Item {
         userName = plasmoid.readConfig("userName")
         password = plasmoid.readConfig("password")
 
-        print("TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl)
-
-        dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
-        var service = dataSource.serviceForSource(dataSource.connectedSources[0])
+        messagesDataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl]
+        imagesDataSource.connectedSources = ["UserImages:"+serviceUrl]
+        var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
         var operation = service.operationDescription("auth");
         operation.password = plasmoid.readConfig("password")
         service.startOperationCall(operation);
@@ -56,15 +55,23 @@ Item {
         plasmoid.busy = true
     }
 
-    PlasmaCore.DataSource {
-          id: dataSource
-          engine: "microblog"
-          interval: 50000
 
-          onDataChanged: {
-              plasmoid.busy = false
-          }
-      }
+    PlasmaCore.DataSource {
+        id: messagesDataSource
+        engine: "microblog"
+        interval: 50000
+
+        onDataChanged: {
+            plasmoid.busy = false
+        }
+    }
+
+    //Split images and messages: even if a datasource can take multiple sources, their data must have the same keys
+    PlasmaCore.DataSource {
+        id: imagesDataSource
+        engine: "microblog"
+        interval: 5000
+    }
 
     ListView {
         id: entryList
@@ -72,71 +79,10 @@ Item {
         clip: true
         spacing: 5
         model: PlasmaCore.DataModel {
-            dataSource: dataSource
+            dataSource: messagesDataSource
             keyRoleFilter: "[\\d]*"
         }
-        header: PlasmaComponents.Frame {
-            id: postWidget
-            width: entryList.width
-
-            QtExtraComponents.QImageItem {
-                id: profileIcon
-                smooth: true
-                anchors.left: padding.left
-                anchors.top: padding.top
-                width: 48
-                height: 48
-                image: dataSource.data["UserImages:"+serviceUrl][userName]
-            }
-            Text {
-                anchors.top: profileIcon.bottom
-                text: userName
-            }
-
-            PlasmaComponents.Frame {
-                anchors.left: profileIcon.right
-                anchors.right: postWidget.padding.right
-                anchors.top: postWidget.padding.top
-                height: 90
-
-                prefix: "sunken"
-                TextEdit {
-                    id: postTextEdit
-                    anchors.fill: parent.padding
-                    wrapMode: TextEdit.WordWrap
-                    property string inReplyToStatusId: ""
-
-                    onTextChanged: {
-                        //yes, TextEdit doesn't have returnPressed sadly
-                        if (text[text.length-1] == "\n") {
-                            var service = dataSource.serviceForSource(dataSource.connectedSources[0])
-                            var operation = service.operationDescription("update");
-                            operation.password = password
-                            operation.status = text;
-                            operation.inReplyToStatusId = inReplyToStatusId
-                            service.startOperationCall(operation);
-                            text = ""
-                            inReplyToStatusId = ""
-
-                            operation = service.operationDescription("refresh");
-                            service.startOperationCall(operation);
-                        } else if (text.length == 0) {
-                            inReplyToStatusId = ""
-                        }
-                    }
-                    Connections {
-                        target: main
-                        onReplyAsked: {
-                            inReplyToStatusId = id
-                            postTextEdit.text = message
-                        }
-                        onRetweetAsked: {
-                            postTextEdit.text = message
-                        }
-                    }
-                }
-            }
-        }
+        header: PostingWidget {}
 
         delegate: MessageWidget {
             width: entryList.width
