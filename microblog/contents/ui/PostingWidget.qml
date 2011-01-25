@@ -62,16 +62,15 @@ Item {
                     if (text[text.length-1] == "\n") {
                         var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
                         var operation = service.operationDescription("update");
-                        operation.password = password
                         operation.status = text;
                         operation.in_reply_to_status_id = inReplyToStatusId
-                        print(inReplyToStatusId)
                         service.startOperationCall(operation);
                         text = ""
                         inReplyToStatusId = ""
 
                         operation = service.operationDescription("refresh");
                         service.startOperationCall(operation);
+                        plasmoid.busy = true
                     } else if (text.length == 0) {
                         inReplyToStatusId = ""
                     }
@@ -83,7 +82,17 @@ Item {
                         postTextEdit.text = message
                     }
                     onRetweetAsked: {
-                        postTextEdit.text = message
+                        var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+                        var operation = service.operationDescription("statuses/retweet");
+                        operation.id = id;
+                        print(id)
+                        service.startOperationCall(operation);
+                        text = ""
+                        inReplyToStatusId = ""
+
+                        operation = service.operationDescription("refresh")
+                        service.startOperationCall(operation)
+                        plasmoid.busy = true
                     }
                 }
             }

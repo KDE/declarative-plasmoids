@@ -61,7 +61,7 @@ PlasmaComponents.Frame {
         width: 24
         height: 24
         onClicked: {
-            main.retweetAsked(model["Id"], "♻ @" + model["User"] + ": " + model["Status"]);
+            main.retweetAsked(model["Id"]);
         }
     }
     Text {

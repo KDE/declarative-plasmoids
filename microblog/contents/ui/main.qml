@@ -32,7 +32,7 @@ Item {
     property string password
 
     signal replyAsked(string id, string message)
-    signal retweetAsked(string id, string message)
+    signal retweetAsked(string id)
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
