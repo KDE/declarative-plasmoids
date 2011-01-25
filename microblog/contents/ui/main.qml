@@ -33,6 +33,7 @@ Item {
 
     signal replyAsked(string id, string message)
     signal retweetAsked(string id)
+    signal favoriteAsked(string id, bool isFavorite)
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -54,7 +55,6 @@ Item {
         plasmoid.configurationRequired = false
         plasmoid.busy = true
     }
-
 
     PlasmaCore.DataSource {
         id: messagesDataSource

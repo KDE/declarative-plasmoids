@@ -22,9 +22,24 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/code/logic.js" as Logic
+
 Item {
     width: entryList.width
     height: postWidget.height + 5
+
+    Component.onCompleted: {
+        Logic.messagesDataSource = messagesDataSource
+    }
+
+    function refresh()
+    {
+        postTextEdit.text = ""
+        postTextEdit.inReplyToStatusId = ""
+        Logic.refresh()
+        plasmoid.busy = true
+    }
+
     PlasmaComponents.Frame {
         id: postWidget
         anchors.left: parent.left
@@ -60,17 +75,8 @@ Item {
                 onTextChanged: {
                     //yes, TextEdit doesn't have returnPressed sadly
                     if (text[text.length-1] == "\n") {
-                        var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
-                        var operation = service.operationDescription("update");
-                        operation.status = text;
-                        operation.in_reply_to_status_id = inReplyToStatusId
-                        service.startOperationCall(operation);
-                        text = ""
-                        inReplyToStatusId = ""
-
-                        operation = service.operationDescription("refresh");
-                        service.startOperationCall(operation);
-                        plasmoid.busy = true
+                        Logic.update(text, inReplyToStatusId);
+                        refresh()
                     } else if (text.length == 0) {
                         inReplyToStatusId = ""
                     }
@@ -82,17 +88,14 @@ Item {
                         postTextEdit.text = message
                     }
                     onRetweetAsked: {
-                        var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
-                        var operation = service.operationDescription("statuses/retweet");
-                        operation.id = id;
+                        Logic.retweet(id)
+                        refresh()
+                    }
+                    onFavoriteAsked: {
                         print(id)
-                        service.startOperationCall(operation);
-                        text = ""
-                        inReplyToStatusId = ""
-
-                        operation = service.operationDescription("refresh")
-                        service.startOperationCall(operation)
-                        plasmoid.busy = true
+                        print(isFavorite)
+                        Logic.setFavorite(id, isFavorite)
+                        refresh()
                     }
                 }
             }

@@ -43,32 +43,44 @@ PlasmaComponents.Frame {
         anchors.top: padding.top
         text: i18n("%1 from %2", model["User"], model["Source"])
     }
-    PlasmaComponents.ToolButton {
-        id: replyButton
-        anchors.right: repeatButton.left
-        anchors.rightMargin: 5
-        text: "@"
-        width: 24
-        height: 24
-        onClicked: {
-            main.replyAsked(model["Id"], "@" + model["User"] + ": ");
-        }
-    }
-    PlasmaComponents.ToolButton {
-        id: repeatButton
+    Row {
+        id: toolBoxRow
         anchors.right: parent.right
-        text: "♻"
-        width: 24
-        height: 24
-        onClicked: {
-            main.retweetAsked(model["Id"]);
+        anchors.rightMargin: 5
+        PlasmaComponents.ToolButton {
+            id: favoriteButton
+            text: "♥"
+            width: 24
+            height: 24
+            down: model["IsFavorite"]
+            onClicked: {
+                main.favoriteAsked(model["Id"], model["IsFavorite"] != "true");
+            }
+        }
+        PlasmaComponents.ToolButton {
+            id: replyButton
+            text: "@"
+            width: 24
+            height: 24
+            onClicked: {
+                main.replyAsked(model["Id"], "@" + model["User"] + ": ");
+            }
+        }
+        PlasmaComponents.ToolButton {
+            id: repeatButton
+            text: "♻"
+            width: 24
+            height: 24
+            onClicked: {
+                main.retweetAsked(model["Id"]);
+            }
         }
     }
     Text {
         anchors.leftMargin: 5
         anchors.left: userIcon.right
         anchors.right: padding.right
-        anchors.top: repeatButton.bottom
+        anchors.top: toolBoxRow.bottom
         anchors.bottomMargin: 5
         text: model['Status']
         wrapMode: Text.WordWrap
