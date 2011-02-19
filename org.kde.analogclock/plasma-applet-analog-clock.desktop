@@ -1,5 +1,6 @@
 [Desktop Entry]
 Comment=A clock with hands
+Comment[es]=Un reloj con manecillas
 Comment[km]=នាឡិកា​មាន​ទ្រនិច
 Comment[nl]=Een klok met wijzers
 Comment[pt]=Um relógio com ponteiros
@@ -11,6 +12,7 @@ Encoding=UTF-8
 Icon=clock
 Keywords=
 Name=Analog Clock
+Name[es]=Reloj analógico
 Name[km]=នាឡិកាអាណាឡូក
 Name[nds]=Analoogklock
 Name[nl]=Analoge klok
