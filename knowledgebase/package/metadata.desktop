@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Knowledge base (QML)
 Name[es]=Base de conocimiento (QML)
+Name[et]=Teadmusbaas (QML)
 Name[km]=Knowledge base (QML)
 Name[pt]=Base de Conhecimento (QML)
 Name[pt_BR]=Base de conhecimento (QML)
@@ -8,6 +9,7 @@ Name[sv]=Kunskapsbas (QML)
 Name[uk]=База знань (QML)
 Name[x-test]=xxKnowledge base (QML)xx
 Comment=Open Collaboration Service Knowledge base client
+Comment[et]=Avatud koostööteenuste teadmusbaasi klient
 Comment[km]=បើក​ម៉ាស៊ីន​ភ្ញៀវ​ដែលមាន​មូលដ្ឋាន​លើ​ចំណេះដេង​សេវា​សហការ
 Comment[pt]=Cliente da base de conhecimento do Open Collaboration Service
 Comment[pt_BR]=Cliente da base de conhecimento do Open Collaboration Service
