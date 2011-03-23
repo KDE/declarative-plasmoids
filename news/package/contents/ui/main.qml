@@ -22,6 +22,7 @@ import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
+import "plasmapackage:/ui/CommonComponents"
 import "plasmapackage:/code/utils.js" as Utils
 import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
