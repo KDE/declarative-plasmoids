@@ -92,8 +92,8 @@ Item {
             tabBarShown: false
 
             onCurrentChanged: {
-                backButton.visible = currentIndex > 0
-                searchBox.visible = currentIndex < 2
+                toolbarFrame.backEnabled = currentIndex > 0
+                toolbarFrame.searchEnabled = currentIndex < 2
             }
 
             QGraphicsWidget {

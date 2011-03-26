@@ -22,35 +22,44 @@ import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
-PlasmaWidgets.Frame {
+PlasmaCore.FrameSvgItem {
     id: toolbarFrame
     width: parent.width
-    maximumSize: maximumSize.width+"x"+minimumSize.height
-    frameShadow: "Raised"
-    layout: GraphicsLayouts.QGraphicsLinearLayout {
-        PlasmaWidgets.PushButton {
-            id: backButton
-            text: i18n("Back")
-            maximumSize: minimumSize
-            visible: false
+    height: backButton.height + margins.top + margins.bottom
 
-            onClicked: {
-                if (!bodyView.customUrl) {
-                    mainView.currentIndex = mainView.currentIndex -1
-                } else {
-                    bodyView.html = "<body style=\"background:#fff;\">"+feedSource.data['items'][list.currentIndex].description+"</body>";
-                }
+    imagePath: "widgets/frame"
+    prefix: "raised"
+
+    property bool backEnabled: false
+    property bool searchEnabled: true
+
+    PlasmaWidgets.PushButton {
+        id: backButton
+        text: i18n("Back")
+        maximumSize: minimumSize
+        visible: backEnabled
+        x: toolbarFrame.margins.left
+        y: toolbarFrame.margins.top
+
+        onClicked: {
+            if (!bodyView.customUrl) {
+                mainView.currentIndex = mainView.currentIndex -1
+            } else {
+                bodyView.html = "<body style=\"background:#fff;\">"+feedSource.data['items'][list.currentIndex].description+"</body>";
             }
         }
-        QGraphicsWidget {
-            GraphicsLayouts.QGraphicsLinearLayout.stretchFactor: 2
-        }
-        PlasmaWidgets.LineEdit {
-            id: searchBox
-            clearButtonShown: true
-            onTextEdited: {
-                searchTimer.running = true
-            }
+    }
+
+    PlasmaWidgets.LineEdit {
+        id: searchBox
+        clearButtonShown: true
+        anchors.right: parent.right
+        anchors.top: parent.top
+        visible: searchEnabled
+        anchors.rightMargin: toolbarFrame.margins.right
+        anchors.topMargin: toolbarFrame.margins.top
+        onTextEdited: {
+            searchTimer.running = true
         }
     }
 }
