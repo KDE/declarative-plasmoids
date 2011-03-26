@@ -66,15 +66,21 @@ Item {
 
 
     Column {
+        //FIXME: hardcoded
+        spacing: -9
         Toolbar {
             id: toolbarFrame
+            imagePath: "widgets/background"
+            prefix: ""
+            enabledBorders: "BottomBorder"
+            z: mainView.z+1
         }
 
 
         PlasmaWidgets.TabBar {
             id : mainView
             width: mainWindow.width
-            height: mainWindow.height - toolbarFrame.height
+            height: mainWindow.height - toolbarFrame.height +9
             tabBarShown: false
 
             onCurrentChanged: {
