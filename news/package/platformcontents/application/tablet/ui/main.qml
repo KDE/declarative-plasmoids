@@ -90,63 +90,9 @@ Item {
                     mainView.currentIndex = 0
                 }
 
-                ListView {
-                    id: feedList
-
+                FeedList {
                     anchors.fill: listContainer
                     anchors.rightMargin: listContainer.width/4*3
-
-                    signal itemClicked;
-                    spacing: 5;
-                    snapMode: ListView.SnapToItem
-
-                    clip: true
-                    model: PlasmaCore.SortFilterModel {
-                        id: feedListFilter
-                        filterRole: "feed_title"
-                        filterRegExp: toolbarFrame.searchQuery
-                        sourceModel: PlasmaCore.DataModel {
-                            dataSource: feedSource
-                            keyRoleFilter: "sources"
-                        }
-                    }
-
-                    header: Column {
-                        ListItemSource {
-                            id: feedListHeader
-                            text: i18n("Show All")
-                            unread: BookKeeping.totalUnreadCount
-                            onClicked: {
-                                feedCategoryFilter.filterRegExp = ""
-                            }
-                            Connections {
-                                target: mainWindow
-                                onUnreadCountChanged: {
-                                    feedListHeader.unread = BookKeeping.totalUnreadCount
-                                }
-                            }
-                        }
-                        Item {
-                            height: 5
-                            width: 5
-                        }
-                    }
-                    delegate: ListItemSource {
-                        id: listItemSource
-                        text: feed_title
-                        icon: model.icon
-                        unread: BookKeeping.unreadForSource(feed_url)
-
-                        onClicked: {
-                            feedCategoryFilter.filterRegExp = feed_url
-                        }
-                        Connections {
-                            target: mainWindow
-                            onUnreadCountChanged: {
-                                unread = BookKeeping.unreadForSource(feed_url)
-                            }
-                        }
-                    }
                 }
 
                 ListView {
