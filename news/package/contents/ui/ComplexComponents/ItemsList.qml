@@ -29,7 +29,6 @@ ListView {
 
     property string feedCategory
 
-    spacing: 5;
     snapMode: ListView.SnapToItem
 
     PlasmaCore.SvgItem {

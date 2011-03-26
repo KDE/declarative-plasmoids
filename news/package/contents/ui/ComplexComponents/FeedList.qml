@@ -29,7 +29,6 @@ ListView {
     signal itemClicked;
     property string feedCategory
 
-    spacing: 5;
     snapMode: ListView.SnapToItem
 
     clip: true

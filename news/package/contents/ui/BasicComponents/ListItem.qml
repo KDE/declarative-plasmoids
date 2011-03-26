@@ -21,29 +21,36 @@ import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
-PlasmaCore.FrameSvgItem {
-    id : background
-    imagePath: "widgets/frame"
-    prefix: "plain"
-
-    width: parent.width
-    height: childrenRect.height
-
-    property alias padding: paddingRectangle;
+Item {
+    id: listItem
+    property alias padding: paddingRectangle
     signal clicked;
+    width: parent.width
+    height: childrenRect.height+4
+
+
+    PlasmaCore.FrameSvgItem {
+        id : background
+        imagePath: "widgets/frame"
+        prefix: "plain"
+
+        anchors.fill: parent
+        anchors.topMargin: 2
+        anchors.bottomMargin: 2
+
+        MouseArea {
+            id: itemMouse
+            anchors.fill: listItem
+            onClicked: listItem.clicked()
+        }
+    }
 
     Item {
         id: paddingRectangle
-        anchors.fill: parent
+        anchors.fill: background
         anchors.leftMargin: background.margins.left
         anchors.topMargin: background.margins.top
         anchors.rightMargin: background.margins.right
         anchors.bottomMargin: background.margins.bottom
-    }
-
-    MouseArea {
-        id: itemMouse
-        anchors.fill: background
-        onClicked: background.clicked()
     }
 }
