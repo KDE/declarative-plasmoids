@@ -23,13 +23,14 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 import "plasmapackage:/ui/BasicComponents"
+import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/code/utils.js" as Utils
 import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
-QGraphicsWidget {
+Item {
     id: mainWindow;
-    preferredSize: "250x600"
-    minimumSize: "200x200"
+    width: 250
+    height: 400
 
     property string source
     signal unreadCountChanged();
@@ -49,66 +50,39 @@ QGraphicsWidget {
         feedSource.connectedSources = source
     }
 
-    Item {
-        PlasmaCore.DataSource {
-            id: feedSource
-            engine: "rss"
-            interval: 50000
-            onDataChanged: {
-                plasmoid.busy = false
-                BookKeeping.updateUnreadCount(feedSource.data[source].items)
-            }
-        }
 
-        PlasmaCore.Theme {
-            id: theme
+    PlasmaCore.DataSource {
+        id: feedSource
+        engine: "rss"
+        interval: 50000
+        onDataChanged: {
+            plasmoid.busy = false
+            BookKeeping.updateUnreadCount(feedSource.data[source].items)
         }
+    }
 
-        Timer {
-            id: searchTimer
-            interval: 500;
-            running: false
-            repeat: false
-            onTriggered: {
-                if (mainView.currentIndex == 0) {
-                    feedListFilter.filterRegExp = ".*"+searchBox.text+".*";
-                } else {
-                    postTitleFilter.filterRegExp = ".*"+searchBox.text+".*";
-                }
+    PlasmaCore.Theme {
+        id: theme
+    }
+
+    Timer {
+        id: searchTimer
+        interval: 500;
+        running: false
+        repeat: false
+        onTriggered: {
+            if (mainView.currentIndex == 0) {
+                feedListFilter.filterRegExp = ".*"+searchBox.text+".*";
+            } else {
+                postTitleFilter.filterRegExp = ".*"+searchBox.text+".*";
             }
         }
     }
 
-    layout: GraphicsLayouts.QGraphicsLinearLayout {
-        orientation: "Vertical"
-        PlasmaWidgets.Frame {
-            maximumSize: maximumSize.width+"x"+minimumSize.height
-            frameShadow: "Raised"
-            layout: GraphicsLayouts.QGraphicsLinearLayout {
-                PlasmaWidgets.PushButton {
-                    id: backButton
-                    text: i18n("Back")
-                    maximumSize: minimumSize
 
-                    onClicked: {
-                        if (!bodyView.customUrl) {
-                            mainView.currentIndex = mainView.currentIndex -1
-                        } else {
-                            bodyView.html = "<body style=\"background:#fff;\">"+feedSource.data['items'][list.currentIndex].description+"</body>";
-                        }
-                    }
-                }
-                QGraphicsWidget {
-                    GraphicsLayouts.QGraphicsLinearLayout.stretchFactor: 2
-                }
-                PlasmaWidgets.LineEdit {
-                    id: searchBox
-                    clearButtonShown: true
-                    onTextEdited: {
-                        searchTimer.running = true
-                    }
-                }
-            }
+    Column {
+        Toolbar {
+            id: toolbarFrame
         }
 
         PlasmaWidgets.TabBar {
