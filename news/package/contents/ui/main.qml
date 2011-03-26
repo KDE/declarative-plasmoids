@@ -84,6 +84,7 @@ Item {
             QGraphicsWidget {
                 id: feedListContainer
                 FeedList {
+                    id: feedList
                     anchors.fill: feedListContainer
                     onItemClicked: mainView.currentIndex = 1
                 }
@@ -97,6 +98,7 @@ Item {
                 ItemsList {
                     id: itemsList
                     anchors.fill: listContainer
+                    feedCategory: feedList.feedCategory
                 }
             }
 

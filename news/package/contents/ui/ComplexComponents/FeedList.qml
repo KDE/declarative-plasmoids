@@ -27,6 +27,8 @@ ListView {
     id: feedList
 
     signal itemClicked;
+    property string feedCategory
+
     spacing: 5;
     snapMode: ListView.SnapToItem
 
@@ -46,7 +48,7 @@ ListView {
             text: i18n("Show All")
             unread: BookKeeping.totalUnreadCount
             onClicked: {
-                feedCategoryFilter.filterRegExp = ""
+                feedCategory = ""
                 feedList.itemClicked()
             }
             Connections {
@@ -64,7 +66,7 @@ ListView {
         unread: BookKeeping.unreadForSource(feed_url)
 
         onClicked: {
-            feedCategoryFilter.filterRegExp = feed_url
+            feedCategory = feed_url
             itemClicked()
         }
         Connections {

@@ -64,8 +64,6 @@ Item {
         id: theme
     }
 
-    
-
 
     Column {
         Toolbar {
@@ -100,6 +98,7 @@ Item {
                     id: itemsList
                     anchors.fill: listContainer
                     anchors.leftMargin: listContainer.width/4
+                    feedCategory: feedList.feedCategory
                 }
 
             }

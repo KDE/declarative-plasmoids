@@ -27,6 +27,8 @@ import "plasmapackage:/code/utils.js" as Utils
 ListView {
     id: list
 
+    property string feedCategory
+
     spacing: 5;
     snapMode: ListView.SnapToItem
 
@@ -51,6 +53,7 @@ ListView {
         sourceModel: PlasmaCore.SortFilterModel {
             id: feedCategoryFilter
             filterRole: "feed_url"
+            filterRegExp: feedCategory
             sourceModel: PlasmaCore.DataModel {
                 dataSource: feedSource
                 keyRoleFilter: "items"
