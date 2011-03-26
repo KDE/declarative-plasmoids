@@ -64,19 +64,7 @@ Item {
         id: theme
     }
 
-    Timer {
-        id: searchTimer
-        interval: 500;
-        running: false
-        repeat: false
-        onTriggered: {
-            if (mainView.currentIndex == 0) {
-                feedListFilter.filterRegExp = ".*"+searchBox.text+".*";
-            } else {
-                postTitleFilter.filterRegExp = ".*"+searchBox.text+".*";
-            }
-        }
-    }
+    
 
 
     Column {
@@ -92,8 +80,8 @@ Item {
             tabBarShown: false
 
             onCurrentChanged: {
-                backButton.visible = currentIndex > 0
-                searchBox.visible = currentIndex < 1
+                toolbarFrame.backEnabled = currentIndex > 0
+                toolbarFrame.searchEnabled = currentIndex < 1
             }
 
             QGraphicsWidget {
@@ -116,6 +104,7 @@ Item {
                     model: PlasmaCore.SortFilterModel {
                         id: feedListFilter
                         filterRole: "feed_title"
+                        filterRegExp: toolbarFrame.searchQuery
                         sourceModel: PlasmaCore.DataModel {
                             dataSource: feedSource
                             keyRoleFilter: "sources"
@@ -166,7 +155,7 @@ Item {
                     anchors.leftMargin: listContainer.width/4
                     spacing: 5;
                     snapMode: ListView.SnapToItem
-                    
+
                     PlasmaCore.SvgItem {
                         width: 32
                         anchors.top: parent.top
@@ -184,6 +173,7 @@ Item {
                         filterRole: "title"
                         sortRole: "time"
                         sortOrder: "DescendingOrder"
+                        filterRegExp: toolbarFrame.searchQuery
                         sourceModel: PlasmaCore.SortFilterModel {
                             id: feedCategoryFilter
                             filterRole: "feed_url"

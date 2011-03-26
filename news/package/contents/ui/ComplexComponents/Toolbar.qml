@@ -32,6 +32,21 @@ PlasmaCore.FrameSvgItem {
 
     property bool backEnabled: false
     property bool searchEnabled: true
+    property string searchQuery
+
+    Timer {
+        id: searchTimer
+        interval: 500;
+        running: false
+        repeat: false
+        onTriggered: {
+            if (mainView.currentIndex == 0) {
+                searchQuery = ".*"+searchBox.text+".*";
+            } else {
+                searchQuery = ".*"+searchBox.text+".*";
+            }
+        }
+    }
 
     PlasmaWidgets.PushButton {
         id: backButton

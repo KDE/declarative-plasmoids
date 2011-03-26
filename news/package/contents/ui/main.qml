@@ -65,21 +65,6 @@ Item {
         id: theme
     }
 
-    Timer {
-        id: searchTimer
-        interval: 500;
-        running: false
-        repeat: false
-        onTriggered: {
-            if (mainView.currentIndex == 0) {
-                feedListFilter.filterRegExp = ".*"+searchBox.text+".*";
-            } else {
-                postTitleFilter.filterRegExp = ".*"+searchBox.text+".*";
-            }
-        }
-    }
-
-
     Column {
         Toolbar {
             id: toolbarFrame
@@ -109,6 +94,7 @@ Item {
                     model: PlasmaCore.SortFilterModel {
                         id: feedListFilter
                         filterRole: "feed_title"
+                        filterRegExp: toolbarFrame.searchQuery
                         sourceModel: PlasmaCore.DataModel {
                             dataSource: feedSource
                             keyRoleFilter: "sources"
@@ -173,6 +159,7 @@ Item {
                         filterRole: "title"
                         sortRole: "time"
                         sortOrder: "DescendingOrder"
+                        filterRegExp: toolbarFrame.searchQuery
                         sourceModel: PlasmaCore.SortFilterModel {
                             id: feedCategoryFilter
                             filterRole: "feed_url"
