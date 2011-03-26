@@ -23,8 +23,8 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 PlasmaCore.FrameSvgItem {
     id : background
-    imagePath: "widgets/frame"
-    prefix: "plain"
+    imagePath: plasmoid.file("images", "frame.svgz")
+    prefix: ""
 
     property alias padding: paddingRectangle
     signal clicked;
