@@ -94,60 +94,9 @@ Item {
                     mainView.currentIndex = 1
                 }
 
-                ListView {
-                    id: list
+                ItemsList {
+                    id: itemsList
                     anchors.fill: listContainer
-                    spacing: 5;
-                    snapMode: ListView.SnapToItem
-
-                    clip: true
-                    model: PlasmaCore.SortFilterModel {
-                        id: postTitleFilter
-                        filterRole: "title"
-                        sortRole: "time"
-                        sortOrder: "DescendingOrder"
-                        filterRegExp: toolbarFrame.searchQuery
-                        sourceModel: PlasmaCore.SortFilterModel {
-                            id: feedCategoryFilter
-                            filterRole: "feed_url"
-                            sourceModel: PlasmaCore.DataModel {
-                                dataSource: feedSource
-                                keyRoleFilter: "items"
-                            }
-                        }
-                    }
-
-                    section.property: "feed_title"
-                    section.criteria: ViewSection.FullString
-                    section.delegate: ListItem {
-                        Text {
-                            color: theme.textColor
-                            text: section
-                            font.bold: true
-                        }
-                    }
-
-                    delegate: ListItemEntry {
-                        text: title
-                        date: Utils.date(time)
-
-                        Component.onCompleted: {
-                            if (BookKeeping.isArticleRead(link)) {
-                                opacity = 0.5
-                            } else {
-                                opacity = 1
-                            }
-                        }
-
-                        onClicked: {
-                            BookKeeping.setArticleRead(link, feed_url);
-                            opacity = 0.5;
-
-                            list.currentIndex = index
-                            bodyView.html = "<body style=\"background:#fff;\">"+description+"</body>"
-                            mainView.currentIndex = 2
-                        }
-                    }
                 }
             }
 

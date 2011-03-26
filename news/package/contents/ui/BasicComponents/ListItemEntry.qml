@@ -28,7 +28,7 @@ ListItem {
 
     Column {
         id : delegateLayout
-        width: list.width
+        width: parent.width
         spacing: 5
         anchors.left: listItem.padding.left
         anchors.right: listItem.padding.right

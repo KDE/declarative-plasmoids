@@ -41,13 +41,13 @@ ListView {
         }
     }
 
-    header: Column {
-        ListItemSource {
+    header: ListItemSource {
             id: feedListHeader
             text: i18n("Show All")
             unread: BookKeeping.totalUnreadCount
             onClicked: {
                 feedCategoryFilter.filterRegExp = ""
+                feedList.itemClicked()
             }
             Connections {
                 target: mainWindow
@@ -56,11 +56,7 @@ ListView {
                 }
             }
         }
-        Item {
-            height: 5
-            width: 5
-        }
-    }
+
     delegate: ListItemSource {
         id: listItemSource
         text: feed_title
