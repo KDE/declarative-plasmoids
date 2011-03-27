@@ -104,6 +104,8 @@ Item {
             prefix: ""
             enabledBorders: "BottomBorder"
             z: mainView.z+1
+            onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
+            onBackRequested: bodyView.html = bodyView.articleHtml
         }
 
         Row {
@@ -144,15 +146,10 @@ Item {
                 }
             }
 
-            PlasmaWidgets.WebView {
+            ArticleView {
                 id : bodyView
                 width: mainWindow.width/4*3
                 height: parent.height
-                dragToScroll : true
-                property bool customUrl: false
-                onUrlChanged: {
-                    customUrl = (url != "about:blank")
-                }
 
                 PlasmaCore.SvgItem {
                     width: 32

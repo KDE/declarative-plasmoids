@@ -31,6 +31,9 @@ PlasmaCore.FrameSvgItem {
     imagePath: "widgets/frame"
     prefix: "raised"
 
+    signal openOriginalRequested
+    signal backRequested
+
     property bool backEnabled: false
     property bool searchEnabled: true
     property string searchQuery
@@ -64,9 +67,25 @@ PlasmaCore.FrameSvgItem {
                 } else if (mainWindow.state == "items") {
                     mainWindow.state = "feeds"
                 }
-            } else {
-                bodyView.html = "<body style=\"background:#fff;\">"+feedSource.data['items'][list.currentIndex].description+"</body>";
             }
+            backRequested()
+        }
+
+        Behavior on y {
+            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+        }
+    }
+
+    PlasmaWidgets.PushButton {
+        id: openOriginalButton
+        text: i18n("Open original")
+        maximumSize: minimumSize
+
+        anchors.left: backButton.right
+        y: (mainWindow.state == "item")?toolbarFrame.margins.top:-height-5
+
+        onClicked: {
+            openOriginalRequested();
         }
 
         Behavior on y {

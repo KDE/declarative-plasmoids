@@ -84,6 +84,8 @@ Item {
     Column {
         Toolbar {
             id: toolbarFrame
+            onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
+            onBackRequested: bodyView.html = bodyView.articleHtml
         }
 
         PlasmaWidgets.TabBar {
@@ -116,13 +118,8 @@ Item {
                 }
             }
 
-            PlasmaWidgets.WebView {
+            ArticleView {
                 id : bodyView
-                dragToScroll : true
-                property bool customUrl: false
-                onUrlChanged: {
-                    customUrl = (url != "about:blank")
-                }
             }
         }
     }

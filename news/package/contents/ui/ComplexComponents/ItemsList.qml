@@ -85,7 +85,8 @@ ListView {
             articleRead = true
 
             list.currentIndex = index
-            bodyView.html = "<body style=\"background:#fff;\">"+description+"</body>"
+            bodyView.articleUrl = link
+            bodyView.articleHtml = "<body style=\"background:#fff;\">"+description+"</body>"
             list.itemClicked()
         }
     }
