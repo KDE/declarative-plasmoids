@@ -32,17 +32,6 @@ ListView {
 
     snapMode: ListView.SnapToItem
 
-    PlasmaCore.SvgItem {
-        width: 32
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        svg: PlasmaCore.Svg{
-            imagePath: plasmoid.file("images", "shadow.svgz")
-        }
-        elementId: "right"
-    }
-
     clip: true
     model: PlasmaCore.SortFilterModel {
         id: postTitleFilter

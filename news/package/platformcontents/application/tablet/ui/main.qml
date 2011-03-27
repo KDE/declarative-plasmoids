@@ -85,6 +85,10 @@ Item {
         id: theme
     }
 
+    PlasmaCore.Svg{
+        id: shadowSvg
+        imagePath: plasmoid.file("images", "shadow.svgz")
+    }
 
     Column {
         //FIXME: hardcoded
@@ -96,7 +100,6 @@ Item {
             enabledBorders: "BottomBorder"
             z: mainView.z+1
         }
-
 
         Row {
             id: mainView
@@ -125,6 +128,15 @@ Item {
                 Behavior on width {
                     NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
                 }
+
+                PlasmaCore.SvgItem {
+                    width: 32
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.bottom: parent.bottom
+                    svg: shadowSvg
+                    elementId: "right"
+                }
             }
 
             PlasmaWidgets.WebView {
@@ -135,6 +147,13 @@ Item {
                 property bool customUrl: false
                 onUrlChanged: {
                     customUrl = (url != "about:blank")
+                }
+
+                PlasmaCore.SvgItem {
+                    width: 32
+                    height: bodyView.height
+                    svg: shadowSvg
+                    elementId: "right"
                 }
             }
         }
