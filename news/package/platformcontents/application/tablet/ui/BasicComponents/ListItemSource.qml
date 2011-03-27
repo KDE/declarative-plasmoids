@@ -31,7 +31,7 @@ ListItem {
         id: delegateLayout
         anchors.left: listItem.padding.left
         anchors.right: listItem.padding.right
-        anchors.top: listItem.padding.top
+        anchors.verticalCenter: listItem.verticalCenter
 
         Image {
             source: icon

@@ -63,7 +63,11 @@ ListView {
     section.property: "feed_title"
     section.criteria: ViewSection.FullString
     section.delegate: ListItem {
+        id: sectionDelegate
         Text {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: sectionDelegate.padding.left
+            anchors.right: sectionDelegate.padding.right
             color: theme.textColor
             text: section
             font.bold: true

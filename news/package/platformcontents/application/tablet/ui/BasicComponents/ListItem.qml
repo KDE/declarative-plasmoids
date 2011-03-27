@@ -24,21 +24,26 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 PlasmaCore.FrameSvgItem {
     id : background
     imagePath: plasmoid.file("images", "listitem.svgz")
-    prefix: ""
+    state: "normal"
+    prefix: state
 
     property alias padding: paddingRectangle
     signal clicked;
 
     width: parent.width
-    height: childrenRect.height
+    height: paddingRectangle.height + background.margins.top + background.margins.bottom
 
     Item {
         id: paddingRectangle
         anchors.fill: background
+        anchors.left:parent.left
+        anchors.top: parent.top
+        anchors.right: parent.right
         anchors.leftMargin: background.margins.left
         anchors.topMargin: background.margins.top
         anchors.rightMargin: background.margins.right
-        anchors.bottomMargin: background.margins.bottom
+        height: childrenRect.height + background.margins.bottom
+        //anchors.bottomMargin: background.margins.bottom
     }
 
     MouseArea {
