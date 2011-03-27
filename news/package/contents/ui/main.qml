@@ -55,6 +55,8 @@ Item {
         BookKeeping.mainWindow = mainWindow
         BookKeeping.loadReadArticles();
         plasmoid.addEventListener('ConfigChanged', configChanged);
+        //FIXME: it's launching a separated shell script: a more automated process is needed
+        plasmoid.associatedApplication = "news-tablet"
         plasmoid.busy = true
     }
 

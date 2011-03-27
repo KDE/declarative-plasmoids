@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/
+
+plasma-windowed -graphicssystem raster org.kde.news-qml
