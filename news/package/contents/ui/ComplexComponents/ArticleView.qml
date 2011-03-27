@@ -32,4 +32,25 @@ PlasmaWidgets.WebView {
     onUrlChanged: {
         customUrl = (url != "about:blank")
     }
+
+    onLoadProgress: {
+        progressBar.visible = true
+        progressBar.value = percent
+    }
+    onLoadFinished: {
+        progressBar.visible = false
+    }
+
+    PlasmaWidgets.Meter {
+        id: progressBar
+        minimum: 0
+        maximum: 100
+        anchors.left: bodyView.left
+        anchors.right: bodyView.right
+        anchors.bottom: bodyView.bottom
+        height: 32
+
+        svg: "widgets/bar_meter_horizontal"
+        meterType: PlasmaWidgets.Meter.BarMeterHorizontal
+    }
 }
