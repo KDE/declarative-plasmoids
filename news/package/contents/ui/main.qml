@@ -91,7 +91,7 @@ Item {
         PlasmaWidgets.TabBar {
             id : mainView
             width : mainWindow.width
-            height: mainWindow.height
+            height: mainWindow.height-toolbarFrame.height
             tabBarShown: false
 
             onCurrentChanged: {
