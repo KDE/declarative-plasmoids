@@ -46,8 +46,9 @@ ListView {
             id: feedListHeader
             text: i18n("Show All")
             unread: BookKeeping.totalUnreadCount
+            state: (feedList.feedCategory == "")?"sunken":"normal"
             onClicked: {
-                feedCategory = ""
+                feedList.feedCategory = ""
                 feedList.itemClicked()
             }
             Connections {
@@ -63,6 +64,7 @@ ListView {
         text: feed_title
         icon: model.icon
         unread: BookKeeping.unreadForSource(feed_url)
+        state: (feedCategory == feed_url)?"sunken":"normal"
 
         onClicked: {
             feedCategory = feed_url

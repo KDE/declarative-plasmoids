@@ -64,6 +64,7 @@ ListView {
     section.criteria: ViewSection.FullString
     section.delegate: ListItem {
         id: sectionDelegate
+        state: "section"
         Text {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: sectionDelegate.padding.left
