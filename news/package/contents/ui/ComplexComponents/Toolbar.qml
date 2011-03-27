@@ -24,8 +24,9 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 PlasmaCore.FrameSvgItem {
     id: toolbarFrame
-    width: parent.width
+    width: mainWindow.width
     height: backButton.height + margins.top + margins.bottom
+    clip: true
 
     imagePath: "widgets/frame"
     prefix: "raised"
@@ -52,9 +53,9 @@ PlasmaCore.FrameSvgItem {
         id: backButton
         text: i18n("Back")
         maximumSize: minimumSize
-        visible: backEnabled
+
         x: toolbarFrame.margins.left
-        y: toolbarFrame.margins.top
+        y: backEnabled?toolbarFrame.margins.top:-height-5
 
         onClicked: {
             if (!bodyView.customUrl) {
@@ -67,6 +68,10 @@ PlasmaCore.FrameSvgItem {
                 bodyView.html = "<body style=\"background:#fff;\">"+feedSource.data['items'][list.currentIndex].description+"</body>";
             }
         }
+
+        Behavior on y {
+            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+        }
     }
 
     PlasmaWidgets.LineEdit {
@@ -74,11 +79,14 @@ PlasmaCore.FrameSvgItem {
         clearButtonShown: true
         anchors.right: parent.right
         anchors.top: parent.top
-        visible: searchEnabled
+        y: searchEnabled?toolbarFrame.margins.top:-height-5
         anchors.rightMargin: toolbarFrame.margins.right
         anchors.topMargin: toolbarFrame.margins.top
         onTextEdited: {
             searchTimer.running = true
+        }
+        Behavior on y {
+            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
         }
     }
 }
