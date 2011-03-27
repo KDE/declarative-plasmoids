@@ -66,6 +66,7 @@ Item {
         BookKeeping.loadReadArticles();
         plasmoid.addEventListener('ConfigChanged', configChanged);
         plasmoid.busy = true
+        configChanged()
     }
 
     function configChanged()

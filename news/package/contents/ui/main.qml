@@ -58,6 +58,7 @@ Item {
         //FIXME: it's launching a separated shell script: a more automated process is needed
         plasmoid.associatedApplication = "news-tablet"
         plasmoid.busy = true
+        configChanged()
     }
 
     function configChanged()
