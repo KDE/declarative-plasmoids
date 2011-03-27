@@ -31,9 +31,25 @@ Item {
     id: mainWindow;
     width: 250
     height: 400
+    state: "items"
 
     property string source
     signal unreadCountChanged();
+
+    states: [
+         State {
+             name: "feeds"
+             PropertyChanges { target: mainView; currentIndex: 0 }
+         },
+         State {
+             name: "items"
+             PropertyChanges { target: mainView; currentIndex: 1 }
+         },
+         State {
+             name: "item"
+             PropertyChanges { target: mainView; currentIndex: 2 }
+         }
+     ]
 
     Component.onCompleted: {
         BookKeeping.mainWindow = mainWindow
@@ -86,19 +102,17 @@ Item {
                 FeedList {
                     id: feedList
                     anchors.fill: feedListContainer
-                    onItemClicked: mainView.currentIndex = 1
+                    onItemClicked: mainWindow.state = "items"
                 }
             }
             QGraphicsWidget {
                 id: listContainer
-                Component.onCompleted: {
-                    mainView.currentIndex = 1
-                }
 
                 ItemsList {
                     id: itemsList
                     anchors.fill: listContainer
                     feedCategory: feedList.feedCategory
+                    onItemClicked: mainWindow.state = "item"
                 }
             }
 

@@ -28,6 +28,7 @@ ListView {
     id: list
 
     property string feedCategory
+    signal itemClicked
 
     snapMode: ListView.SnapToItem
 
@@ -93,7 +94,7 @@ ListView {
 
             list.currentIndex = index
             bodyView.html = "<body style=\"background:#fff;\">"+description+"</body>"
-            mainView.currentIndex = 1
+            list.itemClicked()
         }
     }
 }

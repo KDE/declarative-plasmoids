@@ -40,7 +40,7 @@ Item {
 
         MouseArea {
             id: itemMouse
-            anchors.fill: listItem
+            anchors.fill: background
             onClicked: listItem.clicked()
         }
     }

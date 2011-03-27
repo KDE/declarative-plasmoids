@@ -31,9 +31,31 @@ Item {
     id: mainWindow
     width: 250
     height: 400
+    state: "items"
 
     property string source
     signal unreadCountChanged();
+
+    states: [
+         State {
+             name: "feeds"
+             PropertyChanges { target: mainView; x: 0 }
+             PropertyChanges { target: itemsList; width: mainWindow.width/4*3}
+             PropertyChanges { target: toolbarFrame; backEnabled: false }
+         },
+         State {
+             name: "items"
+             PropertyChanges { target: mainView; x: 0 }
+             PropertyChanges { target: itemsList; width: mainWindow.width/4*3}
+             PropertyChanges { target: toolbarFrame; backEnabled: false }
+         },
+         State {
+             name: "item"
+             PropertyChanges { target: mainView; x: -mainWindow.width/4}
+             PropertyChanges { target: itemsList; width: mainWindow.width/4}
+             PropertyChanges { target: toolbarFrame; backEnabled: true }
+         }
+     ]
 
     Component.onCompleted: {
         BookKeeping.mainWindow = mainWindow
@@ -77,40 +99,33 @@ Item {
         }
 
 
-        PlasmaWidgets.TabBar {
-            id : mainView
+        Row {
+            id: mainView
             width: mainWindow.width
             height: mainWindow.height - toolbarFrame.height +9
-            tabBarShown: false
 
-            onCurrentChanged: {
-                toolbarFrame.backEnabled = currentIndex > 0
-                toolbarFrame.searchEnabled = currentIndex < 1
+
+            FeedList {
+                id: feedList
+                anchors.top: mainView.top
+                anchors.bottom: mainView.bottom
+                width: mainWindow.width/4
             }
 
-            QGraphicsWidget {
-                id: listContainer
-                Component.onCompleted: {
-                    mainView.currentIndex = 0
-                }
+            ItemsList {
+                id: itemsList
+                anchors.top: mainView.top
+                anchors.bottom: mainView.bottom
+                width: mainWindow.width/4*3
 
-                FeedList {
-                    id: feedList
-                    anchors.fill: listContainer
-                    anchors.rightMargin: listContainer.width/4*3
-                }
-
-                ItemsList {
-                    id: itemsList
-                    anchors.fill: listContainer
-                    anchors.leftMargin: listContainer.width/4
-                    feedCategory: feedList.feedCategory
-                }
-
+                feedCategory: feedList.feedCategory
+                onItemClicked: mainWindow.state = "item"
             }
 
             PlasmaWidgets.WebView {
                 id : bodyView
+                width: mainWindow.width/4*3
+                height: parent.height
                 dragToScroll : true
                 property bool customUrl: false
                 onUrlChanged: {

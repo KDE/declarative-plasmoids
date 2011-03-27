@@ -58,7 +58,11 @@ PlasmaCore.FrameSvgItem {
 
         onClicked: {
             if (!bodyView.customUrl) {
-                mainView.currentIndex = mainView.currentIndex -1
+                if (mainWindow.state == "item") {
+                    mainWindow.state = "items"
+                } else if (mainWindow.state == "items") {
+                    mainWindow.state = "feeds"
+                }
             } else {
                 bodyView.html = "<body style=\"background:#fff;\">"+feedSource.data['items'][list.currentIndex].description+"</body>";
             }
