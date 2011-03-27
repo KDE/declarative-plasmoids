@@ -24,7 +24,6 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/ui/ComplexComponents"
-import "plasmapackage:/code/utils.js" as Utils
 import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
 Item {
@@ -104,6 +103,9 @@ Item {
             width: mainWindow.width
             height: mainWindow.height - toolbarFrame.height +9
 
+            Behavior on x {
+                NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+            }
 
             FeedList {
                 id: feedList
@@ -120,6 +122,9 @@ Item {
 
                 feedCategory: feedList.feedCategory
                 onItemClicked: mainWindow.state = "item"
+                Behavior on width {
+                    NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+                }
             }
 
             PlasmaWidgets.WebView {
