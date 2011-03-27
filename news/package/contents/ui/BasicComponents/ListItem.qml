@@ -27,6 +27,7 @@ Item {
     signal clicked;
     width: parent.width
     height: childrenRect.height+4
+    property int implicitHeight
 
 
     PlasmaCore.FrameSvgItem {

@@ -26,6 +26,7 @@ ListItem {
     property string text
     property string icon
     property int unread
+    implicitHeight: delegateLayout.height
 
     Row{
         id: delegateLayout

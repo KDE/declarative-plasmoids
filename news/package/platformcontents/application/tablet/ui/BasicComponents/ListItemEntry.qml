@@ -25,6 +25,7 @@ ListItem {
     id: listItem
     property string text;
     property string date;
+    implicitHeight: delegateLayout.height
 
     Column {
         id : delegateLayout
@@ -37,6 +38,7 @@ ListItem {
         Text {
             width: delegateLayout.width
             color: theme.textColor
+            wrapMode: Text.WordWrap
             textFormat: Text.RichText
             text: listItem.text
         }

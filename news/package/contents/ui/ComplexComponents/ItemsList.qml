@@ -55,7 +55,9 @@ ListView {
     section.delegate: ListItem {
         id: sectionDelegate
         state: "section"
+        implicitHeight: sectionText.height
         Text {
+            id: sectionText
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: sectionDelegate.padding.left
             anchors.right: sectionDelegate.padding.right

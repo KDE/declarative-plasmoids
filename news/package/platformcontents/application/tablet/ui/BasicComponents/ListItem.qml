@@ -26,24 +26,21 @@ PlasmaCore.FrameSvgItem {
     imagePath: plasmoid.file("images", "listitem.svgz")
     state: "normal"
     prefix: state
+    property int implicitHeight
 
     property alias padding: paddingRectangle
     signal clicked;
 
     width: parent.width
-    height: paddingRectangle.height + background.margins.top + background.margins.bottom
+    height: implicitHeight + background.margins.top + background.margins.bottom
 
     Item {
         id: paddingRectangle
         anchors.fill: background
-        anchors.left:parent.left
-        anchors.top: parent.top
-        anchors.right: parent.right
         anchors.leftMargin: background.margins.left
         anchors.topMargin: background.margins.top
         anchors.rightMargin: background.margins.right
-        height: childrenRect.height + background.margins.bottom
-        //anchors.bottomMargin: background.margins.bottom
+        anchors.bottomMargin: background.margins.bottom
     }
 
     MouseArea {
