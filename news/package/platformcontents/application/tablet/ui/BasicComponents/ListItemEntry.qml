@@ -26,6 +26,7 @@ ListItem {
     property string text;
     property string date;
     implicitHeight: delegateLayout.height
+    property bool articleRead: false
 
     Column {
         id : delegateLayout
@@ -34,6 +35,7 @@ ListItem {
         anchors.left: listItem.padding.left
         anchors.right: listItem.padding.right
         anchors.top: listItem.padding.top
+        opacity: articleRead?0.5:1
 
         Text {
             width: delegateLayout.width

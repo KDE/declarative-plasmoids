@@ -70,18 +70,19 @@ ListView {
     delegate: ListItemEntry {
         text: title
         date: Utils.date(time)
+        state: (list.currentIndex == index)?"sunken":"normal"
 
         Component.onCompleted: {
             if (BookKeeping.isArticleRead(link)) {
-                opacity = 0.5
+                articleRead = true
             } else {
-                opacity = 1
+                articleRead = false
             }
         }
 
         onClicked: {
             BookKeeping.setArticleRead(link, feed_url);
-            opacity = 0.5;
+            articleRead = true
 
             list.currentIndex = index
             bodyView.html = "<body style=\"background:#fff;\">"+description+"</body>"

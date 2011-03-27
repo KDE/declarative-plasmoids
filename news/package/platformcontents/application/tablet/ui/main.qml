@@ -31,6 +31,11 @@ Item {
     width: 250
     height: 400
     state: "items"
+    onStateChanged: {
+        if (state == "items") {
+            itemsList.currentIndex = -1
+        }
+    }
 
     property string source
     signal unreadCountChanged();
