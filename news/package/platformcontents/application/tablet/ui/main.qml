@@ -43,21 +43,24 @@ Item {
     states: [
          State {
              name: "feeds"
-             PropertyChanges { target: mainView; x: 0 }
+             PropertyChanges { target: mainFlickable; contentX: 0 }
              PropertyChanges { target: itemsList; width: mainWindow.width/4*3}
              PropertyChanges { target: toolbarFrame; backEnabled: false }
+             PropertyChanges { target: bodyView; visible: false}
          },
          State {
              name: "items"
-             PropertyChanges { target: mainView; x: 0 }
+             PropertyChanges { target: mainFlickable; contentX: 0 }
              PropertyChanges { target: itemsList; width: mainWindow.width/4*3}
              PropertyChanges { target: toolbarFrame; backEnabled: false }
+             PropertyChanges { target: bodyView; visible: false}
          },
          State {
              name: "item"
-             PropertyChanges { target: mainView; x: -mainWindow.width/4}
+             PropertyChanges { target: mainFlickable; contentX: mainWindow.width/4}
              PropertyChanges { target: itemsList; width: mainWindow.width/4}
              PropertyChanges { target: toolbarFrame; backEnabled: true }
+             PropertyChanges { target: bodyView; visible: true}
          }
      ]
 
@@ -109,54 +112,78 @@ Item {
             onBackRequested: bodyView.html = bodyView.articleHtml
         }
 
-        Row {
-            id: mainView
-            width: mainWindow.width
+        Flickable {
+            id: mainFlickable
+            interactive: mainWindow.state == "item"
+            contentWidth: mainView.width
+            contentHeight: mainView.height
+            width: mainWindow.width/4
             height: mainWindow.height - toolbarFrame.height +9
 
-            Behavior on x {
+            Behavior on contentX {
                 NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
             }
 
-            FeedList {
-                id: feedList
-                anchors.top: mainView.top
-                anchors.bottom: mainView.bottom
-                width: mainWindow.width/4
-            }
-
-            ItemsList {
-                id: itemsList
-                anchors.top: mainView.top
-                anchors.bottom: mainView.bottom
-                width: mainWindow.width/4*3
-
-                feedCategory: feedList.feedCategory
-                onItemClicked: mainWindow.state = "item"
-                Behavior on width {
-                    NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
-                }
-
-                PlasmaCore.SvgItem {
-                    width: 32
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.bottom: parent.bottom
-                    svg: shadowSvg
-                    elementId: "right"
+            onMovementEnded: {
+                if (contentX < mainWindow.width/8) {
+                    mainWindow.state = "items"
+                } else {
+                    contentX = mainWindow.width/4
                 }
             }
 
-            ArticleView {
-                id : bodyView
-                width: mainWindow.width/4*3
-                height: parent.height
+            Row {
+                id: mainView
+                //width: mainWindow.width
+                height: mainFlickable.height
 
-                PlasmaCore.SvgItem {
-                    width: 32
-                    height: bodyView.height
-                    svg: shadowSvg
-                    elementId: "right"
+                FeedList {
+                    id: feedList
+                    anchors.top: mainView.top
+                    anchors.bottom: mainView.bottom
+                    width: mainWindow.width/4
+
+                    PlasmaCore.SvgItem {
+                        width: 32
+                        height: feedList.height
+                        svg: shadowSvg
+                        elementId: "right"
+                    }
+                }
+
+                ItemsList {
+                    id: itemsList
+                    anchors.top: mainView.top
+                    anchors.bottom: mainView.bottom
+                    width: mainWindow.width/4*3
+
+                    feedCategory: feedList.feedCategory
+                    onItemClicked: mainWindow.state = "item"
+                    Behavior on width {
+                        NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+                    }
+
+                    PlasmaCore.SvgItem {
+                        width: 32
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.bottom: parent.bottom
+                        svg: shadowSvg
+                        elementId: "right"
+                    }
+                }
+
+                ArticleView {
+                    id : bodyView
+                    width: mainWindow.width/4*3
+                    height: parent.height
+
+                    PlasmaCore.SvgItem {
+                        width: 32
+                        height: bodyView.height
+                        svg: shadowSvg
+                        elementId: "right"
+                    }
                 }
             }
         }
