@@ -42,7 +42,7 @@ ListView {
         sourceModel: PlasmaCore.SortFilterModel {
             id: feedCategoryFilter
             filterRole: "feed_url"
-            filterRegExp: feedCategory
+            filterRegExp: feedCategory.replace(/\?/, "\\?")
             sourceModel: PlasmaCore.DataModel {
                 dataSource: feedSource
                 keyRoleFilter: "items"
