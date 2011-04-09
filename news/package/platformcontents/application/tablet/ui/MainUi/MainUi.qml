@@ -34,6 +34,12 @@ Column {
             itemsList.currentIndex = -1
         }
     }
+
+    PlasmaCore.Svg {
+        id: shadowSvg
+        imagePath: plasmoid.file("images", "shadow.svgz")
+    }
+
     states: [
          State {
              name: "feeds"
