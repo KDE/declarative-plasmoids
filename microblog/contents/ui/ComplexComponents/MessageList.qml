@@ -28,7 +28,11 @@ ListView {
     id: entryList
 
     clip: true
-    property string source: "TimelineWithFriends:"+userName+"@"+serviceUrl
+
+    property string timeline: "TimelineWithFriends"
+    property string login: userName
+    property string url: serviceUrl
+    property string source: timeline+":"+login+"@"+url
     onSourceChanged: {
         timer.running = true
     }

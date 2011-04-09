@@ -22,6 +22,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/code/logic.js" as Logic
 import "plasmapackage:/ui/MainWidget"
 
 Item {
@@ -40,6 +41,7 @@ Item {
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
         plasmoid.configurationRequired = true
+        Logic.messagesDataSource = microblogSource
         configChanged()
     }
 
@@ -56,7 +58,7 @@ Item {
         microblogSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
         var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
         var operation = service.operationDescription("auth");
-        operation.password = plasmoid.readConfig("password")
+        operation.password = password
         service.startOperationCall(operation);
         plasmoid.configurationRequired = false
         plasmoid.busy = true

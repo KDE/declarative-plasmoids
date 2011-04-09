@@ -28,10 +28,6 @@ Item {
     width: parent.width
     height: postWidget.height + 5
 
-    Component.onCompleted: {
-        Logic.messagesDataSource = microblogSource
-    }
-
     function refresh()
     {
         postTextEdit.text = ""
