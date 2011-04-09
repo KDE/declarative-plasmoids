@@ -24,9 +24,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
 
-Item {
-    width: parent.width
-    height: postWidget.height + 5
+ListItem {
 
     function refresh()
     {

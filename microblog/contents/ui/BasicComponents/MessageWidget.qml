@@ -23,9 +23,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 
-PlasmaComponents.Frame {
-    width: entryList.width
-    height: childrenRect.height
+ListItem {
 
     QtExtraComponents.QImageItem {
         id: userIcon
