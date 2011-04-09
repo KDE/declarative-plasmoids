@@ -24,7 +24,7 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 PlasmaCore.FrameSvgItem {
     id: toolbarFrame
-    width: mainWindow.width
+    width: mainUi.width
     height: backButton.height + margins.top + margins.bottom
     clip: true
 
@@ -62,10 +62,10 @@ PlasmaCore.FrameSvgItem {
 
         onClicked: {
             if (!bodyView.customUrl) {
-                if (mainWindow.state == "item") {
-                    mainWindow.state = "items"
-                } else if (mainWindow.state == "items") {
-                    mainWindow.state = "feeds"
+                if (mainUi.state == "item") {
+                    mainUi.state = "items"
+                } else if (mainUi.state == "items") {
+                    mainUi.state = "feeds"
                 }
             }
             backRequested()
@@ -82,7 +82,7 @@ PlasmaCore.FrameSvgItem {
         maximumSize: minimumSize
 
         anchors.left: backButton.right
-        y: (mainWindow.state == "item")?toolbarFrame.margins.top:-height-5
+        y: (mainUi.state == "item")?toolbarFrame.margins.top:-height-5
 
         onClicked: {
             openOriginalRequested();
