@@ -46,9 +46,12 @@ Item {
         userName = plasmoid.readConfig("userName")
         password = plasmoid.readConfig("password")
 
-        messagesDataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl]
-        imagesDataSource.connectedSources = ["UserImages:"+serviceUrl]
-        var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+        if (!serviceUrl || !userName || !password) {
+            return
+        }
+
+        dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
+        var service = dataSource.serviceForSource(dataSource.connectedSources[0])
         var operation = service.operationDescription("auth");
         operation.password = plasmoid.readConfig("password")
         service.startOperationCall(operation);
@@ -57,7 +60,7 @@ Item {
     }
 
     PlasmaCore.DataSource {
-        id: messagesDataSource
+        id: dataSource
         engine: "microblog"
         interval: 50000
 
@@ -66,12 +69,9 @@ Item {
         }
     }
 
-    //Split images and messages: even if a datasource can take multiple sources, their data must have the same keys
-    PlasmaCore.DataSource {
-        id: imagesDataSource
-        engine: "microblog"
-        interval: 5000
-    }
+    /*MainWidget {
+        anchors.fill: parent
+    }*/
 
     ListView {
         id: entryList
@@ -79,7 +79,7 @@ Item {
         clip: true
         spacing: 5
         model: PlasmaCore.DataModel {
-            dataSource: messagesDataSource
+            dataSource: dataSource
             keyRoleFilter: "[\\d]*"
         }
         header: PostingWidget {}

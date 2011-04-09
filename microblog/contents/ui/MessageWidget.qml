@@ -33,7 +33,7 @@ PlasmaComponents.Frame {
         anchors.top: padding.top
         width: 32
         height: 32
-        image: imagesDataSource.data["UserImages:"+serviceUrl][model['User']]
+        image: dataSource.data["UserImages:"+serviceUrl][model['User']]
     }
     Text {
         id: infoLabel
