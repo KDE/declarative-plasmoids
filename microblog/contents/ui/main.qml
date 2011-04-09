@@ -22,6 +22,8 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/ui/MainWidget"
+
 Item {
     id: main
     width: 200
@@ -38,6 +40,7 @@ Item {
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
         plasmoid.configurationRequired = true
+        configChanged()
     }
 
     function configChanged()
@@ -50,8 +53,8 @@ Item {
             return
         }
 
-        dataSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
-        var service = dataSource.serviceForSource(dataSource.connectedSources[0])
+        microblogSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
+        var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
         var operation = service.operationDescription("auth");
         operation.password = plasmoid.readConfig("password")
         service.startOperationCall(operation);
@@ -60,7 +63,7 @@ Item {
     }
 
     PlasmaCore.DataSource {
-        id: dataSource
+        id: microblogSource
         engine: "microblog"
         interval: 50000
 
@@ -69,23 +72,7 @@ Item {
         }
     }
 
-    /*MainWidget {
-        anchors.fill: parent
-    }*/
-
-    ListView {
-        id: entryList
-        anchors.fill: parent
-        clip: true
-        spacing: 5
-        model: PlasmaCore.DataModel {
-            dataSource: dataSource
-            keyRoleFilter: "[\\d]*"
-        }
-        header: PostingWidget {}
-
-        delegate: MessageWidget {
-            width: entryList.width
-        }
+    MainWidget {
+        anchors.fill: main
     }
 }

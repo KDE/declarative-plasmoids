@@ -25,6 +25,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 PlasmaComponents.Frame {
     width: entryList.width
+    height: childrenRect.height
 
     QtExtraComponents.QImageItem {
         id: userIcon
@@ -33,7 +34,7 @@ PlasmaComponents.Frame {
         anchors.top: padding.top
         width: 32
         height: 32
-        image: dataSource.data["UserImages:"+serviceUrl][model['User']]
+        image: microblogSource.data["UserImages:"+serviceUrl][model['User']]
     }
     Text {
         id: infoLabel

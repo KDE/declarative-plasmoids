@@ -25,11 +25,11 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 import "plasmapackage:/code/logic.js" as Logic
 
 Item {
-    width: entryList.width
+    width: parent.width
     height: postWidget.height + 5
 
     Component.onCompleted: {
-        Logic.messagesDataSource = messagesDataSource
+        Logic.messagesDataSource = microblogSource
     }
 
     function refresh()
@@ -48,11 +48,11 @@ Item {
         QtExtraComponents.QImageItem {
             id: profileIcon
             smooth: true
-            anchors.left: padding.left
-            anchors.top: padding.top
+            anchors.left: postWidget.padding.left
+            anchors.top: postWidget.padding.top
             width: 48
             height: 48
-            image: imagesDataSource.data["UserImages:"+serviceUrl][userName]
+            image: microblogSource.data["UserImages:"+serviceUrl][userName]
         }
         Text {
             anchors.top: profileIcon.bottom
