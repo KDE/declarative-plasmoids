@@ -29,6 +29,8 @@ ListView {
 
     clip: true
 
+    signal itemClicked(variant item)
+
     property string timelineType: "TimelineWithFriends"
     property string login: userName
     property string url: serviceUrl
@@ -53,6 +55,8 @@ ListView {
     }
 
     delegate: MessageWidget {
+        id: messageWidget
         width: entryList.width
+        onClicked: itemClicked(messageWidget)
     }
 }

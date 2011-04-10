@@ -53,6 +53,14 @@ Item {
                 width: messageContainer.columnWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                onItemClicked: {
+                    messageDetails.messageId = item.messageId
+                    messageDetails.user = item.user
+                    messageDetails.source = item.source
+                    messageDetails.isFavorite = item.isFavorite
+                    messageDetails.status = item.status
+                    messageDetails.state = "visible"
+                }
             }
             MessageList {
                 id: repliesList
@@ -60,6 +68,14 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 timelineType: "Replies"
+                onItemClicked: {
+                    messageDetails.messageId = item.messageId
+                    messageDetails.user = item.user
+                    messageDetails.source = item.source
+                    messageDetails.isFavorite = item.isFavorite
+                    messageDetails.status = item.status
+                    messageDetails.state = "visible"
+                }
             }
             MessageList {
                 id: messageList
@@ -67,7 +83,21 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 timelineType: "Messages"
+                onItemClicked: {
+                    messageDetails.messageId = item.messageId
+                    messageDetails.user = item.user
+                    messageDetails.source = item.source
+                    messageDetails.isFavorite = item.isFavorite
+                    messageDetails.status = item.status
+                    messageDetails.state = "visible"
+                }
             }
         }
+    }
+
+    MessageWidgetDetails {
+        id: messageDetails
+        anchors.fill: parent
+        state: "hidden"
     }
 }

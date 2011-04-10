@@ -26,6 +26,12 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 ListItem {
     implicitHeight: infoLabel.height+bodyText.height
 
+    property string messageId: model["Id"]
+    property string user: model["User"]
+    property string source: model["Source"]
+    property bool isFavorite: model["IsFavorite"]
+    property string status: model["Status"]
+
     QtExtraComponents.QImageItem {
         id: userIcon
         smooth: true
@@ -33,7 +39,7 @@ ListItem {
         anchors.top: padding.top
         width: 32
         height: 32
-        image: microblogSource.data["UserImages:"+serviceUrl][model['User']]
+        image: microblogSource.data["UserImages:"+serviceUrl][user]
     }
     Text {
         id: infoLabel
@@ -41,7 +47,7 @@ ListItem {
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: padding.top
-        text: i18n("%1 from %2", model["User"], model["Source"])
+        text: i18n("%1 from %2", user, source)
     }
     Row {
         id: toolBoxRow
@@ -52,9 +58,9 @@ ListItem {
             text: "♥"
             width: 24
             height: 24
-            down: model["IsFavorite"]
+            down: isFavourite
             onClicked: {
-                main.favoriteAsked(model["Id"], model["IsFavorite"] != "true");
+                main.favoriteAsked(messageId, isFavourite != "true");
             }
         }
         PlasmaComponents.ToolButton {
@@ -63,7 +69,7 @@ ListItem {
             width: 24
             height: 24
             onClicked: {
-                main.replyAsked(model["Id"], "@" + model["User"] + ": ");
+                main.replyAsked(messageId, "@" + user + ": ");
             }
         }
         PlasmaComponents.ToolButton {
@@ -72,7 +78,7 @@ ListItem {
             width: 24
             height: 24
             onClicked: {
-                main.retweetAsked(model["Id"]);
+                main.retweetAsked(messageId);
             }
         }
     }
@@ -83,7 +89,7 @@ ListItem {
         anchors.right: padding.right
         anchors.top: toolBoxRow.bottom
         anchors.bottomMargin: 5
-        text: model['Status']
+        text: status
         wrapMode: Text.WordWrap
     }
 }
