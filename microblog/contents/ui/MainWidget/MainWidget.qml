@@ -23,6 +23,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 
 import "plasmapackage:/ui/ComplexComponents"
+import "plasmapackage:/ui/BasicComponents"
 
 Column {
     id: mainWidget
@@ -31,11 +32,32 @@ Column {
         id: tabBar
         anchors.left: parent.left
         anchors.right: parent.right
+        Component.onCompleted: {
+            tabBar.addTab(i18n("Timeline"))
+            tabBar.addTab(i18n("Replies"))
+            tabBar.addTab(i18n("Messages"))
+        }
+        onCurrentChanged: {
+            switch (index) {
+            case 0:
+                messageList.timelineType = "TimelineWithFriends"
+                break;
+            case 1:
+                messageList.timelineType = "Replies"
+                break;
+            case 2:
+            default:
+                messageList.timelineType = "Messages"
+                break;
+            }
+        }
     }
 
     MessageList {
+        id: messageList
         anchors.left: mainWidget.left
         anchors.right: mainWidget.right
         height: mainWidget.height - tabBar.height
+        header: PostingWidget {}
     }
 }

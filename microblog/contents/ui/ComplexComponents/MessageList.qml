@@ -29,10 +29,10 @@ ListView {
 
     clip: true
 
-    property string timeline: "TimelineWithFriends"
+    property string timelineType: "TimelineWithFriends"
     property string login: userName
     property string url: serviceUrl
-    property string source: timeline+":"+login+"@"+url
+    property string source: timelineType+":"+login+"@"+url
     onSourceChanged: {
         timer.running = true
     }
@@ -42,17 +42,15 @@ ListView {
         running: false
         interval: 500
         onTriggered: {
-            dataSource.connectSource(source)
+            microblogSource.connectSource(source)
         }
     }
 
-    spacing: 5
     model: PlasmaCore.DataModel {
         dataSource: microblogSource
         sourceFilter: entryList.source
         keyRoleFilter: "[\\d]*"
     }
-    header: PostingWidget {}
 
     delegate: MessageWidget {
         width: entryList.width
