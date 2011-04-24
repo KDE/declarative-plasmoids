@@ -86,7 +86,7 @@ ListView {
 
             list.currentIndex = index;
             bodyView.articleUrl = link;
-            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body>YAAAAHOOOOO!" + description + "</body></html>";
+            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body>" + description + "</body></html>";
             bodyView.articleHtml = parsedHtml;
             list.itemClicked();
         }
