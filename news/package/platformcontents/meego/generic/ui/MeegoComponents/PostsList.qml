@@ -63,7 +63,7 @@ ListView {
             BookKeeping.setArticleRead(link, feed_url);
             opacity = 0.5;
 
-            currentBody = "<html><head><style type=\"text/css\"> StART " + theme.styleSheet + "</style></head><body>" + model.description + " END </body></html>";
+            currentBody = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body>" + model.description + "</body></html>";
             currentTitle = model.title
             currentUrl = model.link
             mainWindow.nextPage(browserPage);
