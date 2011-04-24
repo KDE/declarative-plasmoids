@@ -82,12 +82,13 @@ ListView {
 
         onClicked: {
             BookKeeping.setArticleRead(link, feed_url);
-            articleRead = true
+            articleRead = true;
 
-            list.currentIndex = index
-            bodyView.articleUrl = link
-            bodyView.articleHtml = "<html><head><style type=\"text/css\">" + theme.stylesheet + "</style></head><body>" + description + "</body></html>"
-            list.itemClicked()
+            list.currentIndex = index;
+            bodyView.articleUrl = link;
+            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body>YAAAAHOOOOO!" + description + "</body></html>";
+            bodyView.articleHtml = parsedHtml;
+            list.itemClicked();
         }
     }
 }

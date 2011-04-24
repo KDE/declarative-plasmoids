@@ -54,6 +54,7 @@ ListView {
             }
         }
     }
+
     delegate: BasicListItem {
         title: model.title
         subtitle: Utils.date(model.time);
@@ -62,7 +63,7 @@ ListView {
             BookKeeping.setArticleRead(link, feed_url);
             opacity = 0.5;
 
-            currentBody = "<html><head><style type=\"text/css\">" + theme.stylesheet + "</style></head><body>" + model.description + "</body></html>";
+            currentBody = "<html><head><style type=\"text/css\"> StART " + theme.styleSheet + "</style></head><body>" + model.description + " END </body></html>";
             currentTitle = model.title
             currentUrl = model.link
             mainWindow.nextPage(browserPage);
