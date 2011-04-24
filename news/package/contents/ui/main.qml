@@ -46,9 +46,10 @@ Item {
     function configChanged()
     {
         source = plasmoid.readConfig("feeds")
+
         var sourceString = new String(source)
         print("Configuration changed: " + source);
-        feedSource.connectedSources = source
+        feedSource.connectedSources = source.split(",")
     }
 
 
