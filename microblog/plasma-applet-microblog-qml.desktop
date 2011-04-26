@@ -1,14 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Microblogging (QML)
+Name[et]=Mikroblogimine (QML)
 Name[pt]=Microblog (QML)
 Name[uk]=Ведення мікроблогу (QML)
 Name[x-test]=xxMicroblogging (QML)xx
 Comment=Update and view your microblog status.
+Comment[et]=Oma mikroblogioleku uuendamine ja vaatamine.
 Comment[pt]=Actualizar e ver o estado do seu micro-blog.
 Comment[uk]=Оновіть і перегляньте ваш стан у мініжурналі.
 Comment[x-test]=xxUpdate and view your microblog status.xx
 Keywords=identi.ca,twitter
+Keywords[et]=identi.ca,twitter
 Keywords[pt]=identi.ca,twitter
 Keywords[uk]=identi.ca,twitter
 Keywords[x-test]=xxidenti.ca,twitterxx
