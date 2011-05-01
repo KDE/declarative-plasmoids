@@ -68,6 +68,7 @@ ListView {
     }
 
     delegate: ListItemEntry {
+        id: feedItem
         text: title
         date: Utils.date(time)
         state: (list.currentIndex == index)?"sunken":"normal"
@@ -86,7 +87,7 @@ ListView {
 
             list.currentIndex = index;
             bodyView.articleUrl = link;
-            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body>" + description + "</body></html>";
+            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body><h2>" + title + "</h2><em>by " + author + "</em><br />"  + description + "</body></html>";
             bodyView.articleHtml = parsedHtml;
             list.itemClicked();
         }
