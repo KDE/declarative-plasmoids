@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=News Reader
+GenericName=Feed Reader
+Comment=A news feed reader for touch tablets
+Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.news-qml
+Terminal=false
+Icon=news-reader
+Type=Application
+Categories=Qt;KDE;News;
