@@ -2,12 +2,14 @@
 Name=News Reader
 Name[nl]=Nieuwslezer
 Name[pt]=Leitor de Notícias
+Name[pt_BR]=Leitor de notícias
 Name[sv]=Nyhetsläsare
 Name[uk]=Читання новин
 Name[x-test]=xxNews Readerxx
 GenericName=Feed Reader
 GenericName[nn]=Kjeldelesar
 GenericName[pt]=Leitor de Fontes
+GenericName[pt_BR]=Leitor de fontes de notícias
 GenericName[sv]=Kanalläsare
 GenericName[uk]=Програма для читання подач
 GenericName[x-test]=xxFeed Readerxx
