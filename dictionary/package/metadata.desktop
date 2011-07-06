@@ -1,15 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Dictionary (QML)
-Name[es]=Diccionario (QML)
-Name[et]=Sõnaraamat (QML)
-Name[km]=វចនានុក្រម (QML)
-Name[nb]=Ordbok (QML)
-Name[pt]=Dicionário (QML)
-Name[pt_BR]=Dicionário (QML)
-Name[sv]=Ordlista (QML)
-Name[uk]=Словник (QML)
-Name[x-test]=xxDictionary (QML)xx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=akregator

@@ -1,24 +1,7 @@
 [Desktop Entry]
 Name=News Reader
-Name[nl]=Nieuwslezer
-Name[pt]=Leitor de Notícias
-Name[pt_BR]=Leitor de notícias
-Name[sv]=Nyhetsläsare
-Name[uk]=Читання новин
-Name[x-test]=xxNews Readerxx
 GenericName=Feed Reader
-GenericName[nn]=Kjeldelesar
-GenericName[pt]=Leitor de Fontes
-GenericName[pt_BR]=Leitor de fontes de notícias
-GenericName[sv]=Kanalläsare
-GenericName[uk]=Програма для читання подач
-GenericName[x-test]=xxFeed Readerxx
 Comment=A news feed reader for touch tablets
-Comment[pt]=Um leitor de fontes noticiosas para tabletes por toque
-Comment[pt_BR]=Um leitor de fontes de notícias para tabletes de toque
-Comment[sv]=En nyhetskanalläsare för pekskärmar
-Comment[uk]=Програма для читання подач на сенсорних планшетах
-Comment[x-test]=xxA news feed reader for touch tabletsxx
 Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.news-qml
 Terminal=false
 Icon=news-reader
