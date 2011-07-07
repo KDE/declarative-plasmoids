@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=News reader (QML)
+Name[nl]=Nieuwslezer (QML)
+Name[pt]=Leitor de notícias (QML)
+Name[x-test]=xxNews reader (QML)xx
 Comment=A proof of concept RSS reader written in qml
+Comment[nl]=Een 'proof of concept' RSS-lezer geschreven in qml
+Comment[pt]=Um leitor de RSS, feito em QML como prova de conceito
+Comment[x-test]=xxA proof of concept RSS reader written in qmlxx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=akregator

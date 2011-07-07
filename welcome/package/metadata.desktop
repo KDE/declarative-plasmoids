@@ -1,6 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Welcome
+Name[nl]=Welkom
+Name[pt]=Bem-Vindo
+Name[x-test]=xxWelcomexx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=ktip
