@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=Welcome
 Name[nl]=Welkom
 Name[pt]=Bem-Vindo
+Name[pt_BR]=Bem-vindo
 Name[x-test]=xxWelcomexx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet

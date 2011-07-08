@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=RSSNow (QML)
 Name[nl]=RSSNow (QML)
 Name[pt]=RSS Agora (QML)
+Name[pt_BR]=RSSNow (QML)
 Name[x-test]=xxRSSNow (QML)xx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet

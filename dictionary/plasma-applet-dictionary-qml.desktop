@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=Dictionary (QML)
 Name[nl]=Woordenboek (QML)
 Name[pt]=Dicionário (QML)
+Name[pt_BR]=Dicionário (QML)
 Name[x-test]=xxDictionary (QML)xx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet

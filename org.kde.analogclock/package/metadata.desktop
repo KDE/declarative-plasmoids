@@ -2,6 +2,7 @@
 Comment=A clock with hands
 Comment[nl]=Een klok met wijzers
 Comment[pt]=Um relógio com ponteiros
+Comment[pt_BR]=Um relógio com ponteiros
 Comment[x-test]=xxA clock with handsxx
 Encoding=UTF-8
 Icon=clock
@@ -9,6 +10,7 @@ Keywords=
 Name=Analog Clock
 Name[nl]=Analoge klok
 Name[pt]=Relógio Analógico
+Name[pt_BR]=Relógio analógico
 Name[x-test]=xxAnalog Clockxx
 Type=Service
 X-KDE-ParentApp=
