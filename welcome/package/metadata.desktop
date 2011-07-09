@@ -4,6 +4,7 @@ Name=Welcome
 Name[nl]=Welkom
 Name[pt]=Bem-Vindo
 Name[pt_BR]=Bem-vindo
+Name[uk]=Вітання
 Name[x-test]=xxWelcomexx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet

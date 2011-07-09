@@ -3,11 +3,13 @@ Name=Knowledge base (QML)
 Name[nl]=Kennisdatabase (QML)
 Name[pt]=Base de conhecimento (QML)
 Name[pt_BR]=Base de conhecimento (QML)
+Name[uk]=База знань (QML)
 Name[x-test]=xxKnowledge base (QML)xx
 Comment=Open Collaboration Service Knowledge base client
 Comment[nl]=Client voor Open Collaboration Service Knowledge base
 Comment[pt]=Cliente da base de conhecimento do Open Collaboration Service
 Comment[pt_BR]=Cliente da base de conhecimento do Open Collaboration Service
+Comment[uk]=Клієнтська частина бази знань служби Open Collaboration
 Comment[x-test]=xxOpen Collaboration Service Knowledge base clientxx
 Encoding=UTF-8
 
