@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=News Reader
+Name[fr]=Lecteur de forums
 Name[nl]=Nieuwslezer
 Name[pt]=Leitor de Notícias
 Name[pt_BR]=Leitor de notícias
@@ -7,6 +8,7 @@ Name[sv]=Nyhetsläsare
 Name[uk]=Читання новин
 Name[x-test]=xxNews Readerxx
 GenericName=Feed Reader
+GenericName[fr]=Lecteur de flux
 GenericName[nl]=Feedlezer
 GenericName[pt]=Leitor de Fontes
 GenericName[pt_BR]=Leitor de fontes de notícias
@@ -14,6 +16,7 @@ GenericName[sv]=Kanalläsare
 GenericName[uk]=Програма для читання подач
 GenericName[x-test]=xxFeed Readerxx
 Comment=A news feed reader for touch tablets
+Comment[fr]=Un agrégateur de flux pour les tablettes graphiques
 Comment[nl]=Een newsfeedlezer voor aanraaktablets.
 Comment[pt]=Um leitor de fontes noticiosas para tabletes por toque
 Comment[pt_BR]=Um leitor de fontes de notícias por toque para tablets

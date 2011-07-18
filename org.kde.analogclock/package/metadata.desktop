@@ -1,5 +1,6 @@
 [Desktop Entry]
 Comment=A clock with hands
+Comment[fr]=Une horloge à aiguilles
 Comment[nl]=Een klok met wijzers
 Comment[pt]=Um relógio com ponteiros
 Comment[pt_BR]=Um relógio com ponteiros
@@ -10,6 +11,7 @@ Encoding=UTF-8
 Icon=clock
 Keywords=
 Name=Analog Clock
+Name[fr]=Horloge analogique
 Name[nl]=Analoge klok
 Name[pt]=Relógio Analógico
 Name[pt_BR]=Relógio analógico
