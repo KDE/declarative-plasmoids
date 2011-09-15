@@ -6,3 +6,4 @@ install(FILES metadata.desktop DESTINATION ${DATA_INSTALL_DIR}/plasma/plasmoids/
 
 install(FILES plasma-applet-microblog-qml.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES active-microblog.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
