@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Microblog
+Comment=A microblog application for touch tablets
+
+Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.microblog-qml
+Terminal=false
+Icon=view-pim-journal
+Type=Application
+Categories=Qt;KDE;News;
