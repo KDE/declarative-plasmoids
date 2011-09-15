@@ -19,7 +19,7 @@
 
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Rectangle {
@@ -107,7 +107,7 @@ Rectangle {
                 id: toolBoxRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: padding.bottom
-                PlasmaComponents.ToolButton {
+                PlasmaWidgets.ToolButton {
                     id: favoriteButton
                     text: "♥"
                     //font.pointSize: 30
@@ -118,7 +118,7 @@ Rectangle {
                         main.favoriteAsked(id, isFavorite != "true");
                     }
                 }
-                PlasmaComponents.ToolButton {
+                PlasmaWidgets.ToolButton {
                     id: replyButton
                     text: "@"
                     //font.pointSize: 30
@@ -128,7 +128,7 @@ Rectangle {
                         main.replyAsked(id, "@" + user + ": ");
                     }
                 }
-                PlasmaComponents.ToolButton {
+                PlasmaWidgets.ToolButton {
                     id: repeatButton
                     text: "♻"
                     //font.pointSize: 30

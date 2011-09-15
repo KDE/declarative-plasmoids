@@ -19,7 +19,6 @@
 
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
@@ -34,16 +33,22 @@ ListItem {
         plasmoid.busy = true
     }
 
-    PlasmaComponents.Frame {
+    PlasmaCore.FrameSvgItem {
         id: postWidget
         anchors.left: parent.left
         anchors.right: parent.right
+        imagePath: "widgets/frame"
+        prefix: "plain"
 
         QtExtraComponents.QImageItem {
             id: profileIcon
             smooth: true
-            anchors.left: postWidget.padding.left
-            anchors.top: postWidget.padding.top
+            anchors {
+                left: postWidget.left
+                top: postWidget.top
+                leftMargin: postWidget.margins.left
+                topMargin: postWidget.margins.top
+            }
             width: 48
             height: 48
             image: microblogSource.data["UserImages:"+serviceUrl][userName]
@@ -53,12 +58,17 @@ ListItem {
             text: userName
         }
 
-        PlasmaComponents.Frame {
-            anchors.left: profileIcon.right
-            anchors.right: postWidget.padding.right
-            anchors.top: postWidget.padding.top
+        PlasmaCore.FrameSvgItem {
+            anchors {
+                left: profileIcon.right
+                right: postWidget.right
+                rightMargin: postWidget.margins.right
+                topMargin: postWidget.margins.top
+            }
+
             height: 90
 
+            imagePath: "widgets/frame"
             prefix: "sunken"
             TextEdit {
                 id: postTextEdit

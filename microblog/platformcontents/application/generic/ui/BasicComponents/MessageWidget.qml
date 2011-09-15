@@ -17,13 +17,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 
 ListItem {
+    //try to fix the height to 8 lines
+    height: infoLabel.height*6
     implicitHeight: infoLabel.height+bodyText.height
 
     property string messageId: model["Id"]
@@ -53,7 +55,7 @@ ListItem {
         id: toolBoxRow
         anchors.right: parent.right
         anchors.rightMargin: 5
-        PlasmaComponents.ToolButton {
+        PlasmaWidgets.ToolButton {
             id: favoriteButton
             text: "♥"
             width: 24
@@ -63,7 +65,7 @@ ListItem {
                 main.favoriteAsked(messageId, isFavourite != "true");
             }
         }
-        PlasmaComponents.ToolButton {
+        PlasmaWidgets.ToolButton {
             id: replyButton
             text: "@"
             width: 24
@@ -72,7 +74,7 @@ ListItem {
                 main.replyAsked(messageId, "@" + user + ": ");
             }
         }
-        PlasmaComponents.ToolButton {
+        PlasmaWidgets.ToolButton {
             id: repeatButton
             text: "♻"
             width: 24

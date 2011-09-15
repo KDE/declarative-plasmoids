@@ -19,7 +19,7 @@
 
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 
@@ -46,7 +46,7 @@ ListItem {
         id: toolBoxRow
         anchors.right: parent.right
         anchors.rightMargin: 5
-        PlasmaComponents.ToolButton {
+        PlasmaWidgets.ToolButton {
             id: favoriteButton
             text: "♥"
             width: 24
@@ -56,7 +56,7 @@ ListItem {
                 main.favoriteAsked(model["Id"], model["IsFavorite"] != "true");
             }
         }
-        PlasmaComponents.ToolButton {
+        PlasmaWidgets.ToolButton {
             id: replyButton
             text: "@"
             width: 24
@@ -65,7 +65,7 @@ ListItem {
                 main.replyAsked(model["Id"], "@" + model["User"] + ": ");
             }
         }
-        PlasmaComponents.ToolButton {
+        PlasmaWidgets.ToolButton {
             id: repeatButton
             text: "♻"
             width: 24

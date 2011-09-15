@@ -19,25 +19,58 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
 
-Item {
+Image {
     id: mainWidget
+    source: "plasmapackage:/images/background.png"
+    fillMode: Image.Tile
+
+    Image {
+        source: "plasmapackage:/images/sidebarbackground.png"
+        fillMode: Image.Tile
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: mainFlickable.top
+        }
+    }
 
     PostingWidget {
         id: postingWidget
-        width: timelineList.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 16
+    }
+
+    PlasmaCore.Svg {
+        id: shadowSvg
+        imagePath: plasmoid.file("images", "shadow.svgz")
+    }
+
+    PlasmaCore.SvgItem {
+        height: 32
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: mainFlickable.top
+        }
+        svg: shadowSvg
+        elementId: "bottom"
     }
 
     Flickable {
+        id: mainFlickable
         anchors.top: postingWidget.bottom
+        anchors.topMargin: 16
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.right: parent.right
+        clip: true
 
         contentWidth: messageContainer.width
         contentHeight: height

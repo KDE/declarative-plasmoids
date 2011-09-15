@@ -19,7 +19,6 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 
 import "plasmapackage:/ui/BasicComponents"
@@ -35,6 +34,7 @@ ListView {
     property string login: userName
     property string url: serviceUrl
     property string source: timelineType+":"+login+"@"+url
+
     onSourceChanged: {
         timer.running = true
     }
@@ -45,6 +45,11 @@ ListView {
         interval: 500
         onTriggered: {
             microblogSource.connectSource(source)
+
+            var service = microblogSource.serviceForSource(source)
+            var operation = service.operationDescription("auth");
+            operation.password = password
+            service.startOperationCall(operation);
         }
     }
 
