@@ -20,6 +20,7 @@
 import QtQuick 1.0
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/ui/ComplexComponents"
@@ -27,10 +28,29 @@ import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
 
 Image {
+    id: mainWidget
     source: "plasmapackage:/images/background.png"
     fillMode: Image.Tile
     width: 800
     height: 480
+    property Component configComponent: Qt.createComponent("ConfigWidget.qml")
+
+    MobileComponents.ActionButton {
+        svg: PlasmaCore.Svg {
+            imagePath: "widgets/configuration-icons"
+        }
+        elementId: "configure"
+        anchors {
+            top: parent.top
+            topMargin: 8
+            left: parent.left
+            rightMargin: 8
+        }
+        onClicked: {
+            var object = configComponent.createObject(mainWidget);
+            print(component.errorString())
+        }
+    }
 
     Column {
         id: mainUi
