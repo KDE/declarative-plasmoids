@@ -47,6 +47,9 @@ Item {
     function configChanged()
     {
         serviceUrl = plasmoid.readConfig("serviceUrl")
+        if (!serviceUrl) {
+            serviceUrl = "https://identi.ca/api/"
+        }
         userName = plasmoid.readConfig("userName")
         password = plasmoid.readConfig("password")
 

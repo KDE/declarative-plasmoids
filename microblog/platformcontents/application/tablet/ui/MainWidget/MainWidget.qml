@@ -20,6 +20,7 @@
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -28,6 +29,7 @@ Image {
     id: mainWidget
     source: "plasmapackage:/images/background.png"
     fillMode: Image.Tile
+    property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
     Image {
         source: "plasmapackage:/images/sidebarbackground.png"
@@ -39,6 +41,25 @@ Image {
             bottom: mainFlickable.top
         }
     }
+
+    MobileComponents.ActionButton {
+        svg: PlasmaCore.Svg {
+            imagePath: "widgets/configuration-icons"
+        }
+        elementId: "configure"
+        anchors {
+            top: parent.top
+            topMargin: 8
+            right: parent.right
+            rightMargin: 8
+        }
+        onClicked: {
+            var object = configComponent.createObject(mainWidget);
+            print(component.errorString())
+        }
+    }
+
+
 
     PostingWidget {
         id: postingWidget
