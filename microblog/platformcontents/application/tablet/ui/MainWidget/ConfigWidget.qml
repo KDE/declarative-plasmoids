@@ -117,7 +117,7 @@ Rectangle {
 
 
                     Text {
-                        text: i18n("Seervice URL:")
+                        text: i18n("Service URL:")
                         color: theme.color
                     }
                     PlasmaWidgets.LineEdit {
