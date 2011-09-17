@@ -27,6 +27,7 @@ ListView {
     id: entryList
 
     clip: true
+    snapMode: ListView.SnapToItem 
 
     signal itemClicked(variant item)
 
@@ -36,6 +37,7 @@ ListView {
     property string source: timelineType+":"+login+"@"+url
 
     onSourceChanged: {
+        microblogSource.connectSource(source)
         timer.running = true
     }
     Timer {
@@ -44,8 +46,6 @@ ListView {
         running: false
         interval: 500
         onTriggered: {
-            microblogSource.connectSource(source)
-
             var service = microblogSource.serviceForSource(source)
             var operation = service.operationDescription("auth");
             operation.password = password

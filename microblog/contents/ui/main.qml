@@ -54,16 +54,25 @@ Item {
             return
         }
 
-        microblogSource.connectedSources = ["TimelineWithFriends:"+userName+"@"+serviceUrl, "UserImages:"+serviceUrl]
-        var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
-        var operation = service.operationDescription("auth");
-        operation.password = password
-        service.startOperationCall(operation);
-        plasmoid.configurationRequired = false
-        plasmoid.busy = true
-        
+        microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
+        microblogSource.connectSource("UserImages:"+serviceUrl)
+
+        authTimer.running = true
     }
 
+    Timer {
+        id: authTimer
+        interval: 100
+        repeat: false
+        onTriggered: {
+            var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
+            var operation = service.operationDescription("auth");
+            operation.password = password
+            service.startOperationCall(operation);
+            plasmoid.configurationRequired = false
+            plasmoid.busy = true
+        }
+    }
 
     PlasmaCore.DataSource {
         id: microblogSource
