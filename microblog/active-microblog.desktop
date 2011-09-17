@@ -1,6 +1,12 @@
 [Desktop Entry]
 Name=Microblog
+Name[pt]=Micro-blog
+Name[uk]=Мікроблог
+Name[x-test]=xxMicroblogxx
 Comment=A microblog application for touch tablets
+Comment[pt]=Uma aplicação de 'micro-blog' para tabletes por toque
+Comment[uk]=Програма для ведення мікроблогів з сенсорних планшетів
+Comment[x-test]=xxA microblog application for touch tabletsxx
 
 Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.microblog-qml
 Terminal=false
