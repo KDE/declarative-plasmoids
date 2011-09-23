@@ -1,11 +1,13 @@
 [Desktop Entry]
 Name=Microblog
+Name[nl]=Microblog
 Name[pt]=Micro-blog
 Name[pt_BR]=Microblog
 Name[sv]=Mikroblogg
 Name[uk]=Мікроблог
 Name[x-test]=xxMicroblogxx
 Comment=A microblog application for touch tablets
+Comment[nl]=Een microblog toepassing voor aanraaktablets
 Comment[pt]=Uma aplicação de 'micro-blog' para tabletes por toque
 Comment[pt_BR]=Um aplicativo de microblog para tablets
 Comment[sv]=Ett mikrobloggprogram för pekskärmar
