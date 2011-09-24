@@ -34,7 +34,10 @@ function setArticleRead(id, feedUrl)
 
     markOperation.group = "read"
     markOperation.key = id
-    storageService.startOperationCall(markOperation);
+    var job = storageService.startOperationCall(markOperation);
+    var data = new Object
+    data[id] = 1
+    job.data = data
     readArticles.push(id)
 
     if (unread) {
