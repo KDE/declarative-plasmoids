@@ -45,7 +45,10 @@ ListItem {
     Text {
         color: theme.textColor
         text: unread
-        anchors.right: listItem.padding.right + 10
-        anchors.verticalCenter: listItem.verticalCenter
+        anchors {
+            right: listItem.padding.right
+            rightMargin: 10
+            verticalCenter: listItem.verticalCenter
+        }
     }
 }
