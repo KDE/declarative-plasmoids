@@ -44,7 +44,7 @@ PlasmaCore.FrameSvgItem {
         text: i18n("Back")
         maximumSize: minimumSize
 
-        x: toolbarFrame.margins.left
+        x: toolbarFrame.margins.left + 8
         y: backEnabled?toolbarFrame.height/2-height/2:-height-5
 
         onClicked: {
