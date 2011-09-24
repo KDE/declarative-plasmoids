@@ -100,6 +100,7 @@ PlasmaCore.FrameSvgItem {
     }
 
     MobileComponents.ActionButton {
+        iconSize: 22
         svg: PlasmaCore.Svg {
             imagePath: "widgets/configuration-icons"
         }
