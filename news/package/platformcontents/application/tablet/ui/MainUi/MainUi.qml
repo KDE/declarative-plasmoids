@@ -35,23 +35,6 @@ Image {
     height: 480
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
-    MobileComponents.ActionButton {
-        svg: PlasmaCore.Svg {
-            imagePath: "widgets/configuration-icons"
-        }
-        elementId: "configure"
-        anchors {
-            top: parent.top
-            topMargin: 8
-            left: parent.left
-            rightMargin: 8
-        }
-        onClicked: {
-            var object = configComponent.createObject(mainWidget);
-            print(component.errorString())
-        }
-    }
-
     Column {
         id: mainUi
         anchors.fill: parent
@@ -91,10 +74,10 @@ Image {
                 PropertyChanges { target: bodyView; visible: true}
             }
         ]
-        
+
         //FIXME: hardcoded
         spacing: -toolbarFrame.margins.bottom/2
-        Toolbar {
+        TabletToolbar {
             id: toolbarFrame
             imagePath: "widgets/frame"
             prefix: "raised"
