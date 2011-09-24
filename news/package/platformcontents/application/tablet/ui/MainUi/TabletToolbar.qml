@@ -92,12 +92,11 @@ PlasmaCore.FrameSvgItem {
         }
         onSearchQueryChanged: {
             if (mainView.currentIndex == 0) {
-                searchQuery = ".*"+searchBox.text+".*";
+                toolbarFrame.searchQuery = ".*"+searchBox.searchQuery+".*";
             } else {
-                searchQuery = ".*"+searchBox.text+".*";
+                toolbarFrame.searchQuery = ".*"+searchBox.searchQuery+".*";
             }
         }
-        opacity: imageViewer.state != "browsing"?0:1
     }
 
     MobileComponents.ActionButton {
