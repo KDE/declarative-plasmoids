@@ -76,8 +76,6 @@ function unreadForSource(feedUrl)
 
 function updateUnreadCount(items)
 {
-    unreadCount = new Array
-    totalUnreadCount  = 0
     for (i in items) {
         var feedUrl = items[i]['feed_url']
         if (!isArticleRead(items[i]['link'])) {

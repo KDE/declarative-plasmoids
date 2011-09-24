@@ -57,9 +57,9 @@ Item {
         id: feedSource
         engine: "rss"
         interval: 50000
-        onDataChanged: {
+        onNewData: {
             plasmoid.busy = false
-            BookKeeping.updateUnreadCount(feedSource.data[source].items)
+            BookKeeping.updateUnreadCount(data.items)
         }
     }
 
