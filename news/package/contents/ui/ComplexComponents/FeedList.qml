@@ -39,6 +39,7 @@ ListView {
         sourceModel: PlasmaCore.DataModel {
             dataSource: feedSource
             keyRoleFilter: "sources"
+            sourceFilter: feedSource.connectedSources[0]
         }
     }
 
