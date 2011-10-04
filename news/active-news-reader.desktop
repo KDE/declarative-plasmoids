@@ -27,6 +27,6 @@ Comment[uk]=Програма для читання подач на сенсор�
 Comment[x-test]=xxA news feed reader for touch tabletsxx
 Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.news-qml
 Terminal=false
-Icon=akregator
+Icon=active-news
 Type=Application
 Categories=Qt;KDE;News;
