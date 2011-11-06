@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=News Reader
 Name[cs]=Klient pro čtení diskusních skupin
+Name[de]=Usenet-Newsreader
 Name[fr]=Lecteur de forums
 Name[nl]=Nieuwslezer
 Name[pt]=Leitor de Notícias
@@ -10,6 +11,7 @@ Name[uk]=Читання новин
 Name[x-test]=xxNews Readerxx
 GenericName=Feed Reader
 GenericName[cs]=Čtečka kanálů
+GenericName[de]=Nachrichtenbetrachter
 GenericName[fr]=Lecteur de flux
 GenericName[nl]=Feedlezer
 GenericName[pt]=Leitor de Fontes

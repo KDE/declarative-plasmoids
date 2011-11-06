@@ -1,6 +1,7 @@
 [Desktop Entry]
 Comment=A clock with hands
 Comment[cs]=Ručičkové hodiny
+Comment[de]=Eine Uhr mit Zeigern
 Comment[fr]=Une horloge à aiguilles
 Comment[nl]=Een klok met wijzers
 Comment[pt]=Um relógio com ponteiros
@@ -13,6 +14,7 @@ Icon=clock
 Keywords=
 Name=Analog Clock
 Name[cs]=Analogové hodiny
+Name[de]=Analoge Uhr
 Name[fr]=Horloge analogique
 Name[nl]=Analoge klok
 Name[pt]=Relógio Analógico
