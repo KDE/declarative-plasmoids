@@ -18,10 +18,8 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 Item {
     id: mainWindow
@@ -74,7 +72,7 @@ Item {
 
         Repeater {
             id: repeater
-        
+
             ListView {
                 id: entryList
                 spacing: 5;
@@ -99,7 +97,7 @@ Item {
                     iconFile: icon
                     feedUrl: link
                 }
-                        
+
                 onFlickEnded: {
                     currentIndex = contentX / contentWidth * count
                 }
@@ -111,7 +109,7 @@ Item {
                     onTriggered: {
                         if (entryList.currentIndex == (entryList.count - 1))
                             entryList.currentIndex = 0
-                        else 
+                        else
                             entryList.currentIndex = entryList.currentIndex + 1
                     }
                 }

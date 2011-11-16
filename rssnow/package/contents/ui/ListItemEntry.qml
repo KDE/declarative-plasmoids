@@ -17,10 +17,8 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 ListItem {
     id: listItem
@@ -73,7 +71,7 @@ ListItem {
                 height: 20
                 elementId: "left"
                 opacity: 0
-                           
+
                 Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
                     imagePath: "rssnow/left"
@@ -85,7 +83,7 @@ ListItem {
                 height: 20
                 elementId: "right"
                 opacity: 0
-                           
+
                 Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
                     imagePath: "rssnow/right"
@@ -102,7 +100,7 @@ ListItem {
                 if (mouse.y > leftArrow.height) {
                     if (entryList.currentIndex == (entryList.count - 1))
                         entryList.currentIndex = 0
-                    else 
+                    else
                         entryList.currentIndex = entryList.currentIndex + 1
                 } else
                     if (entryList.currentIndex == 0)
