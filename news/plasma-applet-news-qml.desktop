@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=News reader (QML)
+Name[de]=Usenet-Newsreader (QML)
 Name[fr]=Lecteur de forums (QML)
 Name[nl]=Nieuwslezer (QML)
 Name[pt]=Leitor de notícias (QML)
@@ -18,7 +19,7 @@ Comment[uk]=Тестова програма для читання RSS, напи�
 Comment[x-test]=xxA proof of concept RSS reader written in qmlxx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
-Icon=akregator
+Icon=active-news
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
 X-KDE-PluginInfo-Author=Marco Martin

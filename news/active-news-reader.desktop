@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=News Reader
 Name[cs]=Klient pro čtení diskusních skupin
+Name[de]=Usenet-Newsreader
 Name[fr]=Lecteur de forums
 Name[nl]=Nieuwslezer
 Name[pt]=Leitor de Notícias
@@ -10,6 +11,7 @@ Name[uk]=Читання новин
 Name[x-test]=xxNews Readerxx
 GenericName=Feed Reader
 GenericName[cs]=Čtečka kanálů
+GenericName[de]=Nachrichtenbetrachter
 GenericName[fr]=Lecteur de flux
 GenericName[nl]=Feedlezer
 GenericName[pt]=Leitor de Fontes
@@ -27,6 +29,6 @@ Comment[uk]=Програма для читання подач на сенсор�
 Comment[x-test]=xxA news feed reader for touch tabletsxx
 Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.news-qml
 Terminal=false
-Icon=akregator
+Icon=active-news
 Type=Application
 Categories=Qt;KDE;News;

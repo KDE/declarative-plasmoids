@@ -5,3 +5,6 @@ install(FILES active-news-reader.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 
 install(FILES plasma-applet-news-qml.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+add_subdirectory(icons)
+
