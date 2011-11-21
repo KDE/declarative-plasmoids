@@ -29,7 +29,7 @@ import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
 Image {
     id: mainWidget
-    source: "plasmapackage:/images/background.png"
+    source: "image://appbackgrounds/standard"
     fillMode: Image.Tile
     width: 800
     height: 480
