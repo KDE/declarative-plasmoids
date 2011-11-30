@@ -79,8 +79,7 @@ Image {
         spacing: -toolbarFrame.margins.bottom/2
         TabletToolbar {
             id: toolbarFrame
-            imagePath: "widgets/frame"
-            prefix: "raised"
+            imagePath: "widgets/toolbar"
             enabledBorders: "BottomBorder"
             z: mainView.z+1
             onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
@@ -113,7 +112,7 @@ Image {
                 height: mainFlickable.height
 
                 Image {
-                    source: "plasmapackage:/images/sidebarbackground.png"
+                    source: "image://appbackgrounds/contextarea"
                     fillMode: Image.Tile
                     anchors.top: mainView.top
                     anchors.bottom: mainView.bottom

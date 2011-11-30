@@ -18,7 +18,7 @@
  */
 
 import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
@@ -28,8 +28,7 @@ PlasmaCore.FrameSvgItem {
     height: backButton.height + margins.top + margins.bottom
     clip: true
 
-    imagePath: "widgets/frame"
-    prefix: "raised"
+    imagePath: "widgets/toolbar"
 
     signal openOriginalRequested
     signal backRequested
@@ -52,10 +51,9 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    PlasmaWidgets.PushButton {
+    PlasmaComponents.Button {
         id: backButton
         text: i18n("Back")
-        maximumSize: minimumSize
 
         x: toolbarFrame.margins.left
         y: backEnabled?toolbarFrame.margins.top:-height-5
@@ -76,10 +74,9 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    PlasmaWidgets.PushButton {
+    PlasmaComponents.Button {
         id: openOriginalButton
         text: i18n("Open original")
-        maximumSize: minimumSize
 
         anchors.left: backButton.right
         y: (mainUi.state == "item")?toolbarFrame.margins.top:-height-5
@@ -93,7 +90,7 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    PlasmaWidgets.LineEdit {
+    PlasmaComponents.TextField {
         id: searchBox
         clearButtonShown: true
         anchors.right: parent.right
@@ -101,7 +98,7 @@ PlasmaCore.FrameSvgItem {
         y: searchEnabled?toolbarFrame.margins.top:-height-5
         anchors.rightMargin: toolbarFrame.margins.right
         anchors.topMargin: toolbarFrame.margins.top
-        onTextEdited: {
+        onTextChanged: {
             searchTimer.running = true
         }
         Behavior on y {

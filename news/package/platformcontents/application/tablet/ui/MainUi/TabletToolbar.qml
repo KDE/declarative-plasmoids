@@ -18,7 +18,7 @@
  */
 
 import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
@@ -26,11 +26,10 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 PlasmaCore.FrameSvgItem {
     id: toolbarFrame
     width: mainUi.width
-    height: childrenRect.height + margins.top + margins.bottom
+    height: Math.max(backButton.height, configButton.height) + margins.top + margins.bottom
     clip: true
 
-    imagePath: "widgets/frame"
-    prefix: "raised"
+    imagePath: "widgets/toolbar"
 
     signal openOriginalRequested
     signal backRequested
@@ -39,10 +38,9 @@ PlasmaCore.FrameSvgItem {
     property bool searchEnabled: true
     property string searchQuery
 
-    PlasmaWidgets.PushButton {
+    PlasmaComponents.Button {
         id: backButton
         text: i18n("Back")
-        maximumSize: minimumSize
 
         x: toolbarFrame.margins.left + 8
         y: backEnabled?toolbarFrame.height/2-height/2:-height-5
@@ -63,11 +61,10 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    PlasmaWidgets.PushButton {
+    PlasmaComponents.Button {
         id: openOriginalButton
         text: i18n("Website")
         width: 128
-        maximumSize: minimumSize
 
         anchors {
             left: backButton.right
@@ -87,7 +84,7 @@ PlasmaCore.FrameSvgItem {
     MobileComponents.ViewSearch {
         id: searchBox
         anchors {
-            horizontalCenter: parent.horizontalCenter
+            centerIn: parent
             top:parent.top
         }
         onSearchQueryChanged: {
@@ -100,6 +97,7 @@ PlasmaCore.FrameSvgItem {
     }
 
     MobileComponents.ActionButton {
+        id: configButton
         iconSize: 22
         svg: PlasmaCore.Svg {
             imagePath: "widgets/configuration-icons"

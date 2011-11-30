@@ -19,7 +19,7 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Rectangle {
@@ -117,10 +117,10 @@ Rectangle {
                         text: i18n("Feed URL:")
                         color: theme.color
                     }
-                    PlasmaWidgets.LineEdit {
+                    PlasmaComponents.TextField {
                         id: feedUrlEdit
                     }
-                    PlasmaWidgets.PushButton {
+                    PlasmaComponents.Button {
                         text: i18n("Add")
                         onClicked: {
                             feedsModel.append({'url': feedUrlEdit.text})
@@ -147,7 +147,7 @@ Rectangle {
                             text: url
                             anchors.verticalCenter: parent.verticalCenter
                         }
-                        PlasmaWidgets.PushButton {
+                        PlasmaComponents.Button {
                             id: removeButton
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
@@ -165,7 +165,7 @@ Rectangle {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                     }
-                    PlasmaWidgets.PushButton {
+                    PlasmaComponents.Button {
                         text: i18n("Ok")
                         onClicked: {
                             var feeds
@@ -183,7 +183,7 @@ Rectangle {
                             disappearAnimation.running = true
                         }
                     }
-                    PlasmaWidgets.PushButton {
+                    PlasmaComponents.Button {
                         text: i18n("Cancel")
                         onClicked: {
                             disappearAnimation.running = true
