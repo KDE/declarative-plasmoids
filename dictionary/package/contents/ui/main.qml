@@ -18,14 +18,16 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 Item {
     id: mainWindow
-    
+    property int minimumWidth: 200
+    property int minimumHeight: 200
+
     property bool listdictionaries: false;
 
     Component.onCompleted: {
@@ -71,22 +73,22 @@ Item {
                     timer.running = true
                 }
             }
-            PlasmaWidgets.LineEdit {
+            PlasmaComponents.TextField {
                 id: searchBox
-                clickMessage: i18n("Type a word...");
                 clearButtonShown: true
+                placeholderText: i18n("Type a word...")
                 width: parent.width - icon.width - parent.spacing
                 onTextChanged: {
                     timer.running = true
                     mainWindow.listdictionaries = false
                 }
             }
-        }
         PlasmaWidgets.WebView {
             id: textBrowser
             width: parent.parent.width
             height: parent.height - searchRow.height - parent.spacing
             dragToScroll: true
+            anchors.top: searchBox.bottom
             html: {
                 if (mainWindow.listdictionaries) {
                     var data = feedSource.data["list-dictionaries"]
@@ -131,4 +133,5 @@ Item {
             }
        }
     }
+}
 }
