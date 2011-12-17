@@ -27,6 +27,8 @@ Item {
     property string source
     property variant individualSources
     property int scrollInterval
+    property int minimumHeight: 200
+    property int minimumWidth: 200
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
@@ -96,6 +98,9 @@ Item {
                     text: title//+individualSources[listIndex]
                     iconFile: icon
                     feedUrl: link
+                    onClicked: {
+                        flickTimer.restart();
+                    }
                 }
 
                 onFlickEnded: {
@@ -107,10 +112,11 @@ Item {
                     running: true
                     repeat: true
                     onTriggered: {
-                        if (entryList.currentIndex == (entryList.count - 1))
+                        if (entryList.currentIndex == (entryList.count - 1)) {
                             entryList.currentIndex = 0
-                        else
+                        } else {
                             entryList.currentIndex = entryList.currentIndex + 1
+                        }
                     }
                 }
             }

@@ -25,6 +25,7 @@ ListItem {
     property string text;
     property string iconFile;
     property string feedUrl;
+    signal clicked;
 
     Row {
         id : delegateLayout
@@ -98,15 +99,19 @@ ListItem {
         onClicked: {
             if (mouse.x < delegateLayout.width && mouse.x > (delegateLayout.width - leftArrow.width)) {
                 if (mouse.y > leftArrow.height) {
-                    if (entryList.currentIndex == (entryList.count - 1))
+                    if (entryList.currentIndex == (entryList.count - 1)) {
                         entryList.currentIndex = 0
-                    else
+                    } else {
                         entryList.currentIndex = entryList.currentIndex + 1
-                } else
-                    if (entryList.currentIndex == 0)
+                        listItem.clicked();
+                    }
+                } else {
+                    if (entryList.currentIndex == 0) {
                         entryList.currentIndex = (entryList.count - 1)
-                    else
+                    } else{
                         entryList.currentIndex = entryList.currentIndex - 1
+                    }
+                }
             } else {
                 plasmoid.openUrl(feedUrl)
             }
