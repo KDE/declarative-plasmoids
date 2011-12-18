@@ -75,7 +75,7 @@ ListItem {
 
                 Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
-                    imagePath: "rssnow/left"
+                    imagePath: "rssnow/arrows"
                 }
             }
             PlasmaCore.SvgItem {
@@ -87,7 +87,7 @@ ListItem {
 
                 Behavior on opacity { PropertyAnimation {} }
                 svg: PlasmaCore.Svg {
-                    imagePath: "rssnow/right"
+                    imagePath: "rssnow/arrows"
                 }
             }
         }
