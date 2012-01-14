@@ -28,6 +28,7 @@ ListView {
     clip: true
     snapMode: ListView.SnapToItem
     spacing: 2
+    cacheBuffer: 5
 
     signal itemClicked(variant item)
 
