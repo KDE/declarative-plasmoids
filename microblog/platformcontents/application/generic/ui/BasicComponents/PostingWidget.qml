@@ -19,6 +19,7 @@
 
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic

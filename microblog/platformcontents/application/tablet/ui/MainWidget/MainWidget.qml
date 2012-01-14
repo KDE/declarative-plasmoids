@@ -19,7 +19,6 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 import "plasmapackage:/ui/ComplexComponents"
@@ -100,7 +99,7 @@ Image {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             //FIXME: use font size
-            property int columnWidth: mainWidget.width/Math.min(3, (mainWidget.width/320))
+            property int columnWidth: mainWidget.width/Math.min(3, (mainWidget.width/400))
 
             MessageList {
                 id: timelineList
