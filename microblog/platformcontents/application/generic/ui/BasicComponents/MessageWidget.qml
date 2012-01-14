@@ -60,7 +60,7 @@ ListItem {
             text: "♥"
             width: 24
             height: 24
-            down: isFavourite
+            down: isFavorite
             onClicked: {
                 main.favoriteAsked(messageId, isFavourite != "true");
             }
