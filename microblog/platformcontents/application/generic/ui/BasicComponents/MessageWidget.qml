@@ -62,6 +62,7 @@ ListItem {
     }
     Row {
         id: toolBoxRow
+        opacity: 0.3
         anchors.right: parent.right
         anchors.rightMargin: 5
         PlasmaComponents.ToolButton {
@@ -118,9 +119,9 @@ ListItem {
         styleColor: theme.backgroundColor
         text: {
             var d = new Date(dateTime);
-            dout = Qt.formatDateTime(d, "h:m:s ap");
+            dout = Qt.formatDateTime(d, "hh:mm");
             //print(" D1: " + dout);
-            return i18n("on %1 from %2", dout, source)
+            return i18n("at %1 from %2", dout, source)
         }
     }
     

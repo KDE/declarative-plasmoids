@@ -109,6 +109,7 @@ Image {
                 anchors.topMargin: 24
                 anchors.bottom: parent.bottom
                 anchors.rightMargin: 20
+                clip: false
                 header: Item {
                     anchors.margins: 12
                     height: 48
