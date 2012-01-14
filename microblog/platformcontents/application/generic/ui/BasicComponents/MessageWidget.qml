@@ -1,5 +1,6 @@
 /*
  *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -25,9 +26,9 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 ListItem {
     //try to fix the height to 8 lines
-    //height: infoLabel.height*6
+    //height: fromLabel.height*6
     height: childrenRect.height
-    //implicitHeight: infoLabel.height+bodyText.height
+    //implicitHeight: fromLabel.height+bodyText.height
 
     property string messageId: model["Id"]
     property string user: model["User"]
@@ -46,14 +47,17 @@ ListItem {
         //image: microblogSource.data["UserImages:"+serviceUrl][user]
     }
     PlasmaComponents.Label {
-        id: infoLabel
+        id: fromLabel
         anchors.leftMargin: 5
-        anchors.bottomMargin: 12
+        anchors.bottomMargin: 8
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: padding.top
         opacity: 0.5
-        text: i18n("%1 from %2", user, source)
+        style: Text.Raised
+        font.pointSize: theme.defaultFont.pointSize + 4
+        styleColor: theme.backgroundColor
+        text: user
     }
     Row {
         id: toolBoxRow
@@ -94,10 +98,25 @@ ListItem {
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: toolBoxRow.bottom
-        anchors.topMargin: 8
-        anchors.bottomMargin: 20
+        anchors.topMargin: 6
+        anchors.bottomMargin: 6
         text: status
         wrapMode: Text.WordWrap
     }
+    PlasmaComponents.Label {
+        id: infoLabel
+        //height: 12
+        anchors.leftMargin: 5
+        //anchors.bottomMargin: 12
+        anchors.left: bodyText.left
+        anchors.right: bodyText.right
+        anchors.top: bodyText.bottom
+        opacity: 0.3
+        font.pointSize: theme.smallestFont.pointSize
+        style: Text.Raised
+        styleColor: theme.backgroundColor
+        text: i18n("from %1", source)
+    }
+    
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
 }

@@ -54,7 +54,7 @@ Image {
         }
         onClicked: {
             var object = configComponent.createObject(mainWidget);
-            print(object.errorString())
+            print(component.errorString())
         }
     }
 

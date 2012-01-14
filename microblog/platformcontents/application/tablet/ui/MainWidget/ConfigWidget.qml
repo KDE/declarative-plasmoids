@@ -17,9 +17,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
+//import org.kde.plasma.graphicswidgets 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Rectangle {
@@ -120,7 +121,7 @@ Rectangle {
                         text: i18n("Service URL:")
                         color: theme.color
                     }
-                    PlasmaWidgets.LineEdit {
+                    PlasmaComponents.TextField {
                         id: serviceUrlEdit
                         text: "https://identi.ca/api/"
                     }
@@ -129,7 +130,7 @@ Rectangle {
                         text: i18n("User name:")
                         color: theme.color
                     }
-                    PlasmaWidgets.LineEdit {
+                    PlasmaComponents.TextField {
                         id: userNameEdit
                     }
 
@@ -137,20 +138,18 @@ Rectangle {
                         text: i18n("Password:")
                         color: theme.color
                     }
-                    PlasmaWidgets.LineEdit {
-                        id: fakePasswordEdit
-                    }
-                    MouseArea {
-                        anchors.fill: fakePasswordEdit
-                        anchors.margins: -5
-                        onPressed: mouse.accepted = true
-                    }
-                    TextInput {
+                    PlasmaComponents.TextField {
                         id: passwordEdit
-                        anchors.fill: fakePasswordEdit
-                        anchors.margins: 5
                         echoMode: TextInput.Password
+                        //anchors.fill: fakePasswordEdit
+                        //anchors.margins: 5
+                        //echoMode: TextInput.Password
                     }
+//                     MouseArea {
+//                         anchors.fill: fakePasswordEdit
+//                         anchors.margins: -5
+//                         onPressed: mouse.accepted = true
+//                     }
                 }
                 Row {
                     id: buttonsRow
@@ -158,7 +157,7 @@ Rectangle {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                     }
-                    PlasmaWidgets.PushButton {
+                    PlasmaComponents.Button {
                         text: i18n("Ok")
                         onClicked: {
                             plasmoid.writeConfig("serviceUrl", serviceUrlEdit.text)
@@ -167,7 +166,7 @@ Rectangle {
                             disappearAnimation.running = true
                         }
                     }
-                    PlasmaWidgets.PushButton {
+                    PlasmaComponents.Button {
                         text: i18n("Cancel")
                         onClicked: {
                             disappearAnimation.running = true

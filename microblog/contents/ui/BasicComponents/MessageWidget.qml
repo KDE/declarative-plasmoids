@@ -1,5 +1,6 @@
 /*
  *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -17,71 +18,88 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 
 ListItem {
+    //try to fix the height to 8 lines
+    //height: infoLabel.height*6
+    height: childrenRect.height
+    //implicitHeight: infoLabel.height+bodyText.height
+
+    property string messageId: model["Id"]
+    property string user: model["User"]
+    property string source: model["Source"]
+    property bool isFavorite: model["IsFavorite"]
+    property string status: model["Status"]
 
     QtExtraComponents.QImageItem {
         id: userIcon
         smooth: true
         anchors.left: padding.left
         anchors.top: padding.top
+        anchors.topMargin: 12
         width: 32
         height: 32
-        image: microblogSource.data["UserImages:"+serviceUrl][model['User']]
+        //image: microblogSource.data["UserImages:"+serviceUrl][user]
     }
-    Text {
+    PlasmaComponents.Label {
         id: infoLabel
         anchors.leftMargin: 5
+        anchors.bottomMargin: 12
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: padding.top
-        text: i18n("%1 from %2", model["User"], model["Source"])
+        opacity: 0.5
+        style: Text.Sunken
+        text: i18n("%1 <font size=\"-2\">from %2</font>", user, source)
     }
     Row {
         id: toolBoxRow
         anchors.right: parent.right
         anchors.rightMargin: 5
-        PlasmaWidgets.ToolButton {
+        PlasmaComponents.ToolButton {
             id: favoriteButton
             text: "♥"
             width: 24
             height: 24
-            down: model["IsFavorite"]
+            checked: isFavorite
             onClicked: {
-                main.favoriteAsked(model["Id"], model["IsFavorite"] != "true");
+                main.favoriteAsked(messageId, isFavorite != "true");
             }
         }
-        PlasmaWidgets.ToolButton {
+        PlasmaComponents.ToolButton {
             id: replyButton
             text: "@"
             width: 24
             height: 24
             onClicked: {
-                main.replyAsked(model["Id"], "@" + model["User"] + ": ");
+                main.replyAsked(messageId, "@" + user + ": ");
             }
         }
-        PlasmaWidgets.ToolButton {
+        PlasmaComponents.ToolButton {
             id: repeatButton
             text: "♻"
             width: 24
             height: 24
             onClicked: {
-                main.retweetAsked(model["Id"]);
+                main.retweetAsked(messageId);
             }
         }
     }
-    Text {
+    PlasmaComponents.Label {
+        id: bodyText
         anchors.leftMargin: 5
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: toolBoxRow.bottom
-        anchors.bottomMargin: 5
-        text: model['Status']
+        anchors.topMargin: 8
+        anchors.bottomMargin: 20
+        text: status
         wrapMode: Text.WordWrap
     }
+    Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
 }

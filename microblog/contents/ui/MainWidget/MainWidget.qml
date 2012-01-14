@@ -1,6 +1,7 @@
 /*
  *   Copyright 2011 Marco Martin <mart@kde.org>
- *
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
+ * 
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
  *   published by the Free Software Foundation; either version 2 or
@@ -17,9 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -27,28 +28,21 @@ import "plasmapackage:/ui/BasicComponents"
 Column {
     id: mainWidget
 
-    PlasmaWidgets.TabBar {
+    PlasmaComponents.TabBar {
         id: tabBar
         anchors.left: parent.left
         anchors.right: parent.right
-        Component.onCompleted: {
-            tabBar.addTab(i18n("Timeline"))
-            tabBar.addTab(i18n("Replies"))
-            tabBar.addTab(i18n("Messages"))
+        PlasmaComponents.TabButton {
+            text: i18n("TimeLine");
+            onClicked: messageList.timelineType = "TimelineWithFriends"
         }
-        onCurrentChanged: {
-            switch (index) {
-            case 0:
-                messageList.timelineType = "TimelineWithFriends"
-                break;
-            case 1:
-                messageList.timelineType = "Replies"
-                break;
-            case 2:
-            default:
-                messageList.timelineType = "Messages"
-                break;
-            }
+        PlasmaComponents.TabButton {
+            text: i18n("Replies");
+            onClicked: messageList.timelineType = "Replies"
+        }
+        PlasmaComponents.TabButton {
+            text: i18n("Messages");
+            onClicked: messageList.timelineType = "Messages"
         }
     }
 

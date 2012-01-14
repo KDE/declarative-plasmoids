@@ -17,13 +17,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
 
 ListItem {
+    height: 100
 
     function refresh()
     {
@@ -51,56 +53,52 @@ ListItem {
             }
             width: 48
             height: 48
-            image: microblogSource.data["UserImages:"+serviceUrl][userName]
+            //image: microblogSource.data["UserImages:"+serviceUrl][userName]
         }
-        Text {
+        PlasmaComponents.Label {
             anchors.top: profileIcon.bottom
             text: userName
         }
 
-        PlasmaCore.FrameSvgItem {
+        PlasmaComponents.TextArea {
+            id: postTextEdit
+            height: 96
             anchors {
                 left: profileIcon.right
                 right: postWidget.right
+                //verticalCenter: parent.verticalCenter
+                //top: parent.top
+                //bottom: parent.bottom
                 rightMargin: postWidget.margins.right
-                topMargin: postWidget.margins.top
+                //topMargin: postWidget.margins.top
             }
+            wrapMode: TextEdit.WordWrap
+            property string inReplyToStatusId: ""
 
-            height: 90
-
-            imagePath: "widgets/frame"
-            prefix: "sunken"
-            TextEdit {
-                id: postTextEdit
-                anchors.fill: parent.padding
-                wrapMode: TextEdit.WordWrap
-                property string inReplyToStatusId: ""
-
-                onTextChanged: {
-                    //yes, TextEdit doesn't have returnPressed sadly
-                    if (text[text.length-1] == "\n") {
-                        Logic.update(text, inReplyToStatusId);
-                        refresh()
-                    } else if (text.length == 0) {
-                        inReplyToStatusId = ""
-                    }
+            onTextChanged: {
+                //yes, TextEdit doesn't have returnPressed sadly
+                if (text[text.length-1] == "\n") {
+                    Logic.update(text, inReplyToStatusId);
+                    refresh()
+                } else if (text.length == 0) {
+                    inReplyToStatusId = ""
                 }
-                Connections {
-                    target: main
-                    onReplyAsked: {
-                        postTextEdit.inReplyToStatusId = id
-                        postTextEdit.text = message
-                    }
-                    onRetweetAsked: {
-                        Logic.retweet(id)
-                        refresh()
-                    }
-                    onFavoriteAsked: {
-                        print(id)
-                        print(isFavorite)
-                        Logic.setFavorite(id, isFavorite)
-                        refresh()
-                    }
+            }
+            Connections {
+                target: main
+                onReplyAsked: {
+                    postTextEdit.inReplyToStatusId = id
+                    postTextEdit.text = message
+                }
+                onRetweetAsked: {
+                    Logic.retweet(id)
+                    refresh()
+                }
+                onFavoriteAsked: {
+                    print(id)
+                    print(isFavorite)
+                    Logic.setFavorite(id, isFavorite)
+                    refresh()
                 }
             }
         }
