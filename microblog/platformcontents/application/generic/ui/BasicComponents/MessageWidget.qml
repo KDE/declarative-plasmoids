@@ -33,6 +33,7 @@ ListItem {
     property string messageId: model["Id"]
     property string user: model["User"]
     property string source: model["Source"]
+    property string dateTime: model["Date"]
     property bool isFavorite: model["IsFavorite"]
     property string status: model["Status"]
 
@@ -115,7 +116,12 @@ ListItem {
         font.pointSize: theme.smallestFont.pointSize
         style: Text.Raised
         styleColor: theme.backgroundColor
-        text: i18n("from %1", source)
+        text: {
+            var d = new Date(dateTime);
+            dout = Qt.formatDateTime(d, "h:m:s ap");
+            //print(" D1: " + dout);
+            return i18n("on %1 from %2", dout, source)
+        }
     }
     
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }

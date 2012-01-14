@@ -19,6 +19,7 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 import "plasmapackage:/ui/ComplexComponents"
@@ -105,8 +106,20 @@ Image {
                 id: timelineList
                 width: messageContainer.columnWidth
                 anchors.top: parent.top
+                anchors.topMargin: 24
                 anchors.bottom: parent.bottom
                 anchors.rightMargin: 20
+                header: Item {
+                    anchors.margins: 12
+                    height: 48
+                    PlasmaComponents.Label {
+                        text: i18n("Timeline");
+                        font.pointSize: theme.defaultFont.pointSize*2
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                    }
+                }
+
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
@@ -122,7 +135,19 @@ Image {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.rightMargin: 20
+                anchors.topMargin: 24
                 timelineType: "Replies"
+                clip: false
+                header: Item {
+                    anchors.margins: 12
+                    height: 48
+                    PlasmaComponents.Label {
+                        text: i18n("Replies");
+                        font.pointSize: theme.defaultFont.pointSize*2
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                    }
+                }
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
@@ -137,7 +162,19 @@ Image {
                 width: messageContainer.columnWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                anchors.topMargin: 24
+                clip: false
                 timelineType: "Messages"
+                header: Item {
+                    anchors.margins: 12
+                    height: 48
+                    PlasmaComponents.Label {
+                        text: i18n("Messages");
+                        font.pointSize: theme.defaultFont.pointSize*2
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                    }
+                }
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
