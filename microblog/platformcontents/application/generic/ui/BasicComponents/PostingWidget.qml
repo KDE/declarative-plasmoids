@@ -52,13 +52,13 @@ Item {
             // FIXME: [bla][bla] doesn't work :/
             //image: microblogSource.data["UserImages:"+serviceUrl][userName]
         }
-        Text {
+        PlasmaComponents.Label {
             anchors.top: profileIcon.bottom
             text: userName
         }
 
-        PlasmaCore.FrameSvgItem {
-            id: sunkenFrame
+        PlasmaComponents.TextArea {
+            id: postTextEdit
             anchors {
                 left: profileIcon.right
                 right: postWidget.right
@@ -67,46 +67,34 @@ Item {
                 rightMargin: postWidget.margins.right
                 topMargin: postWidget.margins.top
             }
+            wrapMode: TextEdit.WordWrap
+            property string inReplyToStatusId: ""
 
-            imagePath: "widgets/frame"
-            prefix: "sunken"
-            TextEdit {
-                id: postTextEdit
-                anchors {
-                    fill: parent
-                    leftMargin: sunkenFrame.margins.left
-                    topMargin: sunkenFrame.margins.top
-                    rightMargin: sunkenFrame.margins.right
-                    bottomMargin: sunkenFrame.margins.bottom
+            onTextChanged: {
+                //yes, TextEdit doesn't have returnPressed sadly
+                if (text[text.length-1] == "\n") {
+                    //Logic.update(text, inReplyToStatusId);
+                    //refresh()
+                    print(" RETURN ");
+                } else if (text.length == 0) {
+                    inReplyToStatusId = ""
                 }
-                wrapMode: TextEdit.WordWrap
-                property string inReplyToStatusId: ""
-
-                onTextChanged: {
-                    //yes, TextEdit doesn't have returnPressed sadly
-                    if (text[text.length-1] == "\n") {
-                        Logic.update(text, inReplyToStatusId);
-                        refresh()
-                    } else if (text.length == 0) {
-                        inReplyToStatusId = ""
-                    }
+            }
+            Connections {
+                target: main
+                onReplyAsked: {
+                    postTextEdit.inReplyToStatusId = id
+                    postTextEdit.text = message
                 }
-                Connections {
-                    target: main
-                    onReplyAsked: {
-                        postTextEdit.inReplyToStatusId = id
-                        postTextEdit.text = message
-                    }
-                    onRetweetAsked: {
-                        Logic.retweet(id)
-                        refresh()
-                    }
-                    onFavoriteAsked: {
-                        print(id)
-                        print(isFavorite)
-                        Logic.setFavorite(id, isFavorite)
-                        refresh()
-                    }
+                onRetweetAsked: {
+                    Logic.retweet(id)
+                    refresh()
+                }
+                onFavoriteAsked: {
+                    print(id)
+                    print(isFavorite)
+                    Logic.setFavorite(id, isFavorite)
+                    refresh()
                 }
             }
         }
