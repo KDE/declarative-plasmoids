@@ -28,7 +28,7 @@ ListView {
 
     clip: true
     snapMode: ListView.SnapToItem
-    spacing: 8
+    spacing: 2
 
     signal itemClicked(variant item)
 

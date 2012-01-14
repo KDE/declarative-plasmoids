@@ -99,13 +99,14 @@ Image {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             //FIXME: use font size
-            property int columnWidth: mainWidget.width/Math.min(3, (mainWidget.width/400))
+            property int columnWidth: mainWidget.width/Math.min(3, (mainWidget.width/340))
 
             MessageList {
                 id: timelineList
                 width: messageContainer.columnWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
@@ -120,6 +121,7 @@ Image {
                 width: messageContainer.columnWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
                 timelineType: "Replies"
                 onItemClicked: {
                     messageDetails.messageId = item.messageId

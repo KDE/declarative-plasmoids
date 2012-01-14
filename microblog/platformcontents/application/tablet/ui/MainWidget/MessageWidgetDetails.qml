@@ -20,6 +20,7 @@
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Rectangle {
@@ -95,9 +96,10 @@ Rectangle {
                 // FIXME: [bla][bla] doesn't work :/
                 //image: microblogSource.data["UserImages:"+serviceUrl][user]
             }
-            Text {
+            PlasmaComponents.Label {
                 id: infoLabel
                 anchors.leftMargin: 5
+                anchors.bottomMargin: 5
                 anchors.left: userIcon.right
                 anchors.right: padding.right
                 anchors.top: padding.top
@@ -108,18 +110,18 @@ Rectangle {
                 id: toolBoxRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: padding.bottom
-                PlasmaWidgets.ToolButton {
+                PlasmaComponents.ToolButton {
                     id: favoriteButton
                     text: "♥"
                     //font.pointSize: 30
                     width: 24
                     height: 24
-                    down: isFavorite
+                    checked: isFavorite
                     onClicked: {
                         main.favoriteAsked(id, isFavorite != "true");
                     }
                 }
-                PlasmaWidgets.ToolButton {
+                PlasmaComponents.ToolButton {
                     id: replyButton
                     text: "@"
                     //font.pointSize: 30
@@ -129,7 +131,7 @@ Rectangle {
                         main.replyAsked(id, "@" + user + ": ");
                     }
                 }
-                PlasmaWidgets.ToolButton {
+                PlasmaComponents.ToolButton {
                     id: repeatButton
                     text: "♻"
                     //font.pointSize: 30
@@ -140,12 +142,13 @@ Rectangle {
                     }
                 }
             }
-            Text {
+            PlasmaComponents.Label {
                 id: bodyText
                 anchors.leftMargin: 5
                 anchors.left: userIcon.right
                 anchors.right: padding.right
                 anchors.top: infoLabel.bottom
+                anchors.topMargin: 20
                 anchors.bottomMargin: 5
                 text: status
                 font.pointSize: 20

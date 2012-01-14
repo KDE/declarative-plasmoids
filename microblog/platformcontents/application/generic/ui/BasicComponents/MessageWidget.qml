@@ -46,14 +46,14 @@ ListItem {
         height: 32
         //image: microblogSource.data["UserImages:"+serviceUrl][user]
     }
-    Text {
+    PlasmaComponents.Label {
         id: infoLabel
         anchors.leftMargin: 5
         anchors.bottomMargin: 12
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: padding.top
-        opacity: 0.6
+        opacity: 0.5
         text: i18n("%1 from %2", user, source)
     }
     Row {
@@ -89,14 +89,16 @@ ListItem {
             }
         }
     }
-    Text {
+    PlasmaComponents.Label {
         id: bodyText
         anchors.leftMargin: 5
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: toolBoxRow.bottom
+        anchors.topMargin: 8
         anchors.bottomMargin: 20
         text: status
         wrapMode: Text.WordWrap
     }
+    Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
 }
