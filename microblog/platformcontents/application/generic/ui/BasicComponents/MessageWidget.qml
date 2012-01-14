@@ -41,7 +41,7 @@ ListItem {
         anchors.top: padding.top
         width: 32
         height: 32
-        image: microblogSource.data["UserImages:"+serviceUrl][user]
+        //image: microblogSource.data["UserImages:"+serviceUrl][user]
     }
     Text {
         id: infoLabel
@@ -62,7 +62,7 @@ ListItem {
             height: 24
             down: isFavorite
             onClicked: {
-                main.favoriteAsked(messageId, isFavourite != "true");
+                main.favoriteAsked(messageId, isFavorite != "true");
             }
         }
         PlasmaWidgets.ToolButton {

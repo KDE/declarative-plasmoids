@@ -92,7 +92,8 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 width: 64
                 height: 64
-                image: microblogSource.data["UserImages:"+serviceUrl][user]
+                // FIXME: [bla][bla] doesn't work :/
+                //image: microblogSource.data["UserImages:"+serviceUrl][user]
             }
             Text {
                 id: infoLabel

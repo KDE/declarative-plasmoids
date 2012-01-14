@@ -48,7 +48,8 @@ Item {
             anchors.top: postWidget.padding.top*/
             width: 64
             height: 64
-            image: microblogSource.data["UserImages:"+serviceUrl][userName]
+            // FIXME: [bla][bla] doesn't work :/
+            //image: microblogSource.data["UserImages:"+serviceUrl][userName]
         }
         Text {
             anchors.top: profileIcon.bottom
