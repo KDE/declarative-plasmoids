@@ -56,6 +56,10 @@ Item {
             anchors.top: profileIcon.bottom
             text: userName
         }
+        QtExtraComponents.QIconItem {
+            icon: QIcon("meeting-chair")
+            anchors.fill: profileIcon
+        }
 
         PlasmaComponents.TextArea {
             id: postTextEdit
@@ -73,8 +77,8 @@ Item {
             onTextChanged: {
                 //yes, TextEdit doesn't have returnPressed sadly
                 if (text[text.length-1] == "\n") {
-                    //Logic.update(text, inReplyToStatusId);
-                    //refresh()
+                    Logic.update(text, inReplyToStatusId);
+                    refresh()
                     print(" RETURN ");
                 } else if (text.length == 0) {
                     inReplyToStatusId = ""

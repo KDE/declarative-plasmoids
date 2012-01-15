@@ -55,6 +55,11 @@ ListItem {
             height: 48
             //image: microblogSource.data["UserImages:"+serviceUrl][userName]
         }
+
+        QtExtraComponents.QIconItem {
+            icon: QIcon("meeting-chair")
+            anchors.fill: profileIcon
+        }
         PlasmaComponents.Label {
             anchors.top: profileIcon.bottom
             text: userName

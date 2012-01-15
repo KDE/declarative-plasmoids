@@ -47,6 +47,11 @@ ListItem {
         height: 32
         //image: microblogSource.data["UserImages:"+serviceUrl][user]
     }
+    QtExtraComponents.QIconItem {
+        icon: QIcon("meeting-chair")
+        anchors.fill: userIcon
+    }
+
     PlasmaComponents.Label {
         id: fromLabel
         anchors.leftMargin: 5
@@ -62,7 +67,7 @@ ListItem {
     }
     Row {
         id: toolBoxRow
-        opacity: 0.3
+        opacity: 0
         anchors.right: parent.right
         anchors.rightMargin: 5
         PlasmaComponents.ToolButton {
