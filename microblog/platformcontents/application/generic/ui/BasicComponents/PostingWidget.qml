@@ -75,6 +75,7 @@ Item {
             id: postTextEdit
             placeholderText: i18n("Share your thoughts...")
             height: 90
+            interactive: false
             //width: 300
 
             anchors {

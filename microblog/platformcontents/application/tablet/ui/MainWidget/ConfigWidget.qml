@@ -20,7 +20,6 @@
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
-//import org.kde.plasma.graphicswidgets 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Rectangle {
@@ -115,41 +114,34 @@ Rectangle {
                     columns: 2
                     rows: 3
                     spacing: 8
+                    width: buttonsRow.width
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-
-                    Text {
+                    PlasmaComponents.Label {
                         text: i18n("Service URL:")
-                        color: theme.color
                     }
                     PlasmaComponents.TextField {
                         id: serviceUrlEdit
                         text: "https://identi.ca/api/"
+                        Keys.onTabPressed: userNameEdit.forceActiveFocus()
                     }
 
-                    Text {
+                    PlasmaComponents.Label {
                         text: i18n("User name:")
-                        color: theme.color
                     }
                     PlasmaComponents.TextField {
                         id: userNameEdit
+                        Keys.onTabPressed: passwordEdit.forceActiveFocus()
                     }
 
-                    Text {
+                    PlasmaComponents.Label {
                         text: i18n("Password:")
-                        color: theme.color
                     }
                     PlasmaComponents.TextField {
                         id: passwordEdit
                         echoMode: TextInput.Password
-                        //anchors.fill: fakePasswordEdit
-                        //anchors.margins: 5
-                        //echoMode: TextInput.Password
+                        Keys.onReturnPressed: layout.acceptConfig()
                     }
-//                     MouseArea {
-//                         anchors.fill: fakePasswordEdit
-//                         anchors.margins: -5
-//                         onPressed: mouse.accepted = true
-//                     }
                 }
                 Row {
                     id: buttonsRow
@@ -159,12 +151,7 @@ Rectangle {
                     }
                     PlasmaComponents.Button {
                         text: i18n("Ok")
-                        onClicked: {
-                            plasmoid.writeConfig("serviceUrl", serviceUrlEdit.text)
-                            plasmoid.writeConfig("userName", userNameEdit.text)
-                            plasmoid.writeConfig("password", passwordEdit.text)
-                            disappearAnimation.running = true
-                        }
+                        onClicked: layout.acceptConfig()
                     }
                     PlasmaComponents.Button {
                         text: i18n("Cancel")
@@ -172,6 +159,12 @@ Rectangle {
                             disappearAnimation.running = true
                         }
                     }
+                }
+                function acceptConfig() {
+                    plasmoid.writeConfig("serviceUrl", serviceUrlEdit.text);
+                    plasmoid.writeConfig("userName", userNameEdit.text);
+                    plasmoid.writeConfig("password", passwordEdit.text);
+                    disappearAnimation.running = true;
                 }
             }
         }
