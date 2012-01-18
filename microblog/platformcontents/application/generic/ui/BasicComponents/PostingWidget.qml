@@ -49,7 +49,10 @@ Item {
             anchors.top: postWidget.padding.top*/
             width: 64
             height: 64
-            // FIXME: [bla][bla] doesn't work :/
+            // FIXME: [bla][bla] doesn't work because it seems we don't get
+            // notifications for elements in the UserImages: data source. It's
+            // requested before the user image is in, and the ImageItem not
+            // being updated. Needs solution. :/
             //image: microblogSource.data["UserImages:"+serviceUrl][userName]
         }
         PlasmaComponents.Label {
@@ -114,7 +117,6 @@ Item {
 
             onCharacterCountChanged: {
                 text = 140 - characterCount;
-                print( "charCountChanged: " + characterCount);
                 if (characterCount <= 140) {
                     color = "green"
                 } else {
