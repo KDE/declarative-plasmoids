@@ -63,6 +63,7 @@ Item {
 
         PlasmaComponents.TextArea {
             id: postTextEdit
+            placeholderText:i18n("Share your thoughts...")
             anchors {
                 left: profileIcon.right
                 right: postWidget.right
@@ -75,12 +76,14 @@ Item {
             property string inReplyToStatusId: ""
 
             onTextChanged: {
+                var txt = text; // prevent copying text more often than necessary
+                characterCountLabel.characterCount = txt.length;
                 //yes, TextEdit doesn't have returnPressed sadly
-                if (text[text.length-1] == "\n") {
-                    Logic.update(text, inReplyToStatusId);
+                if (txt[txt.length-1] == "\n") {
+                    Logic.update(txt, inReplyToStatusId);
                     refresh()
                     print(" RETURN ");
-                } else if (text.length == 0) {
+                } else if (txt.length == 0) {
                     inReplyToStatusId = ""
                 }
             }
@@ -99,6 +102,23 @@ Item {
                     print(isFavorite)
                     Logic.setFavorite(id, isFavorite)
                     refresh()
+                }
+            }
+        }
+        PlasmaComponents.Label {
+            id: characterCountLabel
+            anchors { bottom: postTextEdit.bottom; right: postTextEdit.right; rightMargin: 8 }
+            property int characterCount: 0
+            opacity: 0.6
+            visible: (characterCount == 0)
+
+            onCharacterCountChanged: {
+                text = 140 - characterCount;
+                print( "charCountChanged: " + characterCount);
+                if (characterCount <= 140) {
+                    color = "green"
+                } else {
+                    color = "red"
                 }
             }
         }

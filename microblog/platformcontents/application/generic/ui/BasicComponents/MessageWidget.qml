@@ -45,11 +45,33 @@ ListItem {
         anchors.topMargin: 12
         width: 32
         height: 32
-        //image: microblogSource.data["UserImages:"+serviceUrl][user]
+        //image: microblogSource.data["Defaults"][1]
+        image: {
+            //for (p in Object.keys(microblogSource.data["Defaults"])) {
+            for (p in Object.keys(microblogSource.data["Defaults"])) {
+                print( "PP : " + p);
+            }
+            //print( "" );
+//             print(" props: " + Object.getOwnPropertyNames(microblogSource.data["Defaults"]).join(", "));
+//             for (k in microblogSource.data) {
+//                 //print(" Datasources: " + k);
+//                 //for (kk in Object.keys(microblogSource.data[k])) {
+//                 //    print("     key: " + kk);
+//                 //}
+//             }
+//             //print(" image: " + "UserImages:"+serviceUrl + " :: " + user);
+            print(typeof(microblogSource.data) + " mmmm" + serviceUrl);
+            if (typeof(microblogSource.data["UserImages:"+serviceUrl]) != "undefined") {
+                return microblogSource.data["UserImages:"+serviceUrl][user];
+            } else {
+                return microblogSource.data["Defaults"]["UserImage"];
+            };
+        }
     }
     QtExtraComponents.QIconItem {
         icon: QIcon("meeting-chair")
         anchors.fill: userIcon
+        opacity: 0
     }
 
     PlasmaComponents.Label {

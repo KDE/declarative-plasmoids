@@ -46,6 +46,7 @@ Item {
 
     function configChanged()
     {
+        print(" XXX COnnnecting");
         serviceUrl = plasmoid.readConfig("serviceUrl")
         if (!serviceUrl) {
             serviceUrl = "https://identi.ca/api/"
@@ -68,6 +69,7 @@ Item {
         interval: 100
         repeat: false
         onTriggered: {
+            print(" Logging in ..." + password);
             var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
             var operation = service.operationDescription("auth");
             operation.password = password
@@ -83,7 +85,16 @@ Item {
         interval: 50000
 
         onDataChanged: {
+            print( " datachanged " + sources.join(", "));
             plasmoid.busy = false
+        }
+        onSourceAdded: {
+            print(" Engine, new source: " + source);
+        }
+
+        Component.onCompleted: {
+            print( "connected to Defaults");
+            microblogSource.connectSource("Defaults")
         }
     }
 
