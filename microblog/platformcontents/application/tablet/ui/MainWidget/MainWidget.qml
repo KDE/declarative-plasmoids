@@ -54,8 +54,8 @@ Image {
             rightMargin: 8
         }
         onClicked: {
-            var object = configComponent.createObject(mainWidget);
-            print(component.errorString())
+            var componentObject = configComponent.createObject(mainWidget);
+            //print(componentObject.errorString())
         }
     }
 

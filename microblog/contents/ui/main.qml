@@ -53,13 +53,14 @@ Item {
         }
         userName = plasmoid.readConfig("userName")
         password = plasmoid.readConfig("password")
-
+        print( "Read user and password from config: " + userName + ":" + password);
         if (!serviceUrl || !userName || !password) {
             return
         }
 
         microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
-        microblogSource.connectSource("UserImages:"+serviceUrl)
+        //microblogSource.connectSource("UserImages:"+serviceUrl)
+        imageSource.connectSource("UserImages:"+serviceUrl)
 
         authTimer.running = true
     }
@@ -84,7 +85,7 @@ Item {
         engine: "microblog"
         interval: 50000
 
-        onDataChanged: {
+        onDataUpdated: {
             print( " datachanged " + sources.join(", "));
             plasmoid.busy = false
         }
@@ -98,6 +99,12 @@ Item {
         }
     }
 
+    PlasmaCore.DataSource {
+        id: imageSource
+        engine: "microblog"
+        interval: 50000
+    }
+    
     MainWidget {
         anchors.fill: main
     }
