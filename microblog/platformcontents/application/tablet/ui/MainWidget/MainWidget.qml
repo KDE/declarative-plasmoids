@@ -21,6 +21,7 @@ import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
+import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -31,43 +32,73 @@ Image {
     fillMode: Image.Tile
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
-    Image {
-        source: "plasmapackage:/images/sidebarbackground.png"
-        fillMode: Image.Tile
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            bottom: mainFlickable.top
+    Item {
+        id: topItem
+        anchors { left: parent.left; right: parent.right; top: parent.top }
+        height: childrenRect.height
+        //height: 64
+        //height: postingWidget.state == "active" ? 200 : 64;
+
+        Image {
+            source: "plasmapackage:/images/sidebarbackground.png"
+            fillMode: Image.Tile
+            anchors {
+                fill: parent
+//                 left: parent.left
+//                 right: parent.right
+//                 top: parent.top
+//                 bottom: mainFlickable.top
+            }
         }
+        MobileComponents.ActionButton {
+            svg: PlasmaCore.Svg {
+                imagePath: "widgets/configuration-icons"
+            }
+            elementId: "configure"
+            anchors {
+                top: parent.top
+                topMargin: 8
+                right: parent.right
+                rightMargin: 8
+            }
+            onClicked: {
+                var componentObject = configComponent.createObject(mainWidget);
+                //print(componentObject.errorString())
+            }
+
+
+
+        }
+        PostingWidget {
+            id: postingWidget
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: topItem.top
+            anchors.bottom: topItem.bottom
+            //height: 200
+            width: 400
+            anchors.topMargin: 8
+            anchors.bottomMargin: 16
+        }
+
+    /*
+        MobileComponents.ActionButton {
+            svg: PlasmaCore.Svg {
+                imagePath: "widgets/configuration-icons"
+            }
+            elementId: "configure"
+            anchors {
+                top: parent.top
+                topMargin: 8
+                right: parent.right
+                rightMargin: 8
+            }
+            onClicked: {
+                var object = configComponent.createObject(mainWidget);
+                print(configComponent.errorString())
+            }
+        }
+    */
     }
-
-    MobileComponents.ActionButton {
-        svg: PlasmaCore.Svg {
-            imagePath: "widgets/configuration-icons"
-        }
-        elementId: "configure"
-        anchors {
-            top: parent.top
-            topMargin: 8
-            right: parent.right
-            rightMargin: 8
-        }
-        onClicked: {
-            var componentObject = configComponent.createObject(mainWidget);
-            //print(componentObject.errorString())
-        }
-    }
-
-
-
-    PostingWidget {
-        id: postingWidget
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 16
-    }
-
     PlasmaCore.Svg {
         id: shadowSvg
         imagePath: plasmoid.file("images", "shadow.svgz")
@@ -84,13 +115,33 @@ Image {
         elementId: "bottom"
     }
 
+    QtExtraComponents.MouseEventListener {
+        id: mouseEventListener
+        z: 100
+        x: 0
+        y: 0
+        width: 200
+        height: topItem.height
+        //anchors.bottom: mainFlickable.top
+        //anchors.fill: mainFlickable
+        onPressed: {
+//             mainFlickable.forceActiveFocus();
+            postingWidget.state = "inactive"
+            print("focus lost.");
+        }
+    }
+    //Rectangle { anchors.fill: mouseEventListener; color: "green"; opacity: 0.3 }
+
     Flickable {
         id: mainFlickable
-        anchors.top: postingWidget.bottom
-        anchors.topMargin: 16
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        //focus: true
+        //parent: mouseEventListener
+        //anchors.fill: parent
+        anchors.top: topItem.bottom
+        //anchors.topMargin: 16
+        anchors.left: mainWidget.left
+        anchors.bottom: mainWidget.bottom
+        anchors.right: mainWidget.right
         clip: true
 
         contentWidth: messageContainer.width
