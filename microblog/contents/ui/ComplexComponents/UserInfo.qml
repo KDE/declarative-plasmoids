@@ -43,8 +43,8 @@ Item {
         id: userIcon
         smooth: true
         anchors { left: parent.left; top: parent.top }
-        width: 128
-        height: 128
+        width: 96
+        height: 96
         // FIXME: [bla][bla] doesn't work :/
         //image: microblogSource.data["UserImages:"+serviceUrl][user]
         image: {

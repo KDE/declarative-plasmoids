@@ -23,6 +23,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/ui/ComplexComponents"
 
 ListItem {
     id: messageWidget
@@ -39,29 +40,11 @@ ListItem {
     property variant avatar: microblogSource.data["Defaults"]["UserImage"]
     property string status: model["Status"]
 
-    QtExtraComponents.QImageItem {
+    Avatar {
         id: userIcon
-        smooth: true
         anchors.left: padding.left
         anchors.top: padding.top
         anchors.topMargin: 12
-        width: 48
-        height: 48
-        image: {
-            var sourceName = "UserImages:"+serviceUrl;
-            if (typeof(imageSource.data[sourceName]) != "undefined" &&
-                typeof(imageSource.data[sourceName][user]) != "undefined") {
-                return imageSource.data[sourceName][user];
-            } else {
-                return microblogSource.data["Defaults"]["UserImage"];
-            }
-        }
-    }
-
-    QtExtraComponents.QIconItem {
-        icon: QIcon("meeting-chair")
-        anchors.fill: userIcon
-        opacity: 0
     }
 
     PlasmaComponents.Label {

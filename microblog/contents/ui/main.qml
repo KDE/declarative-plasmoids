@@ -84,6 +84,7 @@ Item {
     PlasmaCore.DataSource {
         id: microblogSource
         engine: "microblog"
+        //interval: 50000
         interval: 50000
 
         onDataUpdated: {

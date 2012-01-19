@@ -94,8 +94,8 @@ Rectangle {
                 anchors.top: padding.top
                 anchors.topMargin: 12
                 anchors.rightMargin: 12
-                width: 128
-                height: 128
+                width: 96
+                height: 96
                 image: {
                     var sourceName = "UserImages:"+serviceUrl;
                     if (typeof(imageSource.data[sourceName]) != "undefined" &&
