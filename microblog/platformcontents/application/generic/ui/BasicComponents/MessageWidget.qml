@@ -45,8 +45,8 @@ ListItem {
         anchors.left: padding.left
         anchors.top: padding.top
         anchors.topMargin: 12
-        width: 32
-        height: 32
+        width: 48
+        height: 48
         image: {
             var sourceName = "UserImages:"+serviceUrl;
             if (typeof(imageSource.data[sourceName]) != "undefined" &&

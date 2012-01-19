@@ -88,12 +88,14 @@ Rectangle {
             QtExtraComponents.QImageItem {
                 id: userIcon
                 smooth: true
+                x: 24; y: 24;
                 anchors.left: padding.left
-                anchors.verticalCenter: parent.verticalCenter
-                width: 64
-                height: 64
-                // FIXME: [bla][bla] doesn't work :/
-                //image: microblogSource.data["UserImages:"+serviceUrl][user]
+                anchors.leftMargin: 12
+                anchors.top: padding.top
+                anchors.topMargin: 12
+                anchors.rightMargin: 12
+                width: 128
+                height: 128
                 image: {
                     var sourceName = "UserImages:"+serviceUrl;
                     if (typeof(imageSource.data[sourceName]) != "undefined" &&
@@ -107,11 +109,13 @@ Rectangle {
             }
             PlasmaComponents.Label {
                 id: infoLabel
-                anchors.leftMargin: 5
+                //anchors.leftMargin: 5
                 anchors.bottomMargin: 5
                 anchors.left: userIcon.right
+                anchors.leftMargin: 12
                 anchors.right: padding.right
                 anchors.top: padding.top
+                anchors.topMargin: 12
                 text: i18n("%1 from %2", user, source)
                 font.pointSize: 15
             }
@@ -122,9 +126,9 @@ Rectangle {
                 PlasmaComponents.ToolButton {
                     id: favoriteButton
                     text: "♥"
-                    //font.pointSize: 30
-                    width: 24
-                    height: 24
+                    font.pointSize: 24
+                    width: 48
+                    height: 48
                     checked: isFavorite
                     onClicked: {
                         main.favoriteAsked(id, isFavorite != "true");
@@ -133,9 +137,9 @@ Rectangle {
                 PlasmaComponents.ToolButton {
                     id: replyButton
                     text: "@"
-                    //font.pointSize: 30
-                    width: 24
-                    height: 24
+                    font.pointSize: 24
+                    width: 48
+                    height: 48
                     onClicked: {
                         main.replyAsked(id, "@" + user + ": ");
                     }
@@ -143,9 +147,9 @@ Rectangle {
                 PlasmaComponents.ToolButton {
                     id: repeatButton
                     text: "♻"
-                    //font.pointSize: 30
-                    width: 24
-                    height: 24
+                    font.pointSize: 24
+                    width: 48
+                    height: 48
                     onClicked: {
                         main.retweetAsked(id);
                     }
@@ -153,7 +157,7 @@ Rectangle {
             }
             PlasmaComponents.Label {
                 id: bodyText
-                anchors.leftMargin: 5
+                anchors.leftMargin: 12
                 anchors.left: userIcon.right
                 anchors.right: padding.right
                 anchors.top: infoLabel.bottom

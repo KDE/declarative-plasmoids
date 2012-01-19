@@ -71,7 +71,7 @@ Item {
         interval: 100
         repeat: false
         onTriggered: {
-            print(" Logging in ..." + password);
+            //print(" Logging in ..." + password);
             var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
             var operation = service.operationDescription("auth");
             operation.password = password
@@ -87,15 +87,15 @@ Item {
         interval: 50000
 
         onDataUpdated: {
-            print( " datachanged " + sources.join(", "));
+            //print( " datachanged " + sources.join(", "));
             plasmoid.busy = false
         }
         onSourceAdded: {
-            print(" Engine, new source: " + source);
+            //print(" Engine, new source: " + source);
         }
 
         Component.onCompleted: {
-            print( "connected to Defaults");
+            //print( "connected to Defaults");
             microblogSource.connectSource("Defaults")
         }
     }
@@ -103,7 +103,7 @@ Item {
     PlasmaCore.DataSource {
         id: imageSource
         engine: "microblog"
-        interval: 50000
+        interval: 0
 
         onNewData: {
             //print(" XXXXXXXXXXXXXXXXXXXXXXXXX imagesource has new data! " + sourceName);
