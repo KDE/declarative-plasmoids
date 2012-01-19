@@ -94,6 +94,16 @@ Rectangle {
                 height: 64
                 // FIXME: [bla][bla] doesn't work :/
                 //image: microblogSource.data["UserImages:"+serviceUrl][user]
+                image: {
+                    var sourceName = "UserImages:"+serviceUrl;
+                    if (typeof(imageSource.data[sourceName]) != "undefined" &&
+                        typeof(imageSource.data[sourceName][user]) != "undefined") {
+                        return imageSource.data[sourceName][user];
+                    } else {
+                        return microblogSource.data["Defaults"]["UserImage"];
+                    }
+                }
+
             }
             PlasmaComponents.Label {
                 id: infoLabel
