@@ -29,8 +29,8 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl
-    property string userName
+    property string serviceUrl: "https://identi.ca/api"
+    property string userName: "sebas"
     property string password
 
     signal replyAsked(string id, string message)
@@ -50,6 +50,7 @@ Item {
         serviceUrl = plasmoid.readConfig("serviceUrl")
         if (!serviceUrl) {
             serviceUrl = "https://identi.ca/api/"
+            serviceUrl = "https://twitter.com/"
         }
         userName = plasmoid.readConfig("userName")
         password = plasmoid.readConfig("password")
@@ -103,8 +104,34 @@ Item {
         id: imageSource
         engine: "microblog"
         interval: 50000
+
+        onNewData: {
+            //print(" XXXXXXXXXXXXXXXXXXXXXXXXX imagesource has new data! " + sourceName);
+        }
+
+        Component.onCompleted: {
+            serviceUrl = plasmoid.readConfig("serviceUrl")
+            imageSource.connectSource("UserImages:"+serviceUrl)
+            //print(" XXXXXXXXX Imagesource connected...");
+        }
     }
-    
+
+    PlasmaCore.DataSource {
+        id: userSource
+        engine: "microblog"
+        interval: 50000
+
+        onNewData: {
+            //print(" XXXXXXXXXXXXXXXXXXXXXXXXX imagesource has new data! " + sourceName);
+        }
+
+        Component.onCompleted: {
+            //serviceUrl = plasmoid.readConfig("serviceUrl")
+            //imageSource.connectSource("UserImages:"+serviceUrl)
+            //print(" XXXXXXXXX userource connected...");
+        }
+    }
+
     MainWidget {
         anchors.fill: main
     }

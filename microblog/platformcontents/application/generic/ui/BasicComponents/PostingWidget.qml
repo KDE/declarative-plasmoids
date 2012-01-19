@@ -76,6 +76,7 @@ Item {
             placeholderText: i18n("Share your thoughts...")
             height: 90
             interactive: false
+            //width: 300
 
             anchors {
                 left: profileIcon.right
@@ -91,19 +92,25 @@ Item {
             onTextChanged: {
                 var txt = text; // prevent copying text more often than necessary
                 characterCountLabel.characterCount = txt.length;
-                if (txt.length == 0) {
+                //yes, TextEdit doesn't have returnPressed sadly
+                if (txt[txt.length-1] == "\n") {
+                    //Logic.update(txt, inReplyToStatusId);
+                    //refresh();
+                    print(" RETURN ");
+                } else if (txt.length == 0) {
                     inReplyToStatusId = ""
                 }
             }
 
             Keys.onReturnPressed: {
-                print(" Sending Update: " + txt + " to statusId: " + inReplyToStatusId);
                 //Logic.update(txt, inReplyToStatusId);
-                refresh();
+                //refresh();
+                print(" Sending Update: " + txt + " to statusId: " + inReplyToStatusId);
+                ///print(" sending update");
             }
 
             onActiveFocusChanged: {
-                //print("Focus " + activeFocus);
+                print("Focus " + activeFocus);
                 activeFocus ? pwItem.state = "active" : pwItem.state = "inactive";
             }
 

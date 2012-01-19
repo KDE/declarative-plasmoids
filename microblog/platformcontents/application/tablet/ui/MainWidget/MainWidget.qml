@@ -209,6 +209,14 @@ Image {
                     messageDetails.state = "visible"
                 }
             }
+            UserInfo {
+                id: userInfo
+                width: messageContainer.columnWidth
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.topMargin: 24
+                clip: false
+            }
             MessageList {
                 id: messageList
                 width: messageContainer.columnWidth

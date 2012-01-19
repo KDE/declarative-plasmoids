@@ -25,6 +25,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 
 ListItem {
+    id: messageWidget
     //try to fix the height to 8 lines
     //height: fromLabel.height*6
     height: childrenRect.height
@@ -35,6 +36,7 @@ ListItem {
     property string source: model["Source"]
     property string dateTime: model["Date"]
     property bool isFavorite: model["IsFavorite"]
+    property variant avatar: microblogSource.data["Defaults"]["UserImage"]
     property string status: model["Status"]
 
     QtExtraComponents.QImageItem {
@@ -48,9 +50,10 @@ ListItem {
         //image: microblogSource.data["Defaults"][1]
         image: {
             //for (p in Object.keys(microblogSource.data["Defaults"])) {
-            for (p in Object.keys(microblogSource.data["Defaults"])) {
-                print( "PP : " + p);
-            }
+//             for (p in imageSource.data[messageWidget.source]) {
+//                 print( "PP : " + p);
+//             }
+//             return;
             //print( "" );
 //             print(" props: " + Object.getOwnPropertyNames(microblogSource.data["Defaults"]).join(", "));
 //             for (k in microblogSource.data) {
@@ -60,14 +63,57 @@ ListItem {
 //                 //}
 //             }
 //             //print(" image: " + "UserImages:"+serviceUrl + " :: " + user);
-            print(typeof(microblogSource.data) + " mmmm" + serviceUrl);
-            if (typeof(microblogSource.data["UserImages:"+serviceUrl]) != "undefined") {
-                return microblogSource.data["UserImages:"+serviceUrl][user];
+            //print(typeof(microblogSource.data) + " mmmm" + serviceUrl);
+            //return microblogSource.data["UserImages:"+serviceUrl][user];
+            for (k in imageSource.data) {
+                if (k == user) {
+                    print( " imageChanged: Key: " + k + ":" + imageSource.data[k]);
+                    //userIcon.image = imageSource.data[k];
+                    return imageSource.data[k];
+                }
+                //output += "<strong>" + k + "</strong>: " + data[k] + br;
+            }
+            var sourceName = "UserImages:"+serviceUrl;
+            print(" SourceName: " + sourceName);
+            if (typeof(imageSource.data[sourceName]) != "undefined") {
+                print( " OK!");
+                return imageSource.data[sourceName][user];
             } else {
+                print( " FAllback.");
                 return microblogSource.data["Defaults"]["UserImage"];
             };
         }
     }
+
+    function showData(d, sourceName) {
+        //var d = imageSource.data["UserImages:https://identi.ca/api/"];
+        for (k in d) {
+            //print( " source key: " + k + ":" + d[k]);
+            if (k == user) {
+                print( " FOUND :) Key: " + k + ":" + d[k], sourceName);
+                avatar = imageSource.data[k];
+                userIcon.image = d[k]
+            }
+            //output += "<strong>" + k + "</strong>: " + data[k] + br;
+        }
+    }
+    Connections {
+        target: imageSource
+        onNewData: {
+            var sourceName = "UserImages:https://identi.ca/api/";
+            print("onNewData: ", sourceName);
+            var d = imageSource.data[sourceName];
+            showData(d, sourceName);
+        }
+        onDataChanged: {
+            var sourceName = "UserImages:https://identi.ca/api/";
+            print("onDataChanged: ", sourceName);
+            var d = imageSource.data[sourceName];
+            showData(d, sourceName);
+        }
+    }
+
+    
     QtExtraComponents.QIconItem {
         icon: QIcon("meeting-chair")
         anchors.fill: userIcon
