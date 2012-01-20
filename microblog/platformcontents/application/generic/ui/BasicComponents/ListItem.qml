@@ -23,7 +23,7 @@ PlasmaCore.FrameSvgItem {
     id : background
     imagePath: "widgets/listitem"
     state: "normal"
-    prefix: "state"
+    prefix: state
     property int implicitHeight
 
     property alias padding: paddingRectangle

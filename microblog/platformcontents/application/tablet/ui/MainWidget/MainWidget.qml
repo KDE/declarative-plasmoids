@@ -151,6 +151,7 @@ Image {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             //FIXME: use font size
+            spacing: 4
             property int columnWidth: mainWidget.width/Math.min(3, (mainWidget.width/340))
 
             MessageList {

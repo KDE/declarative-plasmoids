@@ -45,77 +45,76 @@ ListItem {
         anchors.left: padding.left
         anchors.top: padding.top
         anchors.topMargin: 12
+        anchors.leftMargin: 12
     }
 
     PlasmaComponents.Label {
         id: fromLabel
-        anchors.leftMargin: 5
-        anchors.bottomMargin: 8
+        anchors.leftMargin: 11
+        anchors.rightMargin: 12
         anchors.left: userIcon.right
         anchors.right: padding.right
         anchors.top: padding.top
+        anchors.topMargin: 4
         opacity: 0.5
-        style: Text.Raised
+        style: Text.Sunken
         font.pointSize: theme.defaultFont.pointSize + 4
         styleColor: theme.backgroundColor
         text: user
     }
-    Row {
-        id: toolBoxRow
-        opacity: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        PlasmaComponents.ToolButton {
-            id: favoriteButton
-            text: "♥"
-            width: 24
-            height: 24
-            checked: isFavorite
-            onClicked: {
-                main.favoriteAsked(messageId, isFavorite != "true");
-            }
-        }
-        PlasmaComponents.ToolButton {
-            id: replyButton
-            text: "@"
-            width: 24
-            height: 24
-            onClicked: {
-                main.replyAsked(messageId, "@" + user + ": ");
-            }
-        }
-        PlasmaComponents.ToolButton {
-            id: repeatButton
-            text: "♻"
-            width: 24
-            height: 24
-            onClicked: {
-                main.retweetAsked(messageId);
-            }
-        }
-    }
+//     Row {
+//         id: toolBoxRow
+//         opacity: 0
+//         anchors.right: parent.right
+//         anchors.rightMargin: 5
+//         PlasmaComponents.ToolButton {
+//             id: favoriteButton
+//             text: "♥"
+//             width: 24
+//             height: 24
+//             checked: isFavorite
+//             onClicked: {
+//                 main.favoriteAsked(messageId, isFavorite != "true");
+//             }
+//         }
+//         PlasmaComponents.ToolButton {
+//             id: replyButton
+//             text: "@"
+//             width: 24
+//             height: 24
+//             onClicked: {
+//                 main.replyAsked(messageId, "@" + user + ": ");
+//             }
+//         }
+//         PlasmaComponents.ToolButton {
+//             id: repeatButton
+//             text: "♻"
+//             width: 24
+//             height: 24
+//             onClicked: {
+//                 main.retweetAsked(messageId);
+//             }
+//         }
+//     }
     PlasmaComponents.Label {
         id: bodyText
-        anchors.leftMargin: 5
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
         anchors.left: userIcon.right
         anchors.right: padding.right
-        anchors.top: toolBoxRow.bottom
-        anchors.topMargin: 6
+        anchors.top: fromLabel.bottom
         anchors.bottomMargin: 6
         text: status
         wrapMode: Text.WordWrap
     }
     PlasmaComponents.Label {
         id: infoLabel
-        //height: 12
-        anchors.leftMargin: 5
-        //anchors.bottomMargin: 12
-        anchors.left: bodyText.left
         anchors.right: bodyText.right
-        anchors.top: bodyText.bottom
+        anchors.bottom: fromLabel.bottom
+        anchors.rightMargin: 12
         opacity: 0.3
         font.pointSize: theme.smallestFont.pointSize
-        style: Text.Raised
+        //style: Text.Raised
         styleColor: theme.backgroundColor
         text: {
             var d = new Date(dateTime);
