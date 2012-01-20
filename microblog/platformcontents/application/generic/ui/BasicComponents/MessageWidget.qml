@@ -27,17 +27,13 @@ import "plasmapackage:/ui/ComplexComponents"
 
 ListItem {
     id: messageWidget
-    //try to fix the height to 8 lines
-    //height: fromLabel.height*6
     height: childrenRect.height
-    //implicitHeight: fromLabel.height+bodyText.height
 
     property string messageId: model["Id"]
     property string user: model["User"]
     property string source: model["Source"]
     property string dateTime: model["Date"]
     property bool isFavorite: model["IsFavorite"]
-    property variant avatar: microblogSource.data["Defaults"]["UserImage"]
     property string status: model["Status"]
 
     Avatar {
@@ -62,40 +58,6 @@ ListItem {
         styleColor: theme.backgroundColor
         text: user
     }
-//     Row {
-//         id: toolBoxRow
-//         opacity: 0
-//         anchors.right: parent.right
-//         anchors.rightMargin: 5
-//         PlasmaComponents.ToolButton {
-//             id: favoriteButton
-//             text: "♥"
-//             width: 24
-//             height: 24
-//             checked: isFavorite
-//             onClicked: {
-//                 main.favoriteAsked(messageId, isFavorite != "true");
-//             }
-//         }
-//         PlasmaComponents.ToolButton {
-//             id: replyButton
-//             text: "@"
-//             width: 24
-//             height: 24
-//             onClicked: {
-//                 main.replyAsked(messageId, "@" + user + ": ");
-//             }
-//         }
-//         PlasmaComponents.ToolButton {
-//             id: repeatButton
-//             text: "♻"
-//             width: 24
-//             height: 24
-//             onClicked: {
-//                 main.retweetAsked(messageId);
-//             }
-//         }
-//     }
     PlasmaComponents.Label {
         id: bodyText
         anchors.leftMargin: 12
@@ -114,15 +76,13 @@ ListItem {
         anchors.rightMargin: 12
         opacity: 0.3
         font.pointSize: theme.smallestFont.pointSize
-        //style: Text.Raised
         styleColor: theme.backgroundColor
         text: {
             var d = new Date(dateTime);
             dout = Qt.formatDateTime(d, "hh:mm");
-            //print(" D1: " + dout);
-            return i18n("at %1 from %2", dout, source)
+            return i18n("at %1", dout);
         }
     }
-    
+
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
 }

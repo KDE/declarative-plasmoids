@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
@@ -84,19 +84,12 @@ Item {
     PlasmaCore.DataSource {
         id: microblogSource
         engine: "microblog"
-        //interval: 50000
         interval: 50000
 
         onDataUpdated: {
-            //print( " datachanged " + sources.join(", "));
             plasmoid.busy = false
         }
-        onSourceAdded: {
-            //print(" Engine, new source: " + source);
-        }
-
         Component.onCompleted: {
-            //print( "connected to Defaults");
             microblogSource.connectSource("Defaults")
         }
     }
@@ -106,31 +99,16 @@ Item {
         engine: "microblog"
         interval: 0
 
-        onNewData: {
-            //print(" XXXXXXXXXXXXXXXXXXXXXXXXX imagesource has new data! " + sourceName);
-        }
-
         Component.onCompleted: {
             serviceUrl = plasmoid.readConfig("serviceUrl")
             imageSource.connectSource("UserImages:"+serviceUrl)
-            //print(" XXXXXXXXX Imagesource connected...");
         }
     }
 
     PlasmaCore.DataSource {
         id: userSource
         engine: "microblog"
-        interval: 50000
-
-        onNewData: {
-            //print(" XXXXXXXXXXXXXXXXXXXXXXXXX imagesource has new data! " + sourceName);
-        }
-
-        Component.onCompleted: {
-            //serviceUrl = plasmoid.readConfig("serviceUrl")
-            //imageSource.connectSource("UserImages:"+serviceUrl)
-            //print(" XXXXXXXXX userource connected...");
-        }
+        interval: 0
     }
 
     MainWidget {
