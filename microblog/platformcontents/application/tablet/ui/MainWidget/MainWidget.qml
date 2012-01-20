@@ -152,7 +152,16 @@ Image {
             anchors.bottom: parent.bottom
             //FIXME: use font size
             spacing: 4
-            property int columnWidth: mainWidget.width/Math.min(3, (mainWidget.width/340))
+            property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
+
+            UserInfo {
+                id: userInfo
+                width: messageContainer.columnWidth
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.topMargin: 24
+                clip: false
+            }
 
             MessageList {
                 id: timelineList
@@ -209,14 +218,6 @@ Image {
                     messageDetails.status = item.status
                     messageDetails.state = "visible"
                 }
-            }
-            UserInfo {
-                id: userInfo
-                width: messageContainer.columnWidth
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 24
-                clip: false
             }
             MessageList {
                 id: messageList

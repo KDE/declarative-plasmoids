@@ -24,8 +24,10 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/ui/BasicComponents"
 
-Item {
+PlasmaCore.FrameSvgItem {
     id: userInfo
+    imagePath: "widgets/frame"
+    prefix: "plain"
 
     clip: true
 //     snapMode: ListView.SnapToItem
