@@ -56,13 +56,9 @@ Item {
             width: height
             userId: userName
         }
-        PlasmaComponents.Label {
-            anchors.top: profileIcon.bottom
-            text: userName
-        }
-//         QtExtraComponents.QIconItem {
-//             icon: QIcon("user-identity")
-//             anchors.fill: profileIcon
+//         PlasmaComponents.Label {
+//             anchors.top: profileIcon.bottom
+//             text: userName
 //         }
 
         PlasmaComponents.TextArea {

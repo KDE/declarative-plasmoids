@@ -30,7 +30,7 @@ Item {
     height: 300
 
     property string serviceUrl: "https://identi.ca/api/"
-    property string userName
+    property string userName: "sebas" // FIXME: remove until config doesn't get nuked all the time
     property string password
 
     signal replyAsked(string id, string message)

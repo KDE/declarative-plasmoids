@@ -40,6 +40,7 @@ PlasmaCore.FrameSvgItem {
     property string login: userName
     property string url: serviceUrl
     property string source: timelineType+":"+url
+    property string previousSource: ""
     //property alias data: imageSource.data
 
     Avatar {
@@ -62,16 +63,38 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    Text {
-        id: headerLabel
-        text: "<h1>User " + userInfo.login + "</h1>"
-        anchors { left: userIcon.right; right: parent.right; verticalCenter: userIcon.verticalCenter}
-
+    PlasmaComponents.Label {
+        id: realNameLabel
+        font.pointSize: theme.defaultFont.pointSize * 1.5
+        anchors { left: userIcon.right; right: parent.right;  bottom: userIcon.verticalCenter; leftMargin: 12; }
+    }
+    PlasmaComponents.Label {
+        id: userIdLabel
+        text: userInfo.login ? "@" + userInfo.login : ""
+        anchors { left: userIcon.right; right: parent.right; top: userIcon.verticalCenter; leftMargin: 12; }
+    }
+    PlasmaComponents.Label {
+        id: descriptonLabel
+        wrapMode: Text.Wrap
+        opacity: 0.6
+        //text: userInfo.login ? "@" + userInfo.login : ""
+        anchors { left: userIcon.left; right: parent.right; top: userIcon.bottom; topMargin: 12; leftMargin: 12; }
     }
 
-    Text {
+    PlasmaComponents.Label {
+        id: labelText
+        horizontalAlignment: Text.AlignRight
+        anchors { right: userIcon.right; left: parent.left; top: descriptonLabel.bottom; topMargin: 12; }
+    }
+    PlasmaComponents.Label {
+        id: infoText
+        anchors { left: userIdLabel.left; right: parent.right; top: descriptonLabel.bottom; topMargin: 12;  }
+    }
+
+    PlasmaComponents.Label {
         id: mainText
-        anchors { left: parent.left; right: parent.right; top: userIcon.bottom; bottom: parent.bottom; }
+        anchors { left: parent.left; right: parent.right; top: labelText.bottom; bottom: parent.bottom; }
+        visible: false
     }
 
     onSourceChanged: {
@@ -82,10 +105,55 @@ PlasmaCore.FrameSvgItem {
             //url = "https://identi.ca/api/"
         }
         //print("Connecting to : " + source);
-        source = timelineType+":"+login+"@"+url
+        //source = timelineType+":"+login+"@"+url
         //source = "User:sebas@http://identi.ca/api"
-        userSource.connectSource(source);
+        if (userSource.data[source]) {
+            print(" moving " + source);
+            updateData(userSource.data[source]);
+        } else {
+            print(" connnecting " + source);
+            userSource.connectSource(source);
+        }
         //timer.running = true
+    }
+
+    function updateData(data) {
+        realNameLabel.text = data.realname;
+        descriptonLabel.text = data.description ? data.description : "";
+        print("DESC:" + data.description);
+        var br = "<br/>\n";
+        var info = "";
+        var labels = "";
+        if (data.location) {
+            info += data.location + br;
+            labels += i18n("Location:") + br;
+        }
+        if (data.website) {
+            info += "<a href=\"http://" + data.website + "\">" + data.website + "</a>" + br;
+            labels += i18n("Website:") + br;
+        }
+//         if (data.location) {
+//             info += data.location + br;
+//             labels += i18n("Location:") + br;
+//         }
+        labels += br + i18n("Updates:") + br;
+        info += br + data.tweets + br;
+        // friends
+        labels += i18n("Following:") + br;
+        info += data.friends + br;
+        // followers
+        labels += i18n("Followers:") + br;
+        info += data.followers + br;
+
+        infoText.text = info;
+        labelText.text = labels
+
+        var output = "";
+        for (k in data) {
+            //print( " Key: " + k + ":" + data[k]);
+            output += "<strong>" + k + "</strong>: " + data[k] + br;
+        }
+        mainText.text = output;
     }
 
     Connections {
@@ -93,20 +161,14 @@ PlasmaCore.FrameSvgItem {
         onNewData: {
             //print(" new data for " + sourceName);
             //print(" DATA: " + data);
-            var br = "<br/>\n";
-            var output = "";
-            for (k in data) {
-                //print( " Key: " + k + ":" + data[k]);
-                output += "<strong>" + k + "</strong>: " + data[k] + br;
-            }
-            mainText.text = output;
+            updateData(data);
         }
     }
 
     onLoginChanged: {
         source = timelineType+":"+login+"@"+url
         print("onLoginChanged: " + source);
-        userSource.connectSource(source);
+        //userSource.connectSource(source);
     }
     Component.onCompleted: {
         print(" user info loaded: " + login + source);
