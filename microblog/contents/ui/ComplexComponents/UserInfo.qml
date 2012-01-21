@@ -78,7 +78,7 @@ PlasmaCore.FrameSvgItem {
         wrapMode: Text.Wrap
         opacity: 0.6
         //text: userInfo.login ? "@" + userInfo.login : ""
-        anchors { left: userIcon.left; right: parent.right; top: userIcon.bottom; topMargin: 12; leftMargin: 12; }
+        anchors { left: userIcon.left; right: parent.right; top: userIcon.bottom; topMargin: 12;}
     }
 
     PlasmaComponents.Label {

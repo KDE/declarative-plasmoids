@@ -54,6 +54,7 @@ ListItem {
         anchors.topMargin: 4
         opacity: 0.5
         style: Text.Sunken
+        elide: Text.ElideRight
         font.pointSize: theme.defaultFont.pointSize + 4
         styleColor: theme.backgroundColor
         text: user
