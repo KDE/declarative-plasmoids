@@ -40,22 +40,21 @@ PlasmaCore.FrameSvgItem {
     property string login: userName
     property string url: serviceUrl
     property string source: timelineType+":"+url
+    //property alias data: imageSource.data
 
-    QtExtraComponents.QImageItem {
+    Avatar {
         id: userIcon
-        smooth: true
+        userId: login
         anchors { left: parent.left; top: parent.top }
         width: 96
         height: 96
-        // FIXME: [bla][bla] doesn't work :/
-        //image: microblogSource.data["UserImages:"+serviceUrl][user]
+        anchors.margins: 12
         image: {
-            //print(" USer: " + "sebas");
             var sourceName = "UserImages:"+serviceUrl;
             if (typeof(imageSource.data[sourceName]) != "undefined" &&
-                typeof(imageSource.data[sourceName]["sebas"]) != "undefined") {
+                typeof(imageSource.data[sourceName][login]) != "undefined") {
                 //print("set image for sebas");
-                return imageSource.data[sourceName]["sebas"];
+                return imageSource.data[sourceName][login];
             } else {
                 //print("set fallback");
                 return microblogSource.data["Defaults"]["UserImage"];
@@ -78,8 +77,9 @@ PlasmaCore.FrameSvgItem {
     onSourceChanged: {
         if (url == "" || login == "") {
             print("Invalid source: " + source);
-            login = "sebas";
-            url = "https://identi.ca/api/"
+            print(" UserInfo: " + login, url, source);
+            //login = "sebas";
+            //url = "https://identi.ca/api/"
         }
         //print("Connecting to : " + source);
         source = timelineType+":"+login+"@"+url
@@ -103,7 +103,12 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-   Component.onCompleted: {
+    onLoginChanged: {
+        source = timelineType+":"+login+"@"+url
+        print("onLoginChanged: " + source);
+        userSource.connectSource(source);
+    }
+    Component.onCompleted: {
         print(" user info loaded: " + login + source);
-   }
+    }
 }

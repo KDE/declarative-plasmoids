@@ -126,8 +126,8 @@ Image {
         //anchors.fill: mainFlickable
         onPressed: {
 //             mainFlickable.forceActiveFocus();
-            postingWidget.state = "inactive"
-            print("focus lost.");
+            postingWidget.state == "inactive" ? postingWidget.state = "active" : postingWidget.state = "inactive"
+            print("focus " + postingWidget.state);
         }
     }
     //Rectangle { anchors.fill: mouseEventListener; color: "green"; opacity: 0.3 }

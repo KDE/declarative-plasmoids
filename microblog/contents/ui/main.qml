@@ -29,8 +29,8 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl: "https://identi.ca/api"
-    property string userName: "sebas"
+    property string serviceUrl: "https://identi.ca/api/"
+    property string userName
     property string password
 
     signal replyAsked(string id, string message)
@@ -46,24 +46,35 @@ Item {
 
     function configChanged()
     {
-        print(" XXX COnnnecting");
+        //print(" XXX COnnnecting");
         serviceUrl = plasmoid.readConfig("serviceUrl")
-        if (!serviceUrl) {
+        var u = plasmoid.readConfig("userName")
+        var p = plasmoid.readConfig("password")
+        var s = serviceUrl = plasmoid.readConfig("serviceUrl")
+        print( "XXX Read user and password from config: " + u + ":" + p);
+
+        if (u) {
+            userName = u;
+        }
+        userName = u;
+        if (p) {
+            password = plasmoid.readConfig("password")
+        }
+        if (s) {
+            serviceUrl = plasmoid.readConfig("serviceUrl")
+            imageSource.connectSource("UserImages:"+serviceUrl)
+        } else {
             serviceUrl = "https://identi.ca/api/"
-            serviceUrl = "https://twitter.com/"
+            //serviceUrl = "https://twitter.com/"
         }
-        userName = plasmoid.readConfig("userName")
-        password = plasmoid.readConfig("password")
-        print( "Read user and password from config: " + userName + ":" + password);
-        if (!serviceUrl || !userName || !password) {
-            return
+        if (serviceUrl && userName) {
+            microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
-
-        microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         //microblogSource.connectSource("UserImages:"+serviceUrl)
-        imageSource.connectSource("UserImages:"+serviceUrl)
 
-        authTimer.running = true
+        if (serviceUrl && userName && password) {
+            authTimer.running = true
+        }
     }
 
     Timer {
@@ -84,7 +95,7 @@ Item {
     PlasmaCore.DataSource {
         id: microblogSource
         engine: "microblog"
-        interval: 50000
+        interval: 600000 // 10 minutes
 
         onDataUpdated: {
             plasmoid.busy = false

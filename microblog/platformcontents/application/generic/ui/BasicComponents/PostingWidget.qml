@@ -23,6 +23,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
+import "plasmapackage:/ui/ComplexComponents"
 
 Item {
     id: pwItem
@@ -47,29 +48,22 @@ Item {
         prefix: "plain"
         property alias textWidth: postTextEdit.width
 
-        QtExtraComponents.QImageItem {
+        Avatar {
             id: profileIcon
-            smooth: true
-            /*anchors.left: postWidget.padding.left
-            anchors.top: postWidget.padding.top*/
-
-            //width: pwItem.state == "active" ? 64 : 32;
             height: 32
+            anchors.top: postWidget.top
+            anchors.verticalCenter: postTextEdit.verticalCenter
             width: height
-            // FIXME: [bla][bla] doesn't work because it seems we don't get
-            // notifications for elements in the UserImages: data source. It's
-            // requested before the user image is in, and the ImageItem not
-            // being updated. Needs solution. :/
-            //image: microblogSource.data["UserImages:"+serviceUrl][userName]
+            userId: userName
         }
         PlasmaComponents.Label {
             anchors.top: profileIcon.bottom
             text: userName
         }
-        QtExtraComponents.QIconItem {
-            icon: QIcon("user-identity")
-            anchors.fill: profileIcon
-        }
+//         QtExtraComponents.QIconItem {
+//             icon: QIcon("user-identity")
+//             anchors.fill: profileIcon
+//         }
 
         PlasmaComponents.TextArea {
             id: postTextEdit
@@ -84,6 +78,7 @@ Item {
                 top: postWidget.top
                 bottom: postWidget.bottom
                 rightMargin: postWidget.margins.right
+                leftMargin: 6
                 topMargin: postWidget.margins.top
             }
             wrapMode: TextEdit.WordWrap

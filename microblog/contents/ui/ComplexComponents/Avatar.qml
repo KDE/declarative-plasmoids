@@ -1,4 +1,3 @@
- 
 /*
  *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
  *
@@ -21,42 +20,28 @@
 import QtQuick 1.1
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
-Item {
-    id: avatar
-    property int borderwidth: 2
+QtExtraComponents.QImageItem {
+    id: userIcon
+
+    property string userId: user
+
     width: 48
     height: 48
+    smooth: true
 
-    Rectangle {
-        width: avatar.width + (avatar.borderwidth)
-        height: avatar.height + (avatar.borderwidth)
-        anchors.centerIn: userIcon
-        //x: parent.x+1
-        //y: parent.y+1
-        //anchors.left: parent.left+1
-        radius: 2
-        clip: true
-        anchors.margins: 0
-        border.color: theme.textColor
-        border.width: avatar.borderwidth
-        opacity: 0.1
-    }
-
-    QtExtraComponents.QImageItem {
-        id: userIcon
-        //anchors.centerIn: parent
-        smooth: true
-        anchors.fill: parent
-
-        image: {
-            var sourceName = "UserImages:"+serviceUrl;
-            var d = imageSource.data[sourceName];
-            if (typeof(d) != "undefined" &&
-                typeof(d[user]) != "undefined") {
-                return d[user];
-            } else {
-                return microblogSource.data["Defaults"]["UserImage"];
-            }
+    image: {
+        var sourceName = "UserImages:"+serviceUrl;
+        //print(" avatar for user: ", userId, sourceName);
+        var d = imageSource.data[sourceName];
+        if (typeof(d) != "undefined" &&
+            typeof(d[userId]) != "undefined") {
+            return d[userId];
+        } else {
+            return microblogSource.data["Defaults"]["UserImage"];
         }
+    }
+    MouseArea {
+        anchors.fill: parent
+        onClicked: userInfo.login = userId
     }
 }
