@@ -28,20 +28,19 @@ PlasmaCore.FrameSvgItem {
     id: userInfo
     imagePath: "widgets/frame"
     prefix: "plain"
+    opacity: realNameLabel.text != "" ? 1 : 0.1;
 
     clip: true
 //     snapMode: ListView.SnapToItem
 //     spacing: 2
 //     cacheBuffer: 5
 
-    signal itemClicked(variant item)
+    //signal itemClicked(variant item)
 
     property string timelineType: "User"
-    property string login: userName
+    property string login
     property string url: serviceUrl
-    property string source: timelineType+":"+url
-    property string previousSource: ""
-    //property alias data: imageSource.data
+    property string source: timelineType+":"+login+"@"+url
 
     Avatar {
         id: userIcon
@@ -65,13 +64,14 @@ PlasmaCore.FrameSvgItem {
 
     PlasmaComponents.Label {
         id: realNameLabel
+        wrapMode: Text.Wrap
         font.pointSize: theme.defaultFont.pointSize * 1.5
-        anchors { left: userIcon.right; right: parent.right;  bottom: userIcon.verticalCenter; leftMargin: 12; }
+        anchors { left: userIcon.right; right: parent.right;  top: userIcon.top; leftMargin: 12; }
     }
     PlasmaComponents.Label {
         id: userIdLabel
         text: userInfo.login ? "@" + userInfo.login : ""
-        anchors { left: userIcon.right; right: parent.right; top: userIcon.verticalCenter; leftMargin: 12; }
+        anchors { left: userIcon.right; right: parent.right; top: realNameLabel.bottom; leftMargin: 12; }
     }
     PlasmaComponents.Label {
         id: descriptonLabel
@@ -91,9 +91,19 @@ PlasmaCore.FrameSvgItem {
         anchors { left: userIdLabel.left; right: parent.right; top: descriptonLabel.bottom; topMargin: 12;  }
     }
 
+//     PlasmaComponents.Label {
+//         id: isFollowing
+//         anchors { left: userIdLabel.left; right: parent.right; top: infoText.bottom; topMargin: 12;  }
+//     }
+    PlasmaComponents.Button {
+        id: followButton
+        visible: login != userName
+        anchors { left: userIdLabel.left; right: parent.right; top: infoText.bottom; topMargin: 12; rightMargin: 12  }
+    }
+
     PlasmaComponents.Label {
         id: mainText
-        anchors { left: parent.left; right: parent.right; top: labelText.bottom; bottom: parent.bottom; }
+        anchors { left: parent.left; right: parent.right; top: followButton.bottom; bottom: parent.bottom; }
         visible: false
     }
 
@@ -107,6 +117,8 @@ PlasmaCore.FrameSvgItem {
         //print("Connecting to : " + source);
         //source = timelineType+":"+login+"@"+url
         //source = "User:sebas@http://identi.ca/api"
+        realNameLabel.text = "";
+        descriptonLabel.text = "";
         if (userSource.data[source]) {
             print(" moving " + source);
             updateData(userSource.data[source]);
@@ -118,6 +130,7 @@ PlasmaCore.FrameSvgItem {
     }
 
     function updateData(data) {
+        //userInfo.data = data
         realNameLabel.text = data.realname;
         descriptonLabel.text = data.description ? data.description : "";
         print("DESC:" + data.description);
@@ -129,7 +142,8 @@ PlasmaCore.FrameSvgItem {
             labels += i18n("Location:") + br;
         }
         if (data.website) {
-            info += "<a href=\"http://" + data.website + "\">" + data.website + "</a>" + br;
+            info += "<a href=\"http://" + data.website + "\">" + data.website + "</a>" + b//list-remove-user
+r;
             labels += i18n("Website:") + br;
         }
 //         if (data.location) {
@@ -147,6 +161,10 @@ PlasmaCore.FrameSvgItem {
 
         infoText.text = info;
         labelText.text = labels
+
+        //isFollowing.text = data.following ? i18n("Your are following " + login) : "";
+        followButton.iconSource = data.following ? "list-remove-user" : "list-add-user";
+        followButton.text = data.following ? i18n("Unfollow") : i18n("Follow");
 
         var output = "";
         for (k in data) {
@@ -171,6 +189,7 @@ PlasmaCore.FrameSvgItem {
         //userSource.connectSource(source);
     }
     Component.onCompleted: {
+        login = userName
         print(" user info loaded: " + login + source);
     }
 }

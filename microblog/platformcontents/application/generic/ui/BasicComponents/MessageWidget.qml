@@ -49,7 +49,7 @@ ListItem {
         anchors.leftMargin: 11
         anchors.rightMargin: 12
         anchors.left: userIcon.right
-        anchors.right: padding.right
+        anchors.right: infoLabel.left
         anchors.top: padding.top
         anchors.topMargin: 4
         opacity: 0.5
@@ -57,6 +57,11 @@ ListItem {
         font.pointSize: theme.defaultFont.pointSize + 4
         styleColor: theme.backgroundColor
         text: user
+        MouseArea {
+            anchors.fill: parent
+            onClicked: userInfo.login = user
+        }
+
     }
     PlasmaComponents.Label {
         id: bodyText

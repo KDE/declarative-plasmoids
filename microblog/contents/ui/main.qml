@@ -88,7 +88,7 @@ Item {
             operation.password = password
             service.startOperationCall(operation);
             plasmoid.configurationRequired = false
-            plasmoid.busy = true
+            //plasmoid.busy = true
         }
     }
 
