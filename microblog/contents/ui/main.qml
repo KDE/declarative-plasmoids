@@ -19,6 +19,7 @@
 
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
@@ -29,8 +30,8 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl: "https://identi.ca/api/"
-    property string userName: "sebas" // FIXME: remove until config doesn't get nuked all the time
+    property string serviceUrl: "https://twitter.com/"
+    property string userName: "PlasmaActive" // FIXME: remove until config doesn't get nuked all the time
     property string password
 
     signal replyAsked(string id, string message)
@@ -51,7 +52,7 @@ Item {
         var u = plasmoid.readConfig("userName")
         var p = plasmoid.readConfig("password")
         var s = serviceUrl = plasmoid.readConfig("serviceUrl")
-        print( "XXX Read user and password from config: " + u + ":" + p);
+//         print( "XXX Read user and password from config: " + u + ":" + p);
 
         if (u) {
             userName = u;
@@ -64,8 +65,8 @@ Item {
             serviceUrl = plasmoid.readConfig("serviceUrl")
             imageSource.connectSource("UserImages:"+serviceUrl)
         } else {
-            serviceUrl = "https://identi.ca/api/"
-            //serviceUrl = "https://twitter.com/"
+            //serviceUrl = "https://identi.ca/api/"
+            serviceUrl = "https://twitter.com/"
         }
         if (serviceUrl && userName) {
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
@@ -105,6 +106,11 @@ Item {
         }
     }
 
+    onServiceUrlChanged: {
+        print("C O N N E C T E D");
+        statusSource.connectSource("Status:"+serviceUrl);
+    }
+
     PlasmaCore.DataSource {
         id: imageSource
         engine: "microblog"
@@ -122,7 +128,33 @@ Item {
         interval: 0
     }
 
+    PlasmaCore.DataSource {
+        id: statusSource
+        engine: "microblog"
+        interval: 0
+        onDataChanged: {
+            if (statusSource.data["Status:"+serviceUrl]) {
+                print(" status: " + statusSource.data);
+                authStatusLabel.text = statusSource.data["Status:"+serviceUrl]["Authorization"];
+            } else {
+                authStatusLabel.text = "Unknown status"
+            }
+        }
+        Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
+
+    }
+
     MainWidget {
         anchors.fill: main
+    }
+
+    PlasmaComponents.Label {
+        id: authStatusLabel
+        width: 300
+        height: 48
+        //text: statusSource.data["Status:https://twitter.com/"]["Authorization"]
+        //text: "Status:" + statusSource.data["Status:https://twitter.com/"]["Authorization"]
+        text: "Status..."
+        anchors { left: parent.left; right: parent.right; }
     }
 }

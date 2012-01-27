@@ -51,9 +51,9 @@ Item {
         Avatar {
             id: profileIcon
             height: 32
-            anchors.top: postWidget.top
-            anchors.verticalCenter: postTextEdit.verticalCenter
             width: height
+            anchors.left: postWidget.left
+            anchors.verticalCenter: postTextEdit.verticalCenter
             userId: userName
         }
 //         PlasmaComponents.Label {

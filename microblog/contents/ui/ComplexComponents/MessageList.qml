@@ -28,7 +28,7 @@ ListView {
     clip: true
     snapMode: ListView.SnapToItem
     spacing: 2
-    cacheBuffer: 5
+    //cacheBuffer: 500
 
     signal itemClicked(variant item)
 
@@ -41,6 +41,7 @@ ListView {
         microblogSource.connectSource(source)
         timer.running = true
     }
+
     Timer {
         id: timer
         repeat: false
@@ -54,12 +55,18 @@ ListView {
         }
     }
 
-    model: PlasmaCore.DataModel {
-        dataSource: microblogSource
-        sourceFilter: entryList.source
-        keyRoleFilter: "[\\d]*"
+    model: PlasmaCore.SortFilterModel {
+        id: sortModel
+        sortRole: "Date"
+        sortOrder: "DescendingOrder"
+        sourceModel: PlasmaCore.DataModel {
+            dataSource: microblogSource
+            sourceFilter: entryList.source
+            keyRoleFilter: "[\\d]*"
+        }
     }
 
+    
     delegate: MessageWidget {
         id: messageWidget
         width: entryList.width

@@ -109,8 +109,8 @@ PlasmaCore.FrameSvgItem {
 
     onSourceChanged: {
         if (url == "" || login == "") {
-            print("Invalid source: " + source);
-            print(" UserInfo: " + login, url, source);
+            //print("Invalid source: " + source);
+            //print(" UserInfo: " + login, url, source);
             //login = "sebas";
             //url = "https://identi.ca/api/"
         }
@@ -120,10 +120,10 @@ PlasmaCore.FrameSvgItem {
         realNameLabel.text = "";
         descriptonLabel.text = "";
         if (userSource.data[source]) {
-            print(" moving " + source);
+            //print(" moving " + source);
             updateData(userSource.data[source]);
         } else {
-            print(" connnecting " + source);
+            //print(" connnecting " + source);
             userSource.connectSource(source);
         }
         //timer.running = true
@@ -185,11 +185,11 @@ r;
 
     onLoginChanged: {
         source = timelineType+":"+login+"@"+url
-        print("onLoginChanged: " + source);
+        //print("onLoginChanged: " + source);
         //userSource.connectSource(source);
     }
     Component.onCompleted: {
         login = userName
-        print(" user info loaded: " + login + source);
+        //print(" user info loaded: " + login + source);
     }
 }
