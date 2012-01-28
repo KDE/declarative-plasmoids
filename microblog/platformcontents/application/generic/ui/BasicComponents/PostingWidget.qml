@@ -23,6 +23,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
+import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/ui/ComplexComponents"
 
 Item {
@@ -38,24 +39,24 @@ Item {
         Logic.refresh()
         plasmoid.busy = true
     }
-    //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
+
+    AuthorizationWidget {
+        id: authStatusWidget
+        anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
+        Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
+    }
 
     PlasmaCore.FrameSvgItem {
         id: postWidget
-        //width: 520
-        anchors.fill: parent
+        width: 400
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
         imagePath: "widgets/frame"
         prefix: "plain"
+        visible: authStatusWidget.status == "Ok"
         property alias textWidth: postTextEdit.width
+        anchors.horizontalCenter: parent.horizontalCenter
 
-        Avatar {
-            id: profileIcon
-            height: 32
-            width: height
-            anchors.left: postWidget.left
-            anchors.verticalCenter: postTextEdit.verticalCenter
-            userId: userName
-        }
 //         PlasmaComponents.Label {
 //             anchors.top: profileIcon.bottom
 //             text: userName
@@ -69,10 +70,11 @@ Item {
             //width: 300
 
             anchors {
-                left: profileIcon.right
-                right: postWidget.right
-                top: postWidget.top
-                bottom: postWidget.bottom
+//                 left: parent.right
+//                 right: postWidget.right
+//                 top: postWidget.top
+//                 bottom: postWidget.bottom
+                fill: parent;
                 rightMargin: postWidget.margins.right
                 leftMargin: 6
                 topMargin: postWidget.margins.top
@@ -146,13 +148,13 @@ Item {
             name: "active"
             PropertyChanges { target: topItem; height: 120 }
             PropertyChanges { target: pwItem; width: 384 }
-            PropertyChanges { target: profileIcon; height: 64 }
+            PropertyChanges { target: authStatusWidget; height: 64 }
         },
         State {
             name: "inactive"
             PropertyChanges { target: topItem; height: 64 }
             PropertyChanges { target: pwItem; width: 320 }
-            PropertyChanges { target: profileIcon; height: 32 }
+            PropertyChanges { target: authStatusWidget; height: 32 }
         }
     ]
 
@@ -163,13 +165,13 @@ Item {
             from: "inactive"; to: "active"
             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
-            PropertyAnimation { target: profileIcon; properties: "height"; duration: animation_duration }
+            PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
         },
         Transition {
             from: "active"; to: "inactive"
             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
-            PropertyAnimation { target: profileIcon; properties: "height"; duration: animation_duration }
+            PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
         }
     ]
     Component.onCompleted: {

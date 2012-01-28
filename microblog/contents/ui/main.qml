@@ -31,7 +31,7 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl: "https://twitter.com/"
+    property string serviceUrl//: "https://twitter.com/"
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
 
@@ -129,28 +129,8 @@ Item {
         interval: 0
     }
 
-    PlasmaCore.DataSource {
-        id: statusSource
-        engine: "microblog"
-        interval: 0
-        onDataChanged: {
-            if (statusSource.data["Status:"+serviceUrl]) {
-                print(" status: " + statusSource.data);
-                authStatusWidget.statusMessage = statusSource.data["Status:"+serviceUrl]["Authorization"] + ": " + statusSource.data["Status:"+serviceUrl]["AuthorizationMessage"] ;
-            } else {
-                authStatusWidget.statusMessage = "Unknown status"
-            }
-        }
-        Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
-
-    }
 
     MainWidget {
         anchors.fill: main
-    }
-
-    AuthorizationWidget {
-        id: authStatusWidget
-        anchors { left: parent.left; right: parent.right; }
     }
 }

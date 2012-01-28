@@ -31,7 +31,7 @@ QtExtraComponents.QImageItem {
 
     image: {
         var sourceName = "UserImages:"+serviceUrl;
-        //print(" avatar for user: ", userId, sourceName);
+        print(" avatar for user: ", userId, sourceName);
         var d = imageSource.data[sourceName];
         if (typeof(d) != "undefined" &&
             typeof(d[userId]) != "undefined") {
@@ -42,6 +42,10 @@ QtExtraComponents.QImageItem {
     }
     MouseArea {
         anchors.fill: parent
-        onClicked: userInfo.login = userId
+        onClicked: {
+            print("Avatar clicked: " + userId);
+            userInfo.login = userId
+            
+        }
     }
 }

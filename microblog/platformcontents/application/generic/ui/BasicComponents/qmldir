@@ -1,3 +1,4 @@
+AuthorizationWidget 1.0 AuthorizationWidget.qml
 MessageWidget 1.0 MessageWidget.qml
 PostingWidget 1.0 PostingWidget.qml
 ListItem 1.0 ListItem.qml

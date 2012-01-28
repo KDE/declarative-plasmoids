@@ -69,13 +69,15 @@ Image {
 
 
         }
+        
         PostingWidget {
             id: postingWidget
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: topItem.top
-            anchors.bottom: topItem.bottom
-            //height: 200
-            width: 400
+//             anchors.horizontalCenter: parent.horizontalCenter
+//             anchors.top: topItem.top
+//             anchors.bottom: topItem.bottom
+//             //height: 200
+//             width: 400
+            anchors.fill: topItem
             anchors.topMargin: 8
             anchors.bottomMargin: 16
         }

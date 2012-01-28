@@ -27,44 +27,45 @@ import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
 Item {
     id: authStatusWidget
-    width: 800
-    height: 200
+     width: 800
+     height: 200
     property alias statusMessage: statusLabel.text
-    property string status: "Idle";
+    property string status: "Idle"
 
-    width: childrenRect.width
-    height: childrenRect.height
+//     width: childrenRect.width
+//     height: childrenRect.height
 
     PlasmaComponents.BusyIndicator {
         id: busyIndicator
-        width: authStatusWidget.height, height: width
+        width: authStatusWidget.height; height: width
 //       width: 64; height: width;
-        //visible: status == "Busy"
+        visible: status == "Busy"
         anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
         running: status == "Busy"
-        Rectangle { color: "green"; fill: parent; opacity: 0.5 }
+        //Rectangle { color: "green"; anchors.fill: parent; opacity: 0.5 }
     }
     Avatar {
         id: profileIcon
-        height: 48
-        width: 48
-        anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
-        //visible: status == "Ok"
+        height: parent.height
+        width: height
+        anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 6}
+        visible: status == "Ok"
         userId: {
             print(" USER NAME: " + userName);
             userName
         }
-        Rectangle { color: "green"; fill: parent; opacity: 0.5 }
+        //Rectangle { color: "green"; anchors.fill: parent; opacity: 0.5 }
     }
 
     PlasmaComponents.Label {
         id: statusLabel
         width: 300
         height: 48
+        font.pointSize: theme.defaultFont.pointSize+3
         anchors { left: busyIndicator.right; verticalCenter: busyIndicator.verticalCenter; leftMargin: 12; }
         //text: statusSource.data["Status:https://twitter.com/"]["Authorization"]
         //text: "Status:" + statusSource.data["Status:https://twitter.com/"]["Authorization"]
-        text: status == "Busy" ? "Logging in..." : status == "Ok" ? "<h2>@" + userName + "</h2>" : "";
+        text: status == "Busy" ? i18n("Logging in...") : status == "Ok" ? "@" + userName : "";
     }
     PlasmaCore.DataSource {
         id: statusSource
@@ -84,6 +85,6 @@ Item {
         Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
 
     }
-    
+
 }
- 
+

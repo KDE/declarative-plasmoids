@@ -26,9 +26,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
 Item {
-    id: authStatusWidget
-    width: 800
-    height: 200
+
     property alias statusMessage: statusLabel.text
     property string status: "Idle";
 
@@ -37,24 +35,10 @@ Item {
 
     PlasmaComponents.BusyIndicator {
         id: busyIndicator
-        width: authStatusWidget.height, height: width
-//       width: 64; height: width;
-        //visible: status == "Busy"
+        width: 36; height: width;
+        visible: status == "Busy"
         anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
         running: status == "Busy"
-        Rectangle { color: "green"; fill: parent; opacity: 0.5 }
-    }
-    Avatar {
-        id: profileIcon
-        height: 48
-        width: 48
-        anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
-        //visible: status == "Ok"
-        userId: {
-            print(" USER NAME: " + userName);
-            userName
-        }
-        Rectangle { color: "green"; fill: parent; opacity: 0.5 }
     }
 
     PlasmaComponents.Label {
