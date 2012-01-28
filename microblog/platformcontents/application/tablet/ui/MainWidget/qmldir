@@ -1,2 +1,3 @@
 MainWidget 1.0 MainWidget.qml
 MessageWidgetDetails 1.0 MessageWidgetDetails.qml
+AuthorizationWidget 1.0 AuthorizationWidget.qml

@@ -12,6 +12,7 @@
     </entry>
     <entry name="userName" type="String">
       <label>User name</label>
+      <default>PlasmaActive</default>
     </entry>
     <entry name="password" type="String">
       <label>Password</label>

@@ -24,6 +24,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/code/logic.js" as Logic
 import "plasmapackage:/ui/MainWidget"
+import "plasmapackage:/ui/BasicComponents"
 
 Item {
     id: main
@@ -31,7 +32,7 @@ Item {
     height: 300
 
     property string serviceUrl: "https://twitter.com/"
-    property string userName: "PlasmaActive" // FIXME: remove until config doesn't get nuked all the time
+    property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
 
     signal replyAsked(string id, string message)
@@ -83,7 +84,7 @@ Item {
         interval: 100
         repeat: false
         onTriggered: {
-            //print(" Logging in ..." + password);
+            print(" XXXX Logging in ..." + password);
             var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
             var operation = service.operationDescription("auth");
             operation.password = password
@@ -135,9 +136,9 @@ Item {
         onDataChanged: {
             if (statusSource.data["Status:"+serviceUrl]) {
                 print(" status: " + statusSource.data);
-                authStatusLabel.text = statusSource.data["Status:"+serviceUrl]["Authorization"];
+                authStatusWidget.statusMessage = statusSource.data["Status:"+serviceUrl]["Authorization"] + ": " + statusSource.data["Status:"+serviceUrl]["AuthorizationMessage"] ;
             } else {
-                authStatusLabel.text = "Unknown status"
+                authStatusWidget.statusMessage = "Unknown status"
             }
         }
         Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
@@ -148,13 +149,8 @@ Item {
         anchors.fill: main
     }
 
-    PlasmaComponents.Label {
-        id: authStatusLabel
-        width: 300
-        height: 48
-        //text: statusSource.data["Status:https://twitter.com/"]["Authorization"]
-        //text: "Status:" + statusSource.data["Status:https://twitter.com/"]["Authorization"]
-        text: "Status..."
+    AuthorizationWidget {
+        id: authStatusWidget
         anchors { left: parent.left; right: parent.right; }
     }
 }
