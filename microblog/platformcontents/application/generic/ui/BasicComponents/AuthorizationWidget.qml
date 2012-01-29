@@ -83,8 +83,14 @@ Item {
             }
         }
         Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
-
     }
 
+    Connections {
+        target: main
+        onServiceUrlChanged: {
+            print("C O N N E C T E D");
+            statusSource.connectSource("Status:"+serviceUrl);
+        }
+    }
 }
 

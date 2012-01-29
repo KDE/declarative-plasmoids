@@ -43,7 +43,7 @@ Item {
     AuthorizationWidget {
         id: authStatusWidget
         anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
-        Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
+        //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
     }
 
     PlasmaCore.FrameSvgItem {

@@ -66,8 +66,8 @@ Item {
             serviceUrl = plasmoid.readConfig("serviceUrl")
             imageSource.connectSource("UserImages:"+serviceUrl)
         } else {
-            //serviceUrl = "https://identi.ca/api/"
-            serviceUrl = "https://twitter.com/"
+            serviceUrl = "https://identi.ca/api/"
+            //serviceUrl = "https://twitter.com/"
         }
         if (serviceUrl && userName) {
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
@@ -105,11 +105,6 @@ Item {
         Component.onCompleted: {
             microblogSource.connectSource("Defaults")
         }
-    }
-
-    onServiceUrlChanged: {
-        print("C O N N E C T E D");
-        statusSource.connectSource("Status:"+serviceUrl);
     }
 
     PlasmaCore.DataSource {
