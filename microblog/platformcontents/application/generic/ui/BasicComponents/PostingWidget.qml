@@ -87,8 +87,10 @@ Item {
                 characterCountLabel.characterCount = txt.length;
                 //yes, TextEdit doesn't have returnPressed sadly
                 if (txt[txt.length-1] == "\n") {
-                    //Logic.update(txt, inReplyToStatusId);
-                    //refresh();
+                    Logic.userName = userName;
+                    Logic.serviceUrl = serviceUrl;
+                    Logic.update(txt, inReplyToStatusId);
+                    refresh();
                     print(" RETURN ");
                 } else if (txt.length == 0) {
                     inReplyToStatusId = ""

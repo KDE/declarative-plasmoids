@@ -20,21 +20,25 @@
 .pragma library
 
 var messagesDataSource
-
+var userName
+var serviceUrl
 
 function refresh()
 {
-    var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+    var src = "TimelineWithFriends" + userName + "@" + serviceUrl;
+    var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("refresh");
     service.startOperationCall(operation);
 }
 
 function update(status, inReplyToStatusId)
 {
-    var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+    var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+    var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("update");
     operation.status = status;
     operation.in_reply_to_status_id = inReplyToStatusId
+    print(" ... > messagesDataSource: " + src)
     service.startOperationCall(operation);
 }
 

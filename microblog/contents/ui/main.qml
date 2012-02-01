@@ -31,7 +31,7 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl//: "https://twitter.com/"
+    property string serviceUrl: "https://twitter.com/"
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
 
@@ -63,13 +63,13 @@ Item {
             password = plasmoid.readConfig("password")
         }
         if (s) {
-            serviceUrl = plasmoid.readConfig("serviceUrl")
             imageSource.connectSource("UserImages:"+serviceUrl)
         } else {
             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
         }
         if (serviceUrl && userName) {
+            print("Requesting ... " + userName + "@" + serviceUrl);
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
         //microblogSource.connectSource("UserImages:"+serviceUrl)
@@ -84,8 +84,9 @@ Item {
         interval: 100
         repeat: false
         onTriggered: {
-            print(" XXXX Logging in ..." + password);
-            var service = microblogSource.serviceForSource(microblogSource.connectedSources[0])
+            var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+            print(" XXXX Logging in ..." + password + " source: " + src);
+            var service = microblogSource.serviceForSource(src)
             var operation = service.operationDescription("auth");
             operation.password = password
             service.startOperationCall(operation);

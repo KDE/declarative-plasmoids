@@ -35,6 +35,10 @@ Item {
 //     width: childrenRect.width
 //     height: childrenRect.height
 
+    onStatusChanged: {
+        print(" status changed to " + status);
+    }
+
     PlasmaComponents.BusyIndicator {
         id: busyIndicator
         width: authStatusWidget.height; height: width
@@ -81,6 +85,7 @@ Item {
 //                 authStatusWidget.status = "Idle"
 
             }
+            print(" -----> dataChagned");
         }
         Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
     }
@@ -88,8 +93,9 @@ Item {
     Connections {
         target: main
         onServiceUrlChanged: {
-            print("C O N N E C T E D");
-            statusSource.connectSource("Status:"+serviceUrl);
+            var src = "Status:"+serviceUrl;
+            print("C O N N E C T E D to " + src);
+            statusSource.connectSource(src);
         }
     }
 }
