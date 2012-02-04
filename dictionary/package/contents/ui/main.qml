@@ -102,10 +102,13 @@ Item {
 
             TextEdit {
                 id: textBrowser
-                anchors.fill: parent
+                anchors {
+                    fill: parent
+                }
 
                 wrapMode: TextEdit.Wrap
                 readOnly: true
+                clip: true
 
                 text: {
                     if (mainWindow.listdictionaries) {
@@ -144,8 +147,8 @@ Item {
             anchors { bottom: parent.bottom }
 
             orientation: Qt.Vertical
-            stepSize: 40
-            scrollButtonInterval: 50
+            stepSize: textBrowser.lineCount / 4
+            scrollButtonInterval: textBrowser.lineCount / 4
 
             flickableItem: flickable
         }
