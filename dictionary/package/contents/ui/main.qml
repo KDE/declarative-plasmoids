@@ -67,7 +67,9 @@ Item {
 
         Row {
             id: searchRow
+
             width: parent.width
+
             PlasmaWidgets.IconWidget {
                 id: icon
                 onClicked: {
@@ -78,22 +80,26 @@ Item {
 
             PlasmaComponents.TextField {
                 id: searchBox
+
                 clearButtonShown: true
                 placeholderText: i18n("Type a word...")
                 width: parent.width - icon.width - parent.spacing
+
                 onTextChanged: {
                     timer.running = true
                     mainWindow.listdictionaries = false
                 }
             }
+        }
 
-            PlasmaWidgets.WebView {
+            TextEdit {
                 id: textBrowser
-                width: parent.parent.width
-                height: parent.height - searchRow.height - parent.spacing
-                dragToScroll: true
-                anchors.top: searchBox.bottom
-                html: {
+
+                width: parent.width
+
+                readOnly: true
+
+                text: {
                     if (mainWindow.listdictionaries) {
                         var data = feedSource.data["list-dictionaries"]
                         var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br><br>")
@@ -123,7 +129,6 @@ Item {
                 }
             }
         }
-    }
 
     Timer {
         id: timer
