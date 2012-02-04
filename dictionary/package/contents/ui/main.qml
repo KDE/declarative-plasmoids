@@ -92,10 +92,17 @@ Item {
             }
         }
 
+        Flickable {
+            id: flickable
+
+            width: parent.width
+            height: parent.height
+            contentWidth: textBrowser.paintedWidth
+            contentHeight: textBrowser.paintedHeight
+
             TextEdit {
                 id: textBrowser
-
-                width: parent.width
+                anchors.fill: parent
 
                 readOnly: true
 
@@ -129,6 +136,7 @@ Item {
                 }
             }
         }
+    }
 
     Timer {
         id: timer
