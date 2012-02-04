@@ -97,13 +97,13 @@ Item {
 
             width: parent.width
             height: parent.height
-            contentWidth: textBrowser.paintedWidth
             contentHeight: textBrowser.paintedHeight
 
             TextEdit {
                 id: textBrowser
                 anchors.fill: parent
 
+                wrapMode: TextEdit.Wrap
                 readOnly: true
 
                 text: {
