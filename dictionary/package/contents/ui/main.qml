@@ -1,4 +1,5 @@
 /*
+*   Copyright (C) 2012 Shaun Reich <shaun.reich@kdemail.net>
 *   Copyright 2010 Marco Martin <notmart@gmail.com>
 *   Copyright 2010 Lukas Appelhans <l.appelhans@gmx.de>
 *
@@ -36,8 +37,8 @@ Item {
         icon.setIcon("accessories-dictionary")
     }
 
-    function configChanged()
-    {
+    function configChanged() {
+
     }
 
     PlasmaCore.DataSource {
@@ -63,6 +64,7 @@ Item {
     Column {
         width: mainWindow.width
         height: mainWindow.height
+
         Row {
             id: searchRow
             width: parent.width
@@ -73,6 +75,7 @@ Item {
                     timer.running = true
                 }
             }
+
             PlasmaComponents.TextField {
                 id: searchBox
                 clearButtonShown: true
@@ -83,55 +86,57 @@ Item {
                     mainWindow.listdictionaries = false
                 }
             }
-        PlasmaWidgets.WebView {
-            id: textBrowser
-            width: parent.parent.width
-            height: parent.height - searchRow.height - parent.spacing
-            dragToScroll: true
-            anchors.top: searchBox.bottom
-            html: {
-                if (mainWindow.listdictionaries) {
-                    var data = feedSource.data["list-dictionaries"]
-                    var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br><br>")
-                    for (var line in data) {
-                        temp = temp + line + ": " + data[line] + "<br><br>"
-                    }
-                    return temp;
-                } else {
-                    var styledHtml = "";
-                    if (feedSource.data[searchBox.text]) {
-                        var dictText = feedSource.data[searchBox.text]["text"];
-                        if (typeof feedSource.data[searchBox.text] == "undefined" || typeof dictText == "undefined") {
-                            dictText = i18n("Loading...");
+
+            PlasmaWidgets.WebView {
+                id: textBrowser
+                width: parent.parent.width
+                height: parent.height - searchRow.height - parent.spacing
+                dragToScroll: true
+                anchors.top: searchBox.bottom
+                html: {
+                    if (mainWindow.listdictionaries) {
+                        var data = feedSource.data["list-dictionaries"]
+                        var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br><br>")
+                        for (var line in data) {
+                            temp = temp + line + ": " + data[line] + "<br><br>"
                         }
-                        styledHtml += "<html><head><style type=\"text/css\">";
-                        styledHtml += theme.styleSheet + "</style></head>";
-                        styledHtml += "<body>" + dictText;
-                        styledHtml += "</body></html>";
+                        return temp;
                     } else {
-                        styledHtml += "<html><head><style type=\"text/css\">";
-                        styledHtml += theme.styleSheet + "</style></head>";
-                        styledHtml += "<body>" + i18n("This is the dictionary app. Type a word in the search field above to get a definition.");
-                        styledHtml += "</body></html>";
+                        var styledHtml = "";
+                        if (feedSource.data[searchBox.text]) {
+                            var dictText = feedSource.data[searchBox.text]["text"];
+                            if (typeof feedSource.data[searchBox.text] == "undefined" || typeof dictText == "undefined") {
+                                dictText = i18n("Loading...");
+                            }
+                            styledHtml += "<html><head><style type=\"text/css\">";
+                            styledHtml += theme.styleSheet + "</style></head>";
+                            styledHtml += "<body>" + dictText;
+                            styledHtml += "</body></html>";
+                        } else {
+                            styledHtml += "<html><head><style type=\"text/css\">";
+                            styledHtml += theme.styleSheet + "</style></head>";
+                            styledHtml += "<body>" + i18n("This is the dictionary app. Type a word in the search field above to get a definition.");
+                            styledHtml += "</body></html>";
+                        }
+                        return styledHtml;
                     }
-                    return styledHtml;
                 }
             }
         }
-    }
-    Timer {
-       id: timer
-       running: false
-       repeat: false
-       interval: 500
-       onTriggered: {
-            plasmoid.busy = true
-            if (mainWindow.listdictionaries) {
-                feedSource.connectedSources = "list-dictionaries"
-            } else {
-                feedSource.connectedSources = [searchBox.text]
+
+        Timer {
+            id: timer
+            running: false
+            repeat: false
+            interval: 500
+            onTriggered: {
+                    plasmoid.busy = true
+                    if (mainWindow.listdictionaries) {
+                        feedSource.connectedSources = "list-dictionaries"
+                    } else {
+                        feedSource.connectedSources = [searchBox.text]
+                    }
             }
-       }
+        }
     }
-}
 }
