@@ -136,6 +136,13 @@ Item {
                 }
             }
         }
+
+        PlasmaComponents.ScrollBar {
+            orientation: Qt.Vertical
+            flickableItem: flickable
+            stepSize: 40
+            scrollButtonInterval: 50
+        }
     }
 
     Timer {
