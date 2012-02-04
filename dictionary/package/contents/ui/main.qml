@@ -98,6 +98,7 @@ Item {
             width: parent.width
             height: parent.height
             contentHeight: textBrowser.paintedHeight
+            clip: true
 
             TextEdit {
                 id: textBrowser
