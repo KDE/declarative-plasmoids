@@ -139,10 +139,15 @@ Item {
         }
 
         PlasmaComponents.ScrollBar {
+            id: scrollBar
+
+            anchors { bottom: parent.bottom }
+
             orientation: Qt.Vertical
-            flickableItem: flickable
             stepSize: 40
             scrollButtonInterval: 50
+
+            flickableItem: flickable
         }
     }
 
