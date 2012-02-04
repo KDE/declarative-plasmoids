@@ -123,20 +123,20 @@ Item {
                 }
             }
         }
+    }
 
-        Timer {
-            id: timer
-            running: false
-            repeat: false
-            interval: 500
-            onTriggered: {
-                    plasmoid.busy = true
-                    if (mainWindow.listdictionaries) {
-                        feedSource.connectedSources = "list-dictionaries"
-                    } else {
-                        feedSource.connectedSources = [searchBox.text]
-                    }
-            }
+    Timer {
+        id: timer
+        running: false
+        repeat: false
+        interval: 500
+        onTriggered: {
+                plasmoid.busy = true
+                if (mainWindow.listdictionaries) {
+                    feedSource.connectedSources = "list-dictionaries"
+                } else {
+                    feedSource.connectedSources = [searchBox.text]
+                }
         }
     }
 }
