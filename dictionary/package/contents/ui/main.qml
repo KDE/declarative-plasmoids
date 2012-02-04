@@ -113,7 +113,7 @@ Item {
                 text: {
                     if (mainWindow.listdictionaries) {
                         var data = feedSource.data["list-dictionaries"]
-                        var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br><br>")
+                        var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
                         for (var line in data) {
                             temp = temp + line + ": " + data[line] + "<br><br>"
                         }
