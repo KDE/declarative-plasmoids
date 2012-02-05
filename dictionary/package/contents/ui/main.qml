@@ -33,7 +33,6 @@ Item {
 
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
-        plasmoid.busy = true
         icon.setIcon("accessories-dictionary")
     }
 
@@ -127,7 +126,6 @@ Item {
             flickableItem: flickable
         }
     }
-
 
     Timer {
         id: timer
