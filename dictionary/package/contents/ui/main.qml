@@ -110,34 +110,8 @@ Item {
                 readOnly: true
                 clip: true
 
-                text: {
-                    if (mainWindow.listdictionaries) {
-                        var data = feedSource.data["list-dictionaries"]
-                        var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
-                        for (var line in data) {
-                            temp = temp + line + ": " + data[line] + "<br><br>"
-                        }
-                        return temp;
-                    } else {
-                        var styledHtml = "";
-                        if (feedSource.data[searchBox.text]) {
-                            var dictText = feedSource.data[searchBox.text]["text"];
-                            if (typeof feedSource.data[searchBox.text] == "undefined" || typeof dictText == "undefined") {
-                                dictText = i18n("Loading...");
-                            }
-                            styledHtml += "<html><head><style type=\"text/css\">";
-                            styledHtml += theme.styleSheet + "</style></head>";
-                            styledHtml += "<body>" + dictText;
-                            styledHtml += "</body></html>";
-                        } else {
-                            styledHtml += "<html><head><style type=\"text/css\">";
-                            styledHtml += theme.styleSheet + "</style></head>";
-                            styledHtml += "<body>" + i18n("This is the dictionary app. Type a word in the search field above to get a definition.");
-                            styledHtml += "</body></html>";
-                        }
-                        return styledHtml;
-                    }
-                }
+                text: computeHtml()
+
             }
         }
 
@@ -154,6 +128,7 @@ Item {
         }
     }
 
+
     Timer {
         id: timer
         running: false
@@ -166,6 +141,41 @@ Item {
                 } else {
                     feedSource.connectedSources = [searchBox.text]
                 }
+        }
+    }
+
+    function computeHtml() {
+        if (mainWindow.listdictionaries) {
+            var data = feedSource.data["list-dictionaries"]
+            var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
+
+            for (var line in data) {
+                temp = temp + line + ": " + data[line] + "<br><br>"
+            }
+
+            return temp;
+        } else {
+            var styledHtml = "";
+
+            if (feedSource.data[searchBox.text]) {
+                var dictText = feedSource.data[searchBox.text]["text"];
+
+                if (typeof feedSource.data[searchBox.text] == "undefined" || typeof dictText == "undefined") {
+                    dictText = i18n("Loading...");
+                }
+
+                styledHtml += "<html><head><style type=\"text/css\">";
+                styledHtml += theme.styleSheet + "</style></head>";
+                styledHtml += "<body>" + dictText;
+                styledHtml += "</body></html>";
+
+            } else {
+                styledHtml += "<html><head><style type=\"text/css\">";
+                styledHtml += theme.styleSheet + "</style></head>";
+                styledHtml += "<body>" + i18n("This is the dictionary app. Type a word in the search field above to get a definition.");
+                styledHtml += "</body></html>";
+            }
+            return styledHtml;
         }
     }
 }
