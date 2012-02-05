@@ -46,7 +46,10 @@ Item {
         connectedSources: ["freedom"]
         interval: 0
         onDataChanged: {
-            plasmoid.busy = false
+            if (!timer.running) {
+                plasmoid.busy = false
+            }
+            console.log("SETTING !BUSY");
         }
     }
 
@@ -170,7 +173,7 @@ Item {
             } else {
                 styledHtml += "<html><head><style type=\"text/css\">";
                 styledHtml += theme.styleSheet + "</style></head>";
-                styledHtml += "<body>" + i18n("This is the dictionary app. Type a word in the search field above to get a definition.");
+                styledHtml += "<body>" + i18n("This is the dictionary widget. Type a word in the search field above to get a definition.");
                 styledHtml += "</body></html>";
             }
             return styledHtml;
