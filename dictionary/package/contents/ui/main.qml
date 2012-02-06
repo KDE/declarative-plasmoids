@@ -171,8 +171,7 @@ Item {
 
                     highlight: PlasmaComponents.Highlight {
                         anchors { left: parent.left; right: parent.right; leftMargin: 10; rightMargin: 10 }
-                        //           width: view.width
-                        //          height: view.heigh
+                        height: textMetric.paintedHeight
                         hover: true;
                     }
         
@@ -191,7 +190,6 @@ Item {
                 highlightMoveDuration: 250
                 highlightMoveSpeed: 1
                 }
-
 
             TextEdit {
                 id: textBrowser
