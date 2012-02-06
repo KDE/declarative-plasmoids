@@ -83,13 +83,13 @@ Item {
 
                     //TOTAL HACK, this results in an entry that looks like any other, clickable and eveyrhtin
                     var title = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
-                    listModel.append({ "name" : title })
+                    listModel.append({ "name": title, "description": "description2" })
 
 
                     var data = feedSource.data["list-dictionaries"]
                     for (var line in data) {
                         console.log("APPENDING: " + data[line])
-                        listModel.append({ "name" : data[line] })
+                        listModel.append({ "name": line, "description": data[line] })
                     }
 
                     mainWindow.listdictionaries = true
@@ -147,7 +147,7 @@ Item {
                             id: text
                             anchors.fill: parent
                             //anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter }
-                            text: model.name
+                            text: model.name + " - " + model.description
                         }
 
                         MouseArea {
