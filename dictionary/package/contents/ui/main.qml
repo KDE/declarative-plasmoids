@@ -80,13 +80,16 @@ Item {
                 id: icon
                 onClicked: {
 
+                    //TOTAL HACK, this results in an entry that looks like any other, clickable and eveyrhtin
+                    var title = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
+                    listModel.append({ "name" : title })
+
+
                     var data = feedSource.data["list-dictionaries"]
-                    var temp = "hello"
                     for (var line in data) {
-                        console.log("########## appending: " + data[line]);
-                        listModel.append({ "name" : data[line] });
-                        console.log("%%%%%%%% COUNT: " + listModel.count)
+                        listModel.append({ "name" : data[line] })
                     }
+
                     mainWindow.listdictionaries = true
                     timer.running = true
                 }
@@ -120,7 +123,6 @@ Item {
                 visible: mainWindow.listdictionaries ? true : false
 
                 model: listModel
-                //listModel
 
                 delegate: Item {
                     //    height: itemHeight
@@ -151,7 +153,6 @@ Item {
                     }
                 }
 
-  //j          var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
 
             TextEdit {
                 id: textBrowser
@@ -168,7 +169,7 @@ Item {
                 text: computeHtml()
 
             }
-    }
+        }
 
         PlasmaComponents.ScrollBar {
             id: scrollBar
