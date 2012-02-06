@@ -157,7 +157,7 @@ Item {
                     }
 
                     highlight: PlasmaComponents.Highlight {
-                                    anchors { left: parent.left; right: parent.right }
+                        anchors { left: parent.left; right: parent.right; leftMargin: 10; rightMargin: 10 }
                         //           width: view.width
                         //          height: view.heigh
                         hover: true;
