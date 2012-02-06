@@ -146,12 +146,37 @@ Item {
                             }
 
                             onEntered: {
+                                view.currentIndex = index
+                                view.highlightItem.opacity = 1
                             }
 
                             onExited: {
+                                view.highlightItem.opacity = 0
                             }
                         }
                     }
+
+                    highlight: PlasmaComponents.Highlight {
+                        //            anchors { left: profileView.left; right: profileView.right }
+                        //           width: view.width
+                        //          height: view.heigh
+                        hover: true;
+                    }
+        
+        //highlight: profileViewHighlighter
+        // old, working good way. I think the plasma component is busted, or my use of it is.
+        //    Component {
+            //        id: profileViewHighlighter
+            //
+            //        PlasmaCore.FrameSvgItem {
+                //            imagePath: "widgets/viewitem"
+                //            prefix: "hover"
+                //            opacity: 0
+                //        }
+                //    }
+                
+                highlightMoveDuration: 250
+                highlightMoveSpeed: 1
                 }
 
 
