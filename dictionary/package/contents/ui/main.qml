@@ -88,6 +88,7 @@ Item {
 
                     var data = feedSource.data["list-dictionaries"]
                     for (var line in data) {
+                        console.log("APPENDING: " + data[line])
                         listModel.append({ "name" : data[line] })
                     }
 
@@ -155,6 +156,7 @@ Item {
                             hoverEnabled: true
 
                             onClicked: {
+                                console.log("CLICKED: " + model.name)
                             }
 
                             onEntered: {
