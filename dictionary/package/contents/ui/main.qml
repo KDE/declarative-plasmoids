@@ -110,6 +110,16 @@ Item {
             }
         }
 
+        //we use this to compute a fixed height for the items, and also to implement
+        //the said constant below (itemHeight)
+        Text {
+            id: textMetric
+            visible: false
+            // i think this should indeed technically be translated, even though we won't ever use it, just
+            // its height/width
+            text: i18n("Arbitrary String Which Says The Dictionary Type")
+        }
+
         Flickable {
             id: flickable
 
@@ -120,14 +130,17 @@ Item {
 
             ListView {
                 id: view
-                anchors.fill: mainWindow.listdictionaries ? parent : undefined
+
                 visible: mainWindow.listdictionaries ? true : false
+                anchors.fill: mainWindow.listdictionaries ? parent : undefined
 
                 model: listModel
 
                 delegate: Item {
-                    //    height: itemHeight
-                    height: 20
+                    id: listdelegate
+                    height: textMetric.paintedHeight
+//                    width: text.paintedWidth
+//                    height: 20
                         anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10 }
 
                         Text {
