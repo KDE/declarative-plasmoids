@@ -79,6 +79,7 @@ Item {
             PlasmaWidgets.IconWidget {
                 id: icon
                 onClicked: {
+                    listModel.clear()
 
                     //TOTAL HACK, this results in an entry that looks like any other, clickable and eveyrhtin
                     var title = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
