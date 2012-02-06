@@ -150,7 +150,7 @@ Item {
                         }
 
                         MouseArea {
-                            height: parent.height + 20
+                            height: parent.height + 15
                             anchors { left: parent.left; right: parent.right;}
                             hoverEnabled: true
 
