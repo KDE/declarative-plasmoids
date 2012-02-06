@@ -63,6 +63,10 @@ Item {
         id: theme
     }
 
+    ListModel {
+        id: listModel
+    }
+
     Column {
         width: mainWindow.width
         height: mainWindow.height
@@ -75,6 +79,14 @@ Item {
             PlasmaWidgets.IconWidget {
                 id: icon
                 onClicked: {
+
+                    var data = feedSource.data["list-dictionaries"]
+                    var temp = "hello"
+                    for (var line in data) {
+                        console.log("########## appending: " + data[line]);
+                        listModel.append({ "name" : data[line] });
+                        console.log("%%%%%%%% COUNT: " + listModel.count)
+                    }
                     mainWindow.listdictionaries = true
                     timer.running = true
                 }
@@ -99,11 +111,51 @@ Item {
 
             width: parent.width
             height: parent.height
-            contentHeight: textBrowser.paintedHeight
+//            contentHeight: textBrowser.paintedHeight
             clip: true
+
+            ListView {
+                id: view
+                anchors.fill: parent
+
+                model: listModel
+                //listModel
+
+                delegate: Item {
+                    //    height: itemHeight
+                    height: 20
+                        anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10 }
+
+                        Text {
+                            id: text
+                            anchors.fill: parent
+                            //anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: model.name
+                        }
+
+                        MouseArea {
+                            height: 20
+                            anchors { left: parent.left; right: parent.right }
+                            hoverEnabled: true
+
+                            onClicked: {
+                            }
+
+                            onEntered: {
+                            }
+
+                            onExited: {
+                            }
+                        }
+                    }
+                }
+            }
+
+  //j          var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
 
             TextEdit {
                 id: textBrowser
+                visible: false // !mainWindow.listdictionaries
                 anchors {
                     fill: parent
                 }
@@ -115,7 +167,6 @@ Item {
                 text: computeHtml()
 
             }
-        }
 
         PlasmaComponents.ScrollBar {
             id: scrollBar
@@ -146,16 +197,7 @@ Item {
     }
 
     function computeHtml() {
-        if (mainWindow.listdictionaries) {
-            var data = feedSource.data["list-dictionaries"]
-            var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
-
-            for (var line in data) {
-                temp = temp + line + ": " + data[line] + "<br><br>"
-            }
-
-            return temp;
-        } else {
+       // ielse {
             var styledHtml = "";
 
             if (feedSource.data[searchBox.text]) {
@@ -177,6 +219,6 @@ Item {
                 styledHtml += "</body></html>";
             }
             return styledHtml;
-        }
+       // }
     }
 }
