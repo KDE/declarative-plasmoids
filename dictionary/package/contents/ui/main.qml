@@ -111,12 +111,13 @@ Item {
 
             width: parent.width
             height: parent.height
-//            contentHeight: textBrowser.paintedHeight
+//FIXME:            contentHeight: mainWindow.listdictionaries ? 0 : textBrowser.paintedHeight
             clip: true
 
             ListView {
                 id: view
-                anchors.fill: parent
+                anchors.fill: mainWindow.listdictionaries ? parent : undefined
+                visible: mainWindow.listdictionaries ? true : false
 
                 model: listModel
                 //listModel
@@ -149,16 +150,16 @@ Item {
                         }
                     }
                 }
-            }
 
   //j          var temp = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
 
             TextEdit {
                 id: textBrowser
-                visible: false // !mainWindow.listdictionaries
-                anchors {
-                    fill: parent
-                }
+//                anchors.fill: mainWindow.listdictionaries ? undefined : parent
+                anchors.left: mainWindow.listdictionaries ? undefined : parent.left
+                anchors.right: mainWindow.listdictionaries ? undefined : parent.right
+
+                visible: mainWindow.listdictionaries ? false : true
 
                 wrapMode: TextEdit.Wrap
                 readOnly: true
@@ -167,6 +168,7 @@ Item {
                 text: computeHtml()
 
             }
+    }
 
         PlasmaComponents.ScrollBar {
             id: scrollBar
