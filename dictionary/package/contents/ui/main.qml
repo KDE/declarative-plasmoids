@@ -135,12 +135,11 @@ Item {
                 anchors.fill: mainWindow.listdictionaries ? parent : undefined
 
                 model: listModel
+                spacing: 15
 
                 delegate: Item {
                     id: listdelegate
                     height: textMetric.paintedHeight
-//                    width: text.paintedWidth
-//                    height: 20
                         anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10 }
 
                         Text {
@@ -151,8 +150,8 @@ Item {
                         }
 
                         MouseArea {
-                            height: 20
-                            anchors { left: parent.left; right: parent.right }
+                            height: parent.height + 20
+                            anchors { left: parent.left; right: parent.right;}
                             hoverEnabled: true
 
                             onClicked: {
