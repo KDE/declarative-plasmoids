@@ -81,10 +81,10 @@ Item {
                 onClicked: {
                     listModel.clear()
 
+                    //FIXME: make it into a title, not a member of the listview/modeol
                     //TOTAL HACK, this results in an entry that looks like any other, clickable and eveyrhtin
-                    var title = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
-                    listModel.append({ "name": title, "description": "description2" })
-
+                   // var title = i18n("<b>This is a list of Dictionaries. You can type 'dictionaryname:' in front of your search term to pick from a certain one.</b><br/><br/>")
+                    //listModel.append({ "name": title, "description": '' })
 
                     var data = feedSource.data["list-dictionaries"]
                     for (var line in data) {
@@ -134,6 +134,7 @@ Item {
 
                 visible: mainWindow.listdictionaries ? true : false
                 anchors.fill: mainWindow.listdictionaries ? parent : undefined
+                anchors.topMargin: 20
 
                 model: listModel
                 spacing: 15
