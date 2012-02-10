@@ -58,14 +58,23 @@ Item {
         cellWidth: 300; cellHeight: 30
 
         focus: true
+
+        
     }
 
     Component {
         id: tasksDelegate
 
         Item {
+            id: wrapper
             width: 300
             height: 30
+
+            GridView.onRemove: SequentialAnimation {
+                PropertyAction { target: wrapper ; property: "GridView.delayRemove"; value: true }
+                NumberAnimation { target: taskBackground; property: "opacity"; to: 0; duration: 2500; easing.type: Easing.InOutQuad }
+                PropertyAction { target: wrapper; property: "GridView.delayRemove"; value: false }
+            }
 
             PlasmaCore.FrameSvgItem {
                 id: taskBackground
