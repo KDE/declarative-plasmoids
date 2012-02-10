@@ -39,7 +39,10 @@ Tasks::Tasks(QObject *parent, const QVariantList &args)
     setHasConfigurationInterface(false);
 
     QDeclarativeEngine *engine = new QDeclarativeEngine;
+
     QDeclarativeComponent component(engine, QUrl::fromLocalFile("qml/package/contents/ui/main.qml"));
+    kDebug() << "TASKS COMPONENT ERRORS: " << component.errors();
+
     QGraphicsObject *object = qobject_cast<QGraphicsObject *>(component.create());
     containment()->corona()->addItem(object);
 }
