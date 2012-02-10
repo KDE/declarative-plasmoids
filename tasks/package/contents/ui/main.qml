@@ -68,6 +68,9 @@ Item {
             width: 300
             height: 30
 
+            //FIXME: make it not be created in the first place..
+            visible: model.onCurrentDesktop
+
             GridView.onRemove: SequentialAnimation {
                 PropertyAction { target: wrapper ; property: "GridView.delayRemove"; value: true }
                 NumberAnimation { target: taskBackground; property: "opacity"; to: 0; duration: 2500; easing.type: Easing.InOutQuad }
