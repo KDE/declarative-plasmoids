@@ -22,17 +22,21 @@
 
 #include <Plasma/Applet>
 
+namespace Plasma {
+    class Package;
+    class DeclarativeWidget;
+}
+
 class Tasks : public Plasma::Applet
 {
-    Q_OBJECT
-    public:
-        Tasks(QObject *parent, const QVariantList &args);
-        ~Tasks();
+Q_OBJECT
+public:
+    Tasks(QObject *parent, const QVariantList &args);
+    ~Tasks();
 
-
- //   protected:
+private:
+    Plasma::Package *m_package;
+    Plasma::DeclarativeWidget *m_declarativeWidget;
 };
-
-K_EXPORT_PLASMA_APPLET(tasks, Tasks)
 
 #endif

@@ -26,9 +26,15 @@
 #include <QDeclarativeEngine>
 #include <QDeclarativeView>
 #include <QDeclarativeComponent>
+#include <QGraphicsLinearLayout>
 #include <QUrl>
 
 #include <KDebug>
+
+#include <Plasma/DeclarativeWidget>
+#include <Plasma/Package>
+
+K_EXPORT_PLASMA_APPLET(tasks, Tasks)
 
 Tasks::Tasks(QObject *parent, const QVariantList &args)
     : Plasma::Applet(parent, args)
@@ -38,13 +44,13 @@ Tasks::Tasks(QObject *parent, const QVariantList &args)
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setHasConfigurationInterface(false);
 
-    QDeclarativeEngine *engine = new QDeclarativeEngine;
+    QGraphicsLinearLayout *lay = new QGraphicsLinearLayout(this);
+    m_declarativeWidget = new Plasma::DeclarativeWidget(this);
+    lay->addItem(m_declarativeWidget);
 
-    QDeclarativeComponent component(engine, QUrl::fromLocalFile("qml/package/contents/ui/main.qml"));
-    kDebug() << "TASKS COMPONENT ERRORS: " << component.errors();
-
-    QGraphicsObject *object = qobject_cast<QGraphicsObject *>(component.create());
-    containment()->corona()->addItem(object);
+    Plasma::PackageStructure::Ptr structure = Plasma::PackageStructure::load("Plasma/Generic");
+    m_package = new Plasma::Package(QString(), "org.kde.tasks", structure);
+    m_declarativeWidget->setQmlPath(m_package->filePath("mainscript"));
 }
 
 Tasks::~Tasks()
