@@ -24,24 +24,24 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Item {
     id: tasks
-    
+
     property int minimumWidth: 300
     property int minimumHeight: 300
-    
+
     PlasmaCore.DataSource {
         id: tasksSource
         engine: "tasks"
         onSourceAdded: connectSource(source)
         onSourceRemoved: disconnectSource(source)
-        
+
         Component.onCompleted: connectedSources = sources
     }
-    
+
     PlasmaCore.DataModel {
         id: tasksModel
         dataSource: tasksSource
     }
-    
+
     Component.onCompleted: {
 //        plasmoid.popupIcon = "utilities-terminal";
  //       plasmoid.aspectRatioMode = IgnoreAspectRatio;
@@ -77,52 +77,49 @@ Item {
             }
 
             Text {
-//                anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
-
                 anchors { left: icon.right; top: icon.top; bottom: icon.bottom }
 
                 text: model.name
-//                width: tasksGrid.cellWdith
                 width: 100
-               clip: true
+                clip: true
                 height: tasksGrid.cellHeight
             }
         }
     }
 
-    
+
 //    PlasmaCore.Svg {
 //        id: lineSvg
 //        imagePath: "widgets/line"
 //    }
-//    
+//
 //        QIconItem {
 //            icon: QIcon("utilities-terminal")
 //            width: 32
 //            height: 32
 //        }
-//        
+//
 //        PlasmaComponents.Label {
 //            id: header
 //            text: i18n("Konsole Profiles")
 //            anchors { horizontalCenter: parent.horizontalCenter }
 //            horizontalAlignment: Text.AlignHCenter
 //        }
-//    
+//
 //    PlasmaCore.SvgItem {
 //        id: separator
-//        
+//
 //        anchors { left: headerRow.left; right: headerRow.right; top: headerRow.bottom }
 //        svg: lineSvg
 //        elementId: "horizontal-line"
 //        height: lineSvg.elementSize("horizontal-line").height
 //    }
-//    
+//
 //    Text {
 //        id: textMetric
 //        visible: false
 //        // translated but not used, we just need length/height
 //        text: i18n("Arbitrary String Which Says The Something")
 //    }
-//    
+//
 }
