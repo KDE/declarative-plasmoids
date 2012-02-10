@@ -138,10 +138,14 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
 
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+
                 onClicked: {
                    // if (!contextMenu) {
+                    if (mouse.button == Qt.RightButton) {
                         contextMenu = contextMenuComponent.createObject(wrapper)
                         contextMenu.open()
+                    }
                    // }
                 }
 
