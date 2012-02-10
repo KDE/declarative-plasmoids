@@ -58,8 +58,6 @@ Item {
         cellWidth: 300; cellHeight: 30
 
         focus: true
-
-        
     }
 
     Component {
@@ -76,6 +74,19 @@ Item {
                 PropertyAction { target: wrapper; property: "GridView.delayRemove"; value: false }
             }
 
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    taskBackground.prefix = "focus"
+                }
+
+                onExited: {
+                    taskBackground.prefix = "normal"
+                }
+            }
+
             PlasmaCore.FrameSvgItem {
                 id: taskBackground
 
@@ -88,7 +99,7 @@ Item {
             QIconItem {
                 id: icon
 
-                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                anchors { left: taskBackground.left; verticalCenter: taskBackground.verticalCenter }
 
                 icon: model.icon
                 width: 22
