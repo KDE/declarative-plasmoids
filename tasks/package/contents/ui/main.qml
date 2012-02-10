@@ -113,6 +113,10 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
 
+                onClicked: {
+                    
+                }
+
                 onEntered: {
                     hovered = true;
                 }
