@@ -91,11 +91,13 @@ Item {
 
                 anchors { left: icon.right; top: icon.top; bottom: icon.bottom }
 
-                verticalAlignment: Text.AlignVCenter
-                text: model.name
-                width: 200
-                clip: true
                 height: tasksGrid.cellHeight
+                width: 200
+
+                verticalAlignment: Text.AlignVCenter
+
+                clip: true
+                text: model.name
             }
         }
     }
