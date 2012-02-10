@@ -66,7 +66,6 @@ Item {
         Item {
             width: 300
             height: 30
-//            clip: true
 
             PlasmaCore.FrameSvgItem {
                 id: taskBackground
@@ -87,7 +86,7 @@ Item {
                 height: 22
             }
 
-            Text {
+            PlasmaComponents.Label {
                 id: text
 
                 anchors { left: icon.right; top: icon.top; bottom: icon.bottom }
