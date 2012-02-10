@@ -68,12 +68,18 @@ Item {
             height: 200
 //            clip: true
 
+            QIconItem {
+                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                id: icon
+                icon: model.icon
+                width: 32
+                height: 32
+            }
 
             Text {
-                
 //                anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
 
-                anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
+                anchors { left: icon.right; top: icon.top; bottom: icon.bottom }
 
                 text: model.name
 //                width: tasksGrid.cellWdith
