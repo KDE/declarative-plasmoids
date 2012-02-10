@@ -34,6 +34,8 @@
 #include <Plasma/DeclarativeWidget>
 #include <Plasma/Package>
 
+#include <tasksmodel.h>
+//    libs/taskmanager/tasksmodel.h
 K_EXPORT_PLASMA_APPLET(tasks, Tasks)
 
 Tasks::Tasks(QObject *parent, const QVariantList &args)
