@@ -21,6 +21,7 @@ import org.kde.qtextracomponents 0.1
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.components 0.1
 
 Item {
     id: tasks
@@ -58,6 +59,28 @@ Item {
         cellWidth: 300; cellHeight: 30
 
         focus: true
+    }
+
+    Component {
+        id: contextMenuComponent
+        PlasmaComponents.ContextMenu {
+            PlasmaComponents.MenuItem {
+                text: "White"
+//                onClicked: contentMenuButton.parent.color = "White"
+            }
+            PlasmaComponents.MenuItem {
+                text: "Red"
+ //               onClicked: contentMenuButton.parent.color = "Red"
+            }
+            PlasmaComponents.MenuItem {
+                text: "LightBlue"
+  //              onClicked: contentMenuButton.parent.color = "LightBlue"
+            }
+            PlasmaComponents.MenuItem {
+                text: "LightGreen"
+   //             onClicked: contentMenuButton.parent.color = "LightGreen"
+            }
+        }
     }
 
     Component {
@@ -108,13 +131,16 @@ Item {
             ]
 
             property bool hovered: false
-
+            property ContextMenu contextMenu
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
 
                 onClicked: {
-                    
+                    if (!contextMenu) {
+                        contextMenu = contextMenuComponent.createObject(parent)
+                        contextMenu.open()
+                    }
                 }
 
                 onEntered: {
