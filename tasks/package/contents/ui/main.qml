@@ -59,6 +59,25 @@ Item {
         cellWidth: 300; cellHeight: 30
 
         focus: true
+        interactive: false
+
+
+
+        MouseArea {
+            property string currentId: "-1"                       // Original position in model
+            property int newIndex                            // Current Position in model
+            property int index: tasksGrid.indexAt(mouseX, mouseY) // Item underneath cursor
+            id: loc
+            anchors.fill: parent
+            onPressAndHold: currentId =tasksModel.get(1).name //tasksModel.get(newIndex = index).gridId.
+            onReleased: currentId = -1
+            onMousePositionChanged:
+            if (loc.currentId != "-1" && index != -1 && index != newIndex) {
+                
+                console.log("DEBUG" + "newindex: " + newIndex + " INDEX: " + index)
+                tasksModel.move(0 , 1, 1)//newIndex, newIndex = index, 1)
+            }
+        }
     }
 
     Component {
@@ -135,10 +154,11 @@ Item {
             property bool hovered: false
             property ContextMenu contextMenu
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
+  
 
                 onClicked: {
                    // if (!contextMenu) {
