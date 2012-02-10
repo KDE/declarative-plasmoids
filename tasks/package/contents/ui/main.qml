@@ -74,16 +74,18 @@ Item {
                 PropertyAction { target: wrapper; property: "GridView.delayRemove"; value: false }
             }
 
+            property bool hovered: false
+
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
 
                 onEntered: {
-                    taskBackground.prefix = "hover"
+                    hovered = true;
                 }
 
                 onExited: {
-                    taskBackground.prefix = "normal"
+                    hovered = false;
                 }
             }
 
@@ -93,7 +95,17 @@ Item {
                 anchors { left: icon.left; right: text.right; top: icon.top; bottom: icon.bottom }
 
                 imagePath: "widgets/tasks"
-                prefix: "normal"
+                prefix: {
+                    if (model.minimized) {
+                        "focus"
+                    } else {
+                        if (hovered) {
+                            "hover"
+                        } else {
+                            "normal"
+                        }
+                    }
+                }
             }
 
             QIconItem {
