@@ -74,6 +74,36 @@ Item {
                 PropertyAction { target: wrapper; property: "GridView.delayRemove"; value: false }
             }
 
+            states: [
+                State {
+                    name: "none"
+                    when: !hovered && !model.minimized
+
+                    PropertyChanges {
+                        target: taskBackground
+                        prefix: "normal"
+                    }
+                },
+                State {
+                    name: "hovered"
+                    when: hovered && !model.minimized
+
+                    PropertyChanges {
+                        target: taskBackground
+                        prefix: "hover"
+                    }
+                },
+                State {
+                    name: "minimized"
+                    when: model.minimized
+
+                    PropertyChanges {
+                        target: taskBackground
+                        prefix: "focus"
+                    }
+                }
+            ]
+
             property bool hovered: false
 
             MouseArea {
@@ -95,17 +125,17 @@ Item {
                 anchors { left: icon.left; right: text.right; top: icon.top; bottom: icon.bottom }
 
                 imagePath: "widgets/tasks"
-                prefix: {
-                    if (model.minimized) {
-                        "focus"
-                    } else {
-                        if (hovered) {
-                            "hover"
-                        } else {
-                            "normal"
-                        }
-                    }
-                }
+//                prefix: {
+//                    if (model.minimized) {
+//                        "focus"
+//                    } else {
+//                        if (hovered) {
+//                            "hover"
+//                        } else {
+//                            "normal"
+//                        }
+//                    }
+//                }
             }
 
             QIconItem {
