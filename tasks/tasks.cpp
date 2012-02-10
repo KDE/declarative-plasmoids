@@ -34,7 +34,7 @@
 #include <Plasma/DeclarativeWidget>
 #include <Plasma/Package>
 
-#include <tasksmodel.h>
+#include <plasmagenericshell/taskmanager/tasksmodel.h>
 //    libs/taskmanager/tasksmodel.h
 K_EXPORT_PLASMA_APPLET(tasks, Tasks)
 
