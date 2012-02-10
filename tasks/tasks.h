@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright 2008 by Olivier Goffart <ogoffart@kde.org>                  *
+ *   Copyright (C) 2012 by Shaun M. Reich <shaun.reich@kdemail.net>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,32 +17,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef EYES_H
-#define EYES_H
+#ifndef TASKS_H
+#define TASKS_H
 
 #include <Plasma/Applet>
-#include <Plasma/Svg>
-#include <Plasma/SvgWidget>
 
-class Eyes : public Plasma::Applet
+class Tasks : public Plasma::Applet
 {
     Q_OBJECT
     public:
-        Eyes(QObject *parent, const QVariantList &args);
-        ~Eyes();
+        Tasks(QObject *parent, const QVariantList &args);
+        ~Tasks();
 
         void paintInterface(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRect& contentsRect);
         void constraintsEvent(Plasma::Constraints constraints);
-        
-    protected:
-        void timerEvent(QTimerEvent *);
-        Plasma::SvgWidget *leftPupil, *rightPupil;
-        int timerId;
-        int timerInterval;
-        QPoint previousMousePos;
-        Plasma::Svg *m_svg;
+
+ //   protected:
 };
 
-K_EXPORT_PLASMA_APPLET(eyes, Eyes)
+K_EXPORT_PLASMA_APPLET(tasks, Tasks)
 
 #endif
