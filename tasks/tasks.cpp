@@ -20,6 +20,10 @@
 #include "tasks.h"
 
 #include <QGraphicsView>
+#include <QDeclarativeEngine>
+#include <QDeclarativeView>
+#include <QDeclarativeComponent>
+#include <QUrl>
 
 #include <KDebug>
 
@@ -30,6 +34,11 @@ Tasks::Tasks(QObject *parent, const QVariantList &args)
 
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setHasConfigurationInterface(false);
+
+    QDeclarativeEngine *engine = new QDeclarativeEngine;
+    QDeclarativeComponent component(engine, QUrl::fromLocalFile("qml/contents/ui/main.qml"));
+    QGraphicsObject *object = qobject_cast<QGraphicsObject *>(component.create());
+    scene()->addItem(object);
 }
 
 Tasks::~Tasks()
