@@ -42,14 +42,16 @@ Item {
 
     PlasmaCore.DataSource {
         id: feedSource
-        engine: "dict"
-        connectedSources: ["freedom"]
+        engine: "tasks"
+
         interval: 0
+        onSourceAdded: connectSource(source)
+        onSourceRemoved: disconnectSource(source)
+
+        Component.onCompleted: connectedSources = sources
+
         onDataChanged: {
-            if (!timer.running) {
-                plasmoid.busy = false
-            }
-            console.log("SETTING !BUSY");
+
         }
     }
 
