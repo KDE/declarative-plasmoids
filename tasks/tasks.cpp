@@ -37,9 +37,4 @@ Tasks::~Tasks()
 
 }
 
-void Tasks::constraintsEvent(Plasma::Constraints constraints)
-{
-
-}
-
 #include "tasks.moc"

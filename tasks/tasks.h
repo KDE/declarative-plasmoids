@@ -29,8 +29,6 @@ class Tasks : public Plasma::Applet
         Tasks(QObject *parent, const QVariantList &args);
         ~Tasks();
 
-        void paintInterface(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRect& contentsRect);
-        void constraintsEvent(Plasma::Constraints constraints);
 
  //   protected:
 };
