@@ -55,7 +55,7 @@ Item {
         model: tasksModel
         delegate: tasksDelegate
 
-        cellWidth: 200; cellHeight: 200
+        cellWidth: 300; cellHeight: 30
 
         focus: true
     }
@@ -64,23 +64,36 @@ Item {
         id: tasksDelegate
 
         Item {
-            width: 200
-            height: 200
+            width: 300
+            height: 30
 //            clip: true
 
+            PlasmaCore.FrameSvgItem {
+                id: taskBackground
+
+                anchors { left: icon.left; right: text.right; top: icon.top; bottom: icon.bottom }
+
+                imagePath: "widgets/tasks"
+                prefix: "normal"
+            }
+
             QIconItem {
-                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
                 id: icon
+
+                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+
                 icon: model.icon
-                width: 32
-                height: 32
+                width: 22
+                height: 22
             }
 
             Text {
+                id: text
+
                 anchors { left: icon.right; top: icon.top; bottom: icon.bottom }
 
                 text: model.name
-                width: 100
+                width: 200
                 clip: true
                 height: tasksGrid.cellHeight
             }
@@ -88,17 +101,6 @@ Item {
     }
 
 
-//    PlasmaCore.Svg {
-//        id: lineSvg
-//        imagePath: "widgets/line"
-//    }
-//
-//        QIconItem {
-//            icon: QIcon("utilities-terminal")
-//            width: 32
-//            height: 32
-//        }
-//
 //        PlasmaComponents.Label {
 //            id: header
 //            text: i18n("Konsole Profiles")
@@ -106,14 +108,7 @@ Item {
 //            horizontalAlignment: Text.AlignHCenter
 //        }
 //
-//    PlasmaCore.SvgItem {
-//        id: separator
-//
-//        anchors { left: headerRow.left; right: headerRow.right; top: headerRow.bottom }
-//        svg: lineSvg
-//        elementId: "horizontal-line"
-//        height: lineSvg.elementSize("horizontal-line").height
-//    }
+
 //
 //    Text {
 //        id: textMetric
