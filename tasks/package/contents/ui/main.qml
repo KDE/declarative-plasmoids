@@ -91,6 +91,7 @@ Item {
 
                 anchors { left: icon.right; top: icon.top; bottom: icon.bottom }
 
+                verticalAlignment: Text.AlignVCenter
                 text: model.name
                 width: 200
                 clip: true
