@@ -79,7 +79,7 @@ Item {
                 hoverEnabled: true
 
                 onEntered: {
-                    taskBackground.prefix = "focus"
+                    taskBackground.prefix = "hover"
                 }
 
                 onExited: {
