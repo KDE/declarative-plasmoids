@@ -19,6 +19,9 @@
 
 #include "tasks.h"
 
+#include <Plasma/Containment>
+#include <Plasma/Corona>
+
 #include <QGraphicsView>
 #include <QDeclarativeEngine>
 #include <QDeclarativeView>
@@ -36,9 +39,9 @@ Tasks::Tasks(QObject *parent, const QVariantList &args)
     setHasConfigurationInterface(false);
 
     QDeclarativeEngine *engine = new QDeclarativeEngine;
-    QDeclarativeComponent component(engine, QUrl::fromLocalFile("qml/contents/ui/main.qml"));
+    QDeclarativeComponent component(engine, QUrl::fromLocalFile("qml/package/contents/ui/main.qml"));
     QGraphicsObject *object = qobject_cast<QGraphicsObject *>(component.create());
-    scene()->addItem(object);
+    containment()->corona()->addItem(object);
 }
 
 Tasks::~Tasks()
