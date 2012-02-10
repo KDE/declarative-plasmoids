@@ -66,7 +66,9 @@ Item {
         PlasmaComponents.ContextMenu {
             PlasmaComponents.MenuItem {
                 text: "White"
-//                onClicked: contentMenuButton.parent.color = "White"
+              //  onClicked: {
+                    //contentMenuButton.parent.color = "White"
+               // }
             }
             PlasmaComponents.MenuItem {
                 text: "Red"
@@ -137,10 +139,10 @@ Item {
                 hoverEnabled: true
 
                 onClicked: {
-                    if (!contextMenu) {
-                        contextMenu = contextMenuComponent.createObject(parent)
+                   // if (!contextMenu) {
+                        contextMenu = contextMenuComponent.createObject(wrapper)
                         contextMenu.open()
-                    }
+                   // }
                 }
 
                 onEntered: {
