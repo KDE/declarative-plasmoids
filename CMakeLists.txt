@@ -12,8 +12,6 @@ include_directories(
 add_subdirectory(rssnow)
 add_subdirectory(dictionary)
 add_subdirectory(knowledgebase)
-add_subdirectory(rssnow)
 add_subdirectory(news)
 add_subdirectory(social-news)
 add_subdirectory(microblog)
-add_subdirectory(dictionary)
