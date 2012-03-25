@@ -43,6 +43,7 @@ Item {
         plasmoid.addEventListener('ConfigChanged', configChanged);
         plasmoid.configurationRequired = true
         Logic.messagesDataSource = microblogSource
+        //print("MDS: " + Logic.messagesDataSource);
         configChanged()
     }
 
@@ -77,6 +78,9 @@ Item {
         if (serviceUrl && userName && password) {
             authTimer.running = true
         }
+        Logic.userName = userName;
+        Logic.serviceUrl = serviceUrl;
+
     }
 
     Timer {
@@ -113,8 +117,15 @@ Item {
         engine: "microblog"
         interval: 0
 
+//         onDataUpdated: {
+//             print("image data updated");
+//         }
+//         onDataChanged: {
+//             print("image data changed");
+//         }
         Component.onCompleted: {
             serviceUrl = plasmoid.readConfig("serviceUrl")
+            print("connecting to UserImages:"+serviceUrl);
             imageSource.connectSource("UserImages:"+serviceUrl)
         }
     }

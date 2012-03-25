@@ -25,7 +25,7 @@ var serviceUrl
 
 function refresh()
 {
-    var src = "TimelineWithFriends" + userName + "@" + serviceUrl;
+    var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
     var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("refresh");
     service.startOperationCall(operation);
@@ -44,7 +44,9 @@ function update(status, inReplyToStatusId)
 
 function retweet(id)
 {
-    var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+    var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+    
+    var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("statuses/retweet");
     operation.id = id;
     service.startOperationCall(operation);
@@ -52,7 +54,8 @@ function retweet(id)
 
 function setFavorite(id, isFavorite)
 {
-    var service = messagesDataSource.serviceForSource(messagesDataSource.connectedSources[0])
+    var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+    var service = messagesDataSource.serviceForSource(src)
     var operation;
     if (isFavorite) {
         operation = "favorites/create";

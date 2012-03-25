@@ -31,21 +31,23 @@ QtExtraComponents.QImageItem {
 
     image: {
         var sourceName = "UserImages:"+serviceUrl;
-        print(" avatar for user: ", userId, sourceName);
+        //print(" avatar for user: ", userId, sourceName);
+        //sourceName = sourceName+"/"
         var d = imageSource.data[sourceName];
         if (typeof(d) != "undefined" &&
             typeof(d[userId]) != "undefined") {
             return d[userId];
         } else {
+            //print("returning default image for " + userId + " ");
+            //for (k in imageSource.data) print(" K " + k);
             return microblogSource.data["Defaults"]["UserImage"];
         }
     }
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            print("Avatar clicked: " + userId);
+            //print("Avatar clicked: " + userId);
             userInfo.login = userId
-            
         }
     }
 }

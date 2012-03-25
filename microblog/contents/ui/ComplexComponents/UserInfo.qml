@@ -26,8 +26,8 @@ import "plasmapackage:/ui/BasicComponents"
 
 PlasmaCore.FrameSvgItem {
     id: userInfo
-    imagePath: "widgets/frame"
-    prefix: "plain"
+    //imagePath: "widgets/frame"
+    //prefix: "plain"
     opacity: realNameLabel.text != "" ? 1 : 0.1;
 
     clip: true
@@ -133,7 +133,7 @@ PlasmaCore.FrameSvgItem {
         //userInfo.data = data
         realNameLabel.text = data.realname;
         descriptonLabel.text = data.description ? data.description : "";
-        print("DESC:" + data.description);
+        //print("DESC:" + data.description);
         var br = "<br/>\n";
         var info = "";
         var labels = "";

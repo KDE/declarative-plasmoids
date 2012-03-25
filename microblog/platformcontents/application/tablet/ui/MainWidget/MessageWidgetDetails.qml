@@ -131,7 +131,7 @@ Rectangle {
                     height: 48
                     checked: isFavorite
                     onClicked: {
-                        main.favoriteAsked(id, isFavorite != "true");
+                        main.favoriteAsked(messageId, isFavorite != "true");
                     }
                 }
                 PlasmaComponents.ToolButton {
@@ -141,7 +141,7 @@ Rectangle {
                     width: 48
                     height: 48
                     onClicked: {
-                        main.replyAsked(id, "@" + user + ": ");
+                        main.replyAsked(messageId, "@" + user + ": ");
                     }
                 }
                 PlasmaComponents.ToolButton {
@@ -151,7 +151,8 @@ Rectangle {
                     width: 48
                     height: 48
                     onClicked: {
-                        main.retweetAsked(id);
+                        print("message ID: " + messageId);
+                        main.retweetAsked(messageId);
                     }
                 }
             }
