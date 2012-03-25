@@ -54,7 +54,7 @@ Item {
         var u = plasmoid.readConfig("userName")
         var p = plasmoid.readConfig("password")
         var s = serviceUrl = plasmoid.readConfig("serviceUrl")
-//         print( "XXX Read user and password from config: " + u + ":" + p);
+        print( "XXX Read user and password from config: " + u + ":" + p);
 
         if (u) {
             userName = u;
@@ -80,7 +80,6 @@ Item {
         }
         Logic.userName = userName;
         Logic.serviceUrl = serviceUrl;
-
     }
 
     Timer {
@@ -88,6 +87,7 @@ Item {
         interval: 100
         repeat: false
         onTriggered: {
+            if (userName == "" || password == "") return;
             var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
             print(" XXXX Logging in ..." + password + " source: " + src);
             var service = microblogSource.serviceForSource(src);

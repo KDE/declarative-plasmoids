@@ -48,6 +48,7 @@ ListView {
         running: false
         interval: 500
         onTriggered: {
+            if (userName == "" || password == "") return;
             var s = timelineType+":"+userName+"@"+url;
             print(" Source: " + s + "USER: " + userName);
             var service = microblogSource.serviceForSource(s)

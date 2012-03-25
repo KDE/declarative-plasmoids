@@ -38,7 +38,7 @@ PlasmaCore.FrameSvgItem {
     //signal itemClicked(variant item)
 
     property string timelineType: "User"
-    property string login
+    property string login: userName
     property string url: serviceUrl
     property string source: timelineType+":"+login+"@"+url
 
@@ -98,7 +98,8 @@ PlasmaCore.FrameSvgItem {
     PlasmaComponents.Button {
         id: followButton
         visible: login != userName
-        anchors { left: userIdLabel.left; right: parent.right; top: infoText.bottom; topMargin: 12; rightMargin: 12  }
+        width: parent.width /3
+        anchors { left: userIdLabel.left; right: parent.right; top: infoText.bottom; topMargin: 12; rightMargin: 12 *4  }
     }
 
     PlasmaComponents.Label {

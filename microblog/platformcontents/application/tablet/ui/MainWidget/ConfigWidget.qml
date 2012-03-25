@@ -164,6 +164,8 @@ Rectangle {
                     plasmoid.writeConfig("serviceUrl", serviceUrlEdit.text);
                     plasmoid.writeConfig("userName", userNameEdit.text);
                     plasmoid.writeConfig("password", passwordEdit.text);
+                    configChanged();
+                    userInfo.login = userNameEdit.text;
                     disappearAnimation.running = true;
                 }
             }
