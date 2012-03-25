@@ -33,9 +33,9 @@ ListView {
     signal itemClicked(variant item)
 
     property string timelineType: "TimelineWithFriends"
-    property string login: userName
+    //property string login: userName
     property string url: serviceUrl
-    property string source: timelineType+":"+login+"@"+url
+    property string source: timelineType+":"+userName+"@"+url
 
     onSourceChanged: {
         microblogSource.connectSource(source)
@@ -48,7 +48,9 @@ ListView {
         running: false
         interval: 500
         onTriggered: {
-            var service = microblogSource.serviceForSource(source)
+            var s = timelineType+":"+userName+"@"+url;
+            print(" Source: " + s + "USER: " + userName);
+            var service = microblogSource.serviceForSource(s)
             var operation = service.operationDescription("auth");
             operation.password = password
             service.startOperationCall(operation);
@@ -66,7 +68,6 @@ ListView {
         }
     }
 
-    
     delegate: MessageWidget {
         id: messageWidget
         width: entryList.width

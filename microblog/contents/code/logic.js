@@ -45,7 +45,6 @@ function update(status, inReplyToStatusId)
 function retweet(id)
 {
     var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-    
     var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("statuses/retweet");
     operation.id = id;

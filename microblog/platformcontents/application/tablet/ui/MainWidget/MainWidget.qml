@@ -154,7 +154,8 @@ Image {
             anchors.bottom: parent.bottom
             //FIXME: use font size
             spacing: 4
-            property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
+            //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
+            property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
 
             UserInfo {
                 id: userInfo
@@ -187,6 +188,7 @@ Image {
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
+                    messageDetails.dateTime = item.dateTime
                     messageDetails.source = item.source
                     messageDetails.isFavorite = item.isFavorite
                     messageDetails.status = item.status
@@ -215,6 +217,7 @@ Image {
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
+                    messageDetails.dateTime = item.dateTime
                     messageDetails.source = item.source
                     messageDetails.isFavorite = item.isFavorite
                     messageDetails.status = item.status
@@ -242,6 +245,7 @@ Image {
                 onItemClicked: {
                     messageDetails.messageId = item.messageId
                     messageDetails.user = item.user
+                    messageDetails.dateTime = item.dateTime
                     messageDetails.source = item.source
                     messageDetails.isFavorite = item.isFavorite
                     messageDetails.status = item.status

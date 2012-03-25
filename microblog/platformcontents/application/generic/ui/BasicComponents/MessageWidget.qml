@@ -72,7 +72,7 @@ ListItem {
         anchors.right: padding.right
         anchors.top: fromLabel.bottom
         anchors.bottomMargin: 6
-        text: status
+        text: formatMessage(status)
         wrapMode: Text.WordWrap
     }
     PlasmaComponents.Label {
@@ -83,36 +83,9 @@ ListItem {
         opacity: 0.3
         font.pointSize: theme.smallestFont.pointSize
         styleColor: theme.backgroundColor
-        text: friendlyDate(dateTime);
+        text: friendlyDate(dateTime)
     }
 
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
 
-    function friendlyDate(date) {
-//         print(" - - - - - - - - - - - - - - - -");
-        var d = new Date(date);
-        var now = new Date();
-//         print("Now is: " + now);
-//         print("  d is: " + d);
-        var dout = Qt.formatDateTime(d, "hh:mm");
-        var ago = (now - d) / 1000;
-        var output = "";
-//         print(" NOW: " + now.getTime());
-//         print("   D: " + d.getTime());
-//         print(" AGO: " + ago);
-        if (ago < 60) {
-            output = i18n("%1 seconds ago", ago);
-        } else if (ago < 3600) {
-            output = i18n("%1 minutes ago", Math.round(ago/60));
-        } else if (ago < 84600) {
-            output = i18n("%1 hours ago", Math.round(ago/3600));
-        } else {
-            output = i18n("%1 days ago", Math.round(ago/86400));
-            //output = Qt.formatDateTime(d, "hh:mm");
-        }
-//         print(" Date Conversion: ", dateTime, "->", output);
-        //print("     ago sec:" + ago + output);
-        //return i18n("at %1", dout);
-        return output;
-    }
 }

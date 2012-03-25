@@ -20,6 +20,7 @@
 import Qt 4.7
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Rectangle {
@@ -30,6 +31,7 @@ Rectangle {
     property string messageId
     property string user
     property string source
+    property string dateTime
     property bool isFavorite
     property string status
 
@@ -49,8 +51,8 @@ Rectangle {
     transitions: [
         Transition {
             ParallelAnimation {
-            NumberAnimation { properties: "opacity"; duration: 500 }
-            NumberAnimation { properties: "y"; duration: 500 }
+            NumberAnimation { properties: "opacity"; duration: 250 }
+            NumberAnimation { properties: "y"; duration: 250 }
             }
         }
     ]
@@ -107,7 +109,7 @@ Rectangle {
                 }
 
             }
-            PlasmaComponents.Label {
+            PlasmaExtras.Title {
                 id: infoLabel
                 //anchors.leftMargin: 5
                 anchors.bottomMargin: 5
@@ -116,8 +118,13 @@ Rectangle {
                 anchors.right: padding.right
                 anchors.top: padding.top
                 anchors.topMargin: 12
-                text: i18n("%1 from %2", user, source)
-                font.pointSize: 15
+                text: user
+                //font.pointSize: 15
+            }
+            PlasmaComponents.Label {
+                text: i18n("%1 from %2", friendlyDate(dateTime), source)
+                height: 20
+                anchors { top: infoLabel.bottom; left: infoLabel.left; right: infoLabel.right; }
             }
             Row {
                 id: toolBoxRow
@@ -161,10 +168,10 @@ Rectangle {
                 anchors.leftMargin: 12
                 anchors.left: userIcon.right
                 anchors.right: padding.right
-                anchors.top: infoLabel.bottom
+                anchors.top: userIcon.bottom
                 anchors.topMargin: 20
                 anchors.bottomMargin: 5
-                text: status
+                text: formatMessage(status)
                 font.pointSize: 20
                 wrapMode: Text.WordWrap
             }

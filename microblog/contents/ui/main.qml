@@ -90,7 +90,7 @@ Item {
         onTriggered: {
             var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
             print(" XXXX Logging in ..." + password + " source: " + src);
-            var service = microblogSource.serviceForSource(src)
+            var service = microblogSource.serviceForSource(src);
             var operation = service.operationDescription("auth");
             operation.password = password
             service.startOperationCall(operation);
@@ -140,4 +140,37 @@ Item {
     MainWidget {
         anchors.fill: main
     }
+
+    function friendlyDate(date) {
+//         print(" - - - - - - - - - - - - - - - -");
+        var d = new Date(date);
+        var now = new Date();
+//         print("Now is: " + now);
+//         print("  d is: " + d);
+        var dout = Qt.formatDateTime(d, "hh:mm");
+        var ago = (now - d) / 1000;
+        var output = "";
+//         print(" NOW: " + now.getTime());
+//         print("   D: " + d.getTime());
+//         print(" AGO: " + ago);
+        if (ago < 60) {
+            output = i18n("%1 seconds ago", ago);
+        } else if (ago < 3600) {
+            output = i18n("%1 minutes ago", Math.round(ago/60));
+        } else if (ago < 84600) {
+            output = i18n("%1 hours ago", Math.round(ago/3600));
+        } else {
+            output = i18n("%1 days ago", Math.round(ago/86400));
+            //output = Qt.formatDateTime(d, "hh:mm");
+        }
+//         print(" Date Conversion: ", dateTime, "->", output);
+        //print("     ago sec:" + ago + output);
+        //return i18n("at %1", dout);
+        return output;
+    }
+
+    function formatMessage(msg) {
+        return msg.replace(/(http:\/\/\S+)/g, "<a href='$1'>$1</a>").replace("'>http://", "'>")
+    }
+    
 }
