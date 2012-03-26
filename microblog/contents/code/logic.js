@@ -33,6 +33,7 @@ function refresh()
 
 function update(status, inReplyToStatusId)
 {
+    print("Posting update: " + status);
     var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
     var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("update");

@@ -34,6 +34,7 @@ Item {
     property string serviceUrl: "https://twitter.com/"
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
+    property bool authorized: false
 
     signal replyAsked(string id, string message)
     signal retweetAsked(string id)
@@ -49,37 +50,40 @@ Item {
 
     function configChanged()
     {
-        //print(" XXX COnnnecting");
-        serviceUrl = plasmoid.readConfig("serviceUrl")
-        var u = plasmoid.readConfig("userName")
-        var p = plasmoid.readConfig("password")
-        var s = serviceUrl = plasmoid.readConfig("serviceUrl")
-        print( "XXX Read user and password from config: " + u + ":" + p);
+        print(" configChanged()");
+        serviceUrl = plasmoid.readConfig("serviceUrl");
+        var u = plasmoid.readConfig("userName");
+        var p = plasmoid.readConfig("password");
+        var s = plasmoid.readConfig("serviceUrl");
+//         print( "    Read serviceUrl user and password from config: " + s + " : "  + u + " : " + p);
 
         if (u) {
             userName = u;
         }
-        userName = u;
+        //userName = u;
         if (p) {
-            password = plasmoid.readConfig("password")
+            password = p;
         }
         if (s) {
+            serviceUrl = s;
             imageSource.connectSource("UserImages:"+serviceUrl)
         } else {
             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
         }
+        print( "    Read serviceUrl user and password from config: " + serviceUrl + " : "  + userName + " : " + password);
         if (serviceUrl && userName) {
             print("Requesting ... " + userName + "@" + serviceUrl);
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
         //microblogSource.connectSource("UserImages:"+serviceUrl)
 
+        Logic.userName = userName;
+        Logic.serviceUrl = serviceUrl;
+
         if (serviceUrl && userName && password) {
             authTimer.running = true
         }
-        Logic.userName = userName;
-        Logic.serviceUrl = serviceUrl;
     }
 
     Timer {
@@ -125,7 +129,7 @@ Item {
 //         }
         Component.onCompleted: {
             serviceUrl = plasmoid.readConfig("serviceUrl")
-            print("connecting to UserImages:"+serviceUrl);
+            //print("connecting to UserImages:"+serviceUrl);
             imageSource.connectSource("UserImages:"+serviceUrl)
         }
     }
@@ -170,7 +174,7 @@ Item {
     }
 
     function formatMessage(msg) {
-        return msg.replace(/(http:\/\/\S+)/g, "<a href='$1'>$1</a>").replace("'>http://", "'>")
+        return msg.replace(/(http:\/\/\S+)/g, " <a href='$1'>$1</a>").replace("'>http://", "'>")
     }
     
 }

@@ -37,6 +37,7 @@ Item {
 
     onStatusChanged: {
         print(" status changed to " + status);
+        main.authorized = status == "Ok"
     }
 
     PlasmaComponents.BusyIndicator {
@@ -55,7 +56,7 @@ Item {
         anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 6}
         visible: status == "Ok"
         userId: {
-            print(" USER NAME: " + userName);
+            //print(" USER NAME: " + userName);
             userName
         }
         //Rectangle { color: "green"; anchors.fill: parent; opacity: 0.5 }
@@ -85,7 +86,6 @@ Item {
 //                 authStatusWidget.status = "Idle"
 
             }
-            print(" -----> dataChagned");
         }
         Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
     }

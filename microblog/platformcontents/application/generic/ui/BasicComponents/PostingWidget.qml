@@ -32,10 +32,12 @@ Item {
     //height: 300
     state: "inactive"
 
+    property string inReplyToStatusId: ""
+
     function refresh()
     {
         postTextEdit.text = ""
-        postTextEdit.inReplyToStatusId = ""
+        inReplyToStatusId = ""
         Logic.refresh()
         plasmoid.busy = true
     }
@@ -51,8 +53,8 @@ Item {
         width: 400
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        imagePath: "widgets/frame"
-        prefix: "plain"
+        //imagePath: "widgets/frame"
+        //prefix: "plain"
         visible: authStatusWidget.status == "Ok"
         property alias textWidth: postTextEdit.width
         anchors.horizontalCenter: parent.horizontalCenter
@@ -76,32 +78,25 @@ Item {
 //                 bottom: postWidget.bottom
                 fill: parent;
                 rightMargin: postWidget.margins.right
-                leftMargin: 6
+                //leftMargin: 6
                 topMargin: postWidget.margins.top
             }
             wrapMode: TextEdit.WordWrap
-            property string inReplyToStatusId: ""
 
             onTextChanged: {
                 var txt = text; // prevent copying text more often than necessary
                 characterCountLabel.characterCount = txt.length;
                 //yes, TextEdit doesn't have returnPressed sadly
                 if (txt[txt.length-1] == "\n") {
-                    Logic.userName = userName;
-                    Logic.serviceUrl = serviceUrl;
-                    Logic.update(txt, inReplyToStatusId);
-                    refresh();
-                    print(" RETURN ");
+                    //Logic.userName = userName;
+                    //Logic.serviceUrl = serviceUrl;
+                    //Logic.update(txt, inReplyToStatusId);
+                    //unfocus
+                    //refresh();
+                    //print(" should lose focus here: imlement");
                 } else if (txt.length == 0) {
                     inReplyToStatusId = ""
                 }
-            }
-
-            Keys.onReturnPressed: {
-                //Logic.update(txt, inReplyToStatusId);
-                //refresh();
-                print(" Sending Update: " + txt + " to statusId: " + inReplyToStatusId);
-                ///print(" sending update");
             }
 
             onActiveFocusChanged: {
@@ -112,7 +107,7 @@ Item {
             Connections {
                 target: main
                 onReplyAsked: {
-                    postTextEdit.inReplyToStatusId = id
+                    inReplyToStatusId = id
                     postTextEdit.text = message
                 }
                 onRetweetAsked: {
@@ -141,6 +136,19 @@ Item {
                 } else {
                     color = "red"
                 }
+            }
+        }
+        PlasmaComponents.Button {
+            id: sendButton
+            text: "Send"
+            visible: postTextEdit.text != "" && main.authorized
+            anchors { bottom: parent.bottom; left: postTextEdit.right; leftMargin: 12; bottomMargin: 4; }
+            onClicked: {
+                print("button clicked");
+                Logic.userName = userName;
+                Logic.serviceUrl = serviceUrl;
+                Logic.update(postTextEdit.text, inReplyToStatusId);
+                Logic.refresh();
             }
         }
     }
