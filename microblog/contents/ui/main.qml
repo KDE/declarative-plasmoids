@@ -31,7 +31,7 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl: "https://twitter.com/"
+    property string serviceUrl: "https://identi.ca/api/"
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
     property bool authorized: false
@@ -82,7 +82,7 @@ Item {
 
     Timer {
         id: authTimer
-        interval: 5000
+        interval: 100
         repeat: false
         onTriggered: {
             if (userName == "" || password == "") return;

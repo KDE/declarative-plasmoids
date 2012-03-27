@@ -36,32 +36,19 @@ ListView {
     //property string login: userName
     property string url: serviceUrl
     property string source: timelineType+":"+userName+"@"+url
+    property string previousSource
 
     onSourceChanged: {
+        if (previousSource) {
+            print("source changed from " + previousSource + " to " + source);
+            microblogSource.disconnectSource(previousSource);
+        }
         if (userName) {
             microblogSource.connectSource(source)
         }
-//         timer.running = true
+        previousSource = source
     }
 
-//     Timer {
-//         id: timer
-//         repeat: false
-//         running: false
-//         interval: 500
-//         onTriggered: {
-//             if (userName == "" || password == "") {
-//                 print("user empty");
-//                 return;
-//             }
-//             var s = timelineType+":"+userName+"@"+url;
-//             print(" Source: " + s + "USER: " + userName);
-//             var service = microblogSource.serviceForSource(s)
-//             var operation = service.operationDescription("auth");
-//             operation.password = password
-//             service.startOperationCall(operation);
-//         }
-//     }
 
     model: PlasmaCore.SortFilterModel {
         id: sortModel

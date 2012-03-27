@@ -214,12 +214,12 @@ Image {
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 24
                 clip: false
-                timelineType: "Messages"
+                timelineType: "Timeline"
                 header: Item {
                     anchors.margins: 12
                     height: 48
                     PlasmaComponents.Label {
-                        text: i18n("Messages");
+                        text: i18n("My tweets");
                         font.pointSize: theme.defaultFont.pointSize*2
                         anchors.fill: parent
                         anchors.leftMargin: 12
