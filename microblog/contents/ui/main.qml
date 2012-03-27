@@ -50,19 +50,13 @@ Item {
 
     function configChanged()
     {
-        print(" configChanged()");
-        serviceUrl = plasmoid.readConfig("serviceUrl");
+//         print(" configChanged()");
+        //serviceUrl = plasmoid.readConfig("serviceUrl");
         var u = plasmoid.readConfig("userName");
-        var p = plasmoid.readConfig("password");
         var s = plasmoid.readConfig("serviceUrl");
-//         print( "    Read serviceUrl user and password from config: " + s + " : "  + u + " : " + p);
 
         if (u) {
             userName = u;
-        }
-        //userName = u;
-        if (p) {
-            password = p;
         }
         if (s) {
             serviceUrl = s;
@@ -71,9 +65,9 @@ Item {
             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
         }
-        print( "    Read serviceUrl user and password from config: " + serviceUrl + " : "  + userName + " : " + password);
-        if (serviceUrl && userName) {
-            print("Requesting ... " + userName + "@" + serviceUrl);
+//         print( "    Read serviceUrl user and password from config: " + serviceUrl + " : "  + userName + " : " + password);
+        if (serviceUrl != "" && userName != "") {
+//             print("Requesting ... " + userName + "@" + serviceUrl);
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
         //microblogSource.connectSource("UserImages:"+serviceUrl)
@@ -88,7 +82,7 @@ Item {
 
     Timer {
         id: authTimer
-        interval: 100
+        interval: 5000
         repeat: false
         onTriggered: {
             if (userName == "" || password == "") return;
@@ -121,15 +115,8 @@ Item {
         engine: "microblog"
         interval: 0
 
-//         onDataUpdated: {
-//             print("image data updated");
-//         }
-//         onDataChanged: {
-//             print("image data changed");
-//         }
         Component.onCompleted: {
             serviceUrl = plasmoid.readConfig("serviceUrl")
-            //print("connecting to UserImages:"+serviceUrl);
             imageSource.connectSource("UserImages:"+serviceUrl)
         }
     }
@@ -146,30 +133,20 @@ Item {
     }
 
     function friendlyDate(date) {
-//         print(" - - - - - - - - - - - - - - - -");
         var d = new Date(date);
         var now = new Date();
-//         print("Now is: " + now);
-//         print("  d is: " + d);
         var dout = Qt.formatDateTime(d, "hh:mm");
         var ago = (now - d) / 1000;
         var output = "";
-//         print(" NOW: " + now.getTime());
-//         print("   D: " + d.getTime());
-//         print(" AGO: " + ago);
         if (ago < 60) {
-            output = i18n("%1 seconds ago", ago);
+            output = i18np("%1 second ago", "%1 seconds ago", ago);
         } else if (ago < 3600) {
-            output = i18n("%1 minutes ago", Math.round(ago/60));
+            output = i18np("%1 minute ago", "%1 minutes ago", Math.round(ago/60));
         } else if (ago < 84600) {
-            output = i18n("%1 hours ago", Math.round(ago/3600));
+            output = i18np("%1 hour ago", "%1 hours ago", Math.round(ago/3600));
         } else {
-            output = i18n("%1 days ago", Math.round(ago/86400));
-            //output = Qt.formatDateTime(d, "hh:mm");
+            output = i18np("%1 day ago", "%1 days ago", Math.round(ago/86400));
         }
-//         print(" Date Conversion: ", dateTime, "->", output);
-        //print("     ago sec:" + ago + output);
-        //return i18n("at %1", dout);
         return output;
     }
 

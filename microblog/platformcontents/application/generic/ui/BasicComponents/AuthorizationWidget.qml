@@ -36,7 +36,7 @@ Item {
 //     height: childrenRect.height
 
     onStatusChanged: {
-        print(" status changed to " + status);
+//         print(" status changed to " + status);
         main.authorized = status == "Ok"
     }
 
@@ -78,7 +78,7 @@ Item {
         interval: 0
         onDataChanged: {
             if (statusSource.data["Status:"+serviceUrl]) {
-                print(" status: " + statusSource.data);
+//                 print(" status: " + statusSource.data);
                 //authStatusWidget.statusMessage = statusSource.data["Status:"+serviceUrl]["Authorization"] + ": " + statusSource.data["Status:"+serviceUrl]["AuthorizationMessage"] ;
                 authStatusWidget.status = statusSource.data["Status:"+serviceUrl]["Authorization"]
             } else {
@@ -94,7 +94,7 @@ Item {
         target: main
         onServiceUrlChanged: {
             var src = "Status:"+serviceUrl;
-            print("C O N N E C T E D to " + src);
+//             print("C O N N E C T E D to " + src);
             statusSource.connectSource(src);
         }
     }

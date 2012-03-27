@@ -57,8 +57,9 @@ Rectangle {
         NumberAnimation {
             targets: mainTranslate
             properties: "y"
+            from: -frame.height
             duration: 250
-            to: 0
+            to: 80
             easing.type: "InOutCubic"
         }
     }
@@ -95,12 +96,16 @@ Rectangle {
             id: frame
             imagePath: "widgets/background"
 
-            anchors.centerIn: parent
+            //anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            x: 80
             anchors.margins: 20
+            anchors.rightMargin: 48*3
+            anchors.bottomMargin: 200
             width: layout.width + margins.left + margins.right + 48*4
             height: layout.height + margins.top + margins.bottom + 48
 
-            transform: Translate { id: mainTranslate; y: -frame.height }
+            transform: Translate { id: mainTranslate; y: 120 }
 
             MouseArea {
                 anchors.fill: parent
@@ -113,27 +118,34 @@ Rectangle {
                 id: layout
                 spacing: 20
                 anchors.margins: 12
+                anchors.rightMargin: 48
+                //anchors.leftMargin: 0
                 //anchors.fill: parent
                 anchors.centerIn: parent
+//                 anchors.horizontalCenter: parent.horizontalCenter
+                //anchors.verticalCenter: parent.verticalCenter
 //                 x: frame.margins.left
 //                 y: frame.margins.top
                 //width: childrenRect.width
 
-                PlasmaExtras.Title {
-                    text: i18n("Sign in...")
-                    width: 200
-                }
+//                 PlasmaExtras.Title {
+//                     text: i18n("Sign in...")
+//                     width: 200
+//                 }
 
                 Grid {
                     id: formGrid
                     columns: 2
                     rows: 3
-                    spacing: 20
-                    width: layout.width
+                    spacing: 12
+                    width: 200
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    PlasmaComponents.Label {
-                        text: i18n(" ")
+                    PlasmaExtras.Title {
+                        text: i18n("Sign in:")
+                        horizontalAlignment: Text.AlignRight
+                        anchors.right: parent.horizontalCenter
+                        anchors.rightMargin: 24
                         //text: i18n("Service URL:")
                     }
 //                     PlasmaComponents.TextField {
@@ -142,6 +154,7 @@ Rectangle {
 //                         Keys.onTabPressed: userNameEdit.forceActiveFocus()
 //                     }
                     Column {
+                        id: radioCol
                         PlasmaComponents.RadioButton {
                             id: twitterRadio
                             width: 140
@@ -183,6 +196,8 @@ Rectangle {
                     PlasmaComponents.Label {
                         text: i18n("User name:")
                         horizontalAlignment: Text.AlignRight
+                        anchors.right: parent.horizontalCenter
+                        anchors.rightMargin: 24
                     }
                     PlasmaComponents.TextField {
                         id: userNameEdit
@@ -192,6 +207,8 @@ Rectangle {
                     PlasmaComponents.Label {
                         text: i18n("Password:")
                         horizontalAlignment: Text.AlignRight
+                        anchors.right: parent.horizontalCenter
+                        anchors.rightMargin: 24
                     }
                     PlasmaComponents.TextField {
                         id: passwordEdit
@@ -199,20 +216,18 @@ Rectangle {
                         Keys.onReturnPressed: layout.acceptConfig()
                     }
                 }
-                Row {
+                PlasmaComponents.Button {
                     id: buttonsRow
-
-                    spacing: 8
+                    text: i18n("Sign in")
+                    width: 80
+                    enabled: userNameEdit.text != "" && selectedService != ""
                     anchors {
                         topMargin: 20
-                        horizontalCenter: parent.horizontalCenter
+                        left: parent.horizontalCenter
+                        leftMargin: 12
                     }
-                    PlasmaComponents.Button {
-                        text: i18n("Sign in")
-                        width: 80
-                        enabled: userNameEdit.text != "" && selectedService != ""
-                        onClicked: layout.acceptConfig()
-                    }
+                    onClicked: layout.acceptConfig()
+                }
 //                     PlasmaComponents.Button {
 //                         text: i18n("Cancel")
 //                         width: 80
@@ -220,7 +235,6 @@ Rectangle {
 //                             disappearAnimation.running = true
 //                         }
 //                     }
-                }
                 function acceptConfig() {
                     //var s = serviceUrlEdit.text;
                     //var s = selectedService;

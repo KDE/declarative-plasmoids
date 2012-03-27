@@ -184,16 +184,7 @@ Image {
                         anchors.leftMargin: 12
                     }
                 }
-
-                onItemClicked: {
-                    messageDetails.messageId = item.messageId
-                    messageDetails.user = item.user
-                    messageDetails.dateTime = item.dateTime
-                    messageDetails.source = item.source
-                    messageDetails.isFavorite = item.isFavorite
-                    messageDetails.status = item.status
-                    messageDetails.state = "visible"
-                }
+                onItemClicked: showMessage(item)
             }
             MessageList {
                 id: repliesList
@@ -214,15 +205,7 @@ Image {
                         anchors.leftMargin: 12
                     }
                 }
-                onItemClicked: {
-                    messageDetails.messageId = item.messageId
-                    messageDetails.user = item.user
-                    messageDetails.dateTime = item.dateTime
-                    messageDetails.source = item.source
-                    messageDetails.isFavorite = item.isFavorite
-                    messageDetails.status = item.status
-                    messageDetails.state = "visible"
-                }
+                onItemClicked: showMessage(item)
             }
             MessageList {
                 id: messageList
@@ -242,17 +225,19 @@ Image {
                         anchors.leftMargin: 12
                     }
                 }
-                onItemClicked: {
-                    messageDetails.messageId = item.messageId
-                    messageDetails.user = item.user
-                    messageDetails.dateTime = item.dateTime
-                    messageDetails.source = item.source
-                    messageDetails.isFavorite = item.isFavorite
-                    messageDetails.status = item.status
-                    messageDetails.state = "visible"
-                }
+                onItemClicked: showMessage(item)
             }
         }
+    }
+
+    function showMessage(item) {
+        messageDetails.messageId = item.messageId
+        messageDetails.user = item.user
+        messageDetails.dateTime = item.dateTime
+        messageDetails.source = item.source
+        messageDetails.isFavorite = item.isFavorite
+        messageDetails.status = item.status
+        messageDetails.state = "visible"
     }
 
     MessageWidgetDetails {

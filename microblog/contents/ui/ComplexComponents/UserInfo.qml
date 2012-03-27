@@ -124,7 +124,7 @@ PlasmaCore.FrameSvgItem {
             //print(" moving " + source);
             updateData(userSource.data[source]);
         } else {
-            //print(" connnecting " + source);
+//             print(" connnecting to user: " + source);
             userSource.connectSource(source);
         }
         //timer.running = true
@@ -144,7 +144,6 @@ PlasmaCore.FrameSvgItem {
         }
         if (data.website) {
             info += "<a href=\"http://" + data.website + "\">" + data.website + "</a>" + b//list-remove-user
-r;
             labels += i18n("Website:") + br;
         }
 //         if (data.location) {
@@ -169,7 +168,6 @@ r;
 
         var output = "";
         for (k in data) {
-            //print( " Key: " + k + ":" + data[k]);
             output += "<strong>" + k + "</strong>: " + data[k] + br;
         }
         mainText.text = output;
@@ -184,13 +182,7 @@ r;
         }
     }
 
-    onLoginChanged: {
-        source = timelineType+":"+login+"@"+url
-        //print("onLoginChanged: " + source);
-        //userSource.connectSource(source);
-    }
     Component.onCompleted: {
         login = userName
-        //print(" user info loaded: " + login + source);
     }
 }

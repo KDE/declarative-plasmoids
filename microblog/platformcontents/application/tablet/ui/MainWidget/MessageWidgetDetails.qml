@@ -56,6 +56,30 @@ Rectangle {
             }
         }
     ]
+    PlasmaCore.DataSource {
+        id: pmSource
+        engine: "org.kde.preview"
+
+        interval: 0
+        Component.onCompleted: {
+            var url = previewImage.url;
+//            print(" setting URL: " + url);
+            pmSource.connectedSources = [url]
+            if (data[url] == undefined) {
+                previewImage.visible = false
+                return
+            }
+            previewImage.visible = data[url]["status"] == "done"
+            //iconItem.visible = !previewFrame.visible
+            previewImage.image = data[url]["thumbnail"]
+        }
+        onDataChanged: {
+            var url = previewImage.url;
+            previewImage.visible = (data[url]["status"] == "done")
+            //iconItem.visible = !previewFrame.visible
+            previewImage.image = data[url]["thumbnail"]
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -126,6 +150,47 @@ Rectangle {
                 height: 20
                 anchors { top: infoLabel.bottom; left: infoLabel.left; right: infoLabel.right; }
             }
+
+            PlasmaComponents.Label {
+                id: bodyText
+                anchors.leftMargin: 12
+                anchors.left: userIcon.right
+                anchors.right: padding.right
+                anchors.top: userIcon.bottom
+                anchors.topMargin: 20
+                anchors.bottomMargin: 5
+                text: {
+                    findUrls(status);
+                    formatMessage(status);
+                }
+                font.pointSize: 20
+                wrapMode: Text.WordWrap
+            }
+
+            QtExtraComponents.QImageItem {
+                id: previewImage
+                anchors.right: parent.horizontalCenter
+                anchors.bottom: toolBoxRow.top
+                property string url: "http://kde.org"
+
+                onUrlChanged: {
+//                     print("url chagned: " + url);
+//                     pmSource.connectedSources = [url]
+                }
+
+                width: 128
+                height: 128
+            }
+//             Image {
+//                 id: previewImage2
+//                 anchors.left: parent.horizontalCenter
+//                 anchors.bottom: toolBoxRow.top
+//                 source: "https://p.twimg.com/Ao2nGdmCQAEW_IZ.jpg"
+//                 //property string url: "http://kde.org"
+// 
+//                 width: 128
+//                 height: 128
+//             }
             Row {
                 id: toolBoxRow
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -163,18 +228,25 @@ Rectangle {
                     }
                 }
             }
-            PlasmaComponents.Label {
-                id: bodyText
-                anchors.leftMargin: 12
-                anchors.left: userIcon.right
-                anchors.right: padding.right
-                anchors.top: userIcon.bottom
-                anchors.topMargin: 20
-                anchors.bottomMargin: 5
-                text: formatMessage(status)
-                font.pointSize: 20
-                wrapMode: Text.WordWrap
-            }
         }
+    }
+
+    function findUrls(txt) {
+        print( "full text: " + txt);
+        var matches = [];
+        //var rgx = /\s(ht|f)tp:\/\/([^ \,\;\:\!\)\(\"\'\\f\n\r\t\v])+/g;
+        var rgx = /(http:\/\/\S+)/g;
+        txt.replace(rgx, function () {
+                //matches.push("https://p.twimg.com/Ao2nGdmCQAEW_IZ.jpg");
+                matches.push(arguments[0]);
+                //print(" URL found: " + arguments[0]);
+                for (a in arguments) {
+//                    print("A : " + a);
+                }
+        });
+        if (matches.length) {
+            previewImage.url = matches[0].toString();
+        }
+        return matches;
     }
 }

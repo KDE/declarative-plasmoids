@@ -38,7 +38,9 @@ ListView {
     property string source: timelineType+":"+userName+"@"+url
 
     onSourceChanged: {
-        microblogSource.connectSource(source)
+        if (userName) {
+            microblogSource.connectSource(source)
+        }
 //         timer.running = true
     }
 
