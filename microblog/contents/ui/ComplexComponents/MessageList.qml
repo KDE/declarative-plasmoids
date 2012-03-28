@@ -19,6 +19,8 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/BasicComponents"
 
@@ -33,7 +35,7 @@ ListView {
     signal itemClicked(variant item)
 
     property string timelineType: "TimelineWithFriends"
-    //property string login: userName
+    property string title: "bla"
     property string url: serviceUrl
     property string source: timelineType+":"+userName+"@"+url
     property string previousSource
@@ -58,6 +60,15 @@ ListView {
             dataSource: microblogSource
             sourceFilter: entryList.source
             keyRoleFilter: "[\\d]*"
+        }
+    }
+    header: Component {
+        PlasmaExtras.Title {
+            anchors.margins: 12
+            x: 24
+            anchors.leftMargin: 24
+            height: 48
+            text: entryList.title
         }
     }
 

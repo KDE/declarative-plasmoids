@@ -20,6 +20,7 @@
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
@@ -58,9 +59,6 @@ Image {
             onClicked: {
                 var componentObject = configComponent.createObject(mainWidget);
             }
-
-
-
         }
 
         PostingWidget {
@@ -120,7 +118,7 @@ Image {
             property int columnWidth: colWidth(mainWidget.width)
 
             function colWidth(mainWidth) {
-                var cols = Math.round(Math.max(2, (mainWidth/500)));
+                var cols = Math.round(Math.max(1, (mainWidth/500)));
                 var w = (mainWidth/cols);
                 print(" Columns: " + cols + " (" + w + ")");
                 return w;
@@ -143,15 +141,9 @@ Image {
                 anchors.bottom: parent.bottom
                 anchors.rightMargin: 20
                 clip: false
-                header: Item {
-                    anchors.margins: 12
-                    height: 48
-                    PlasmaComponents.Label {
-                        text: i18n("Timeline");
-                        font.pointSize: theme.defaultFont.pointSize*2
-                        anchors.fill: parent
-                        anchors.leftMargin: 12
-                    }
+                header: PlasmaExtras.Title {
+                    text: i18n("My timeline");
+                    x: 20
                 }
                 onItemClicked: showMessage(item)
             }
@@ -164,15 +156,9 @@ Image {
                 anchors.topMargin: 24
                 timelineType: "Replies"
                 clip: false
-                header: Item {
-                    anchors.margins: 12
-                    height: 48
-                    PlasmaComponents.Label {
-                        text: i18n("Replies");
-                        font.pointSize: theme.defaultFont.pointSize*2
-                        anchors.fill: parent
-                        anchors.leftMargin: 12
-                    }
+                header: PlasmaExtras.Title {
+                    text: i18n("Replies");
+                    x: 20
                 }
                 onItemClicked: showMessage(item)
             }
@@ -184,15 +170,9 @@ Image {
                 anchors.topMargin: 24
                 clip: false
                 timelineType: "Timeline"
-                header: Item {
-                    anchors.margins: 12
-                    height: 48
-                    PlasmaComponents.Label {
-                        text: i18n("My tweets");
-                        font.pointSize: theme.defaultFont.pointSize*2
-                        anchors.fill: parent
-                        anchors.leftMargin: 12
-                    }
+                header: PlasmaExtras.Title {
+                    text: i18n("My tweets");
+                    x: 20
                 }
                 onItemClicked: showMessage(item)
             }
@@ -206,15 +186,9 @@ Image {
                 clip: false
                 source: timelineType+":"+userName+"@"+url
                 timelineType: "CustomTimeline"
-                header: Item {
-                    anchors.margins: 12
-                    height: 48
-                    PlasmaComponents.Label {
-                        text: i18n("Custom");
-                        font.pointSize: theme.defaultFont.pointSize*2
-                        anchors.fill: parent
-                        anchors.leftMargin: 12
-                    }
+                header: PlasmaExtras.Title {
+                    text: i18n("Custom ...");
+                    x: 20
                 }
                 onItemClicked: showMessage(item)
             }
