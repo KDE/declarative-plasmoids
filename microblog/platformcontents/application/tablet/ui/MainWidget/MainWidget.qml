@@ -116,7 +116,15 @@ Image {
             anchors.bottom: parent.bottom
             spacing: 4
             //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
-            property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
+            //property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
+            property int columnWidth: colWidth(mainWidget.width)
+
+            function colWidth(mainWidth) {
+                var cols = Math.round(Math.max(2, (mainWidth/500)));
+                var w = (mainWidth/cols);
+                print(" Columns: " + cols + " (" + w + ")");
+                return w;
+            }
 
             UserInfo {
                 id: userInfo
@@ -181,6 +189,28 @@ Image {
                     height: 48
                     PlasmaComponents.Label {
                         text: i18n("My tweets");
+                        font.pointSize: theme.defaultFont.pointSize*2
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                    }
+                }
+                onItemClicked: showMessage(item)
+            }
+            MessageList {
+                id: customTimeline
+                width: messageContainer.columnWidth
+                anchors.top: parent.top
+                anchors.topMargin: 24
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                clip: false
+                source: timelineType+":"+userName+"@"+url
+                timelineType: "CustomTimeline"
+                header: Item {
+                    anchors.margins: 12
+                    height: 48
+                    PlasmaComponents.Label {
+                        text: i18n("Custom");
                         font.pointSize: theme.defaultFont.pointSize*2
                         anchors.fill: parent
                         anchors.leftMargin: 12
