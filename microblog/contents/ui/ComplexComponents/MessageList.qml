@@ -42,7 +42,7 @@ ListView {
 
     onSourceChanged: {
         if (previousSource) {
-            print("source changed from " + previousSource + " to " + source);
+            //print("source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
         }
         if (userName) {
@@ -62,15 +62,15 @@ ListView {
             keyRoleFilter: "[\\d]*"
         }
     }
-    header: Component {
-        PlasmaExtras.Title {
-            anchors.margins: 12
-            x: 24
-            anchors.leftMargin: 24
-            height: 48
-            text: entryList.title
-        }
-    }
+//     header: Component {
+//         PlasmaExtras.Title {
+//             anchors.margins: 12
+//             x: 24
+//             anchors.leftMargin: 24
+//             height: 48
+//             text: entryList.title
+//         }
+//     }
 
     delegate: MessageWidget {
         id: messageWidget

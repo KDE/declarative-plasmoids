@@ -31,6 +31,8 @@ Item {
     property alias statusMessage: statusLabel.text
     property string status: "Idle"
 
+    property string __serviceUrl
+
     onStatusChanged: {
         main.authorized = status == "Ok"
     }
@@ -73,7 +75,13 @@ Item {
 
     Connections {
         target: main
-        onServiceUrlChanged: statusSource.connectSource("Status:"+serviceUrl);
+        onServiceUrlChanged: {
+            if (__serviceUrl) {
+                statusSou.disconnectSource("Status:"+__serviceUrl);
+                __serviceUrl = serviceUrl;
+            }
+            statusSource.connectSource("Status:"+serviceUrl);
+        }
     }
 }
 

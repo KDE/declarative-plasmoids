@@ -151,6 +151,10 @@ Item {
     }
 
     function formatMessage(msg) {
+        if (msg.indexOf("<a") > -1) {
+            print("bla .. ." + msg);
+            return msg;
+        }
         return msg.replace(/(http:\/\/\S+)/g, " <a href='$1'>$1</a>").replace("'>http://", "'>")
     }
     

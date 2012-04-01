@@ -120,7 +120,7 @@ Image {
             function colWidth(mainWidth) {
                 var cols = Math.round(Math.max(1, (mainWidth/500)));
                 var w = (mainWidth/cols);
-                print(" Columns: " + cols + " (" + w + ")");
+                //print(" Columns: " + cols + " (" + w + ")");
                 return w;
             }
 
@@ -133,6 +133,14 @@ Image {
                 clip: false
             }
 
+            MessageSearchList {
+                id: customTimeline
+                width: messageContainer.columnWidth
+                anchors.top: parent.top
+                anchors.topMargin: 24
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+            }
             MessageList {
                 id: timelineList
                 width: messageContainer.columnWidth
@@ -147,51 +155,35 @@ Image {
                 }
                 onItemClicked: showMessage(item)
             }
-            MessageList {
-                id: repliesList
-                width: messageContainer.columnWidth
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.rightMargin: 20
-                anchors.topMargin: 24
-                timelineType: "Replies"
-                clip: false
-                header: PlasmaExtras.Title {
-                    text: i18n("Replies");
-                    x: 20
-                }
-                onItemClicked: showMessage(item)
-            }
-            MessageList {
-                id: messageList
-                width: messageContainer.columnWidth
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 24
-                clip: false
-                timelineType: "Timeline"
-                header: PlasmaExtras.Title {
-                    text: i18n("My tweets");
-                    x: 20
-                }
-                onItemClicked: showMessage(item)
-            }
-            MessageList {
-                id: customTimeline
-                width: messageContainer.columnWidth
-                anchors.top: parent.top
-                anchors.topMargin: 24
-                anchors.bottom: parent.bottom
-                anchors.rightMargin: 20
-                clip: false
-                source: timelineType+":"+userName+"@"+url
-                timelineType: "CustomTimeline"
-                header: PlasmaExtras.Title {
-                    text: i18n("Custom ...");
-                    x: 20
-                }
-                onItemClicked: showMessage(item)
-            }
+//             MessageList {
+//                 id: repliesList
+//                 width: messageContainer.columnWidth
+//                 anchors.top: parent.top
+//                 anchors.bottom: parent.bottom
+//                 anchors.rightMargin: 20
+//                 anchors.topMargin: 24
+//                 timelineType: "Replies"
+//                 clip: false
+//                 header: PlasmaExtras.Title {
+//                     text: i18n("Replies");
+//                     x: 20
+//                 }
+//                 onItemClicked: showMessage(item)
+//             }
+//             MessageList {
+//                 id: messageList
+//                 width: messageContainer.columnWidth
+//                 anchors.top: parent.top
+//                 anchors.bottom: parent.bottom
+//                 anchors.topMargin: 24
+//                 clip: false
+//                 timelineType: "Timeline"
+//                 header: PlasmaExtras.Title {
+//                     text: i18n("My tweets");
+//                     x: 20
+//                 }
+//                 onItemClicked: showMessage(item)
+//             }
         }
     }
 
