@@ -108,7 +108,16 @@ Image {
         anchors.right: mainWidget.right
 
         content: mainFlickable
-        navigation: PlasmaExtras.Title { id: navigationItem; text: "nav area" }
+        navigation: userInfo
+
+        UserInfo {
+            id: userInfo
+            width: myApp.navigationWidth
+//             anchors.top: parent.top
+//             anchors.bottom: parent.bottom
+//             anchors.topMargin: 48
+            clip: false
+        }
 
         Flickable {
             id: mainFlickable
@@ -125,22 +134,13 @@ Image {
                 spacing: 4
                 //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
                 //property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
-                property int columnWidth: colWidth(mainWidget.width)
+                property int columnWidth: colWidth(mainFlickable.width)
 
                 function colWidth(mainWidth) {
                     var cols = Math.round(Math.max(1, (mainWidth/500)));
                     var w = (mainWidth/cols);
                     //print(" Columns: " + cols + " (" + w + ")");
                     return w;
-                }
-
-                UserInfo {
-                    id: userInfo
-                    width: messageContainer.columnWidth
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.topMargin: 24
-                    clip: false
                 }
 
                 MessageSearchList {

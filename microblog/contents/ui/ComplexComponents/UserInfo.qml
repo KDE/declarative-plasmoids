@@ -49,6 +49,7 @@ PlasmaCore.FrameSvgItem {
         width: 96
         height: 96
         anchors.margins: 12
+        anchors.topMargin: 48
         image: {
             var sourceName = "UserImages:"+serviceUrl;
             if (typeof(imageSource.data[sourceName]) != "undefined" &&
