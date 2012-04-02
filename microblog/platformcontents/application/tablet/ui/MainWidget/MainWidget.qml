@@ -109,6 +109,7 @@ Image {
 
         content: mainFlickable
         navigation: userInfo
+        navigationWidth: 300
 
         UserInfo {
             id: userInfo
@@ -137,7 +138,7 @@ Image {
                 property int columnWidth: colWidth(mainFlickable.width)
 
                 function colWidth(mainWidth) {
-                    var cols = Math.round(Math.max(1, (mainWidth/500)));
+                    var cols = Math.round(Math.max(1, (mainWidth/450)));
                     var w = (mainWidth/cols);
                     //print(" Columns: " + cols + " (" + w + ")");
                     return w;
@@ -165,35 +166,35 @@ Image {
                     }
                     onItemClicked: showMessage(item)
                 }
-    //             MessageList {
-    //                 id: repliesList
-    //                 width: messageContainer.columnWidth
-    //                 anchors.top: parent.top
-    //                 anchors.bottom: parent.bottom
-    //                 anchors.rightMargin: 20
-    //                 anchors.topMargin: 24
-    //                 timelineType: "Replies"
-    //                 clip: false
-    //                 header: PlasmaExtras.Title {
-    //                     text: i18n("Replies");
-    //                     x: 20
-    //                 }
-    //                 onItemClicked: showMessage(item)
-    //             }
-    //             MessageList {
-    //                 id: messageList
-    //                 width: messageContainer.columnWidth
-    //                 anchors.top: parent.top
-    //                 anchors.bottom: parent.bottom
-    //                 anchors.topMargin: 24
-    //                 clip: false
-    //                 timelineType: "Timeline"
-    //                 header: PlasmaExtras.Title {
-    //                     text: i18n("My tweets");
-    //                     x: 20
-    //                 }
-    //                 onItemClicked: showMessage(item)
-    //             }
+                MessageList {
+                    id: repliesList
+                    width: messageContainer.columnWidth
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.rightMargin: 20
+                    anchors.topMargin: 24
+                    timelineType: "Replies"
+                    clip: false
+                    header: PlasmaExtras.Title {
+                        text: i18n("Replies");
+                        x: 20
+                    }
+                    onItemClicked: showMessage(item)
+                }
+                MessageList {
+                    id: messageList
+                    width: messageContainer.columnWidth
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.topMargin: 24
+                    clip: false
+                    timelineType: "Timeline"
+                    header: PlasmaExtras.Title {
+                        text: i18n("My tweets");
+                        x: 20
+                    }
+                    onItemClicked: showMessage(item)
+                }
             }
         }
     }
