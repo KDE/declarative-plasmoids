@@ -91,6 +91,7 @@ Item {
             var service = microblogSource.serviceForSource(src);
             var operation = service.operationDescription("auth");
             operation.password = password
+            operation.user = userName
             service.startOperationCall(operation);
             plasmoid.configurationRequired = false
             //plasmoid.busy = true
