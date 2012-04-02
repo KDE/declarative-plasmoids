@@ -29,6 +29,8 @@ ListView {
 
     clip: true
     snapMode: ListView.SnapToItem
+    boundsBehavior: Flickable.StopAtBounds
+    //boundsBehavior: Flickable.DragOverBounds
     spacing: 2
     //cacheBuffer: 500
 
