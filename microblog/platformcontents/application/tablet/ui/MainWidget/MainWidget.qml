@@ -120,45 +120,55 @@ Image {
             clip: false
         }
 
-        Flickable {
+        Item {
             id: mainFlickable
             clip: true
             width: myApp.contentWidth
             height: myApp.height
+            property int columnWidth: colWidth(mainFlickable.width)
 
-            contentWidth: messageContainer.width
-            contentHeight: height
-            Row {
+            //contentWidth: messageContainer.width
+            //contentHeight: height
+            ListView {
                 id: messageContainer
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                orientation: ListView.Horizontal
+                snapMode: ListView.SnapOneItem
+                boundsBehavior: Flickable.StopAtBounds
+//                 anchors.top: parent.top
+//                 anchors.bottom: parent.bottom
+                anchors.fill: parent
                 spacing: 4
+                model: messageListModel
                 //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
                 //property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
-                property int columnWidth: colWidth(mainFlickable.width)
 
-                function colWidth(mainWidth) {
-                    var cols = Math.round(Math.max(1, (mainWidth/450)));
-                    var w = (mainWidth/cols);
-                    //print(" Columns: " + cols + " (" + w + ")");
-                    return w;
-                }
+            }
+            function colWidth(mainWidth) {
+                var cols = Math.round(Math.max(1, (mainWidth/450)));
+                var w = (mainWidth/cols);
+                //print(" Columns: " + cols + " (" + w + ")");
+                return w;
+            }
 
-                MessageSearchList {
-                    id: customTimeline
-                    width: messageContainer.columnWidth
-                    anchors.top: parent.top
-                    anchors.topMargin: 24
-                    anchors.bottom: parent.bottom
-                    anchors.rightMargin: 20
-                }
+            VisualItemModel {
+                id: messageListModel
+//                 MessageSearchList {
+//                     id: customTimeline
+//                     width: mainFlickable.columnWidth
+//                     //height: mainFlickable.height
+//                     //anchors.top: parent.top
+// //                     anchors.topMargin: 24
+//                     //anchors.bottom: parent.bottom
+// //                     anchors.rightMargin: 20
+//                 }
                 MessageList {
                     id: timelineList
-                    width: messageContainer.columnWidth
-                    anchors.top: parent.top
-                    anchors.topMargin: 24
-                    anchors.bottom: parent.bottom
-                    anchors.rightMargin: 20
+                    width: mainFlickable.columnWidth
+                    height: mainFlickable.height
+                    //anchors.top: parent.top
+//                     anchors.topMargin: 24
+                    //anchors.bottom: parent.bottom
+//                     anchors.rightMargin: 20
                     clip: false
                     header: PlasmaExtras.Title {
                         text: i18n("My timeline");
@@ -168,11 +178,12 @@ Image {
                 }
                 MessageList {
                     id: repliesList
-                    width: messageContainer.columnWidth
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.rightMargin: 20
-                    anchors.topMargin: 24
+                    width: mainFlickable.columnWidth
+                    height: mainFlickable.height
+                    //anchors.top: parent.top
+                    //anchors.bottom: parent.bottom
+//                     anchors.rightMargin: 20
+//                     anchors.topMargin: 24
                     timelineType: "Replies"
                     clip: false
                     header: PlasmaExtras.Title {
@@ -183,9 +194,10 @@ Image {
                 }
                 MessageList {
                     id: messageList
-                    width: messageContainer.columnWidth
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
+                    width: mainFlickable.columnWidth
+                    height: mainFlickable.height
+                    //anchors.top: parent.top
+                    //anchors.bottom: parent.bottom
                     anchors.topMargin: 24
                     clip: false
                     timelineType: "Timeline"

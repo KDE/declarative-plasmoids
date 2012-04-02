@@ -74,7 +74,7 @@ ListView {
 
     delegate: MessageWidget {
         id: messageWidget
-        width: entryList.width
+        //width: entryList.width
         onClicked: itemClicked(messageWidget)
     }
 }
