@@ -36,9 +36,9 @@ Image {
     Item {
         id: topItem
         anchors { left: parent.left; right: parent.right; top: parent.top }
-        height: childrenRect.height
+        //height: childrenRect.height
         //height: 64
-        //height: postingWidget.state == "active" ? 200 : 64;
+        height: postingWidget.state == "active" ? 200 : 64;
 
         Image {
             source: "plasmapackage:/images/sidebarbackground.png"
@@ -75,11 +75,13 @@ Image {
 
     PlasmaCore.SvgItem {
         height: 32
+        //y: myApp.navigationWidth
         anchors {
             left: parent.left
             right: parent.right
-            top: mainFlickable.top
+            top: myApp.top
         }
+        z: 10
         svg: shadowSvg
         elementId: "bottom"
     }
@@ -98,92 +100,101 @@ Image {
     }
     //Rectangle { anchors.fill: mouseEventListener; color: "green"; opacity: 0.3 }
 
-    Flickable {
-        id: mainFlickable
+    PlasmaExtras.App {
+        id: myApp
         anchors.top: topItem.bottom
         anchors.left: mainWidget.left
         anchors.bottom: mainWidget.bottom
         anchors.right: mainWidget.right
-        clip: true
 
-        contentWidth: messageContainer.width
-        contentHeight: height
-        Row {
-            id: messageContainer
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            spacing: 4
-            //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
-            //property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
-            property int columnWidth: colWidth(mainWidget.width)
+        content: mainFlickable
+        navigation: PlasmaExtras.Title { id: navigationItem; text: "nav area" }
 
-            function colWidth(mainWidth) {
-                var cols = Math.round(Math.max(1, (mainWidth/500)));
-                var w = (mainWidth/cols);
-                //print(" Columns: " + cols + " (" + w + ")");
-                return w;
-            }
+        Flickable {
+            id: mainFlickable
+            clip: true
+            width: myApp.contentWidth
+            height: myApp.height
 
-            UserInfo {
-                id: userInfo
-                width: messageContainer.columnWidth
+            contentWidth: messageContainer.width
+            contentHeight: height
+            Row {
+                id: messageContainer
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 24
-                clip: false
-            }
+                spacing: 4
+                //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
+                //property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
+                property int columnWidth: colWidth(mainWidget.width)
 
-            MessageSearchList {
-                id: customTimeline
-                width: messageContainer.columnWidth
-                anchors.top: parent.top
-                anchors.topMargin: 24
-                anchors.bottom: parent.bottom
-                anchors.rightMargin: 20
-            }
-            MessageList {
-                id: timelineList
-                width: messageContainer.columnWidth
-                anchors.top: parent.top
-                anchors.topMargin: 24
-                anchors.bottom: parent.bottom
-                anchors.rightMargin: 20
-                clip: false
-                header: PlasmaExtras.Title {
-                    text: i18n("My timeline");
-                    x: 20
+                function colWidth(mainWidth) {
+                    var cols = Math.round(Math.max(1, (mainWidth/500)));
+                    var w = (mainWidth/cols);
+                    //print(" Columns: " + cols + " (" + w + ")");
+                    return w;
                 }
-                onItemClicked: showMessage(item)
+
+                UserInfo {
+                    id: userInfo
+                    width: messageContainer.columnWidth
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.topMargin: 24
+                    clip: false
+                }
+
+                MessageSearchList {
+                    id: customTimeline
+                    width: messageContainer.columnWidth
+                    anchors.top: parent.top
+                    anchors.topMargin: 24
+                    anchors.bottom: parent.bottom
+                    anchors.rightMargin: 20
+                }
+                MessageList {
+                    id: timelineList
+                    width: messageContainer.columnWidth
+                    anchors.top: parent.top
+                    anchors.topMargin: 24
+                    anchors.bottom: parent.bottom
+                    anchors.rightMargin: 20
+                    clip: false
+                    header: PlasmaExtras.Title {
+                        text: i18n("My timeline");
+                        x: 20
+                    }
+                    onItemClicked: showMessage(item)
+                }
+    //             MessageList {
+    //                 id: repliesList
+    //                 width: messageContainer.columnWidth
+    //                 anchors.top: parent.top
+    //                 anchors.bottom: parent.bottom
+    //                 anchors.rightMargin: 20
+    //                 anchors.topMargin: 24
+    //                 timelineType: "Replies"
+    //                 clip: false
+    //                 header: PlasmaExtras.Title {
+    //                     text: i18n("Replies");
+    //                     x: 20
+    //                 }
+    //                 onItemClicked: showMessage(item)
+    //             }
+    //             MessageList {
+    //                 id: messageList
+    //                 width: messageContainer.columnWidth
+    //                 anchors.top: parent.top
+    //                 anchors.bottom: parent.bottom
+    //                 anchors.topMargin: 24
+    //                 clip: false
+    //                 timelineType: "Timeline"
+    //                 header: PlasmaExtras.Title {
+    //                     text: i18n("My tweets");
+    //                     x: 20
+    //                 }
+    //                 onItemClicked: showMessage(item)
+    //             }
             }
-//             MessageList {
-//                 id: repliesList
-//                 width: messageContainer.columnWidth
-//                 anchors.top: parent.top
-//                 anchors.bottom: parent.bottom
-//                 anchors.rightMargin: 20
-//                 anchors.topMargin: 24
-//                 timelineType: "Replies"
-//                 clip: false
-//                 header: PlasmaExtras.Title {
-//                     text: i18n("Replies");
-//                     x: 20
-//                 }
-//                 onItemClicked: showMessage(item)
-//             }
-//             MessageList {
-//                 id: messageList
-//                 width: messageContainer.columnWidth
-//                 anchors.top: parent.top
-//                 anchors.bottom: parent.bottom
-//                 anchors.topMargin: 24
-//                 clip: false
-//                 timelineType: "Timeline"
-//                 header: PlasmaExtras.Title {
-//                     text: i18n("My tweets");
-//                     x: 20
-//                 }
-//                 onItemClicked: showMessage(item)
-//             }
         }
     }
 

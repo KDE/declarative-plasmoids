@@ -61,24 +61,24 @@ Rectangle {
         engine: "org.kde.preview"
 
         interval: 0
-        Component.onCompleted: {
-            var url = previewImage.url;
-//            print(" setting URL: " + url);
-            pmSource.connectedSources = [url]
-            if (data[url] == undefined) {
-                previewImage.visible = false
-                return
-            }
-            previewImage.visible = data[url]["status"] == "done"
-            //iconItem.visible = !previewFrame.visible
-            previewImage.image = data[url]["thumbnail"]
-        }
-        onDataChanged: {
-            var url = previewImage.url;
-            previewImage.visible = (data[url]["status"] == "done")
-            //iconItem.visible = !previewFrame.visible
-            previewImage.image = data[url]["thumbnail"]
-        }
+//         Component.onCompleted: {
+//             var url = previewImage.url;
+// //            print(" setting URL: " + url);
+//             pmSource.connectedSources = [url]
+//             if (data[url] == undefined) {
+//                 previewImage.visible = false
+//                 return
+//             }
+//             previewImage.visible = data[url]["status"] == "done"
+//             //iconItem.visible = !previewFrame.visible
+//             previewImage.image = data[url]["thumbnail"]
+//         }
+//         onDataChanged: {
+//             var url = previewImage.url;
+//             previewImage.visible = (data[url]["status"] == "done")
+//             //iconItem.visible = !previewFrame.visible
+//             previewImage.image = data[url]["thumbnail"]
+//         }
     }
 
     MouseArea {
