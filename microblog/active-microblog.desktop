@@ -1,30 +1,12 @@
 [Desktop Entry]
+Icon=kjournal
 Name=Microblog
-Name[de]=Microblog
-Name[es]=Microblog
-Name[et]=Mikroblogi
-Name[fr]=Microblogage
-Name[nl]=Microblog
-Name[pl]=Mikroblog
-Name[pt]=Micro-blog
-Name[pt_BR]=Microblog
-Name[sv]=Mikroblogg
-Name[uk]=Мікроблог
-Name[x-test]=xxMicroblogxx
-Comment=A microblog application for touch tablets
-Comment[es]=Una aplicación de microblog para tabletas digitales
-Comment[et]=Mikroblogirakendus puuteekraaniga tahvelarvutitele
-Comment[fr]=Une application de microblogage pour les tablettes graphiques
-Comment[nl]=Een microblog toepassing voor aanraaktablets
-Comment[pl]=Program mikrobloga dla tabletów dotykowych
-Comment[pt]=Uma aplicação de 'micro-blog' para tabletes por toque
-Comment[pt_BR]=Um aplicativo de microblog para tablets
-Comment[sv]=Ett mikrobloggprogram för pekskärmar
-Comment[uk]=Програма для ведення мікроблогів з сенсорних планшетів
-Comment[x-test]=xxA microblog application for touch tabletsxx
-
+GenericName=Microblog Client
+Comment=Active Twitter & Identi.ca client
 Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.microblog-qml
+Keywords=identi.ca,twitter
+
 Terminal=false
-Icon=view-pim-journal
+Icon=active-news
 Type=Application
 Categories=Qt;KDE;News;

@@ -1,5 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
+Icon=kjournal
 Name=Microblogging (QML)
 Name[cs]=Mikroblogování (QML)
 Name[de]=Microblogging (QML)
@@ -45,7 +46,7 @@ Keywords[x-test]=xxidenti.ca,twitterxx
 
 Type=Service
 X-KDE-ParentApp=
-X-KDE-PluginInfo-Author=Marco Martin
+X-KDE-PluginInfo-Author=Marco Martin, Sebastian Kügler
 X-KDE-PluginInfo-Category=
 X-KDE-PluginInfo-Email=mart@kde.org
 X-KDE-PluginInfo-License=GPL
