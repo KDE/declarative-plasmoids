@@ -40,7 +40,7 @@ PlasmaComponents.Page {
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.top: parent.top
-        anchors.topMargin: 12
+        anchors.topMargin: 48
         anchors.rightMargin: 12
         width: 96
         height: 96
@@ -55,28 +55,27 @@ PlasmaComponents.Page {
         }
 
     }
-    PlasmaExtras.Title {
+    PlasmaExtras.Heading {
         id: infoLabel
-        //anchors.leftMargin: 5
-        anchors.bottomMargin: 5
+        level: 3
+        //anchors.bottomMargin: 5
         anchors.left: userIcon.right
         anchors.leftMargin: 12
         anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 12
+        anchors.top: userIcon.top
         text: user
-        //font.pointSize: 15
     }
     PlasmaComponents.Label {
         text: i18n("%1 from %2", friendlyDate(dateTime), source)
+        wrapMode: Text.WordWrap
         height: 20
-        anchors { top: infoLabel.bottom; left: infoLabel.left; right: infoLabel.right; }
+        anchors { top: infoLabel.bottom; left: infoLabel.left; right: infoLabel.right; topMargin: 12; }
     }
 
-    PlasmaComponents.Label {
+    PlasmaExtras.Paragraph {
         id: bodyText
-        anchors.leftMargin: 12
-        anchors.left: userIcon.right
+        anchors.rightMargin: 12
+        anchors.left: userIcon.left
         anchors.right: parent.right
         anchors.top: userIcon.bottom
         anchors.topMargin: 20
@@ -85,7 +84,7 @@ PlasmaComponents.Page {
             findUrls(status);
             formatMessage(status);
         }
-        font.pointSize: 20
+        font.pointSize: 14
         wrapMode: Text.WordWrap
     }
     Row {
