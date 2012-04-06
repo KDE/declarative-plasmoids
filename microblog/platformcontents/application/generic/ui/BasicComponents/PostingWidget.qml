@@ -166,38 +166,38 @@ PlasmaComponents.Page {
         }
     }
 
-    states: [
-        State {
-            name: "active"
-//             PropertyChanges { target: topItem; height: 120 }
-            PropertyChanges { target: pwItem; width: 384 }
-//             PropertyChanges { target: authStatusWidget; height: 64 }
-        },
-        State {
-            name: "inactive"
-//             PropertyChanges { target: topItem; height: 64 }
-            PropertyChanges { target: pwItem; width: 320 }
-//             PropertyChanges { target: authStatusWidget; height: 32 }
-        }
-    ]
-
-    property int animation_duration: 150
-
-    transitions: [
-        Transition {
-            from: "inactive"; to: "active"
-//             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
-            PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
-//             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
-        },
-        Transition {
-            from: "active"; to: "inactive"
-//             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
-            PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
-//             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
-        }
-    ]
-    Component.onCompleted: {
-        //topItem.height = 120
-    }
+//     states: [
+//         State {
+//             name: "active"
+// //             PropertyChanges { target: topItem; height: 120 }
+//             PropertyChanges { target: pwItem; width: 384 }
+// //             PropertyChanges { target: authStatusWidget; height: 64 }
+//         },
+//         State {
+//             name: "inactive"
+// //             PropertyChanges { target: topItem; height: 64 }
+//             PropertyChanges { target: pwItem; width: 320 }
+// //             PropertyChanges { target: authStatusWidget; height: 32 }
+//         }
+//     ]
+// 
+//     property int animation_duration: 150
+// 
+//     transitions: [
+//         Transition {
+//             from: "inactive"; to: "active"
+// //             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
+//             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
+// //             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
+//         },
+//         Transition {
+//             from: "active"; to: "inactive"
+// //             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
+//             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
+// //             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
+//         }
+//     ]
+//     Component.onCompleted: {
+//         //topItem.height = 120
+//     }
 }

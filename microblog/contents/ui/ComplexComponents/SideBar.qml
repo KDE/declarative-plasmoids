@@ -55,6 +55,7 @@ PlasmaComponents.PageStack {
 
     PostingWidget {
         id: postingWidget
+        visible: false
     }
 
     onActivePageChanged: {
