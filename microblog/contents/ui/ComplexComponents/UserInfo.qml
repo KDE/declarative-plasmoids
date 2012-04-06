@@ -29,6 +29,8 @@ PlasmaComponents.Page {
     //imagePath: "widgets/frame"
     //prefix: "plain"
     opacity: realNameLabel.text != "" ? 1 : 0.1;
+    anchors.rightMargin: 12
+
 
     clip: true
 //     snapMode: ListView.SnapToItem
@@ -49,7 +51,7 @@ PlasmaComponents.Page {
         width: 96
         height: 96
         anchors.margins: 12
-        anchors.topMargin: 48
+        anchors.topMargin: 24
         image: {
             var sourceName = "UserImages:"+serviceUrl;
             if (typeof(imageSource.data[sourceName]) != "undefined" &&

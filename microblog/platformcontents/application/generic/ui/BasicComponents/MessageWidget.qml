@@ -52,7 +52,7 @@ ListItem {
         anchors.right: infoLabel.left
         anchors.top: padding.top
         anchors.topMargin: 4
-        opacity: 0.5
+        opacity: 0.6
         style: Text.Sunken
         elide: Text.ElideRight
         font.pointSize: theme.defaultFont.pointSize + 4

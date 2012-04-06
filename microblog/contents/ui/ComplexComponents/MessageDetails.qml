@@ -40,7 +40,7 @@ PlasmaComponents.Page {
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.top: parent.top
-        anchors.topMargin: 48
+        anchors.topMargin: 24
         anchors.rightMargin: 12
         width: 96
         height: 96
@@ -65,12 +65,6 @@ PlasmaComponents.Page {
         anchors.top: userIcon.top
         text: user
     }
-    PlasmaComponents.Label {
-        text: i18n("%1 from %2", friendlyDate(dateTime), source)
-        wrapMode: Text.WordWrap
-        height: 20
-        anchors { top: infoLabel.bottom; left: infoLabel.left; right: infoLabel.right; topMargin: 12; }
-    }
 
     PlasmaExtras.Paragraph {
         id: bodyText
@@ -84,13 +78,23 @@ PlasmaComponents.Page {
             findUrls(status);
             formatMessage(status);
         }
-        font.pointSize: 14
         wrapMode: Text.WordWrap
+    }
+    PlasmaComponents.Label {
+        id: dateTimeLabel
+        text: i18n("%1 from %2", friendlyDate(dateTime), source)
+        height: 20
+        opacity: 0.6
+        anchors { top: bodyText.bottom; right: bodyText.right; topMargin: 12; }
     }
     Row {
         id: toolBoxRow
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        opacity: 0.8
+        anchors.left: userIcon.right
+        anchors.leftMargin: 12
+        anchors.bottom: userIcon.bottom
+//         anchors.horizontalCenter: parent.horizontalCenter
+//         anchors.top: dateTimeLabel.bottom
         PlasmaComponents.ToolButton {
             id: favoriteButton
             text: "♥"
