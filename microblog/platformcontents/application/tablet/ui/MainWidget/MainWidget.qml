@@ -109,15 +109,12 @@ Image {
         clip: true
 
         content: mainFlickable
-        navigation: userInfo
+        navigation: sideBar
         navigationWidth: 300
 
-        UserInfo {
-            id: userInfo
+        SideBar {
+            id: sideBar
             width: myApp.navigationWidth
-//             anchors.top: parent.top
-//             anchors.bottom: parent.bottom
-//             anchors.topMargin: 48
             clip: false
         }
 
@@ -201,13 +198,21 @@ Image {
     }
 
     function showMessage(item) {
-        messageDetails.messageId = item.messageId
-        messageDetails.user = item.user
-        messageDetails.dateTime = item.dateTime
-        messageDetails.source = item.source
-        messageDetails.isFavorite = item.isFavorite
-        messageDetails.status = item.status
-        messageDetails.state = "visible"
+//         messageDetails.messageId = item.messageId
+//         messageDetails.user = item.user
+//         messageDetails.dateTime = item.dateTime
+//         messageDetails.source = item.source
+//         messageDetails.isFavorite = item.isFavorite
+//         messageDetails.status = item.status
+//         messageDetails.state = "visible"
+            sideBar.messageId = item.messageId
+            sideBar.user = item.user
+            sideBar.dateTime = item.dateTime
+            sideBar.source = item.source
+            sideBar.isFavorite = item.isFavorite
+            sideBar.status = item.status
+            sideBar.activePage = "MessageDetails"
+            //sideBar.state = "visible"
     }
 
     MessageWidgetDetails {

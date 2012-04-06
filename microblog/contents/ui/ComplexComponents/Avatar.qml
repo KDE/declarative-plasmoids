@@ -47,7 +47,10 @@ QtExtraComponents.QImageItem {
         anchors.fill: parent
         onClicked: {
             //print("Avatar clicked: " + userId);
-            userInfo.login = userId
+            //userInfo.login = userId
+            sideBar.activePage = "UserInfo"
+            sideBar.activeUser = userId
+            //userInfo.login = userId
         }
     }
 }

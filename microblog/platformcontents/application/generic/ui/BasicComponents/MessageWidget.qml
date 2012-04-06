@@ -60,7 +60,7 @@ ListItem {
         text: user
         MouseArea {
             anchors.fill: parent
-            onClicked: userInfo.login = user
+            onClicked: sideBar.activeUser = user
         }
 
     }

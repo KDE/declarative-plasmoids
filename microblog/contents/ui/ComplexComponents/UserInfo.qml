@@ -24,7 +24,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/ui/BasicComponents"
 
-PlasmaCore.FrameSvgItem {
+PlasmaComponents.Page {
     id: userInfo
     //imagePath: "widgets/frame"
     //prefix: "plain"
@@ -111,12 +111,12 @@ PlasmaCore.FrameSvgItem {
 
     onSourceChanged: {
         if (url == "" || login == "") {
-            //print("Invalid source: " + source);
+            print("Invalid source: " + source);
             //print(" UserInfo: " + login, url, source);
             //login = "sebas";
             //url = "https://identi.ca/api/"
         }
-        //print("Connecting to : " + source);
+        print("Connecting to : " + source);
         //source = timelineType+":"+login+"@"+url
         //source = "User:sebas@http://identi.ca/api"
         realNameLabel.text = "";
