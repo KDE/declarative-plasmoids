@@ -76,7 +76,7 @@ PlasmaComponents.Page {
         anchors.bottomMargin: 5
         text: {
             findUrls(status);
-            formatMessage(status);
+            return formatMessage(status);
         }
         wrapMode: Text.WordWrap
     }

@@ -205,13 +205,13 @@ Image {
 //         messageDetails.isFavorite = item.isFavorite
 //         messageDetails.status = item.status
 //         messageDetails.state = "visible"
-            sideBar.messageId = item.messageId
             sideBar.user = item.user
             sideBar.dateTime = item.dateTime
             sideBar.source = item.source
             sideBar.isFavorite = item.isFavorite
             sideBar.status = item.status
             sideBar.activePage = "MessageDetails"
+            sideBar.messageId = item.messageId
             //sideBar.state = "visible"
     }
 
