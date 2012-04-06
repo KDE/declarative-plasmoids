@@ -46,13 +46,15 @@ PlasmaComponents.PageStack {
     UserInfo {
         id: userInfo
         width: myApp.navigationWidth
-        clip: false
+//        clip: false
     }
 
     MessageDetails {
         id: messageDetails
-        //anchors.fill: parent
-        //state: "hidden"
+    }
+
+    PostingWidget {
+        id: postingWidget
     }
 
     onActivePageChanged: {
@@ -61,6 +63,8 @@ PlasmaComponents.PageStack {
             sideBar.replace(userInfo);
         } else if (activePage == "MessageDetails") {
             sideBar.replace(messageDetails);
+        } else if (activePage == "PostingWidget") {
+            sideBar.replace(postingWidget);
         } else {
             print("Sidebar.qml: Unknown Page: " + activePage);
         }

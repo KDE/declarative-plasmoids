@@ -33,85 +33,105 @@ Image {
     fillMode: Image.Tile
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
-    Item {
-        id: topItem
-        anchors { left: parent.left; right: parent.right; top: parent.top }
-        //height: childrenRect.height
-        //height: 64
-        height: postingWidget.state == "active" ? 200 : 64;
 
-        Image {
-            source: "plasmapackage:/images/sidebarbackground.png"
-            fillMode: Image.Tile
-            anchors.fill: parent
-        }
-        MobileComponents.ActionButton {
-            svg: PlasmaCore.Svg {
-                imagePath: "widgets/configuration-icons"
-            }
-            elementId: "configure"
-            anchors {
-                top: parent.top
-                topMargin: 8
-                right: parent.right
-                rightMargin: 8
-            }
-            onClicked: {
-                var componentObject = configComponent.createObject(mainWidget);
-            }
-        }
+//     PlasmaCore.Svg {
+//         id: shadowSvg
+//         imagePath: plasmoid.file("images", "shadow.svgz")
+//     }
 
-        PostingWidget {
-            id: postingWidget
-            anchors.fill: topItem
-            anchors.topMargin: 8
-            anchors.bottomMargin: 16
-        }
-    }
-    PlasmaCore.Svg {
-        id: shadowSvg
-        imagePath: plasmoid.file("images", "shadow.svgz")
-    }
+//     PlasmaCore.SvgItem {
+//         height: 32
+//         //y: myApp.navigationWidth
+//         anchors {
+//             left: parent.left
+//             right: parent.right
+//             top: myApp.top
+//         }
+//         z: 10
+//         svg: shadowSvg
+//         elementId: "bottom"
+//     }
 
-    PlasmaCore.SvgItem {
-        height: 32
-        //y: myApp.navigationWidth
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: myApp.top
-        }
-        z: 10
-        svg: shadowSvg
-        elementId: "bottom"
-    }
-
-    QtExtraComponents.MouseEventListener {
-        id: mouseEventListener
-        z: 100
-        x: 0
-        y: 0
-        width: 200
-        height: topItem.height
-        onPressed: {
-            postingWidget.state == "inactive" ? postingWidget.state = "active" : postingWidget.state = "inactive"
-            //print("focus " + postingWidget.state);
-        }
-    }
+//     QtExtraComponents.MouseEventListener {
+//         id: mouseEventListener
+//         z: 100
+//         x: 0
+//         y: 0
+//         width: 200
+//         height: topItem.height
+//         onPressed: {
+//             postingWidget.state == "inactive" ? postingWidget.state = "active" : postingWidget.state = "inactive"
+//             //print("focus " + postingWidget.state);
+//         }
+//     }
     //Rectangle { anchors.fill: mouseEventListener; color: "green"; opacity: 0.3 }
 
     PlasmaExtras.App {
         id: myApp
-        anchors.top: topItem.bottom
+        anchors.top: parent.top
         anchors.left: mainWidget.left
         anchors.bottom: mainWidget.bottom
         anchors.right: mainWidget.right
         clip: true
 
+        tools: toolbarlayout
         content: mainFlickable
         navigation: sideBar
         navigationWidth: 300
 
+        PlasmaComponents.ToolBarLayout {
+            id: toolbarlayout
+            spacing: 5
+            height: postingWidget.state == "active" ? 200 : 64;
+
+//                 Image {
+//                     source: "plasmapackage:/images/sidebarbackground.png"
+//                     fillMode: Image.Tile
+//                     anchors.fill: parent
+//                 }
+//             MobileComponents.ActionButton {
+//                 svg: PlasmaCore.Svg {
+//                     imagePath: "widgets/configuration-icons"
+//                 }
+//                 elementId: "configure"
+// /*                anchors {
+//                     top: parent.top
+//                     topMargin: 8
+//                     right: parent.right
+//                     rightMargin: 8
+//                 }
+//    */
+//                 onClicked: {
+//                     var componentObject = configComponent.createObject(mainWidget);
+//                 }
+//             }
+            QtExtraComponents.QIconItem {
+                id: iconItem
+                width: 32
+                height: 32
+                icon: QIcon("story-editor")
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: sideBar.activePage = "PostingWidget"
+                }
+            }
+
+            AuthorizationWidget {
+                id: authStatusWidget
+//                 anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
+                //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
+            }
+/*
+            PostingWidget {
+                id: postingWidget
+//                 anchors.fill: topItem
+//                 anchors.topMargin: 8
+//                 anchors.bottomMargin: 16
+            }*/
+        }
+        Component.onCompleted: {
+            myApp.tools = toolbarlayout
+        }
         SideBar {
             id: sideBar
             width: myApp.navigationWidth

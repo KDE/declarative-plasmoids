@@ -26,8 +26,8 @@ import "plasmapackage:/ui/BasicComponents"
 
 Item {
     id: authStatusWidget
-    width: 800
-    height: 200
+    width: 300 
+    height: parent.height
     property alias statusMessage: statusLabel.text
     property string status: "Idle"
 
@@ -41,24 +41,24 @@ Item {
         id: busyIndicator
         width: authStatusWidget.height; height: width
         visible: status == "Busy"
-        anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
+        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
         running: status == "Busy"
     }
     Avatar {
         id: profileIcon
         height: parent.height
         width: height
-        anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 6}
+        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12;}
         visible: status == "Ok"
         userId: userName
     }
 
     PlasmaComponents.Label {
         id: statusLabel
-        width: 300
-        height: 48
-        font.pointSize: theme.defaultFont.pointSize+3
-        anchors { left: busyIndicator.right; verticalCenter: busyIndicator.verticalCenter; leftMargin: 12; }
+        //width: 300
+        height: parent.height
+        //font.pointSize: theme.defaultFont.pointSize+3
+        anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 12; }
         text: status == "Busy" ? i18n("Logging in...") : status == "Ok" ? "@" + userName : "";
     }
     PlasmaCore.DataSource {
@@ -81,6 +81,13 @@ Item {
                 __serviceUrl = serviceUrl;
             }
             statusSource.connectSource("Status:"+serviceUrl);
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            var componentObject = configComponent.createObject(mainWidget);
         }
     }
 }
