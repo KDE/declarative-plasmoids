@@ -186,13 +186,13 @@ PlasmaComponents.Page {
     transitions: [
         Transition {
             from: "inactive"; to: "active"
-            PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
+//             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
 //             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
         },
         Transition {
             from: "active"; to: "inactive"
-            PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
+//             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
 //             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
         }
