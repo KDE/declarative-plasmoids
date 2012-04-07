@@ -41,7 +41,7 @@ PlasmaComponents.PageStack {
     property alias source: messageDetails.source
     property alias dateTime: messageDetails.dateTime
     property alias isFavorite: messageDetails.isFavorite
-    property alias status: messageDetails.status
+    property alias message: messageDetails.message
 
     UserInfo {
         id: userInfo

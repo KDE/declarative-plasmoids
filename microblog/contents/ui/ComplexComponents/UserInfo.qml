@@ -135,7 +135,7 @@ PlasmaComponents.Page {
 
     function updateData(data) {
         //userInfo.data = data
-        realNameLabel.text = data.realname;
+        realNameLabel.text = data.realName;
         descriptonLabel.text = data.description ? data.description : "";
         //print("DESC:" + data.description);
         var br = "<br/>\n";
@@ -154,13 +154,13 @@ PlasmaComponents.Page {
 //             labels += i18n("Location:") + br;
 //         }
         labels += br + i18n("Updates:") + br;
-        info += br + data.tweets + br;
+        info += br + data.statuses_count + br;
         // friends
         labels += i18n("Following:") + br;
-        info += data.friends + br;
+        info += data.friends_count + br;
         // followers
         labels += i18n("Followers:") + br;
-        info += data.followers + br;
+        info += data.followers_count + br;
 
         infoText.text = info;
         labelText.text = labels

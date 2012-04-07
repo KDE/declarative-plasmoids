@@ -31,7 +31,7 @@ PlasmaComponents.Page {
     property string source
     property string dateTime
     property bool isFavorite
-    property string status
+    property string message
 
     QtExtraComponents.QImageItem {
         id: userIcon
@@ -75,8 +75,8 @@ PlasmaComponents.Page {
         anchors.topMargin: 20
         anchors.bottomMargin: 5
         text: {
-            findUrls(status);
-            return formatMessage(status);
+            findUrls(message);
+            return formatMessage(message);
         }
         wrapMode: Text.WordWrap
     }

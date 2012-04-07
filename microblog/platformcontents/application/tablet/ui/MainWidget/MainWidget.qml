@@ -229,9 +229,9 @@ Image {
             sideBar.dateTime = item.dateTime
             sideBar.source = item.source
             sideBar.isFavorite = item.isFavorite
-            sideBar.status = item.status
             sideBar.activePage = "MessageDetails"
             sideBar.messageId = item.messageId
+            sideBar.message = item.message
             //sideBar.state = "visible"
     }
 

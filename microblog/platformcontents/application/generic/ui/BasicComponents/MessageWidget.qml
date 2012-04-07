@@ -34,7 +34,7 @@ ListItem {
     property string source: model["Source"]
     property string dateTime: model["Date"]
     property bool isFavorite: model["IsFavorite"]
-    property string status: model["Status"]
+    property string message: model["Status"]
 
     Avatar {
         id: userIcon
@@ -72,7 +72,7 @@ ListItem {
         anchors.right: padding.right
         anchors.top: fromLabel.bottom
         anchors.bottomMargin: 6
-        text: formatMessage(status)
+        text: formatMessage(message)
         wrapMode: Text.WordWrap
     }
     PlasmaComponents.Label {
