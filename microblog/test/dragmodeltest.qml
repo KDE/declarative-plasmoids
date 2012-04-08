@@ -9,7 +9,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 Item {
 
     width: 800
-    height: 400
+    height: _s*2.5+96
 
     property int _s: 180
 
@@ -56,6 +56,7 @@ Item {
     }
 
     ListView {
+        id: feedsList
         width: parent.width
         anchors.top: iconRow.bottom
         height: parent.height-y
@@ -68,6 +69,7 @@ Item {
     Component {
         id: messageListDelegate
         Rectangle {
+            radius: 10
             id: messageList
             color: bgcolor
             //opacity: 0.3;
@@ -102,59 +104,84 @@ Item {
                     anchors.fill: parent
                     property int positionStarted: 0
                     property int positionEnded: 0
-                    //property int positionsMoved: Math.floor((positionEnded - positionStarted)/starwarsNumberText.height)
-                    //property int newPosition: index + positionsMoved
+                    property int itemWidth: (messageList.width+feedsList.spacing)
+                    property int positionsMoved: Math.round((positionEnded - positionStarted)/itemWidth);
+                    property int newPosition: index + positionsMoved
                     property bool held: false
-                    drag.axis: Drag.YAxis
-//                     onPressAndHold: {
-//                         starwarsDelegateBorder.z = 2,
-//                         positionStarted = starwarsDelegateBorder.y,
-//                         dragArea.drag.target = starwarsDelegateBorder,
-//                         starwarsDelegateBorder.opacity = 0.5,
-//                         starwarsList.interactive = false,
-//                         held = true
-//                         drag.maximumY = (wholeBody.height - starwarsNumberText.height - 1 + starwarsList.contentY),
-//                         drag.minimumY = 0
-//                     }
-//                     onPositionChanged: {
-//                         positionEnded = starwarsDelegateBorder.y;
-//                     }
-// 
-//                     onReleased: {
-//                         if (Math.abs(positionsMoved) < 1 && held == true) {
-//                             starwarsDelegateBorder.y = positionStarted,
-//                             starwarsDelegateBorder.opacity = 1,
-//                             starwarsList.interactive = true,
-//                             dragArea.drag.target = null,
-//                             held = false
-//                         } else {
-//                             if (held == true) {
-//                                 if (newPosition < 1) {
-//                                     starwarsDelegateBorder.z = 1,
-//                                     starwarsModel.move(index,0,1),
-//                                     starwarsDelegateBorder.opacity = 1,
-//                                     starwarsList.interactive = true,
-//                                     dragArea.drag.target = null,
-//                                     held = false
-//                                 } else if (newPosition > starwarsList.count - 1) {
-//                                     starwarsDelegateBorder.z = 1,
-//                                     starwarsModel.move(index,starwarsList.count - 1,1),
-//                                     starwarsDelegateBorder.opacity = 1,
-//                                     starwarsList.interactive = true,
-//                                     dragArea.drag.target = null,
-//                                     held = false
-//                                 }
-//                                 else {
-//                                     starwarsDelegateBorder.z = 1,
-//                                     starwarsModel.move(index,newPosition,1),
-//                                     starwarsDelegateBorder.opacity = 1,
-//                                     starwarsList.interactive = true,
-//                                     dragArea.drag.target = null,
-//                                     held = false
-//                                 }
-//                             }
-//                         }
-//                     }
+                    drag.axis: Drag.XAxis
+
+                    onPressed: PlasmaExtras.PressedAnimation { targetItem: messageList }
+
+                    onPositionsMovedChanged: {
+                        //var _m = Math.floor((positionEnded - positionStarted)/(messageList.width+feedsList.spacing));
+                        var _m = Math.round((positionEnded - positionStarted)/itemWidth);
+                        //var _m = Math.floor((positionEnded - positionStarted - itemWidth/2)/itemWidth)
+                        //print("*********** posEnd - posStart " + (positionEnded - positionStarted));
+                        print("itemWidth " + itemWidth + " end: " + positionEnded);
+                        print("moved: " + (positionEnded - positionStarted))
+                        print(" index offset: " + _m);
+                    }
+                    
+                    onPressAndHold: {
+                        messageList.z = 2,
+                        positionStarted = messageList.x,
+                        print(" start pos: " + positionStarted + " mouse.x" + mouse.x);
+                        dragArea.drag.target = messageList,
+                        messageList.opacity = 0.5,
+                        feedsList.interactive = false,
+                        held = true
+                        drag.maximumX = (feedsList.contentWidth - messageList.width + messageList.spacing + feedsList.contentX),
+                        drag.minimumX = - messageList.spacing
+                    }
+                    onPositionChanged: {
+
+//                         print("messageList.x" + positionEnded);
+                        positionEnded = messageList.x;
+                        //print("moved: " + (positionEnded - positionStarted))
+                        //print('posEnd: ' + positionEnded + " " + mouse.x);
+                    }
+
+                    onReleased: {
+                        print(" - - - - - Released - - - - ");
+                        if (Math.abs(positionsMoved) < 1 && held == true) {
+                            print("not moved");
+                            messageList.x = positionStarted,
+                            messageList.opacity = 1,
+                            feedsList.interactive = true,
+                            dragArea.drag.target = null,
+                            held = false
+                        } else {
+                            if (held == true) {
+                                print("new position: " + newPosition + "/"+ feedsList.count);
+                                if (newPosition < 1) {
+                                    print("start of list");
+                                    messageList.z = 1,
+                                    feedsModel.move(index,0,1),
+                                    messageList.opacity = 1,
+                                    feedsList.interactive = true,
+                                    dragArea.drag.target = null,
+                                    held = false
+                                } else if (newPosition > feedsList.count - 1) {
+                                    print("middel");
+                                    messageList.z = 1,
+                                    feedsModel.move(index,feedsList.count - 1,1),
+                                    messageList.opacity = 1,
+                                    feedsList.interactive = true,
+                                    dragArea.drag.target = null,
+                                    held = false
+                                } else {
+                                    print("end of list");
+                                    messageList.z = 1,
+                                    feedsModel.move(index,newPosition,1),
+                                    messageList.opacity = 1,
+                                    feedsList.interactive = true,
+                                    dragArea.drag.target = null,
+                                    held = false
+                                }
+                            }
+                            print(" Item: " + bgcolor + " moved to " + index);
+                        }
+                    }
                 }
             }
 
