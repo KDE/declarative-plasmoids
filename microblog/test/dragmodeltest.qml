@@ -17,7 +17,7 @@ Item {
         id: pageTitle
         text: "Drag & Drop Model Test"
     }
-    
+
     Row {
         id: iconRow
         spacing: 8
@@ -29,7 +29,7 @@ Item {
             icon: QIcon("list-remove")
             MouseArea {
                 anchors.fill: parent
-                onClicked: { if (feedsModel.count > 0) feedsModel.remove(feedsModel.count-1) }
+                onClicked: feedsModel.clear()
             }
         }
 
@@ -42,7 +42,7 @@ Item {
                 anchors.fill: parent
                 onClicked:  {
                     var clrs = ["green", "blue", "orange", "red", "yellow", "blue", "grey", "cyan", "magenta", "#000"];
-                    var _i = Math.floor((Math.random()*clrs.length)+1);
+                    var _i = Math.floor((Math.random()*clrs.length))-1;
                     print(" ++ " + _i + " colors: " + clrs.length + " => " + clrs[_i]);
                     var c =
                     feedsModel.append({
@@ -72,12 +72,29 @@ Item {
             radius: 10
             id: messageList
             color: bgcolor
-            //opacity: 0.3;
+            property int mouseX: x
             width: _s; height: _s*2.4
+            x: {
+                if (!ListView.isCurrentItem) {
+                    index * dragArea.itemWidth;
+                }
+            }
+
             PlasmaExtras.Title {
                 rotation: 90
                 text: "T: " + label
                 anchors.centerIn: parent
+            }
+            Behavior on x {
+                NumberAnimation {
+                    id: bouncebehavior
+                    easing {
+                        type: Easing.OutElastic
+                        amplitude: 1.0
+                        period: 0.5
+                    }
+                    duration: 800
+                }
             }
 
             QtExtraComponents.QIconItem {
@@ -122,8 +139,9 @@ Item {
                         print("moved: " + (positionEnded - positionStarted))
                         print(" index offset: " + _m);
                     }
-                    
-                    onPressAndHold: {
+
+                    onPressed: {
+                        feedsList.currentIndex = index;
                         messageList.z = 2,
                         positionStarted = messageList.x;
                         positionEnded = messageList.x;
@@ -145,10 +163,12 @@ Item {
 
 //                         print("messageList.x" + positionEnded);
                         positionEnded = messageList.x;
+                        messageList.mouseX = mouse.x;
                         //print("moved: " + (positionEnded - positionStarted))
                         //print('posEnd: ' + positionEnded + " " + mouse.x);
                     }
                     onReleased: { 
+                        feedsList.currentIndex = -1;
                         messageList.z = 1,
                         messageList.opacity = 1,
                         feedsList.interactive = true,
@@ -202,7 +222,7 @@ Item {
 
                     Timer {
                         id: timer
-                        interval: 500
+                        interval: 200
                         running: false
 
                         onTriggered: {
@@ -252,7 +272,6 @@ Item {
                     }
                 }
             }
-
         }
     }
 
