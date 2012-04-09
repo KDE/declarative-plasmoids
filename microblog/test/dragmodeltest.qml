@@ -11,7 +11,7 @@ Item {
     width: 800
     height: _s*2.5+96
 
-    property int _s: 180
+    property int _s: width/4-8
 
     PlasmaExtras.Title {
         id: pageTitle
@@ -62,6 +62,7 @@ Item {
         height: parent.height-y
         spacing: 8
         orientation: Qt.Horizontal
+        snapMode: ListView.SnapOneItem
         model: feedsModel
         delegate: messageListDelegate
     }
@@ -76,7 +77,10 @@ Item {
             width: _s; height: _s*2.4
             x: {
                 if (!ListView.isCurrentItem) {
+                    //print(" index " + index + " x" + index * dragArea.itemWidth);
                     index * dragArea.itemWidth;
+                } else {
+                    x
                 }
             }
 
@@ -90,10 +94,10 @@ Item {
                     id: bouncebehavior
                     easing {
                         type: Easing.OutElastic
-                        amplitude: 1.0
-                        period: 0.5
+                        amplitude: 0.3
+                        period: 0.3
                     }
-                    duration: 800
+                    duration: 600
                 }
             }
 
@@ -127,25 +131,12 @@ Item {
                     property bool held: false
                     drag.axis: Drag.XAxis
 
-                    //onPressed: PlasmaExtras.PressedAnimation { targetItem: messageList }
-                    //onReleased: PlasmaExtras.ReleasedAnimation { targetItem: messageList }
-
-                    onPositionsMovedChanged: {
-                        //var _m = Math.floor((positionEnded - positionStarted)/(messageList.width+feedsList.spacing));
-                        var _m = Math.round((positionEnded - positionStarted)/itemWidth);
-                        //var _m = Math.floor((positionEnded - positionStarted - itemWidth/2)/itemWidth)
-                        //print("*********** posEnd - posStart " + (positionEnded - positionStarted));
-                        print("itemWidth " + itemWidth + " end: " + positionEnded);
-                        print("moved: " + (positionEnded - positionStarted))
-                        print(" index offset: " + _m);
-                    }
-
                     onPressed: {
                         feedsList.currentIndex = index;
                         messageList.z = 2,
                         positionStarted = messageList.x;
                         positionEnded = messageList.x;
-                        print(" start pos: " + positionStarted + " mouse.x" + mouse.x);
+                        //print(" start pos: " + positionStarted + " mouse.x" + mouse.x);
                         dragArea.drag.target = messageList,
                         messageList.opacity = 0.5,
                         feedsList.interactive = false,
@@ -175,60 +166,47 @@ Item {
                         dragArea.drag.target = null,
                         dragArea.held = false
                         timer.running = false
-                        timer.restart();
+                        hackTimer.running = true
 
                     }
-//                     onReleased: {
-//                         print(" - - - - - Released - - - - ");
-//                         if (Math.abs(positionsMoved) < 1 && held == true) {
-//                             print("not moved");
-//                             messageList.x = positionStarted,
-//                             messageList.opacity = 1,
-//                             feedsList.interactive = true,
-//                             dragArea.drag.target = null,
-//                             held = false
-//                         } else {
-//                             if (held == true) {
-//                                 print("new position: " + newPosition + "/"+ feedsList.count);
-//                                 if (newPosition < 1) {
-//                                     print("start of list");
-//                                     messageList.z = 1,
-//                                     feedsModel.move(index,0,1),
-//                                     messageList.opacity = 1,
-//                                     feedsList.interactive = true,
-//                                     dragArea.drag.target = null,
-//                                     held = false
-//                                 } else if (newPosition > feedsList.count - 1) {
-//                                     print("middel");
-//                                     messageList.z = 1,
-//                                     feedsModel.move(index,feedsList.count - 1,1),
-//                                     messageList.opacity = 1,
-//                                     feedsList.interactive = true,
-//                                     dragArea.drag.target = null,
-//                                     held = false
-//                                 } else {
-//                                     print("end of list");
-//                                     messageList.z = 1,
-//                                     feedsModel.move(index,newPosition,1),
-//                                     messageList.opacity = 1,
-//                                     feedsList.interactive = true,
-//                                     dragArea.drag.target = null,
-//                                     held = false
-//                                 }
-//                             }
-//                             print(" Item: " + bgcolor + " moved to " + index);
-//                         }
-                    //}
-
+                    property int _scroll
+                    Timer {
+                        id: hackTimer
+                        interval: 700
+                        repeat: false
+                        running: false
+                        onTriggered: {
+                            hackTimer2.running = true
+                            feedsModel.append({
+                                "label": "Dummy",
+                                "sourceName":"Newitem:PlasmaActive@https://api.twitter.com/1/",
+                                bgcolor: "black"
+                            })
+                            print("hack1 applied.");
+                            dragArea._scroll = feedsList.contentX;
+                            //feedsList.contentX = 2000
+                        }
+                    }
+                    Timer {
+                        id: hackTimer2
+                        interval: 300
+                        repeat: false
+                        running: false
+                        onTriggered: {
+                            feedsModel.remove(feedsModel.count-1);
+                            //feedsList.contentX = dragArea._scroll;
+                            print("hack2 applied.");
+                        }
+                    }
                     Timer {
                         id: timer
                         interval: 200
                         running: false
 
                         onTriggered: {
-                            print(" - - - - - triggered - - - - " + dragArea.positionsMoved + " new: " + dragArea.newPosition);
+                            //print(" - - - - - triggered - - - - " + dragArea.positionsMoved + " new: " + dragArea.newPosition);
                             if (Math.abs(dragArea.positionsMoved) < 1 && dragArea.held == true) {
-                                print("not moved");
+                                //print("not moved");
 //                                 messageList.x = dragArea.positionStarted,
 //                                 messageList.opacity = 1,
 //                                 feedsList.interactive = true,
@@ -238,7 +216,7 @@ Item {
                                 if (dragArea.held == true) {
                                     print("new position: " + dragArea.newPosition + "/"+ feedsList.count);
                                     if (dragArea.newPosition < 1) {
-                                        print("start of list");
+                                        //print("start of list");
                                         feedsModel.move(index,0,1);
 //                                         messageList.z = 1,
 //                                         messageList.opacity = 1,
@@ -246,7 +224,7 @@ Item {
 //                                         dragArea.drag.target = null,
 //                                         dragArea.held = false
                                     } else if (dragArea.newPosition > feedsList.count - 1) {
-                                        print("middel");
+                                        //print("middel");
 //                                         messageList.z = 1,
                                         feedsModel.move(index,feedsList.count - 1,1);
 //                                         messageList.opacity = 1,
@@ -254,7 +232,7 @@ Item {
 //                                         dragArea.drag.target = null,
 //                                         dragArea.held = false
                                     } else {
-                                        print("end of list");
+                                        //print("end of list");
                                         feedsModel.move(index,dragArea.newPosition,1);
 //                                         messageList.z = 1,
 //                                         messageList.opacity = 1,
@@ -265,9 +243,22 @@ Item {
                                 }
                                 dragArea.positionEnded = messageList.x;
                                 // FixmE: upate messagelist.x
+                                feedsList.currentIndex = index;
+                                messageList.z = 2,
+                                positionStarted = messageList.x;
+                                positionEnded = messageList.x;
+                                //print(" start pos: " + positionStarted + " mouse.x" + mouse.x);
+                                //dragArea.drag.target = messageList,
+                                //messageList.opacity = 0.5,
+                                //feedsList.interactive = false,
+                                held = true
+                                //dragArea.drag.maximumX = (feedsList.contentWidth - messageList.width + messageList.spacing + feedsList.contentX),
+                                //dragArea.drag.minimumX = - messageList.spacing
+                                //timer.running = true
 
                                 print(" Item: " + bgcolor + " moved to " + index);
                             }
+
                         }
                     }
                 }

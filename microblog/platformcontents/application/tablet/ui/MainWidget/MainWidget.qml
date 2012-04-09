@@ -158,7 +158,21 @@ Image {
 //                 anchors.bottom: parent.bottom
                 anchors.fill: parent
                 spacing: 4
-                model: messageListModel
+                model: feedsModel
+                delegate:
+                Component {
+                    id: messageListDelegate
+                    MessageList {
+                        id: messageList
+//                         width: mainFlickable.columnWidth
+//                         height: mainFlickable.height
+//                         anchors.topMargin: 24
+//                         clip: false
+                        timelineType: tlType
+                        title: tlTitle
+                    }
+                }
+
                 //property int columnWidth: (mainWidget.width/Math.min(3, (mainWidget.width/340)) - 18)
                 //property int columnWidth: (mainWidget.width/Math.min(2, (mainWidget.width/380)))
 
@@ -170,50 +184,59 @@ Image {
                 return w;
             }
 
-            VisualItemModel {
-                id: messageListModel
-                MessageList {
-                    id: timelineList
-                    width: mainFlickable.columnWidth
-                    height: mainFlickable.height
-                    clip: false
-                    header: PlasmaExtras.Title {
-                        text: i18n("My timeline");
-                        x: 20
-                    }
-                    onItemClicked: showMessage(item)
+            ListModel {
+                id: feedsModel
+                ListElement {
+                    tlType: "TimelineWithFriends"
+                    tlTitle: "My timeline"
                 }
-                MessageList {
-                    id: repliesList
-                    width: mainFlickable.columnWidth
-                    height: mainFlickable.height
-                    timelineType: "Replies"
-                    clip: false
-                    header: PlasmaExtras.Title {
-                        text: i18n("Replies");
-                        x: 20
-                    }
-                    onItemClicked: showMessage(item)
+                ListElement {
+                    tlType: "Replies"
+                    tlTitle: 'i18n("Replies")'
                 }
-                MessageList {
-                    id: messageList
-                    width: mainFlickable.columnWidth
-                    height: mainFlickable.height
-                    anchors.topMargin: 24
-                    clip: false
-                    timelineType: "Timeline"
-                    header: PlasmaExtras.Title {
-                        text: i18n("My tweets");
-                        x: 20
-                    }
-                    onItemClicked: showMessage(item)
+                ListElement {
+                    tlType: "Timeline"
+                    tlTitle: 'i18n("My tweets")'
                 }
-                MessageSearchList {
-                    id: customTimeline
-                    width: mainFlickable.columnWidth
-                    height: mainFlickable.height
+                ListElement {
+                    tlType: "TimelineWithFriends"
+                    tlTitle: 'i18n("My timeline")'
                 }
             }
+
+//             VisualItemModel {
+//                 id: messageListModel
+//                 MessageList {
+//                     id: timelineList
+// //                     width: mainFlickable.columnWidth
+// //                     height: mainFlickable.height
+//                     clip: false
+//                     title: i18n("My timeline");
+//                 }
+//                 MessageList {
+//                     id: repliesList
+// //                     width: mainFlickable.columnWidth
+// //                     height: mainFlickable.height
+//                     timelineType: "Replies"
+//                     clip: false
+//                     title: i18n("Replies");
+//                 }
+//                 MessageList {
+//                     id: messageList
+//                     width: mainFlickable.columnWidth
+//                     height: mainFlickable.height
+//                     anchors.topMargin: 24
+//                     clip: false
+//                     timelineType: "Timeline"
+//                     title: i18n("My tweets");
+//                     onItemClicked: showMessage(item)
+//                 }
+//                 MessageSearchList {
+//                     id: customTimeline
+// //                     width: mainFlickable.columnWidth
+// //                     height: mainFlickable.height
+//                 }
+//             }
         }
     }
 

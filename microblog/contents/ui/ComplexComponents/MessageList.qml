@@ -29,15 +29,18 @@ ListView {
 
     clip: true
     snapMode: ListView.SnapToItem
-    //boundsBehavior: Flickable.StopAtBounds
+    boundsBehavior: Flickable.StopAtBounds
     //boundsBehavior: Flickable.DragOverBounds
     spacing: 2
     //cacheBuffer: 500
+    width: mainFlickable.columnWidth
+    height: mainFlickable.height - 48
 
     signal itemClicked(variant item)
 
     property string timelineType: "TimelineWithFriends"
-    property string title: "bla"
+    //property string title: "Tweets"
+    property alias title: titleHeader.text
     property string url: serviceUrl
     property string source: timelineType+":"+userName+"@"+url
     property string previousSource
@@ -53,7 +56,6 @@ ListView {
         previousSource = source
     }
 
-
     model: PlasmaCore.SortFilterModel {
         id: sortModel
         sortRole: "Date"
@@ -64,19 +66,16 @@ ListView {
             keyRoleFilter: "[\\d]*"
         }
     }
-//     header: Component {
-//         PlasmaExtras.Title {
-//             anchors.margins: 12
-//             x: 24
-//             anchors.leftMargin: 24
-//             height: 48
-//             text: entryList.title
-//         }
-//     }
+    header: titleHeader
+    PlasmaExtras.Title {
+        id: titleHeader
+        height: 48
+        x: 20
+    }
 
     delegate: MessageWidget {
         id: messageWidget
         //width: entryList.width
-        onClicked: itemClicked(messageWidget)
+        onClicked: showMessage(messageWidget)
     }
 }
