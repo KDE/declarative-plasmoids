@@ -192,51 +192,17 @@ Image {
                 }
                 ListElement {
                     tlType: "Replies"
-                    tlTitle: 'i18n("Replies")'
+                    tlTitle: "Replies"
                 }
                 ListElement {
                     tlType: "Timeline"
-                    tlTitle: 'i18n("My tweets")'
+                    tlTitle: "My tweets"
                 }
                 ListElement {
                     tlType: "TimelineWithFriends"
-                    tlTitle: 'i18n("My timeline")'
+                    tlTitle: "My other timeline"
                 }
             }
-
-//             VisualItemModel {
-//                 id: messageListModel
-//                 MessageList {
-//                     id: timelineList
-// //                     width: mainFlickable.columnWidth
-// //                     height: mainFlickable.height
-//                     clip: false
-//                     title: i18n("My timeline");
-//                 }
-//                 MessageList {
-//                     id: repliesList
-// //                     width: mainFlickable.columnWidth
-// //                     height: mainFlickable.height
-//                     timelineType: "Replies"
-//                     clip: false
-//                     title: i18n("Replies");
-//                 }
-//                 MessageList {
-//                     id: messageList
-//                     width: mainFlickable.columnWidth
-//                     height: mainFlickable.height
-//                     anchors.topMargin: 24
-//                     clip: false
-//                     timelineType: "Timeline"
-//                     title: i18n("My tweets");
-//                     onItemClicked: showMessage(item)
-//                 }
-//                 MessageSearchList {
-//                     id: customTimeline
-// //                     width: mainFlickable.columnWidth
-// //                     height: mainFlickable.height
-//                 }
-//             }
         }
     }
 
