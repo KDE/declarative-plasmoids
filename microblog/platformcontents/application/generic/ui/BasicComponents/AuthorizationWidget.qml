@@ -20,6 +20,7 @@
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -27,7 +28,7 @@ import "plasmapackage:/ui/BasicComponents"
 Item {
     id: authStatusWidget
     width: 300 
-    height: 48
+    height: parent.height
     property alias statusMessage: statusLabel.text
     property string status: "Idle"
 
@@ -39,27 +40,27 @@ Item {
 
     PlasmaComponents.BusyIndicator {
         id: busyIndicator
-        width: authStatusWidget.height; height: width
+        width: authStatusWidget.height/1.5
+        height: authStatusWidget.height/1.5
         visible: status == "Busy"
-        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12; topMargin: 12}
+        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12;}
         running: status == "Busy"
     }
     Avatar {
         id: profileIcon
-        height: parent.height
-        width: height
+        height: parent.height/1.5
+        width: parent.height/1.5
         anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12;}
         visible: status == "Ok"
         userId: userName
     }
 
-    PlasmaComponents.Label {
+    PlasmaExtras.Heading {
         id: statusLabel
-        //width: 300
+        level: 3
         height: parent.height
-        //font.pointSize: theme.defaultFont.pointSize+3
-        anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 12; }
-        text: status == "Busy" ? i18n("Logging in...") : status == "Ok" ? "@" + userName : "";
+        anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 8; }
+        text: status == "Busy" ? i18n("Logging in...") : status == "Ok" ? userName : "";
     }
     PlasmaCore.DataSource {
         id: statusSource

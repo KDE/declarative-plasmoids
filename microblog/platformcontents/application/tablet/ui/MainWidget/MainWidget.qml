@@ -82,7 +82,7 @@ Image {
         PlasmaComponents.ToolBarLayout {
             id: toolbarlayout
             spacing: 5
-            height: 64
+            height: 48
             //height: postingWidget.state == "active" ? 200 : 64;
 
 //                 Image {
@@ -111,6 +111,7 @@ Image {
                 width: 32
                 height: 32
                 icon: QIcon("story-editor")
+                anchors.verticalCenter: parent.verticalCenter
                 MouseArea {
                     anchors.fill: parent
                     onClicked: sideBar.activePage = "PostingWidget"
@@ -119,6 +120,7 @@ Image {
 
             AuthorizationWidget {
                 id: authStatusWidget
+                anchors.verticalCenter: parent.verticalCenter
 //                 anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
                 //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
             }
@@ -168,6 +170,7 @@ Image {
                         id: messageList
                         timelineType: tlType
                         title: tlTitle
+                        y: 0
                         highlightRangeMode: ListView.ApplyRange
                         //property alias itemWidth: dragArea.itemWidth
 //                         x: {

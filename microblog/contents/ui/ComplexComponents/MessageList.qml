@@ -49,7 +49,7 @@ ListView {
         loadTimer.running = true;
         return;
         if (previousSource && previousSource != source) {
-            print("######################### source changed from " + previousSource + " to " + source);
+//             print("######################### source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
         }
         if (userName && timelineType && url) {
@@ -65,7 +65,7 @@ ListView {
         interval: 500
         onTriggered: {
             if (previousSource && previousSource != source) {
-                print("TIMER ######################### source changed from " + previousSource + " to " + source);
+//                 print("TIMER ######################### source changed from " + previousSource + " to " + source);
                 microblogSource.disconnectSource(previousSource);
             }
             if (userName && timelineType && url) {
@@ -75,7 +75,7 @@ ListView {
         }
     }
     Component.onCompleted: {
-        currentIndex = -1;
+        //currentIndex = -1;
         if (source && userName) {
 //             microblogSource.connectSource(source)
 //             previousSource = source
@@ -101,7 +101,7 @@ ListView {
             text: title
             height: 64
             x: 12
-            Item { height: 128; anchors.top: titleHeader.bottom; anchors.left: titleHeader.left; width: 20}
+            //Item { height: 128; anchors.top: titleHeader.bottom; anchors.left: titleHeader.left; width: 20}
         }
     }
     footer: tfoot
