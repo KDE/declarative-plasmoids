@@ -32,6 +32,7 @@ ListView {
 //     boundsBehavior: Flickable.StopAtBounds
 //     boundsBehavior: Flickable.DragOverBounds
     spacing: 2
+    currentIndex: -1
     cacheBuffer: 500
     width: mainFlickable.columnWidth
     height: mainFlickable.height - 48
@@ -99,7 +100,7 @@ ListView {
         PlasmaExtras.Title {
             id: titleHeader
             text: title
-            height: 64
+            height: 48
             x: 12
             //Item { height: 128; anchors.top: titleHeader.bottom; anchors.left: titleHeader.left; width: 20}
         }

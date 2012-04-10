@@ -147,7 +147,7 @@ Image {
             id: mainFlickable
             clip: false
             width: myApp.contentWidth
-            height: myApp.height
+            height: myApp.height-toolbarlayout.height
             property int columnWidth: colWidth(mainFlickable.width)
 
             //contentWidth: feedsList.width
@@ -173,7 +173,7 @@ Image {
                         id: messageList
                         timelineType: tlType
                         title: tlTitle
-                        y: 0
+                        height: mainFlickable.height
                         highlightRangeMode: ListView.ApplyRange
                         //property alias itemWidth: dragArea.itemWidth
 //                         x: {
