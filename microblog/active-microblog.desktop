@@ -13,7 +13,13 @@ Name[sv]=Mikroblogg
 Name[uk]=Мікроблог
 Name[x-test]=xxMicroblogxx
 GenericName=Microblog Client
+GenericName[pt]=Cliente de Micro-Blog
+GenericName[uk]=Клієнт мікроблогів
+GenericName[x-test]=xxMicroblog Clientxx
 Comment=Active Twitter & Identi.ca client
+Comment[pt]=Cliente Activo do Twitter & Identi.ca
+Comment[uk]=Клієнт Twitter та Identi.ca для портативної Плазми
+Comment[x-test]=xxActive Twitter & Identi.ca clientxx
 Exec=export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/ && plasma-windowed -graphicssystem raster org.kde.microblog-qml
 Keywords=identi.ca,twitter
 Keywords[cs]=identi.ca,twitter
