@@ -115,12 +115,14 @@ Image {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: sideBar.activePage = "PostingWidget"
+                    onPressed: PlasmaExtras.PressedAnimation { targetItem: iconItem }
+                    onReleased: PlasmaExtras.ReleasedAnimation { targetItem: iconItem }
                 }
             }
 
             AuthorizationWidget {
                 id: authStatusWidget
-                anchors.verticalCenter: parent.verticalCenter
+                //anchors.verticalCenter: parent.verticalCenter
 //                 anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
                 //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
             }
@@ -155,6 +157,7 @@ Image {
                 orientation: ListView.Horizontal
                 snapMode: ListView.SnapOneItem
 //                 cacheBuffer: mainFlickable.columnWidth
+                cacheBuffer: 2000
                 boundsBehavior: Flickable.DragOverBounds
 
                 //boundsBehavior: Flickable.StopAtBounds

@@ -84,7 +84,7 @@ ListView {
 
     model: PlasmaCore.SortFilterModel {
         id: sortModel
-        sortRole: "Date"
+        sortRole: "created_at"
         sortOrder: "DescendingOrder"
         sourceModel: PlasmaCore.DataModel {
             dataSource: microblogSource

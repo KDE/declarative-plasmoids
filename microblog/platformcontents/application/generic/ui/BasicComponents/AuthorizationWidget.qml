@@ -28,7 +28,7 @@ import "plasmapackage:/ui/BasicComponents"
 Item {
     id: authStatusWidget
     width: 300 
-    height: parent.height
+    height: 48
     property alias statusMessage: statusLabel.text
     property string status: "Idle"
 
@@ -90,6 +90,8 @@ Item {
         onClicked: {
             var componentObject = configComponent.createObject(mainWidget);
         }
+        onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
+        onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
     }
 }
 
