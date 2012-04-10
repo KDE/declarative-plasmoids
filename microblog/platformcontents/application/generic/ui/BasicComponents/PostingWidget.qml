@@ -69,7 +69,7 @@ PlasmaComponents.Page {
 
     PlasmaExtras.Heading {
         id: heading
-        level: 3
+        level: 2
         text: i18n("Posting as " + userName)
         anchors {
                 left: parent.left
@@ -83,17 +83,11 @@ PlasmaComponents.Page {
         placeholderText: i18n("Share your thoughts...")
         height: 140
         interactive: false
-        //width: 300
 
         anchors {
-                left: parent.left
-                right: parent.right
-                top: heading.bottom
-                bottom: postWidget.bottom
-//             fill: parent;
-//             rightMargin: postWidget.margins.right
-            //leftMargin: 6
-//             topMargin: postWidget.margins.top
+            left: parent.left
+            right: parent.right
+            top: heading.bottom
         }
         wrapMode: TextEdit.WordWrap
 

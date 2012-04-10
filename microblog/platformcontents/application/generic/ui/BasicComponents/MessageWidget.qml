@@ -28,18 +28,19 @@ import "plasmapackage:/ui/ComplexComponents"
 ListItem {
     id: messageWidget
     height: childrenRect.height
+    width: entryList.width
 
     property string messageId: model["Id"]
     property string user: model["User"]
-    property string source: model["Source"]
-    property string dateTime: model["Date"]
-    property bool isFavorite: model["IsFavorite"]
+    property string source: model["source"]
+    property string dateTime: model["created_at"]
+    property bool isFavorite: model["favorited"]
     property string message: model["Status"]
 
     Avatar {
         id: userIcon
-        anchors.left: padding.left
-        anchors.top: padding.top
+        anchors.left: parent.left
+        //anchors.top: padding.top
         anchors.topMargin: 12
         anchors.leftMargin: 12
     }
@@ -50,7 +51,7 @@ ListItem {
         anchors.rightMargin: 12
         anchors.left: userIcon.right
         anchors.right: infoLabel.left
-        anchors.top: padding.top
+        anchors.top: userIcon.top
         anchors.topMargin: 4
         opacity: 0.6
         style: Text.Sunken
@@ -69,7 +70,7 @@ ListItem {
         anchors.leftMargin: 12
         anchors.rightMargin: 12
         anchors.left: userIcon.right
-        anchors.right: padding.right
+        anchors.right: parent.right
         anchors.top: fromLabel.bottom
         anchors.bottomMargin: 6
         text: formatMessage(message)

@@ -31,7 +31,7 @@ Item {
     width: 200
     height: 300
 
-    property string serviceUrl: "https://identi.ca/api/"
+    property string serviceUrl
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
     property bool authorized: false
@@ -50,16 +50,17 @@ Item {
 
     function configChanged()
     {
-//         print(" configChanged()");
         //serviceUrl = plasmoid.readConfig("serviceUrl");
         var u = plasmoid.readConfig("userName");
         var s = plasmoid.readConfig("serviceUrl");
+        print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
 
         if (u) {
             userName = u;
         }
         if (s) {
             serviceUrl = s;
+            //print(" conenct images.......");
             imageSource.connectSource("UserImages:"+serviceUrl)
         } else {
             serviceUrl = "https://identi.ca/api/"
@@ -78,6 +79,9 @@ Item {
         if (serviceUrl && userName && password) {
             authTimer.running = true
         }
+//         if (u) {
+//             sideBar.activeUser = u;
+//         }
     }
 
     Timer {
@@ -117,8 +121,9 @@ Item {
         interval: 0
 
         Component.onCompleted: {
-            serviceUrl = plasmoid.readConfig("serviceUrl")
-            imageSource.connectSource("UserImages:"+serviceUrl)
+            if (serviceUrl) {
+                imageSource.connectSource("UserImages:"+serviceUrl)
+            }
         }
     }
 

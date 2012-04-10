@@ -251,7 +251,7 @@ Rectangle {
                     plasmoid.writeConfig("serviceUrl", s);
                     main.password = p;
                     configChanged();
-                    userInfo.login = userNameEdit.text;
+                    sideBar.activeUser = userNameEdit.text;
                     disappearAnimation.running = true;
                 }
             }

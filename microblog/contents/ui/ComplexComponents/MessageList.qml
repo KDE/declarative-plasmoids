@@ -27,12 +27,12 @@ import "plasmapackage:/ui/BasicComponents"
 ListView {
     id: entryList
 
-    clip: true
+    clip: false
     snapMode: ListView.SnapToItem
 //     boundsBehavior: Flickable.StopAtBounds
 //     boundsBehavior: Flickable.DragOverBounds
     spacing: 2
-    //cacheBuffer: 500
+    cacheBuffer: 500
     width: mainFlickable.columnWidth
     height: mainFlickable.height - 48
 
@@ -46,14 +46,40 @@ ListView {
     property string previousSource
 
     onSourceChanged: {
-        if (previousSource) {
-            //print("source changed from " + previousSource + " to " + source);
+        loadTimer.running = true;
+        return;
+        if (previousSource && previousSource != source) {
+            print("######################### source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
         }
-        if (userName) {
+        if (userName && timelineType && url) {
             microblogSource.connectSource(source)
+            previousSource = source
         }
-        previousSource = source
+    }
+
+    Timer {
+        id: loadTimer
+        repeat: false
+        running: false
+        interval: 500
+        onTriggered: {
+            if (previousSource && previousSource != source) {
+                print("TIMER ######################### source changed from " + previousSource + " to " + source);
+                microblogSource.disconnectSource(previousSource);
+            }
+            if (userName && timelineType && url) {
+                microblogSource.connectSource(source)
+                previousSource = source
+            }
+        }
+    }
+    Component.onCompleted: {
+        currentIndex = -1;
+        if (source && userName) {
+//             microblogSource.connectSource(source)
+//             previousSource = source
+        }
     }
 
     model: PlasmaCore.SortFilterModel {
@@ -73,8 +99,17 @@ ListView {
         PlasmaExtras.Title {
             id: titleHeader
             text: title
+            height: 64
+            x: 12
+            Item { height: 128; anchors.top: titleHeader.bottom; anchors.left: titleHeader.left; width: 20}
+        }
+    }
+    footer: tfoot
+
+    Component {
+        id: tfoot
+        Item {
             height: 48
-            x: 20
         }
     }
     delegate: MessageWidget {

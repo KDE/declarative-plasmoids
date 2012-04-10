@@ -82,7 +82,8 @@ Image {
         PlasmaComponents.ToolBarLayout {
             id: toolbarlayout
             spacing: 5
-            height: postingWidget.state == "active" ? 200 : 64;
+            height: 64
+            //height: postingWidget.state == "active" ? 200 : 64;
 
 //                 Image {
 //                     source: "plasmapackage:/images/sidebarbackground.png"
@@ -151,6 +152,7 @@ Image {
                 id: feedsList
                 orientation: ListView.Horizontal
                 snapMode: ListView.SnapOneItem
+//                 cacheBuffer: mainFlickable.columnWidth
                 boundsBehavior: Flickable.DragOverBounds
 
                 //boundsBehavior: Flickable.StopAtBounds
@@ -166,39 +168,68 @@ Image {
                         id: messageList
                         timelineType: tlType
                         title: tlTitle
-                        x: {
-                            if (!ListView.isCurrentItem) {
-                                //print(" index " + index + " x" + index * dragArea.itemWidth);
-                                index * dragArea.itemWidth;
-                            } else {
-                                x
-                            }
-                        }
+                        highlightRangeMode: ListView.ApplyRange
+                        //property alias itemWidth: dragArea.itemWidth
+//                         x: {
+//                             var view = feedsList;
+//                             if (!ListView.isCurrentItem) {
+//                                 //print(" index " + index + " x" + index * dragArea.itemWidth);
+//                                 index * dragArea.itemWidth;
+//                             } else {
+//                                 //view.contentWidth/2
+//                                 x
+// //                                 if (view.flickingHorizontally) {
+// //                                     (view.contentWidth/2) - (width/2)
+// //                                 } else {
+// //                                     (view.contentWidth/2)-(width/2)
+// //                                 }
+//                             }
+//                         }
+//                         x: {
+//                             feedsList.contentX = index * itemWidth
+//                             index * itemWidth
+//                             return;
+//                             var view = feedsList;
+//                             if (ListView.isCurrentItem) {
+//                                 (view.width/2)
+//                             } else {
+//                                 if (view.currentIndex==-1) {
+//                                     index * itemWidth
+//                                 } else {
+//                                     if (index < view.currentIndex) {
+//                                         index * itemWidth + (itemWidth/2)
+//                                     } else {
+//                                         index * itemWidth - (itemWidth/2)
+//                                     }
+//                                 }
+//                             }
+//                         }
 
-                        Behavior on x {
-                            NumberAnimation {
-                                id: bouncebehavior
-                                easing {
-                                    type: Easing.InOutCubic
-//                                     amplitude: 0.3
-//                                     period: 0.5
-                                }
-                                duration: 450
-                            }
-                        }
+//                         Behavior on x {
+//                             NumberAnimation {
+//                                 id: bouncebehavior
+//                                 easing {
+//                                     type: Easing.InOutCubic
+// //                                     amplitude: 0.3
+// //                                     period: 0.5
+//                                 }
+//                                 duration: 450
+//                             }
+//                         }
 /*
                         QtExtraComponents.QIconItem {
                             id: removeButton
                             anchors { top: parent.top; right: parent.right; }
                             width: 48
                             height: 48
-                            icon: QIcon("list-remove")
+                            icon: QIcon("edit-clear-list")
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: feedsModel.remove(index)
                             }
 
                         }*/
+/*
                         QtExtraComponents.QIconItem {
                             id: dragHandle
                             anchors { top: parent.top; right: parent.right; rightMargin: 20; }
@@ -206,6 +237,7 @@ Image {
                             height: 32
                             opacity: 0.3
                             icon: QIcon("transform-move")
+                            //icon: QIcon("")
 
                             MouseArea {
                                 id: dragArea
@@ -248,43 +280,43 @@ Image {
                                 }
                                 onReleased: {
                                     dragHandle.opacity = 0.3
-                                    feedsList.currentIndex = -1;
+                                    //feedsList.currentIndex = -1;
                                     messageList.z = 1,
                                     messageList.opacity = 1,
                                     feedsList.interactive = true,
                                     dragArea.drag.target = null,
                                     dragArea.held = false
-                                    timer.running = false
-//                                     hackTimer.running = true
+                                    timer.running = true
+                                    hackTimer.running = true
 
                                 }
-//                                 property int _scroll
-//                                 Timer {
-//                                     id: hackTimer
-//                                     interval: 700
-//                                     repeat: false
-//                                     running: false
-//                                     onTriggered: {
-//                                         hackTimer2.running = true
-//                                         feedsModel.append({
-//                                             "tlType": "nonsense",
-//                                             "tlTitle":"Dummy",
-//                                         })
-//                                         print("hack1 applied.");
-//                                         //dragArea._scroll = feedsList.contentX;
-//                                     }
-//                                 }
-//                                 Timer {
-//                                     id: hackTimer2
-//                                     interval: 300
-//                                     repeat: false
-//                                     running: false
-//                                     onTriggered: {
-//                                         feedsModel.remove(feedsModel.count-1);
-//                                         //feedsList.contentX = dragArea._scroll;
-//                                         print("hack2 applied.");
-//                                     }
-//                                 }
+                                property int _scroll
+                                Timer {
+                                    id: hackTimer
+                                    interval: 700
+                                    repeat: false
+                                    running: false
+                                    onTriggered: {
+                                        hackTimer2.running = true
+                                        feedsModel.append({
+                                            "tlType": "nonsense",
+                                            "tlTitle":"Dummy",
+                                        })
+                                        print("hack1 applied.");
+                                        //dragArea._scroll = feedsList.contentX;
+                                    }
+                                }
+                                Timer {
+                                    id: hackTimer2
+                                    interval: 300
+                                    repeat: false
+                                    running: false
+                                    onTriggered: {
+                                        feedsModel.remove(feedsModel.count-1);
+                                        //feedsList.contentX = dragArea._scroll;
+                                        print("hack2 applied.");
+                                    }
+                                }
                                 Timer {
                                     id: timer
                                     interval: 200
@@ -311,7 +343,7 @@ Image {
             //                                         dragArea.drag.target = null,
             //                                         dragArea.held = false
                                                 } else if (dragArea.newPosition > feedsList.count - 1) {
-                                                    //print("middel");
+                                                    print("to end: " + dragArea.newPosition);
             //                                         messageList.z = 1,
                                                     feedsModel.move(index,feedsList.count - 1,1);
             //                                         messageList.opacity = 1,
@@ -319,7 +351,7 @@ Image {
             //                                         dragArea.drag.target = null,
             //                                         dragArea.held = false
                                                 } else {
-                                                    //print("end of list");
+                                                    print("within: " + dragArea.newPosition);
                                                     feedsModel.move(index,dragArea.newPosition,1);
             //                                         messageList.z = 1,
             //                                         messageList.opacity = 1,
@@ -330,15 +362,17 @@ Image {
                                             } else {
                                                 feedsList.interactive = true;
                                             }
-                                            dragArea.positionEnded = messageList.x;
+                                            //dragArea.positionEnded = messageList.x;
+                                            dragArea.positionStarted = dragArea.newPosition*dragArea.itemWidth;
                                             // FixmE: upate messagelist.x
-                                            //feedsList.currentIndex = index;
+                                            feedsList.currentIndex = dragArea.newPosition;
                                         }
 
                                     }
                                 }
                             }
                         }
+                        */
                     }
                 }
             }
@@ -352,20 +386,20 @@ Image {
             ListModel {
                 id: feedsModel
                 ListElement {
-                    tlType: "TimelineWithFriends"
                     tlTitle: "My timeline"
-                }
-                ListElement {
-                    tlType: "Replies"
-                    tlTitle: "Replies"
-                }
-                ListElement {
-                    tlType: "Timeline"
-                    tlTitle: "My tweets"
-                }
-                ListElement {
                     tlType: "TimelineWithFriends"
+                }
+                ListElement {
+                    tlTitle: "Replies"
+                    tlType: "Replies"
+                }
+                ListElement {
+                    tlTitle: "My tweets"
+                    tlType: "Timeline"
+                }
+                ListElement {
                     tlTitle: "My other timeline"
+                    tlType: "TimelineWithFriends"
                 }
             }
         }
