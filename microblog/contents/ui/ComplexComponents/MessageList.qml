@@ -29,6 +29,8 @@ ListView {
 
     clip: false
     snapMode: ListView.SnapToItem
+    highlightRangeMode: ListView.ApplyRange
+
 //     boundsBehavior: Flickable.StopAtBounds
 //     boundsBehavior: Flickable.DragOverBounds
     spacing: 2
@@ -39,7 +41,7 @@ ListView {
 
     signal itemClicked(variant item)
 
-    property string timelineType: "TimelineWithFriends"
+    property string timelineType
     property string title: "Tweets"
     //property alias title: titleHeader.text
     property string url: serviceUrl
@@ -50,10 +52,11 @@ ListView {
         loadTimer.running = true;
         return;
         if (previousSource && previousSource != source) {
-//             print("######################### source changed from " + previousSource + " to " + source);
+            print("######################### source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
         }
         if (userName && timelineType && url) {
+            print("######## Connecting Timeline source: " + source);
             microblogSource.connectSource(source)
             previousSource = source
         }
@@ -73,13 +76,6 @@ ListView {
                 microblogSource.connectSource(source)
                 previousSource = source
             }
-        }
-    }
-    Component.onCompleted: {
-        //currentIndex = -1;
-        if (source && userName) {
-//             microblogSource.connectSource(source)
-//             previousSource = source
         }
     }
 
@@ -117,5 +113,14 @@ ListView {
         id: messageWidget
         //width: entryList.width
         onClicked: showMessage(messageWidget)
+    }
+
+    Component.onCompleted: {
+        print(" message list created..........");
+        if (userName && timelineType && url) {
+            print("######## Connecting Timeline source: " + source);
+            microblogSource.connectSource(source)
+            previousSource = source
+        }
     }
 }

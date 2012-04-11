@@ -166,7 +166,7 @@ Image {
                 anchors.fill: parent
                 spacing: 4
                 model: feedsModel
-                delegate:
+                delegate: messageListDelegate
                 Component {
                     id: messageListDelegate
                     MessageList {
@@ -174,211 +174,6 @@ Image {
                         timelineType: tlType
                         title: tlTitle
                         height: mainFlickable.height
-                        highlightRangeMode: ListView.ApplyRange
-                        //property alias itemWidth: dragArea.itemWidth
-//                         x: {
-//                             var view = feedsList;
-//                             if (!ListView.isCurrentItem) {
-//                                 //print(" index " + index + " x" + index * dragArea.itemWidth);
-//                                 index * dragArea.itemWidth;
-//                             } else {
-//                                 //view.contentWidth/2
-//                                 x
-// //                                 if (view.flickingHorizontally) {
-// //                                     (view.contentWidth/2) - (width/2)
-// //                                 } else {
-// //                                     (view.contentWidth/2)-(width/2)
-// //                                 }
-//                             }
-//                         }
-//                         x: {
-//                             feedsList.contentX = index * itemWidth
-//                             index * itemWidth
-//                             return;
-//                             var view = feedsList;
-//                             if (ListView.isCurrentItem) {
-//                                 (view.width/2)
-//                             } else {
-//                                 if (view.currentIndex==-1) {
-//                                     index * itemWidth
-//                                 } else {
-//                                     if (index < view.currentIndex) {
-//                                         index * itemWidth + (itemWidth/2)
-//                                     } else {
-//                                         index * itemWidth - (itemWidth/2)
-//                                     }
-//                                 }
-//                             }
-//                         }
-
-//                         Behavior on x {
-//                             NumberAnimation {
-//                                 id: bouncebehavior
-//                                 easing {
-//                                     type: Easing.InOutCubic
-// //                                     amplitude: 0.3
-// //                                     period: 0.5
-//                                 }
-//                                 duration: 450
-//                             }
-//                         }
-/*
-                        QtExtraComponents.QIconItem {
-                            id: removeButton
-                            anchors { top: parent.top; right: parent.right; }
-                            width: 48
-                            height: 48
-                            icon: QIcon("edit-clear-list")
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: feedsModel.remove(index)
-                            }
-
-                        }*/
-/*
-                        QtExtraComponents.QIconItem {
-                            id: dragHandle
-                            anchors { top: parent.top; right: parent.right; rightMargin: 20; }
-                            width: 32
-                            height: 32
-                            opacity: 0.3
-                            icon: QIcon("transform-move")
-                            //icon: QIcon("")
-
-                            MouseArea {
-                                id: dragArea
-                                anchors.fill: parent
-                                property int positionStarted: 0
-                                property int positionEnded: 0
-                                property int itemWidth: (messageList.width+feedsList.spacing)
-                                property int positionsMoved: Math.round((positionEnded - positionStarted)/itemWidth);
-                                property int newPosition: index + positionsMoved
-                                property bool held: false
-                                drag.axis: Drag.XAxis
-
-                                onPressed: {
-                                    dragHandle.opacity = 1
-                                    feedsList.currentIndex = index;
-                                    messageList.z = 2,
-                                    positionStarted = messageList.x;
-                                    positionEnded = messageList.x;
-                                    //print(" start pos: " + positionStarted + " mouse.x" + mouse.x);
-                                    dragArea.drag.target = messageList,
-                                    messageList.opacity = 0.5,
-                                    feedsList.interactive = false,
-                                    held = true
-                                    drag.maximumX = (feedsList.contentWidth - messageList.width + messageList.spacing + feedsList.contentX),
-                                    drag.minimumX = - messageList.spacing
-                                    timer.running = true
-                                }
-
-                                onNewPositionChanged: {
-                                    timer.restart();
-
-                                }
-                                onPositionChanged: {
-
-            //                         print("messageList.x" + positionEnded);
-                                    positionEnded = messageList.x;
-                                    //messageList.mouseX = mouse.x;
-                                    //print("moved: " + (positionEnded - positionStarted))
-                                    //print('posEnd: ' + positionEnded + " " + mouse.x);
-                                }
-                                onReleased: {
-                                    dragHandle.opacity = 0.3
-                                    //feedsList.currentIndex = -1;
-                                    messageList.z = 1,
-                                    messageList.opacity = 1,
-                                    feedsList.interactive = true,
-                                    dragArea.drag.target = null,
-                                    dragArea.held = false
-                                    timer.running = true
-                                    hackTimer.running = true
-
-                                }
-                                property int _scroll
-                                Timer {
-                                    id: hackTimer
-                                    interval: 700
-                                    repeat: false
-                                    running: false
-                                    onTriggered: {
-                                        hackTimer2.running = true
-                                        feedsModel.append({
-                                            "tlType": "nonsense",
-                                            "tlTitle":"Dummy",
-                                        })
-                                        print("hack1 applied.");
-                                        //dragArea._scroll = feedsList.contentX;
-                                    }
-                                }
-                                Timer {
-                                    id: hackTimer2
-                                    interval: 300
-                                    repeat: false
-                                    running: false
-                                    onTriggered: {
-                                        feedsModel.remove(feedsModel.count-1);
-                                        //feedsList.contentX = dragArea._scroll;
-                                        print("hack2 applied.");
-                                    }
-                                }
-                                Timer {
-                                    id: timer
-                                    interval: 200
-                                    running: false
-
-                                    onTriggered: {
-                                        //print(" - - - - - triggered - - - - " + dragArea.positionsMoved + " new: " + dragArea.newPosition);
-                                        if (Math.abs(dragArea.positionsMoved) < 1 && dragArea.held == true) {
-                                            //print("not moved");
-            //                                 messageList.x = dragArea.positionStarted,
-            //                                 messageList.opacity = 1,
-            //                                 feedsList.interactive = true,
-            //                                 dragArea.drag.target = null,
-            //                                 held = false
-                                        } else {
-                                            if (dragArea.held == true) {
-                                                print("new position: " + dragArea.newPosition + "/"+ feedsList.count);
-                                                if (dragArea.newPosition < 1) {
-                                                    //print("start of list");
-                                                    feedsModel.move(index,0,1);
-            //                                         messageList.z = 1,
-            //                                         messageList.opacity = 1,
-            //                                         feedsList.interactive = true,
-            //                                         dragArea.drag.target = null,
-            //                                         dragArea.held = false
-                                                } else if (dragArea.newPosition > feedsList.count - 1) {
-                                                    print("to end: " + dragArea.newPosition);
-            //                                         messageList.z = 1,
-                                                    feedsModel.move(index,feedsList.count - 1,1);
-            //                                         messageList.opacity = 1,
-            //                                         feedsList.interactive = true,
-            //                                         dragArea.drag.target = null,
-            //                                         dragArea.held = false
-                                                } else {
-                                                    print("within: " + dragArea.newPosition);
-                                                    feedsModel.move(index,dragArea.newPosition,1);
-            //                                         messageList.z = 1,
-            //                                         messageList.opacity = 1,
-            //                                         feedsList.interactive = true,
-            //                                         dragArea.drag.target = null,
-            //                                         dragArea.held = false
-                                                }
-                                            } else {
-                                                feedsList.interactive = true;
-                                            }
-                                            //dragArea.positionEnded = messageList.x;
-                                            dragArea.positionStarted = dragArea.newPosition*dragArea.itemWidth;
-                                            // FixmE: upate messagelist.x
-                                            feedsList.currentIndex = dragArea.newPosition;
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                        */
                     }
                 }
             }
@@ -391,10 +186,10 @@ Image {
 
             ListModel {
                 id: feedsModel
-                ListElement {
-                    tlTitle: "My timeline"
-                    tlType: "TimelineWithFriends"
-                }
+//                 ListElement {
+//                     tlTitle: "My timeline"
+//                     tlType: "TimelineWithFriends"
+//                 }
                 ListElement {
                     tlTitle: "Replies"
                     tlType: "Replies"
