@@ -1,6 +1,7 @@
 Avatar 1.0 Avatar.qml
 MessageDetails 1.0 MessageDetails.qml
 MessageList 1.0 MessageList.qml
+MessageListHeader 1.0 MessageListHeader.qml
 MessageSearchList 1.0 MessageSearchList.qml
 SideBar 1.0 SideBar.qml
 UserInfo 1.0 UserInfo.qml

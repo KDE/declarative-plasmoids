@@ -194,6 +194,7 @@ Rectangle {
                 id: toolBoxRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: padding.bottom
+                spacing: 12
                 PlasmaComponents.ToolButton {
                     id: favoriteButton
                     text: "♥"

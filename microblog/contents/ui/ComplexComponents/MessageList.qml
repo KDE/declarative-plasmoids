@@ -43,16 +43,11 @@ ListView {
 
     property string timelineType
     property string title: "Tit3l"
-    property string tString: "Tit37l"
-    
-    //property alias title: titleHeader.text
     property string url: serviceUrl
     property string source: timelineType+":"+userName+"@"+url
     property string previousSource
 
     onSourceChanged: {
-        loadTimer.running = true;
-        return;
         if (previousSource && previousSource != source) {
             print("######################### source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
@@ -61,23 +56,6 @@ ListView {
             print("######## Connecting Timeline source: " + source);
             microblogSource.connectSource(source)
             previousSource = source
-        }
-    }
-
-    Timer {
-        id: loadTimer
-        repeat: false
-        running: false
-        interval: 500
-        onTriggered: {
-            if (previousSource && previousSource != source) {
-//                 print("TIMER ######################### source changed from " + previousSource + " to " + source);
-                microblogSource.disconnectSource(previousSource);
-            }
-            if (userName && timelineType && url) {
-                microblogSource.connectSource(source)
-                previousSource = source
-            }
         }
     }
 
@@ -92,30 +70,7 @@ ListView {
         }
     }
 
-    header: thead
-
-    Component {
-        id: thead
-        PlasmaExtras.Title {
-            id: titleHeader
-            text: 'Title: ' + tString
-            height: 48
-            width: 200
-            x: 12
-            Rectangle { color: "green"; anchors.fill: parent; opacity: 0.2; }
-    //         Item { height: 128; anchors.top: titleHeader.bottom; anchors.left: titleHeader.left; width: 20}
-            Connections {
-                target: entryList
-                onTStringChanged: titleHeader.text = tString
-            }
-        }
-    }
-//     onTitleChanged: {
-//         titleHeader.text = title
-//     }
     footer: tfoot
-
-
     Component {
         id: tfoot
         Item {
@@ -126,14 +81,4 @@ ListView {
         id: messageWidget
         onClicked: showMessage(messageWidget)
     }
-
-//     Component.onCompleted: {
-//         print(" message list created..........");
-//         if (userName && timelineType && url) {
-//             print("######## Connecting Timeline source: " + source);
-//             microblogSource.connectSource(source)
-//             previousSource = source
-// //             header.text = "manno"
-//         }
-//     }
 }

@@ -105,32 +105,32 @@ Image {
                 id: feedsModel
                 MessageList {
                     id: timelinewithfriends
-                    title: "Timeline"
+                    title: i18n("Timeline")
                     timelineType: "TimelineWithFriends"
                     height: mainFlickable.height
-                    header: PlasmaExtras.Title { height: 64; text: timelinewithfriends.title; anchors.bottomMargin: 12 }
+                    header: MessageListHeader { text: timelinewithfriends.title }
                 }
                 MessageList {
                     id: mytimeline
-                    title: "My tweets"
+                    title: i18n("My tweets")
                     timelineType: "Timeline"
                     height: mainFlickable.height
-                    header: PlasmaExtras.Title { height: 64; text: mytimeline.title; anchors.bottomMargin: 12 }
+                    header: MessageListHeader { text: mytimeline.title }
                 }
                 MessageList {
                     id: repliestimeline
-                    title: "Replies"
+                    title: i18n("Replies")
                     timelineType: "Replies"
                     height: mainFlickable.height
-                    header: PlasmaExtras.Title { height: 64; text: repliestimeline.title; anchors.bottomMargin: 12 }
+                    header: MessageListHeader { text: repliestimeline.title }
                 }
                 MessageList {
                     id: searchtimeline
-                    title: "Search"
+                    title: i18n("Search")
                     timelineType: "SearchTimeline"
                     source: timelineType+":"+userName+"@"+url+":linux"
                     height: mainFlickable.height
-                    header: PlasmaExtras.Title { height: 64; text: searchtimeline.title; anchors.bottomMargin: 12 }
+                    header: MessageListHeader { text: searchtimeline.title }
                 }
             }
         }
