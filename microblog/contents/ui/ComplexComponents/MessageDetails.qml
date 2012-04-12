@@ -66,8 +66,9 @@ PlasmaComponents.Page {
         text: user
     }
 
-    PlasmaExtras.Paragraph {
+    PlasmaExtras.Heading {
         id: bodyText
+        level: 2
         anchors.rightMargin: 12
         anchors.left: userIcon.left
         anchors.right: parent.right
