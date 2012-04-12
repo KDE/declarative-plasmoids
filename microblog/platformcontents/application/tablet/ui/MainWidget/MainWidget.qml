@@ -84,56 +84,23 @@ Image {
             height: myApp.height-toolbarlayout.height
             property int columnWidth: colWidth(mainFlickable.width)
 
-            //contentWidth: feedsList.width
-            //contentHeight: height
             ListView {
                 id: feedsList
                 orientation: ListView.Horizontal
                 snapMode: ListView.SnapOneItem
-//                 cacheBuffer: mainFlickable.columnWidth
-//                 cacheBuffer: 2000
+                cacheBuffer: mainFlickable.columnWidth
                 boundsBehavior: Flickable.DragOverBounds
 
                 anchors.fill: parent
-                spacing: 4
+                spacing: 12
                 model: feedsModel
-//                 delegate: messageListDelegate
-//                 Component {
-//                     id: messageListDelegate
-//                     MessageList {
-//                         id: messageList
-//                         timelineType: tlType
-//                         title: tlTitle
-//                         height: mainFlickable.height
-//                     }
-//                 }
             }
             function colWidth(mainWidth) {
                 var cols = Math.round(Math.max(1, (mainWidth/450)));
                 var w = (mainWidth/cols);
-                //print(" Columns: " + cols + " (" + w + ")");
                 return w;
             }
 
-//             ListModel {
-//                 id: feedsModel
-//                 ListElement {
-//                     tlTitle: "My timeline"
-//                     tlType: "TimelineWithFriends"
-//                 }
-//                 ListElement {
-//                     tlTitle: "Replies"
-//                     tlType: "Replies"
-//                 }
-//                 ListElement {
-//                     tlTitle: "My tweets"
-//                     tlType: "Timeline"
-//                 }
-//                 ListElement {
-//                     tlTitle: "My other timeline"
-//                     tlType: "TimelineWithFriends"
-//                 }
-//             }
             VisualItemModel {
                 id: feedsModel
                 MessageList {
