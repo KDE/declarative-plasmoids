@@ -25,13 +25,19 @@ Item {
     property alias text: titleItem.text
     property int bottomSpacing: 48
 
-    width: 48
+    width: 96
     height: 48
-    smooth: true
 
     PlasmaExtras.Title {
+        //y: 12
         id: titleItem
-        anchors { top: parent.top; left: parent.left; right: parent.right; }
+        anchors { top: parent.top; left: titlespacerleft.right; right: parent.right; }
+    }
+    Item {
+        id: titlespacerleft
+        width: 12
+        height: 10
+        anchors { top: titleItem.top; left: parent.left}
     }
     Item {
         id: titlespacer
