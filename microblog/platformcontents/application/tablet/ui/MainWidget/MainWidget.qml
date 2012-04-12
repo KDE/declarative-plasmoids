@@ -48,13 +48,15 @@ Image {
 
         PlasmaComponents.ToolBarLayout {
             id: toolbarlayout
-            spacing: 5
+            spacing: 24
             height: 48
-            QtExtraComponents.QIconItem {
+            anchors.rightMargin: 12
+            PlasmaComponents.ToolButton {
                 id: iconItem
-                width: 32
-                height: 32
-                icon: QIcon("story-editor")
+                width: 48
+                height: 48
+                iconSource: "story-editor"
+                checked: sideBar.activePage == "PostingWidget"
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea {
                     anchors.fill: parent
@@ -64,8 +66,49 @@ Image {
                 }
             }
 
+            Item {
+                id: searchHeader
+                //x: 200
+                height: childrenRect.height
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: iconItem.right
+                PlasmaComponents.ToolButton {
+                    id: searchToolButton
+                    iconSource: "edit-find"
+                    checkable: true
+                    width: 48
+                    height: 48
+                    anchors { left: parent.left;
+                            leftMargin: 12; rightMargin: 12 }
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: feedsList.positionViewAtIndex(feedsList.count-1, ListView.Visible)
+
+                }
+                PlasmaComponents.TextField {
+                    id: txtEdit
+                    height: searchButton.height*1.1
+                    visible: searchToolButton.checked
+                    anchors { left: searchToolButton.right;
+                            leftMargin: 24; rightMargin: 12 }
+                    anchors.verticalCenter: parent.verticalCenter
+                    Keys.onReturnPressed: searchTimeline(txtEdit.text);
+                }
+                PlasmaComponents.Button {
+                    id: searchButton
+                    text: i18n("Search")
+                    visible: searchToolButton.checked
+                    width: 96
+                    height: 32
+                    anchors { left: txtEdit.right;
+                            leftMargin: 12; rightMargin: 24 }
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: searchTimeline(txtEdit.text)
+                }
+            }
+
             AuthorizationWidget {
                 id: authStatusWidget
+                anchors.rightMargin: 12
             }
         }
         Component.onCompleted: {
@@ -126,9 +169,9 @@ Image {
                 }
                 MessageList {
                     id: searchtimeline
-                    title: i18n("Search")
+                    title: searchQuery == "" ? i18n("Search") : searchQuery
                     timelineType: "SearchTimeline"
-                    source: timelineType+":"+userName+"@"+url+":linux"
+                    source: timelineType+":"+userName+"@"+url+":" + searchQuery
                     height: mainFlickable.height
                     header: MessageListHeader { text: searchtimeline.title }
                 }
@@ -145,6 +188,16 @@ Image {
             sideBar.messageId = item.messageId
             sideBar.message = item.message
     }
+
+    function searchTimeline(txt) {
+        //print("Loading timeline: " + txt);
+        var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":"+txt;
+        //src = tl;
+        searchtimeline.source = tl;
+        searchQuery = txt;
+//         feedsList.positionViewAtIndex(feedsList.count-1, ListView.Visible);
+    }
+
 
     MessageWidgetDetails {
         id: messageDetails

@@ -43,14 +43,20 @@ Item {
         width: authStatusWidget.height/1.5
         height: authStatusWidget.height/1.5
         visible: status == "Busy"
-        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12;}
+        anchors { right: avispacer.left; verticalCenter: parent.verticalCenter; leftMargin: 12;}
         running: status == "Busy"
+    }
+    Item {
+        id: avispacer
+        width: 18
+        height: 48
+        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12;}
     }
     Avatar {
         id: profileIcon
         height: parent.height/1.5
         width: parent.height/1.5
-        anchors { right: parent.right; verticalCenter: parent.verticalCenter; leftMargin: 12;}
+        anchors { right: avispacer.left; verticalCenter: parent.verticalCenter; leftMargin: 12;}
         visible: status == "Ok"
         userId: userName
     }

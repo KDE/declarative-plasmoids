@@ -80,6 +80,10 @@ PlasmaComponents.Page {
             return formatMessage(message);
         }
         wrapMode: Text.WordWrap
+        onLinkActivated: {
+            print("Link clicked:" + link);
+            Qt.openUrlExternally(link);
+        }
     }
     PlasmaComponents.Label {
         id: dateTimeLabel

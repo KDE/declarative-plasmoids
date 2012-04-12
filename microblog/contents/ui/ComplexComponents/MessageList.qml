@@ -1,5 +1,6 @@
 /*
  *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -31,8 +32,6 @@ ListView {
     snapMode: ListView.SnapToItem
     highlightRangeMode: ListView.ApplyRange
 
-//     boundsBehavior: Flickable.StopAtBounds
-//     boundsBehavior: Flickable.DragOverBounds
     spacing: 2
     currentIndex: -1
     cacheBuffer: 500
@@ -74,7 +73,56 @@ ListView {
     Component {
         id: tfoot
         Item {
-            height: 48
+            id: footerItem
+            height: 96
+            width: 300
+            PlasmaComponents.ToolButton {
+                visible: y > 300 && loadingIndicator.running == false // only show when there are items in the list
+                id: loadMoreButton
+                text: i18n("load more...")
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                font.pointSize: theme.defaultFont.pointSize*1.2
+                height: 48
+                opacity: 0.6
+                onClicked: {
+                    print("TODO: load more ... " + source);
+                }
+                onVisibleChanged: {
+                    loadingIndicator.running = y < 300;
+                    loadingTimer.running = !visible;
+                    loadingIndicator.visible = y < 300;
+                    loadingTimer.running = loadingIndicator.visible;
+                }
+            }
+            PlasmaComponents.BusyIndicator {
+                id: loadingIndicator
+                running: true
+                visible: true
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Timer {
+                    id: loadingTimer
+                    interval: 3000 // 10 sec timeout
+                    repeat: false
+                    onTriggered: {
+                        loadingIndicator.running = false
+                        loadingIndicator.visible = false
+                        loadMoreButton.visible = footerItem.y > 300
+                    }
+                }
+            }
+            onYChanged: {
+                if (y < 300) {
+                    loadingIndicator.running = true
+                    loadingIndicator.visible = true
+                } else {
+                    loadingIndicator.running = false
+                    loadingIndicator.visible = false
+                }
+                loadMoreButton.visible = footerItem.y > 300
+            }
+
         }
     }
     delegate: MessageWidget {

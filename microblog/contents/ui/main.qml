@@ -35,6 +35,7 @@ Item {
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
     property bool authorized: false
+    property string searchQuery
 
     signal replyAsked(string id, string message)
     signal retweetAsked(string id)

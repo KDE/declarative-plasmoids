@@ -160,11 +160,15 @@ Rectangle {
                 anchors.topMargin: 20
                 anchors.bottomMargin: 5
                 text: {
+                    "<a href=\"http://www.kde.org\">kde</a>"
                     findUrls(status);
                     formatMessage(status);
                 }
                 font.pointSize: 20
                 wrapMode: Text.WordWrap
+                onLinkActivated: {
+                    print("Link clicked" + link)
+                }
             }
 
 //             QtExtraComponents.QImageItem {
