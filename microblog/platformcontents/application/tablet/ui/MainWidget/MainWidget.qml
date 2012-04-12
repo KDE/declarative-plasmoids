@@ -33,39 +33,6 @@ Image {
     fillMode: Image.Tile
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
-
-//     PlasmaCore.Svg {
-//         id: shadowSvg
-//         imagePath: plasmoid.file("images", "shadow.svgz")
-//     }
-
-//     PlasmaCore.SvgItem {
-//         height: 32
-//         //y: myApp.navigationWidth
-//         anchors {
-//             left: parent.left
-//             right: parent.right
-//             top: myApp.top
-//         }
-//         z: 10
-//         svg: shadowSvg
-//         elementId: "bottom"
-//     }
-
-//     QtExtraComponents.MouseEventListener {
-//         id: mouseEventListener
-//         z: 100
-//         x: 0
-//         y: 0
-//         width: 200
-//         height: topItem.height
-//         onPressed: {
-//             postingWidget.state == "inactive" ? postingWidget.state = "active" : postingWidget.state = "inactive"
-//             //print("focus " + postingWidget.state);
-//         }
-//     }
-    //Rectangle { anchors.fill: mouseEventListener; color: "green"; opacity: 0.3 }
-
     PlasmaExtras.App {
         id: myApp
         anchors.top: parent.top
@@ -83,29 +50,6 @@ Image {
             id: toolbarlayout
             spacing: 5
             height: 48
-            //height: postingWidget.state == "active" ? 200 : 64;
-
-//                 Image {
-//                     source: "plasmapackage:/images/sidebarbackground.png"
-//                     fillMode: Image.Tile
-//                     anchors.fill: parent
-//                 }
-//             MobileComponents.ActionButton {
-//                 svg: PlasmaCore.Svg {
-//                     imagePath: "widgets/configuration-icons"
-//                 }
-//                 elementId: "configure"
-// /*                anchors {
-//                     top: parent.top
-//                     topMargin: 8
-//                     right: parent.right
-//                     rightMargin: 8
-//                 }
-//    */
-//                 onClicked: {
-//                     var componentObject = configComponent.createObject(mainWidget);
-//                 }
-//             }
             QtExtraComponents.QIconItem {
                 id: iconItem
                 width: 32
@@ -122,17 +66,7 @@ Image {
 
             AuthorizationWidget {
                 id: authStatusWidget
-                //anchors.verticalCenter: parent.verticalCenter
-//                 anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
-                //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
             }
-/*
-            PostingWidget {
-                id: postingWidget
-//                 anchors.fill: topItem
-//                 anchors.topMargin: 8
-//                 anchors.bottomMargin: 16
-            }*/
         }
         Component.onCompleted: {
             myApp.tools = toolbarlayout
@@ -157,25 +91,22 @@ Image {
                 orientation: ListView.Horizontal
                 snapMode: ListView.SnapOneItem
 //                 cacheBuffer: mainFlickable.columnWidth
-                cacheBuffer: 2000
+//                 cacheBuffer: 2000
                 boundsBehavior: Flickable.DragOverBounds
 
-                //boundsBehavior: Flickable.StopAtBounds
-//                 anchors.top: parent.top
-//                 anchors.bottom: parent.bottom
                 anchors.fill: parent
                 spacing: 4
                 model: feedsModel
-                delegate: messageListDelegate
-                Component {
-                    id: messageListDelegate
-                    MessageList {
-                        id: messageList
-                        timelineType: tlType
-                        title: tlTitle
-                        height: mainFlickable.height
-                    }
-                }
+//                 delegate: messageListDelegate
+//                 Component {
+//                     id: messageListDelegate
+//                     MessageList {
+//                         id: messageList
+//                         timelineType: tlType
+//                         title: tlTitle
+//                         height: mainFlickable.height
+//                     }
+//                 }
             }
             function colWidth(mainWidth) {
                 var cols = Math.round(Math.max(1, (mainWidth/450)));
@@ -184,36 +115,61 @@ Image {
                 return w;
             }
 
-            ListModel {
-                id: feedsModel
+//             ListModel {
+//                 id: feedsModel
 //                 ListElement {
 //                     tlTitle: "My timeline"
 //                     tlType: "TimelineWithFriends"
 //                 }
-                ListElement {
-                    tlTitle: "Replies"
-                    tlType: "Replies"
+//                 ListElement {
+//                     tlTitle: "Replies"
+//                     tlType: "Replies"
+//                 }
+//                 ListElement {
+//                     tlTitle: "My tweets"
+//                     tlType: "Timeline"
+//                 }
+//                 ListElement {
+//                     tlTitle: "My other timeline"
+//                     tlType: "TimelineWithFriends"
+//                 }
+//             }
+            VisualItemModel {
+                id: feedsModel
+                MessageList {
+                    id: timelinewithfriends
+                    title: "Timeline"
+                    timelineType: "TimelineWithFriends"
+                    height: mainFlickable.height
+                    header: PlasmaExtras.Title { height: 64; text: timelinewithfriends.title; anchors.bottomMargin: 12 }
                 }
-                ListElement {
-                    tlTitle: "My tweets"
-                    tlType: "Timeline"
+                MessageList {
+                    id: mytimeline
+                    title: "My tweets"
+                    timelineType: "Timeline"
+                    height: mainFlickable.height
+                    header: PlasmaExtras.Title { height: 64; text: mytimeline.title; anchors.bottomMargin: 12 }
                 }
-                ListElement {
-                    tlTitle: "My other timeline"
-                    tlType: "TimelineWithFriends"
+                MessageList {
+                    id: repliestimeline
+                    title: "Replies"
+                    timelineType: "Replies"
+                    height: mainFlickable.height
+                    header: PlasmaExtras.Title { height: 64; text: repliestimeline.title; anchors.bottomMargin: 12 }
+                }
+                MessageList {
+                    id: searchtimeline
+                    title: "Search"
+                    timelineType: "SearchTimeline"
+                    source: timelineType+":"+userName+"@"+url+":linux"
+                    height: mainFlickable.height
+                    header: PlasmaExtras.Title { height: 64; text: searchtimeline.title; anchors.bottomMargin: 12 }
                 }
             }
         }
     }
 
     function showMessage(item) {
-//         messageDetails.messageId = item.messageId
-//         messageDetails.user = item.user
-//         messageDetails.dateTime = item.dateTime
-//         messageDetails.source = item.source
-//         messageDetails.isFavorite = item.isFavorite
-//         messageDetails.status = item.status
-//         messageDetails.state = "visible"
             sideBar.user = item.user
             sideBar.dateTime = item.dateTime
             sideBar.source = item.source
@@ -221,7 +177,6 @@ Image {
             sideBar.activePage = "MessageDetails"
             sideBar.messageId = item.messageId
             sideBar.message = item.message
-            //sideBar.state = "visible"
     }
 
     MessageWidgetDetails {
