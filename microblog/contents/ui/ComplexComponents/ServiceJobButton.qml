@@ -25,20 +25,20 @@ import "plasmapackage:/code/logic.js" as Logic
 PlasmaComponents.ToolButton {
     id: favoriteButton
     property string param
-    //property bool isFavorite
+    //property bool fav: isFavorite
 
     text: "♥"
     font.pointSize: 24
     width: 48
     height: 48
-    checked: isFavorite
+    //checked: isFavorite
     checkable: true
     onClicked: {
         enabled = false;
         var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
         var service = microblogSource.serviceForSource(src)
         var operation;
-        if (isFavorite) {
+        if (checked) {
             operation = "favorites/create";
         } else {
             operation = "favorites/destroy";

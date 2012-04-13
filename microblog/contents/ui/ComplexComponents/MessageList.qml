@@ -45,14 +45,16 @@ ListView {
     property string url: serviceUrl
     property string source: timelineType+":"+userName+"@"+url
     property string previousSource
+    property bool isRefreshing: false
+    property bool isLoadingMore: false
 
     onSourceChanged: {
         if (previousSource && previousSource != source) {
-            print("######################### source changed from " + previousSource + " to " + source);
+            //print("######################### source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
         }
         if (userName && timelineType && url) {
-            print("######## Connecting Timeline source: " + source);
+            //print("######## Connecting Timeline source: " + source);
             microblogSource.connectSource(source)
             previousSource = source
         }
@@ -86,40 +88,40 @@ ListView {
                 height: 48
                 opacity: 0.6
                 onClicked: {
-                    print("TODO: load more ... " + source);
-                }
-                onVisibleChanged: {
-                    loadingIndicator.running = y < 300;
-                    loadingTimer.running = !visible;
-                    loadingIndicator.visible = y < 300;
-                    loadingTimer.running = loadingIndicator.visible;
-                }
-            }
-            PlasmaComponents.BusyIndicator {
-                id: loadingIndicator
-                running: true
-                visible: true
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Timer {
-                    id: loadingTimer
-                    interval: 3000 // 10 sec timeout
-                    repeat: false
-                    onTriggered: {
-                        loadingIndicator.running = false
-                        loadingIndicator.visible = false
-                        loadMoreButton.visible = footerItem.y > 300
-                    }
+                    timelinewithfriends.loadMore();
+//                     print("TODO: load more ... ");
+//                     isLoading = true;
+//                     //loadingTimer.running = !visible;
+//                     //refreshBusy.visible =
+//                     //y < 300;
+//                     loadingTimer.running = true;
                 }
             }
+//             PlasmaComponents.BusyIndicator {
+//                 id: loadingIndicator
+//                 running: false
+//                 visible: false
+//                 anchors.horizontalCenter: parent.horizontalCenter
+// 
+//                 Timer {
+//                     id: loadingTimer
+//                     interval: 4000 // 10 sec timeout
+//                     repeat: false
+//                     onTriggered: {
+//                         isLoading = false
+//                         //refreshBusy.visible = false
+//                         loadMoreButton.visible = footerItem.y > 300
+//                     }
+//                 }
+//             }
             onYChanged: {
-                if (y < 300) {
-                    loadingIndicator.running = true
-                    loadingIndicator.visible = true
-                } else {
-                    loadingIndicator.running = false
-                    loadingIndicator.visible = false
-                }
+//                 if (y < 300) {
+//                     //loadingIndicator.running = true
+//                     //loadingIndicator.visible = true
+//                 } else {
+//                     loadingIndicator.running = false
+//                     loadingIndicator.visible = false
+//                 }
                 loadMoreButton.visible = footerItem.y > 300
             }
 
@@ -128,5 +130,85 @@ ListView {
     delegate: MessageWidget {
         id: messageWidget
         onClicked: showMessage(messageWidget)
+    }
+
+    PlasmaComponents.ToolButton {
+        id: refreshButton
+        iconSource: "view-refresh"
+        width: 48
+        height: 48
+        checkable: false
+        opacity: (source != "" && contentY < 20 && !refreshBusy.running) ? 0.7 : 0
+        anchors { top: parent.top; right: parent.right; rightMargin: 12; }
+        Behavior on opacity {
+            NumberAnimation { duration: 150 }
+        }
+        onClicked: refresh()
+    }
+
+    PlasmaComponents.BusyIndicator {
+        id: refreshBusy
+        anchors { top: parent.top; right: parent.right; rightMargin: 12; }
+        running: isRefreshing
+        visible: running
+
+    }
+    PlasmaComponents.ToolButton {
+        id: loadMoreButton
+        iconSource: "view-refresh"
+        width: 48
+        height: 48
+        checkable: false
+        opacity: (source != "" && atYEnd && !loadMoreBusy.running) ? 0.7 : 0
+        anchors { bottom: parent.bottom; right: parent.right; rightMargin: 12; bottomMargin: 12; }
+        Behavior on opacity {
+            NumberAnimation { duration: 150 }
+        }
+        onClicked: loadMore()
+    }
+    PlasmaComponents.BusyIndicator {
+        id: loadMoreBusy
+        anchors { bottom: parent.bottom; right: parent.right; rightMargin: 12; bottomMargin: 12; }
+        running: isLoadingMore
+        visible: running
+
+    }
+
+//     onIsLoadingChanged: {
+//         print("isLoading : " + isLoading);
+//     }
+
+    function refresh() {
+        var src = source;
+        //var src = timelineType + ":" + userName + "@" + serviceUrl;
+        print("Refreshing" + src + "'");
+        function result(job) {
+            enabled = true;
+            refreshBusy.running = false;
+        }
+        enabled = false;
+        refreshBusy.running = true;
+        var service = microblogSource.serviceForSource(src);
+        var operation = service.operationDescription("refresh");
+        var j = service.startOperationCall(operation);
+        j.finished.connect(result);
+    }
+    function loadMore() {
+        var src = source;
+        print(" load more: " + contentY + " " + contentHeight + " " + (contentHeight-entryList.height));
+        //var src = timelineType + ":" + userName + "@" + serviceUrl;
+        return;
+        print("loadMore" + src + "'");
+        function result(job) {
+            enabled = true;
+            loadMoreBusy.running = false;
+        }
+        enabled = false;
+        refreshBusy.running = true;
+        var service = microblogSource.serviceForSource(src);
+        var operation = service.operationDescription("loadMore");
+        operation.before_id = "";
+        var j = service.startOperationCall(operation);
+        j.finished.connect(result);
     }
 }

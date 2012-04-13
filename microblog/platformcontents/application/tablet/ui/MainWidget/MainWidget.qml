@@ -153,7 +153,6 @@ Image {
                     height: mainFlickable.height
                     header: MessageListHeader {
                         text: timelinewithfriends.title
-                        src: timelinewithfriends.source
                     }
                 }
                 MessageList {
@@ -163,7 +162,6 @@ Image {
                     height: mainFlickable.height
                     header: MessageListHeader {
                         text: mytimeline.title
-                        src: mytimeline.source
                     }
                 }
                 MessageList {
@@ -173,7 +171,6 @@ Image {
                     height: mainFlickable.height
                     header: MessageListHeader {
                         text: repliestimeline.title
-                        src: repliestimeline.source
                     }
                 }
                 MessageList {
@@ -184,7 +181,6 @@ Image {
                     height: mainFlickable.height
                     header: MessageListHeader {
                         text: searchtimeline.title
-                        src: searchTimeline.source
                     }
                 }
             }

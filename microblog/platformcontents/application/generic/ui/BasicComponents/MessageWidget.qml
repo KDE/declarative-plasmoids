@@ -84,7 +84,7 @@ ListItem {
         opacity: 0.3
         font.pointSize: theme.smallestFont.pointSize
         styleColor: theme.backgroundColor
-        text: friendlyDate(dateTime)
+        text: isFavorite + " " + friendlyDate(dateTime)
     }
 
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
