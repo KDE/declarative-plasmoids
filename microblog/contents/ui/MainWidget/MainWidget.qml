@@ -26,25 +26,135 @@ import org.kde.plasma.extras 0.1 as PlasmaExtras
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
 
-Column {
+Item {
     id: mainFlickable
 
-    PlasmaComponents.TabBar {
-        id: tabBar
+//     PlasmaComponents.TabBar {
+//         id: tabBar
+//         anchors.left: parent.left
+//         anchors.right: parent.right
+//         PlasmaComponents.TabButton {
+//             text: i18n("TimeLine");
+//             onClicked: timelinewithfriends.timelineType = "TimelineWithFriends"
+//         }
+//         PlasmaComponents.TabButton {
+//             text: i18n("Replies");
+//             onClicked: timelinewithfriends.timelineType = "Replies"
+//         }
+//         PlasmaComponents.TabButton {
+//             text: i18n("My tweets");
+//             onClicked: timelinewithfriends.timelineType = "Timeline"
+//         }
+//     }
+// 
+    PlasmaExtras.Title {
+        id: timelineTitle
+        text: timelinewithfriends.timelineType
+        anchors.top: parent.top
+        anchors.topMargin: _s
+        anchors.leftMargin: _s
         anchors.left: parent.left
         anchors.right: parent.right
-        PlasmaComponents.TabButton {
+        //height: _s*4
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                topItem.state = topItem.state != "expanded" ? "expanded" : "collapsed"
+                //enabled = false
+            }
+        }
+
+    }
+    PlasmaComponents.ToolButton {
+        id: postButton
+        width: 48
+        height: 48
+        iconSource: "story-editor"
+        checked: postingWidget.visible
+        anchors.verticalCenter: timelineTitle.verticalCenter
+        anchors.right: parent.right
+        checkable: true
+        onClicked: {
+            //topItem.state = "collapsed";
+            postingWidget.visible = checked;
+            //timelinewithfriends.timelineType = "Timeline"
+            main.authorized = true; // hack, should be updated also without AuthorizationStatus or Widet
+        }
+    }
+
+    PlasmaCore.FrameSvgItem {
+        id: topItem
+        //objectName: "frame"
+        enabledBorders: "BottomBorder"
+        //anchors.fill: parent
+        imagePath: "dialogs/background"
+        //color: "yellow"
+        anchors.leftMargin: -5
+        anchors.rightMargin: -5
+        //width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
+        //width: topView.contentWidth
+        anchors.top: timelineTitle.bottom
+        //height: topView.contentHeight
+        height: (state == "collapsed") ? 0 : topView.contentHeight + _s*2
+        Behavior on height {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+        }
+        visible: height > 20
+        z: 1
+        state: "collapsed"
+        ListView {
+            id: topView
+            anchors.fill: parent
+            anchors.margins: _s
+            model: topModel
+            interactive: false
+        }
+    }
+    VisualItemModel {
+        id: topModel
+
+        PlasmaComponents.ToolButton {
             text: i18n("TimeLine");
-            onClicked: timelinewithfriends.timelineType = "TimelineWithFriends"
+            font.pointSize: timelineTitle.font.pointSize
+            height: _s*4
+            onClicked: {
+                topItem.state = "collapsed"
+                timelinewithfriends.timelineType = "TimelineWithFriends"
+            }
+            //onPressed: topItem.state = "expanded"
         }
-        PlasmaComponents.TabButton {
+        PlasmaComponents.ToolButton {
             text: i18n("Replies");
-            onClicked: timelinewithfriends.timelineType = "Replies"
+            font.pointSize: timelineTitle.font.pointSize
+            height: _s*4
+            //onPressed: topItem.state = "expanded"
+            onClicked: {
+                topItem.state = "collapsed"
+                timelinewithfriends.timelineType = "Replies"
+            }
         }
-        PlasmaComponents.TabButton {
+        PlasmaComponents.ToolButton {
             text: i18n("My tweets");
-            onClicked: timelinewithfriends.timelineType = "Timeline"
+            font.pointSize: timelineTitle.font.pointSize
+            height: _s*4
+            onClicked: {
+                topItem.state = "collapsed"
+                timelinewithfriends.timelineType = "Timeline"
+            }
         }
+    }
+
+    PostingWidget {
+        id: postingWidget;
+        height: visible ? 160 : 0
+
+        Behavior on height {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+        }
+
+        anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
     }
 
     MessageList {
@@ -52,9 +162,10 @@ Column {
         clip: true
         title: i18n("Timeline")
         timelineType: "TimelineWithFriends"
-        height: mainFlickable.height - tabBar.height
-        width: mainFlickable.width
-        header: PostingWidget { height: 120 }
+        //height: mainFlickable.height - tabBar.height - topItem.height - _s*2
+        //width: mainFlickable.width
+        anchors { top: postingWidget.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; margins: _s }
+        //header: 
 //         header: MessageListHeader {
 //             text: timelinewithfriends.title
 //         }

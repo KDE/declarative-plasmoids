@@ -55,6 +55,7 @@ PlasmaComponents.PageStack {
 
     PostingWidget {
         id: postingWidget
+        title: i18n("Posting as " + userName)
         visible: false
     }
 

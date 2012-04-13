@@ -31,6 +31,8 @@ PlasmaComponents.Page {
     id: pwItem
     //width: 300
     //height: 300
+
+    property string title
     state: "inactive"
     anchors.margins: 12
 
@@ -49,7 +51,7 @@ PlasmaComponents.Page {
 //         anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
 //         //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
 //     }
-        visible: authStatusWidget.status == "Ok"
+        visible: main.authorized
 
 //     PlasmaCore.FrameSvgItem {
 //         id: postWidget
@@ -68,9 +70,10 @@ PlasmaComponents.Page {
 // //         }
 
     PlasmaExtras.Heading {
+        height: text != "" ? 32 : 0
         id: heading
         level: 2
-        text: i18n("Posting as " + userName)
+        text: title
         anchors {
                 left: parent.left
                 right: parent.right
@@ -88,7 +91,7 @@ PlasmaComponents.Page {
             left: parent.left
             right: parent.right
             top: heading.bottom
-            bottom: parent.bottom
+            bottom: sendButton.top
         }
         wrapMode: TextEdit.WordWrap
 
@@ -151,7 +154,7 @@ PlasmaComponents.Page {
         id: sendButton
         text: "Send"
         visible: postTextEdit.text != "" && main.authorized
-        anchors { top: postTextEdit.bottom; right: postTextEdit.right; topMargin: 12; }
+        anchors { bottom: parent.bottom; right: postTextEdit.right; topMargin: 12; }
         onClicked: {
             print("button clicked");
             Logic.userName = userName;

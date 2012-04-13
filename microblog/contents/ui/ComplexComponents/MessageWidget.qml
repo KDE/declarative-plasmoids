@@ -39,9 +39,10 @@ ListItem {
 
     Avatar {
         id: userIcon
+        y: 12
         anchors.left: parent.left
         //anchors.top: padding.top
-        anchors.topMargin: 12
+        //anchors.topMargin: 12
         anchors.leftMargin: 12
     }
 
@@ -52,7 +53,7 @@ ListItem {
         anchors.left: userIcon.right
         anchors.right: infoLabel.left
         anchors.top: userIcon.top
-        anchors.topMargin: 4
+        //anchors.topMargin: 4
         opacity: 0.6
         style: Text.Sunken
         elide: Text.ElideRight
@@ -84,7 +85,7 @@ ListItem {
         opacity: 0.3
         font.pointSize: theme.smallestFont.pointSize
         styleColor: theme.backgroundColor
-        text: isFavorite + " " + friendlyDate(dateTime)
+        text: friendlyDate(dateTime)
     }
 
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
