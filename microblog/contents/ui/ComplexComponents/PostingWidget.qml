@@ -88,6 +88,7 @@ PlasmaComponents.Page {
             left: parent.left
             right: parent.right
             top: heading.bottom
+            bottom: parent.bottom
         }
         wrapMode: TextEdit.WordWrap
 

@@ -21,12 +21,13 @@
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
 
 Column {
-    id: mainWidget
+    id: mainFlickable
 
     PlasmaComponents.TabBar {
         id: tabBar
@@ -48,9 +49,22 @@ Column {
 
     MessageList {
         id: messageList
-        anchors.left: mainWidget.left
-        anchors.right: mainWidget.right
-        height: mainWidget.height - tabBar.height
-        header: PostingWidget {}
+        clip: true
+        title: i18n("Timeline")
+        timelineType: "TimelineWithFriends"
+        height: mainFlickable.height - tabBar.height
+        width: mainFlickable.width
+        header: PostingWidget { height: 120 }
+//         header: MessageListHeader {
+//             text: messageList.title
+//         }
     }
+//     MessageList {
+//         id: messageList
+//         anchors.left: mainFlickable.left
+//         anchors.right: mainFlickable.right
+//         height: mainFlickable.height - tabBar.height
+//         header: MessageListHeader { }
+//         
+//     }
 }
