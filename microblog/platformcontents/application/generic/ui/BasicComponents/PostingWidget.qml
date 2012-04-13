@@ -122,12 +122,12 @@ PlasmaComponents.Page {
                 Logic.retweet(id)
                 refresh()
             }
-            onFavoriteAsked: {
-                print(id)
-                print(isFavorite)
-                Logic.setFavorite(id, isFavorite)
-                refresh()
-            }
+//             onFavoriteAsked: {
+//                 print(id)
+//                 print(isFavorite)
+//                 var j = Logic.setFavorite(id, isFavorite)
+//                 refresh()
+//             }
         }
     }
     PlasmaComponents.Label {

@@ -151,21 +151,30 @@ Image {
                     title: i18n("Timeline")
                     timelineType: "TimelineWithFriends"
                     height: mainFlickable.height
-                    header: MessageListHeader { text: timelinewithfriends.title }
+                    header: MessageListHeader {
+                        text: timelinewithfriends.title
+                        src: timelinewithfriends.source
+                    }
                 }
                 MessageList {
                     id: mytimeline
                     title: i18n("My tweets")
                     timelineType: "Timeline"
                     height: mainFlickable.height
-                    header: MessageListHeader { text: mytimeline.title }
+                    header: MessageListHeader {
+                        text: mytimeline.title
+                        src: mytimeline.source
+                    }
                 }
                 MessageList {
                     id: repliestimeline
                     title: i18n("Replies")
                     timelineType: "Replies"
                     height: mainFlickable.height
-                    header: MessageListHeader { text: repliestimeline.title }
+                    header: MessageListHeader {
+                        text: repliestimeline.title
+                        src: repliestimeline.source
+                    }
                 }
                 MessageList {
                     id: searchtimeline
@@ -173,7 +182,10 @@ Image {
                     timelineType: "SearchTimeline"
                     source: timelineType+":"+userName+"@"+url+":" + searchQuery
                     height: mainFlickable.height
-                    header: MessageListHeader { text: searchtimeline.title }
+                    header: MessageListHeader {
+                        text: searchtimeline.title
+                        src: searchTimeline.source
+                    }
                 }
             }
         }

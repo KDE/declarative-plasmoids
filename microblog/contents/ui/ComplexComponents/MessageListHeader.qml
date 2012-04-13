@@ -24,6 +24,7 @@ import org.kde.plasma.extras 0.1 as PlasmaExtras
 Item {
     property alias text: titleItem.text
     property int bottomSpacing: 48
+    property string src
 
     width: 96
     height: 48
@@ -43,6 +44,24 @@ Item {
         id: titlespacer
         height: bottomSpacing
         anchors { top: titleItem.top; left: parent.left; right: parent.right; }
+    }
+    PlasmaComponents.ToolButton {
+        iconSource: "view-refresh"
+        width: 48
+        height: 48
+        visible: src != ""
+        anchors { top: parent.top; right: parent.right; }
+        onClicked: {
+            //var src = timelineType + ":" + userName + "@" + serviceUrl;
+            print("Refresh()" + src + "'");
+            function result(job) {
+                print("refresh() finished." + job.result);
+            }
+            var service = microblogSource.serviceForSource(src)
+            var operation = service.operationDescription("refresh");
+            var j = service.startOperationCall(operation);
+            j.finished.connect(result);
+        }
     }
 
 }

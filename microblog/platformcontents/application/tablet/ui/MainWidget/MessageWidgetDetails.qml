@@ -23,6 +23,8 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/ui/ComplexComponents"
+
 Rectangle {
     id: messageWidgetDetails
     color: Qt.rgba(0,0,0,0.7)
@@ -199,16 +201,16 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: padding.bottom
                 spacing: 12
-                PlasmaComponents.ToolButton {
+                ServiceJobButton {
                     id: favoriteButton
-                    text: "♥"
-                    font.pointSize: 24
-                    width: 48
-                    height: 48
-                    checked: isFavorite
-                    onClicked: {
-                        main.favoriteAsked(messageId, isFavorite != "true");
-                    }
+//                     text: "♥"
+//                     font.pointSize: 24
+//                     width: 48
+//                     height: 48
+//                     checked: isFavorite
+//                     onClicked: {
+//                         main.favoriteAsked(messageId, isFavorite != "true");
+//                     }
                 }
                 PlasmaComponents.ToolButton {
                     id: replyButton

@@ -28,7 +28,7 @@ function refresh()
     var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
     var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("refresh");
-    service.startOperationCall(operation);
+    return service.startOperationCall(operation);
 }
 
 function update(status, inReplyToStatusId)
@@ -40,7 +40,7 @@ function update(status, inReplyToStatusId)
     operation.status = status;
     operation.in_reply_to_status_id = inReplyToStatusId
     print(" ... > messagesDataSource: " + src)
-    service.startOperationCall(operation);
+    return service.startOperationCall(operation);
 }
 
 function retweet(id)
@@ -49,7 +49,7 @@ function retweet(id)
     var service = messagesDataSource.serviceForSource(src)
     var operation = service.operationDescription("statuses/retweet");
     operation.id = id;
-    service.startOperationCall(operation);
+    return service.startOperationCall(operation);
 }
 
 function setFavorite(id, isFavorite)
@@ -63,8 +63,16 @@ function setFavorite(id, isFavorite)
         operation = "favorites/destroy";
     }
 
+    function result(job) {
+        print(" XXX Result: " + job.result + " op: " + job.operationName);
+        favoriteButton.text = job.result ? "OK" : ":("
+        favoriteButton.checked = job.result
+    }
+
     var operation = service.operationDescription(operation);
     operation.id = id;
-    service.startOperationCall(operation);
+    var serviceJob = service.startOperationCall(operation);
+    serviceJob.finished.connect(result);
+    return serviceJob;
 }
 

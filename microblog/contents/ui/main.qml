@@ -54,7 +54,7 @@ Item {
         //serviceUrl = plasmoid.readConfig("serviceUrl");
         var u = plasmoid.readConfig("userName");
         var s = plasmoid.readConfig("serviceUrl");
-        print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
+        //print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
 
         if (u) {
             userName = u;
@@ -159,10 +159,24 @@ Item {
 
     function formatMessage(msg) {
         if (msg.indexOf("<a") > -1) {
-            print("bla .. ." + msg);
+            //print("bla .. ." + msg);
             return msg;
         }
         return msg.replace(/(http:\/\/\S+)/g, " <a href='$1'>$1</a>").replace("'>http://", "'>")
     }
-    
+
+    function handleLinkClicked(link) {
+        print("Link clicked:" + link);
+        if (link.indexOf("internal://") == 0) {
+            var tmplink = link.replace("internal://", "").split('/');
+            var action = tmplink[0];
+            var parameter = tmplink[1];
+            print("  Internal link: " + link);
+            print("         action: " + action);
+            print("          param: " + parameter);
+        } else {
+            print("doing nothing for now");
+            //Qt.openUrlExternally(link);
+        }
+    }
 }

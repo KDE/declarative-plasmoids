@@ -23,6 +23,8 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/ui/ComplexComponents"
+
 PlasmaComponents.Page {
     id: messageDetails
 
@@ -81,16 +83,18 @@ PlasmaComponents.Page {
         }
         wrapMode: Text.WordWrap
         onLinkActivated: {
-            print("Link clicked:" + link);
-            Qt.openUrlExternally(link);
+            handleLinkClicked("internal://showuser/PlasmaActive/foobar");
+            handleLinkClicked(link);
         }
     }
     PlasmaComponents.Label {
         id: dateTimeLabel
         text: i18n("%1 from %2", friendlyDate(dateTime), source)
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignRight
         height: 20
         opacity: 0.6
-        anchors { top: bodyText.bottom; right: bodyText.right; topMargin: 12; }
+        anchors { top: bodyText.bottom; right: bodyText.right; left: bodyText.left; topMargin: 12; }
     }
     Row {
         id: toolBoxRow
@@ -100,16 +104,18 @@ PlasmaComponents.Page {
         anchors.bottom: userIcon.bottom
 //         anchors.horizontalCenter: parent.horizontalCenter
 //         anchors.top: dateTimeLabel.bottom
-        PlasmaComponents.ToolButton {
+        ServiceJobButton {
             id: favoriteButton
-            text: "♥"
-            font.pointSize: 24
-            width: 48
-            height: 48
+            param: messageId
             checked: isFavorite
-            onClicked: {
-                main.favoriteAsked(messageId, isFavorite != "true");
-            }
+//             text: "♥"
+//             font.pointSize: 24
+//             width: 48
+//             height: 48
+//             checked: isFavorite
+//             onClicked: {
+//                 main.favoriteAsked(messageId, isFavorite != "true");
+//             }
         }
         PlasmaComponents.ToolButton {
             id: replyButton
