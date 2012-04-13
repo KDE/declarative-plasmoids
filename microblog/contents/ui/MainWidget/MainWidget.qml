@@ -35,20 +35,20 @@ Column {
         anchors.right: parent.right
         PlasmaComponents.TabButton {
             text: i18n("TimeLine");
-            onClicked: messageList.timelineType = "TimelineWithFriends"
+            onClicked: timelinewithfriends.timelineType = "TimelineWithFriends"
         }
         PlasmaComponents.TabButton {
             text: i18n("Replies");
-            onClicked: messageList.timelineType = "Replies"
+            onClicked: timelinewithfriends.timelineType = "Replies"
         }
         PlasmaComponents.TabButton {
-            text: i18n("Messages");
-            onClicked: messageList.timelineType = "Messages"
+            text: i18n("My tweets");
+            onClicked: timelinewithfriends.timelineType = "Timeline"
         }
     }
 
     MessageList {
-        id: messageList
+        id: timelinewithfriends
         clip: true
         title: i18n("Timeline")
         timelineType: "TimelineWithFriends"
@@ -56,11 +56,11 @@ Column {
         width: mainFlickable.width
         header: PostingWidget { height: 120 }
 //         header: MessageListHeader {
-//             text: messageList.title
+//             text: timelinewithfriends.title
 //         }
     }
 //     MessageList {
-//         id: messageList
+//         id: timelinewithfriends
 //         anchors.left: mainFlickable.left
 //         anchors.right: mainFlickable.right
 //         height: mainFlickable.height - tabBar.height
