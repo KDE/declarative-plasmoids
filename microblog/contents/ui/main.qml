@@ -177,8 +177,8 @@ Item {
             print("         action: " + action);
             print("          param: " + parameter);
         } else {
-            print("doing nothing for now");
-            //Qt.openUrlExternally(link);
+            //print("doing nothing for now");
+            Qt.openUrlExternally(link);
         }
     }
 }

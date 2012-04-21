@@ -73,6 +73,7 @@ Item {
         checked: postingWidget.visible
         anchors.verticalCenter: timelineTitle.verticalCenter
         anchors.right: parent.right
+        anchors.rightMargin: _s
         checkable: true
         onClicked: {
             //topItem.state = "collapsed";

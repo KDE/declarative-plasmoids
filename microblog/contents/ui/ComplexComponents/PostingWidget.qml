@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
@@ -40,10 +40,44 @@ PlasmaComponents.Page {
 
     function refresh()
     {
-        postTextEdit.text = ""
-        inReplyToStatusId = ""
+        //postTextEdit.text = ""
         Logic.refresh()
-        plasmoid.busy = true
+//         plasmoid.busy = true
+    }
+    function post() {
+//         Logic.userName = userName;
+//         Logic.serviceUrl = serviceUrl;
+//         Logic.update(postTextEdit.text, inReplyToStatusId);
+        //Logic.refresh();
+        postStatusLabel.text = i18n("Sending tweet...")
+        postTextEdit.enabled = false
+        sendButton.enabled = false
+        //refreshTimer.running = true;
+
+        print("Posting update: " + postTextEdit.text);
+        var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+        var service = microblogSource.serviceForSource(src)
+        var operation = service.operationDescription("update");
+        operation.status = postTextEdit.text;
+        operation.in_reply_to_status_id = inReplyToStatusId
+
+        function result(job) {
+            //print(" XXX Post Result: " + job.result + " op: " + job.operationName);
+            postStatusLabel.text = job.result ? i18n("Tweet posted. Refreshing timeline...") : i18n("Posting failed.")
+            print(" __ " + postStatusLabel.text);
+            postTextEdit.enabled = true;
+            if (job.result) {
+                postTextEdit.text = "";
+                inReplyToStatusId = "";
+            }
+            sendButton.enabled = true;
+            refreshTimer.running = true;
+        }
+
+        //var operation = service.operationDescription(operation);
+//         operation.id = id;
+        var serviceJob = service.startOperationCall(operation);
+        serviceJob.finished.connect(result);
     }
 
 //     AuthorizationWidget {
@@ -106,6 +140,8 @@ PlasmaComponents.Page {
                 //unfocus
                 //refresh();
                 //print(" should lose focus here: imlement");
+                print("Enter");
+                post();
             } else if (txt.length == 0) {
                 inReplyToStatusId = ""
             }
@@ -124,7 +160,8 @@ PlasmaComponents.Page {
             }
             onRetweetAsked: {
                 Logic.retweet(id)
-                refresh()
+                //refresh()
+                refreshTimer.running = true
             }
 //             onFavoriteAsked: {
 //                 print(id)
@@ -150,17 +187,30 @@ PlasmaComponents.Page {
             }
         }
     }
+    PlasmaComponents.Label {
+        id: postStatusLabel
+        anchors { bottom: parent.bottom; left: parent.left; right: sendButton.left; topMargin: 12; }
+    }
     PlasmaComponents.Button {
         id: sendButton
-        text: "Send"
+        text: i18n("Post")
         visible: postTextEdit.text != "" && main.authorized
         anchors { bottom: parent.bottom; right: postTextEdit.right; topMargin: 12; }
         onClicked: {
             print("button clicked");
-            Logic.userName = userName;
-            Logic.serviceUrl = serviceUrl;
-            Logic.update(postTextEdit.text, inReplyToStatusId);
-            Logic.refresh();
+            post();
+        }
+    }
+    Timer {
+        id: refreshTimer
+        interval: 5000
+        repeat: false
+        onTriggered: {
+            //print("Refreshtimer triggered: , refreshing now.");
+            //postStatusLabel.text = ""
+            postTextEdit.enabled = true
+            sendButton.enabled = true
+            refresh();
         }
     }
 
