@@ -3,6 +3,6 @@
 export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/
 #kquitapp plasma-windowed
 export  KDE_PLASMA_COMPONENTS_PLATFORM=touch
-plasma-windowed org.kde.microblog-qml
+plasma-windowed --nofork org.kde.microblog-qml
 #plasmoidviewer /home/sebas/kdesvn/src/declarative-plasmoids/microblog/
 #plasmoidviewer org.kde.microblog-qml

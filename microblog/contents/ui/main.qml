@@ -32,6 +32,7 @@ Item {
     height: 300
 
     property int _s: 12
+    property int _m: 12
 
     property string serviceUrl
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time

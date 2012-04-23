@@ -72,8 +72,8 @@ Item {
         iconSource: "story-editor"
         checked: postingWidget.visible
         anchors.verticalCenter: timelineTitle.verticalCenter
-        anchors.right: parent.right
-        anchors.rightMargin: _s
+        anchors.right: accountsButton.left
+//         anchors.rightMargin: _s
         checkable: true
         onClicked: {
             //topItem.state = "collapsed";
@@ -81,6 +81,18 @@ Item {
             //timelinewithfriends.timelineType = "Timeline"
             main.authorized = true; // hack, should be updated also without AuthorizationStatus or Widet
         }
+    }
+
+    PlasmaComponents.ToolButton {
+        id: accountsButton
+        width: 48
+        height: 48
+        iconSource: "system-users"
+        //checked: postingWidget.visible
+        anchors.verticalCenter: timelineTitle.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: _s
+        onClicked: PlasmaExtras.AppearAnimation { targetItem: accountsDialog }
     }
 
     PlasmaCore.FrameSvgItem {
@@ -171,6 +183,12 @@ Item {
 //             text: timelinewithfriends.title
 //         }
     }
+    Accounts {
+        id: accountsDialog
+        anchors.fill: parent
+        visible: false
+    }
+
 //     MessageList {
 //         id: timelinewithfriends
 //         anchors.left: mainFlickable.left
