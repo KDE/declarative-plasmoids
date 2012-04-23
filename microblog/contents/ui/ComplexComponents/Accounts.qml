@@ -1,5 +1,5 @@
 /*
- *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -16,20 +16,12 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-//#include "../../../../../contents/ui/main.qml"
 
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
-
-//     Component.onCompleted: {
-//         appearAnimation.running = true
-//         selectedService = plasmoid.readConfig("serviceUrl");
-//         userNameEdit.text = plasmoid.readConfig("userName")
-//         passwordEdit.text = plasmoid.readConfig("password")
-//     }
 
 PlasmaCore.FrameSvgItem {
     id: accountsWidget
@@ -66,12 +58,6 @@ PlasmaCore.FrameSvgItem {
         }
         onDataUpdated: print("Data updated.")
     }
-//     PlasmaCore.DataModel {
-//         id: accountsModel
-//         dataSource: accountsSource.data["Accounts"]
-// //         sourceFilter: "Accounts"
-// //         keyRoleFilter: "[\\d]*"
-//     }
     MouseArea {
         anchors.fill: parent
         onPressed: {
@@ -80,10 +66,12 @@ PlasmaCore.FrameSvgItem {
     }
     ListModel {
         id: accountsModel
+        // We have to define at least one item to fix property names
+        // these can't be changed afterwards. The list is cleared though,
+        // so none of this data should ever end up in the UI.
         ListElement { serviceUrl: "https://api.twitter.com/"; userName: "Fakz0r"; identifier: "" }
-//         ListElement { service: "Grapefruit.com"; user: "primo" }
     }
-    
+
     PlasmaComponents.ToolButton {
         anchors { right: parent.right; top: parent.top; topMargin: _m; rightMargin: _m }
         iconSource: "dialog-close"
@@ -97,51 +85,25 @@ PlasmaCore.FrameSvgItem {
             width: parent.width
         }
         ListView {
+            id: accountsList
             width: parent.width
-            height: 400
+            height: parent.height - 48
+            clip: true
+            highlightRangeMode: ListView.ApplyRange
             interactive: height < contentHeight
-            spacing: _m
+//             spacing: _m
             model: accountsModel
-//             model: accountsSource.data["Accounts"]["Groups"]
-//             model: accountsSource.data["Accounts"]["PlasmaActive@https://identi.ca/api/"]
-
-            delegate: Item {
-                height: 76
-                id: accountDelegate
-                property bool isTwitter: (serviceUrl.indexOf("twitter") > -1) 
-                //property alias identifier: currentSource
-//                 property string userName: "u"; //data["accountUser"]
-//                 property string serviceUrl: "SeRvIcE" //data.split("@")[1]
-                
-                //Text { anchors.fill: parent; text: i18n("%1 at %2", userName, serviceUrl)}
-                Image {
-                    id: serviceIcon
-                    source: isTwitter ? "plasmapackage:/images/twitter.png" : "plasmapackage:/images/identica.png"
-                    height: 48; width: height
-                }
-                PlasmaExtras.Heading {
-                    id: delegateHead
-                    anchors { left: serviceIcon.right; top: serviceIcon.top; leftMargin: _m }
-                    text: userName
-                    level: 3
-                }
-                PlasmaComponents.Label {
-                    anchors { left: serviceIcon.right; top: delegateHead.bottom; leftMargin: _m }
-                    text: isTwitter ? i18n("Twitter") : i18n("Identi.ca")
-                    opacity: 0.7
-                }
-                Component.onCompleted: {
-                    print("DEL: ");
-                    for (k in accountDelegate.data) {
-                        print("     - " + k);
-                    }
-                }
-            }
+            delegate: AccountDelegate {}
+            currentIndex: -1
             footer: PlasmaComponents.ToolButton {
                 iconSource: "list-add-user";
                 width: 48; height: 48;
                 anchors.right: parent.right
-                
+                onClicked: {
+                    accountsModel.append({"userName": "", "serviceUrl": "", "identifier": ""});
+                    print("Setting current index: " + accountsModel.count-1);
+                    accountsList.currentIndex = accountsModel.count-1;
+                }
             }
         }
     }

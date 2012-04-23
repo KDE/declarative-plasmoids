@@ -189,6 +189,7 @@ Item {
         visible: false
     }
 
+    Component.onCompleted: accountsDialog.visible = true
 //     MessageList {
 //         id: timelinewithfriends
 //         anchors.left: mainFlickable.left

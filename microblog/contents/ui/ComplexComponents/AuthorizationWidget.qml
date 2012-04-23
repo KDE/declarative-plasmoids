@@ -27,11 +27,11 @@ import "plasmapackage:/ui/BasicComponents"
 
 Item {
     id: authStatusWidget
-    width: 300 
-    height: 48
+    width: 140 
+//     height: 48
     property alias statusMessage: statusLabel.text
     property string status: "Idle"
-
+    property string accountServiceUrl
     property string __serviceUrl
 
     onStatusChanged: {
@@ -61,9 +61,8 @@ Item {
         userId: userName
     }
 
-    PlasmaExtras.Heading {
+    PlasmaComponents.Label {
         id: statusLabel
-        level: 3
         height: parent.height
         anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 8; }
         text: status == "Busy" ? i18n("Logging in...") : status == "Ok" ? userName : "";
@@ -91,13 +90,13 @@ Item {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            var componentObject = configComponent.createObject(mainWidget);
-        }
-        onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
-        onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
-    }
+//     MouseArea {
+//         anchors.fill: parent
+//         onClicked: {
+//             var componentObject = configComponent.createObject(mainWidget);
+//         }
+//         onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
+//         onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
+//     }
 }
 

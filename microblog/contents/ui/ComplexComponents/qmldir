@@ -1,6 +1,8 @@
+AccountDelegate 1.0 AccountDelegate.qml
 Accounts 1.0 Accounts.qml
 AuthorizationWidget 1.0 AuthorizationWidget.qml
 Avatar 1.0 Avatar.qml
+LoginWidget 1.0 LoginWidget.qml
 MessageDetails 1.0 MessageDetails.qml
 MessageList 1.0 MessageList.qml
 MessageListHeader 1.0 MessageListHeader.qml
