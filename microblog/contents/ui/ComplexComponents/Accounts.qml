@@ -34,7 +34,7 @@ PlasmaCore.FrameSvgItem {
     property string selectedService
     property string status
     anchors.centerIn: parent
-    anchors.margins: _m
+    anchors.margins: -_m-2
     width: (parent.width) > 540 ? 540 : parent.width
 
     PlasmaCore.DataSource {

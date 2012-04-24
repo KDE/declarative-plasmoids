@@ -42,7 +42,7 @@ Column {
     spacing: _m
 
     Component.onCompleted: {
-        appearAnimation.running = true
+//         appearAnimation.running = true
         //serviceUrlEdit.text = plasmoid.readConfig("serviceUrl")
         selectedService = plasmoid.readConfig("serviceUrl");
         userNameEdit.text = plasmoid.readConfig("userName")
@@ -60,8 +60,9 @@ Column {
         //anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width
 
-        PlasmaExtras.Title {
+        PlasmaExtras.Heading {
             text: i18n("Sign in:")
+            level: 2
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.horizontalCenter
             anchors.left: parent.left
@@ -143,18 +144,12 @@ Column {
         enabled: userNameEdit.text != "" && selectedService != ""
         anchors {
             topMargin: 20
-            left: parent.horizontalCenter
-            leftMargin: 12
+            //left: parent.horizontalCenter
+//             leftMargin: 2
         }
+        x: passwordEdit.x + 2
         onClicked: loginWidget.acceptConfig()
     }
-    //                     PlasmaComponents.Button {
-    //                         text: i18n("Cancel")
-    //                         width: 80
-    //                         onClicked: {
-    //                             disappearAnimation.running = true
-    //                         }
-    //                     }
     function acceptConfig() {
         //var s = serviceUrlEdit.text;
         //var s = selectedService;
@@ -172,7 +167,7 @@ Column {
         main.password = p;
         configChanged();
         sideBar.activeUser = userNameEdit.text;
-        disappearAnimation.running = true;
+//         disappearAnimation.running = true;
     }
 
 }

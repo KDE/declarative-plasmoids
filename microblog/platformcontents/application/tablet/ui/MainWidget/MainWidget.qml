@@ -50,7 +50,7 @@ Image {
             id: toolbarlayout
             spacing: 24
             height: 48
-            anchors.rightMargin: 12
+//             anchors.rightMargin: 0
             PlasmaComponents.ToolButton {
                 id: iconItem
                 width: 48
@@ -108,7 +108,17 @@ Image {
 
             AuthorizationWidget {
                 id: authStatusWidget
-                anchors.rightMargin: 12
+                anchors { top: parent.top; right: parent.right; rightMargin: -12; }
+                height: 48
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var componentObject = configComponent.createObject(mainWidget);
+                    }
+                    onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
+                    onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
+                }
+
             }
         }
         Component.onCompleted: {
