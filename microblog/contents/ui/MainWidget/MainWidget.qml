@@ -59,12 +59,18 @@ Item {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                topItem.state = "expanded"
-                accountsButton.checked = false;
-                topView.visible = true;
-                accountsDialog.visible = false;
-                topItem.expandedHeight = 160;
-                //enabled = false
+                if (topItem.state == "collapsed") {
+                    topItem.state = "expanded"
+                    accountsButton.checked = false;
+                    postingWidget.visible = false;
+
+                    topView.visible = true;
+                    accountsDialog.visible = false;
+                    topItem.expandedHeight = 160;
+                    //enabled = false
+                } else {
+                    topItem.state = "collapsed"
+                }
             }
         }
     }
@@ -80,13 +86,17 @@ Item {
         checkable: true
         onClicked: {
             //topItem.state = "collapsed";
-            postingWidget.visible = checked;
-            topView.visible = false;
-            accountsDialog.visible = false;
-            topItem.expandedHeight = 160;
-
+            if (checked) {
+                postingWidget.visible = true;
+                topView.visible = false;
+                accountsDialog.visible = false;
+                topItem.expandedHeight = 160;
+                topItem.state = "expanded";
+            } else {
+                topItem.state = "collapsed"
+            }
             //timelinewithfriends.timelineType = "Timeline"
-            main.authorized = true; // hack, should be updated also without AuthorizationStatus or Widet
+            main.authorized = true; // hack, should be updated also without AuthorizationStatus or Widget
         }
     }
 
@@ -106,6 +116,8 @@ Item {
                 topView.visible = false;
                 accountsDialog.visible = true;
                 topItem.expandedHeight = 400;
+                postingWidget.visible = false;
+
             } else {
                 topItem.state = "collapsed";
             }
@@ -153,6 +165,18 @@ Item {
             anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
         }
 
+        PostingWidget {
+            id: postingWidget;
+            height: visible ? 160 : 0
+
+            Behavior on height {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+            }
+
+            anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+        }
+
+
     }
     VisualItemModel {
         id: topModel
@@ -188,16 +212,6 @@ Item {
         }
     }
 
-    PostingWidget {
-        id: postingWidget;
-        height: visible ? 160 : 0
-
-        Behavior on height {
-            NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
-        }
-
-        anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
-    }
 
     MessageList {
         id: timelinewithfriends
@@ -206,7 +220,7 @@ Item {
         timelineType: "TimelineWithFriends"
         //height: mainFlickable.height - tabBar.height - topItem.height - _s*2
         //width: mainFlickable.width
-        anchors { top: postingWidget.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; margins: _s }
+        anchors { top: topItem.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; margins: _s }
         //header: 
 //         header: MessageListHeader {
 //             text: timelinewithfriends.title
