@@ -113,31 +113,31 @@ PlasmaComponents.ListItem {
 
     Connections {
         target: accountsList
-//         onCurrentIndexChanged: accountDelegate.state = accountsList.currentIndex == index ? "Idle" : "Ok"
         onCurrentIndexChanged: {
             if (accountsList.currentIndex == index) {
-                print("  Checking index: " + index + "(" + accountsList.currentIndex + ")");
-                //accountDelegate.state = "Idle"
                 checked = true;
             } else {
                 checked = false;
-                //accountDelegate.state = "Ok"
-
-                print("Unchecking index: " + index + "(" + accountsList.currentIndex + ")");
             }
         }
     }
 
-    onClicked: {
-        state = state == "Idle" ? "Ok" : "Idle"
+    function activate() {
+        main.userName = accountUserName;
+        main.serviceUrl = accountServiceUrl;
         print("Index is now: " + index);
         accountsList.currentIndex = index;
+        topItem.state = "collapsed";
+    }
+
+    onClicked: ParallelAnimation {
+        ScriptAction { script: activate() }
+        PlasmaExtras.DisappearAnimation { targetItem: accountsWidget }
     }
     Component.onCompleted: {
-        print("DEL: ");
-        for (k in accountDelegate.data) {
-            print("     - " + k);
-        }
+//         for (k in accountDelegate.data) {
+//             print("     - " + k);
+//         }
         if (accountUserName == "" || accountServiceUrl == "") {
             state = "Idle";
         }
@@ -146,9 +146,6 @@ PlasmaComponents.ListItem {
         id: statusSource
         engine: "microblog"
         interval: 0
-        onDataUpdated: {
-            print("dataupdated");
-        }
         onSourceAdded: {
             var src = "Status:"+accountDelegate.identifier;
             if (source == src) {

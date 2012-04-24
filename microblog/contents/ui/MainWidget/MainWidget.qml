@@ -59,11 +59,14 @@ Item {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                topItem.state = topItem.state != "expanded" ? "expanded" : "collapsed"
+                topItem.state = "expanded"
+                accountsButton.checked = false;
+                topView.visible = true;
+                accountsDialog.visible = false;
+                topItem.expandedHeight = 160;
                 //enabled = false
             }
         }
-
     }
     PlasmaComponents.ToolButton {
         id: postButton
@@ -78,6 +81,10 @@ Item {
         onClicked: {
             //topItem.state = "collapsed";
             postingWidget.visible = checked;
+            topView.visible = false;
+            accountsDialog.visible = false;
+            topItem.expandedHeight = 160;
+
             //timelinewithfriends.timelineType = "Timeline"
             main.authorized = true; // hack, should be updated also without AuthorizationStatus or Widet
         }
@@ -88,15 +95,27 @@ Item {
         width: 48
         height: 48
         iconSource: "system-users"
+        checkable: true
         //checked: postingWidget.visible
         anchors.verticalCenter: timelineTitle.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: _s
-        onClicked: PlasmaExtras.AppearAnimation { targetItem: accountsDialog }
+        onClicked: {
+            if (checked) {
+                topItem.state = "expanded"
+                topView.visible = false;
+                accountsDialog.visible = true;
+                topItem.expandedHeight = 400;
+            } else {
+                topItem.state = "collapsed";
+            }
+            //PlasmaExtras.AppearAnimation { targetItem: accountsDialog }
+        }
     }
 
     PlasmaCore.FrameSvgItem {
         id: topItem
+        property string expandedHeight: topView.contentHeight + _s*2
         //objectName: "frame"
         enabledBorders: "BottomBorder"
         //anchors.fill: parent
@@ -110,13 +129,14 @@ Item {
         //width: topView.contentWidth
         anchors.top: timelineTitle.bottom
         //height: topView.contentHeight
-        height: (state == "collapsed") ? 0 : topView.contentHeight + _s*2
+        height: (state == "collapsed") ? 0 : expandedHeight
         Behavior on height {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
         }
         visible: height > 20
         z: 1
         state: "collapsed"
+
         ListView {
             id: topView
             anchors.fill: parent
@@ -124,6 +144,15 @@ Item {
             model: topModel
             interactive: false
         }
+
+        Accounts {
+            id: accountsDialog
+            anchors.fill: parent
+            height: visible ? 400 : 0;
+            visible: false
+            anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+        }
+
     }
     VisualItemModel {
         id: topModel
@@ -182,11 +211,6 @@ Item {
 //         header: MessageListHeader {
 //             text: timelinewithfriends.title
 //         }
-    }
-    Accounts {
-        id: accountsDialog
-        anchors.fill: parent
-        visible: false
     }
 
     Component.onCompleted: accountsDialog.visible = true

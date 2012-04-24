@@ -23,9 +23,9 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
-PlasmaCore.FrameSvgItem {
+Item {
     id: accountsWidget
-    imagePath: "widgets/background"
+    //imagePath: "widgets/background"
 
     property string messageId
     property string user
@@ -33,8 +33,8 @@ PlasmaCore.FrameSvgItem {
     property bool isFavorite
     property string selectedService
     property string status
-    anchors.centerIn: parent
-    anchors.margins: -_m-2
+//     anchors.centerIn: parent
+//     anchors.margins: -_m-2
     width: (parent.width) > 540 ? 540 : parent.width
 
     PlasmaCore.DataSource {
@@ -72,11 +72,6 @@ PlasmaCore.FrameSvgItem {
         ListElement { serviceUrl: "https://api.twitter.com/"; userName: "Fakz0r"; identifier: "" }
     }
 
-    PlasmaComponents.ToolButton {
-        anchors { right: parent.right; top: parent.top; topMargin: _m; rightMargin: _m }
-        iconSource: "dialog-close"
-        onClicked: PlasmaExtras.DisappearAnimation { targetItem: accountsWidget }
-    }
     Column {
         spacing: _m
         anchors { fill: parent; margins: _m*2; }
