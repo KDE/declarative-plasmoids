@@ -25,22 +25,23 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 PlasmaComponents.ListItem {
     id: accountDelegate
-//     property string messageId
-//     property string user
-//     property string source
-//     property bool isFavorite
-//     property string selectedService
+    enabled: true
+
+    property string accountServiceUrl: serviceUrl
+    property string accountUserName: userName
+    property string identifier: userName+"@"+serviceUrl
+    property string __previousStatusSource
+
+
+    onAccountServiceUrlChanged: print("Acount Srvice url changed: " + accountServiceUrl + accountUserName) ;
     property int _h: 76
 
-    state: (accountsList.currentIndex == index) ? "new" : "collapsed"
-//     state: "new"
+    state: "Ok"
 
-    //checked: state == "new"
-    enabled: true
 
     Behavior on height { NumberAnimation { duration: 450; easing.type: Easing.OutExpo; } }
 
-    property bool isTwitter: (serviceUrl.indexOf("twitter") > -1)
+    property bool isTwitter: (accountServiceUrl.indexOf("twitter") > -1)
     //property alias identifier: currentSource
 //                 property string userName: "u"; //data["accountUser"]
 //                 property string serviceUrl: "SeRvIcE" //data.split("@")[1]
@@ -48,17 +49,25 @@ PlasmaComponents.ListItem {
     //Text { anchors.fill: parent; text: i18n("%1 at %2", userName, serviceUrl)}
     states: [
         State {
-            name: "collapsed"
+            name: "Ok"
             PropertyChanges { target: accountDelegate; height: _h}
         },
         State {
-            name: "new"
+            name: "Busy"
+            PropertyChanges { target: accountDelegate; height: _h}
+        },
+        State {
+            name: "Error"
+            PropertyChanges { target: accountDelegate; height: _h}
+        },
+        State {
+            name: "Idle"
             PropertyChanges { target: accountDelegate; height: loginWidget.height; }
         }
     ]
     Item {
         anchors.fill: parent
-    visible: accountDelegate.state == "collapsed"
+        visible: accountDelegate.state != "Idle"
         Image {
             id: serviceIcon
             source: isTwitter ? "plasmapackage:/images/twitter.png" : "plasmapackage:/images/identica.png"
@@ -67,7 +76,7 @@ PlasmaComponents.ListItem {
         PlasmaExtras.Heading {
             id: delegateHead
             anchors { left: serviceIcon.right; top: serviceIcon.top; leftMargin: _m }
-            text: userName
+            text: accountUserName
             level: 3
         }
         PlasmaComponents.Label {
@@ -76,11 +85,22 @@ PlasmaComponents.ListItem {
             text: isTwitter ? i18n("Twitter") : i18n("Identi.ca")
             opacity: 0.7
         }
-        AuthorizationWidget {
-            id: accountAuthWidget
-            height: 48
-            anchors { top: parent.top; right: parent.right;}
-        }
+    }
+//     AuthorizationWidget {
+//         id: accountAuthWidget
+//         height: 48
+//         width: 200
+//         visible: true
+//         anchors { top: parent.top; right: parent.right;}
+//     }
+
+    PlasmaComponents.Label {
+        id: accountAuthWidget
+        height: 48
+        width: 48
+        visible: true
+        text: accountDelegate.state
+        anchors { top: parent.top; right: parent.right;}
     }
 
     LoginWidget {
@@ -88,18 +108,20 @@ PlasmaComponents.ListItem {
         height: 220
         width: accountDelegate.width
 //         anchors { left: parent.left; right: parent.right; top: subtitleLabel.bottom; topMargin: _m; }
-        visible: accountDelegate.state == "new"
+        visible: accountDelegate.state == "Idle"
     }
 
     Connections {
         target: accountsList
-//         onCurrentIndexChanged: accountDelegate.state = accountsList.currentIndex == index ? "new" : "collapsed"
+//         onCurrentIndexChanged: accountDelegate.state = accountsList.currentIndex == index ? "Idle" : "Ok"
         onCurrentIndexChanged: {
             if (accountsList.currentIndex == index) {
                 print("  Checking index: " + index + "(" + accountsList.currentIndex + ")");
-                accountDelegate.state = "new"
+                //accountDelegate.state = "Idle"
+                checked = true;
             } else {
-                accountDelegate.state = "collapsed"
+                checked = false;
+                //accountDelegate.state = "Ok"
 
                 print("Unchecking index: " + index + "(" + accountsList.currentIndex + ")");
             }
@@ -107,7 +129,7 @@ PlasmaComponents.ListItem {
     }
 
     onClicked: {
-        state = state == "new" ? "collapsed" : "new"
+        state = state == "Idle" ? "Ok" : "Idle"
         print("Index is now: " + index);
         accountsList.currentIndex = index;
     }
@@ -116,8 +138,66 @@ PlasmaComponents.ListItem {
         for (k in accountDelegate.data) {
             print("     - " + k);
         }
-        if (serviceUrl == "" || userName == "") {
-            state = "new";
+        if (accountUserName == "" || accountServiceUrl == "") {
+            state = "Idle";
         }
+    }
+    PlasmaCore.DataSource {
+        id: statusSource
+        engine: "microblog"
+        interval: 0
+        onDataUpdated: {
+            print("dataupdated");
+        }
+        onSourceAdded: {
+            var src = "Status:"+accountDelegate.identifier;
+            if (source == src) {
+                print("sourceAdded " + source);
+                connectSource(src);
+            }
+        }
+        onDataChanged: {
+            print("Datachanged:");
+            if (statusSource.data["Status:" + accountDelegate.identifier]) {
+                var src = "Status:"+accountDelegate.identifier;
+                var st = statusSource.data[src]["Authorization"];
+                var msg = statusSource.data[src]["AuthorizationMessage"];
+                accountDelegate.state = st;
+                print(" == > Datachanged: " + src + " " + st + " " + msg);
+            }
+        }
+        Component.onCompleted: statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
+
+//         Connections {
+//             target: accountDelegate
+//             onAccountServiceUrlChanged: statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
+//         }
+    }
+
+    onIdentifierChanged: {
+        if (accountDelegate.identifier == "@") {
+            print("invalid identifier : " + accountDelegate.identifier);
+            return;
+        }
+        if (__previousStatusSource) {
+            print("disconnectSource: " + "Status:"+__previousStatusSource);
+            statusSource.disconnectSource("Status:"+__previousStatusSource);
+            __previousStatusSource = accountDelegate.identifier;
+            //__userName = accountDelegate.accountUserName;
+        }
+        var src = "Status:"+accountDelegate.identifier;
+        print("AuthWidget.IdentifierChanged: " + src);
+        statusSource.connectSource(src);
+    }
+
+    
+//     Connections {
+//         target: accountAuthWidget
+//         onStateChanged: accountAuthWidget.state == accountDelegate.state
+//     }
+    onStateChanged: {
+        print("state changed: " + accountDelegate.state);
+        accountAuthWidget.state == accountDelegate.state
+        
     }
 }

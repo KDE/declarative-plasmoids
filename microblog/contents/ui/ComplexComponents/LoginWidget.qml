@@ -45,8 +45,8 @@ Column {
 //         appearAnimation.running = true
         //serviceUrlEdit.text = plasmoid.readConfig("serviceUrl")
         selectedService = plasmoid.readConfig("serviceUrl");
-        userNameEdit.text = plasmoid.readConfig("userName")
-        passwordEdit.text = plasmoid.readConfig("password")
+//         userNameEdit.text = plasmoid.readConfig("userName")
+//         passwordEdit.text = plasmoid.readConfig("password")
     }
 
     Grid {
@@ -160,13 +160,19 @@ Column {
         print("     user: " + u);
         print("     surl: " + s);
         print("     pass: " + p);
-        //plasmoid.writeConfig("serviceUrl", serviceUrlEdit.text);
+//         plasmoid.writeConfig("serviceUrl", serviceUrlEdit.text);
         plasmoid.writeConfig("userName", u);
         //plasmoid.writeConfig("password", p);
         plasmoid.writeConfig("serviceUrl", s);
+        print("+++++++++++++ Stuff setting " + u + "@" + s);
+        accountDelegate.accountUserName = u;
+        accountDelegate.accountServiceUrl = s;
+        accountDelegate.identifier = u+"@"+s;
+        main.userName = u;
+        main.serviceUrl = s;
         main.password = p;
         configChanged();
-        sideBar.activeUser = userNameEdit.text;
+        //sideBar.activeUser = userNameEdit.text;
 //         disappearAnimation.running = true;
     }
 

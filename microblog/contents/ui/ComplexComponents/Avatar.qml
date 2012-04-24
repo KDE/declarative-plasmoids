@@ -24,6 +24,7 @@ QtExtraComponents.QImageItem {
     id: userIcon
 
     property string userId: user
+//     property string serviceUrl
 
     width: 48
     height: 48
@@ -46,7 +47,7 @@ QtExtraComponents.QImageItem {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            //print("Avatar clicked: " + userId);
+            print("Avatar clicked: " + userId + "@" + serviceUrl);
             //userInfo.login = userId
             sideBar.activePage = "UserInfo"
             sideBar.activeUser = userId

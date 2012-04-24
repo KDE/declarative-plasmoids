@@ -27,24 +27,38 @@ import "plasmapackage:/ui/BasicComponents"
 
 Item {
     id: authStatusWidget
-    width: 140 
+    width: 140
+    state: "Idle"
 //     height: 48
     property alias statusMessage: statusLabel.text
-    property string status: "Idle"
+//     property string status: "Idle"
     property string accountServiceUrl
     property string __serviceUrl
+    property string __userName
 
-    onStatusChanged: {
-        main.authorized = status == "Ok"
+    onStateChanged: {
+        main.authorized = authStatusWidget.state == "Ok"
     }
+    states: [
+        State {
+            name: "Ok"
+        },
+        State {
+            name: "Busy"
+        },
+        State {
+            name: "Idle"
+            PropertyChanges { target: accountDelegate; height: loginWidget.height; }
+        }
+    ]
 
     PlasmaComponents.BusyIndicator {
         id: busyIndicator
         width: authStatusWidget.height/1.5
         height: authStatusWidget.height/1.5
-        visible: status == "Busy"
+        visible: authStatusWidget.state == "Busy"
         anchors { right: avispacer.left; verticalCenter: parent.verticalCenter; leftMargin: 12;}
-        running: status == "Busy"
+        running: authStatusWidget.state == "Busy"
     }
     Item {
         id: avispacer
@@ -57,37 +71,15 @@ Item {
         height: parent.height/1.5
         width: parent.height/1.5
         anchors { right: avispacer.left; verticalCenter: parent.verticalCenter; leftMargin: 12;}
-        visible: status == "Ok"
-        userId: userName
+        visible: authStatusWidget.state == "Ok"
+        userId: accountDelegate.accountUserName
     }
 
     PlasmaComponents.Label {
         id: statusLabel
         height: parent.height
         anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 8; }
-        text: status == "Busy" ? i18n("Logging in...") : status == "Ok" ? userName : "";
-    }
-    PlasmaCore.DataSource {
-        id: statusSource
-        engine: "microblog"
-        interval: 0
-        onDataChanged: {
-            if (statusSource.data["Status:"+serviceUrl]) {
-                authStatusWidget.status = statusSource.data["Status:"+serviceUrl]["Authorization"]
-            }
-        }
-        Component.onCompleted: statusSource.connectSource("Status:"+serviceUrl);
-    }
-
-    Connections {
-        target: main
-        onServiceUrlChanged: {
-            if (__serviceUrl) {
-                statusSou.disconnectSource("Status:"+__serviceUrl);
-                __serviceUrl = serviceUrl;
-            }
-            statusSource.connectSource("Status:"+serviceUrl);
-        }
+        text: authStatusWidget.state == "Busy" ? i18n("Logging in...") : authStatusWidget.state == "Ok" ? accountDelegate.accountUserName : "Idle";
     }
 
 //     MouseArea {
