@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export PLASMA_CUSTOM_PREFIX_PATHS=platformcontents/application/generic/:platformcontents/application/tablet/:contents/
+
+plasma-windowed org.kde.microblog-qml
+#plasmoidviewer /home/sebas/kdesvn/src/declarative-plasmoids/microblog/
+#plasmoidviewer org.kde.microblog-qml
