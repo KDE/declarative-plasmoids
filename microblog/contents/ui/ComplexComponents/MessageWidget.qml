@@ -28,7 +28,7 @@ import "plasmapackage:/ui/BasicComponents"
 ListItem {
     id: messageWidget
     height: childrenRect.height
-    width: entryList.width
+    width: entryList.width-scrollBar.width-4
 
     property string messageId: model["Id"]
     property string user: model["User"]
@@ -89,5 +89,4 @@ ListItem {
     }
 
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
-
 }

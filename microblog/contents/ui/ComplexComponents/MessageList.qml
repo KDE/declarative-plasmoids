@@ -137,9 +137,10 @@ ListView {
         flickableItem: entryList
         stepSize: 40
         scrollButtonInterval: 50
+        z: 10
         anchors {
             top: entryList.top
-            left: entryList.right
+            right: entryList.right
             bottom: entryList.bottom
         }
     }
@@ -189,6 +190,9 @@ ListView {
 //     onIsLoadingChanged: {
 //         print("isLoading : " + isLoading);
 //     }
+    onContentYChanged: {
+        refreshButton.opacity = (source != "" && contentY < 20 && !refreshBusy.running) ? 0.7 : 0
+    }
 
     function refresh() {
         var src = source;
