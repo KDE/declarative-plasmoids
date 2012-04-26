@@ -46,10 +46,23 @@ Item {
 //             onClicked: timelinewithfriends.timelineType = "Timeline"
 //         }
 //     }
-// 
+//
+    function typeToTitle(tType) {
+        if (tType == "TimelineWithFriends") {
+            return i18n("Timeline");
+        } else if (tType == "Timeline") {
+            return i18n("My tweets");
+        } else if (tType == "Replies") {
+            return i18n("Replies");
+        } else if (tType == "SearchTimeline") {
+            return i18n("Search for " + main.searchQuery);
+        } else {
+            return i18n("Tweets");
+        }
+    }
     PlasmaExtras.Title {
         id: timelineTitle
-        text: timelinewithfriends.timelineType
+        text: typeToTitle(timelinewithfriends.timelineType)
         anchors.top: parent.top
         anchors.topMargin: _s
         anchors.leftMargin: _s
@@ -59,7 +72,12 @@ Item {
         MouseArea {
             anchors.fill: parent
             onPressed: {
+                topItem.state = (topItem.state != "timelines") ? "timelines" : "collapsed"
+                accountsButton.checked = false;
+                postButton.checked = false;
+                return;
                 if (topItem.state == "collapsed") {
+                    topItem.visible = true;
                     topItem.state = "expanded"
                     accountsButton.checked = false;
                     postingWidget.visible = false;
@@ -69,6 +87,7 @@ Item {
                     topItem.expandedHeight = 160;
                     //enabled = false
                 } else {
+                    topItem.visible = false;
                     topItem.state = "collapsed"
                 }
             }
@@ -85,8 +104,12 @@ Item {
 //         anchors.rightMargin: _s
         checkable: true
         onClicked: {
+            topItem.state = checked ? "post" : "collapsed"
+            accountsButton.checked = false;
+            return;
             //topItem.state = "collapsed";
             if (checked) {
+                topItem.visible = true;
                 postingWidget.visible = true;
                 topView.visible = false;
                 accountsDialog.visible = false;
@@ -111,7 +134,11 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: _s
         onClicked: {
+            topItem.state = checked ? "accounts" : "collapsed";
+            postButton.checked = false;
+            return;
             if (checked) {
+                topItem.visible = true;
                 topItem.state = "expanded"
                 topView.visible = false;
                 accountsDialog.visible = true;
@@ -141,40 +168,77 @@ Item {
         //width: topView.contentWidth
         anchors.top: timelineTitle.bottom
         //height: topView.contentHeight
-        height: (state == "collapsed") ? 0 : expandedHeight
+        //height: (state == "collapsed") ? 0 : expandedHeight
         Behavior on height {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
         }
-        visible: height > 20
+        //visible: height > 20
         z: 1
         state: "collapsed"
 
-        ListView {
-            id: topView
-            anchors.fill: parent
-            anchors.margins: _s
-            model: topModel
-            interactive: false
+        states: [
+            State {
+                name: "collapsed"
+                PropertyChanges { target: topItem; height: 0}
+            },
+            State {
+                name: "accounts"
+                PropertyChanges { target: topItem; height: 400}
+            },
+            State {
+                name: "timelines"
+                PropertyChanges { target: topItem; height: 160}
+            },
+            State {
+                name: "post"
+                PropertyChanges { target: topItem; height: 160 }
+            }
+        ]
+
+        onStateChanged: {
+            print("State changed to: " + state);
+            if (state == "accounts") {
+                topStack.replace(accountsDialog);
+            } else if (state == "post") {
+                topStack.replace(postingWidget);
+            } else if (state == "timelines") {
+                topStack.replace(timelinesList);
+            }
         }
 
-        Accounts {
-            id: accountsDialog
+        PlasmaComponents.PageStack {
+            id: topStack
             anchors.fill: parent
-            height: visible ? 400 : 0;
-            visible: false
-            anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
-        }
-
-        PostingWidget {
-            id: postingWidget;
-            height: visible ? 160 : 0
-
-            Behavior on height {
-                NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+            PlasmaComponents.Page {
+                id: timelinesList
+                ListView {
+                    id: topView
+                    anchors.fill: parent
+                    anchors.margins: _s
+                    model: topModel
+                    interactive: false
+                }
+            }
+            Accounts {
+                id: accountsDialog
+                anchors.fill: parent
+                height: visible ? 400 : 0;
+                visible: false
+                anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
             }
 
-            anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+            PostingWidget {
+                id: postingWidget;
+                height: visible ? 160 : 0
+
+                Behavior on height {
+                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+                }
+
+                anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+            }
         }
+
 
 
     }
@@ -182,30 +246,33 @@ Item {
         id: topModel
 
         PlasmaComponents.ToolButton {
-            text: i18n("TimeLine");
+            text: typeToTitle("TimelineWithFriends")
             font.pointSize: timelineTitle.font.pointSize
             height: _s*4
             onClicked: {
+//                 topItem.visible = false;
                 topItem.state = "collapsed"
                 timelinewithfriends.timelineType = "TimelineWithFriends"
             }
             //onPressed: topItem.state = "expanded"
         }
         PlasmaComponents.ToolButton {
-            text: i18n("Replies");
+            text: typeToTitle("Replies");
             font.pointSize: timelineTitle.font.pointSize
             height: _s*4
             //onPressed: topItem.state = "expanded"
             onClicked: {
+//                 topItem.visible = false;
                 topItem.state = "collapsed"
                 timelinewithfriends.timelineType = "Replies"
             }
         }
         PlasmaComponents.ToolButton {
-            text: i18n("My tweets");
+            text: typeToTitle("Timeline");
             font.pointSize: timelineTitle.font.pointSize
             height: _s*4
             onClicked: {
+//                 topItem.visible = false;
                 topItem.state = "collapsed"
                 timelinewithfriends.timelineType = "Timeline"
             }

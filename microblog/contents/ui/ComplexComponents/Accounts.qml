@@ -23,7 +23,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
-Item {
+PlasmaComponents.Page {
     id: accountsWidget
     //imagePath: "widgets/background"
 
@@ -35,7 +35,7 @@ Item {
     property string status
 //     anchors.centerIn: parent
 //     anchors.margins: -_m-2
-    width: (parent.width) > 540 ? 540 : parent.width
+    //width: (parent.width) > 540 ? 540 : parent.width
 
     PlasmaCore.DataSource {
         id: accountsSource
