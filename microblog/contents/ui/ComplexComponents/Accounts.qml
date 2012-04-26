@@ -84,6 +84,7 @@ Item {
             width: parent.width
             height: parent.height - 48
             clip: true
+            cacheBuffer: 800
             highlightRangeMode: ListView.ApplyRange
             interactive: height < contentHeight
 //             spacing: _m

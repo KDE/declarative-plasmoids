@@ -131,6 +131,18 @@ ListView {
         id: messageWidget
         onClicked: showMessage(messageWidget)
     }
+    PlasmaComponents.ScrollBar {
+        id: scrollBar
+        orientation: Qt.Vertical
+        flickableItem: entryList
+        stepSize: 40
+        scrollButtonInterval: 50
+        anchors {
+            top: entryList.top
+            left: entryList.right
+            bottom: entryList.bottom
+        }
+    }
 
     PlasmaComponents.ToolButton {
         id: refreshButton
