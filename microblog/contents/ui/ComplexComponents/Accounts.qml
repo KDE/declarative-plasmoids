@@ -44,7 +44,7 @@ PlasmaComponents.Page {
         //connectedSources: ["Accounts"]
         Component.onCompleted: connectSource("Accounts")
         onDataChanged: {
-            print("Data changed." + data)
+//             print("Data changed." + data)
             accountsModel.clear();
             for (d in data["Accounts"]) {
 //                 print("  d: " + d + " " + data["Accounts"][d]);
@@ -52,11 +52,11 @@ PlasmaComponents.Page {
                 var u = _d[0];
                 var s = _d[1];
                 accountsModel.append({"userName": u, "serviceUrl": s, "identifier": d})
-                print("  U: " + d + " " + u + " " + s);
+//                 print("  U: " + d + " " + u + " " + s);
 
             }
         }
-        onDataUpdated: print("Data updated.")
+//         onDataUpdated: print("Data updated.")
     }
     MouseArea {
         anchors.fill: parent
@@ -69,7 +69,7 @@ PlasmaComponents.Page {
         // We have to define at least one item to fix property names
         // these can't be changed afterwards. The list is cleared though,
         // so none of this data should ever end up in the UI.
-        ListElement { serviceUrl: "https://api.twitter.com/"; userName: "Fakz0r"; identifier: "" }
+        ListElement { serviceUrl: "https://api.twitter.com/"; userName: ""; identifier: "" }
     }
 
     Column {
@@ -97,10 +97,13 @@ PlasmaComponents.Page {
                 anchors.right: parent.right
                 onClicked: {
                     accountsModel.append({"userName": "", "serviceUrl": "", "identifier": ""});
-                    print("Setting current index: " + accountsModel.count-1);
+//                     print("Setting current index: " + accountsModel.count-1);
                     accountsList.currentIndex = accountsModel.count-1;
                 }
             }
         }
+    }
+    Component.onCompleted: {
+        accountsModel.clear();
     }
 }

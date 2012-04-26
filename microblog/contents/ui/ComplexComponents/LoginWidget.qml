@@ -84,7 +84,7 @@ Column {
                 property string apiUrl: "https://identi.ca/api/"
                 checked: (selectedService == apiUrl)
 
-                onCheckedChanged: {
+                onClicked: {
                     identicaRadio.checked = !checked;
                     if (checked) {
                         console.log(text + " selected" + selectedService);

@@ -72,9 +72,9 @@ Item {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                topItem.state = (topItem.state != "timelines") ? "timelines" : "collapsed"
                 accountsButton.checked = false;
                 postButton.checked = false;
+                topItem.state = (topItem.state != "timelines") ? "timelines" : "collapsed"
                 return;
                 if (topItem.state == "collapsed") {
                     topItem.visible = true;
@@ -104,8 +104,8 @@ Item {
 //         anchors.rightMargin: _s
         checkable: true
         onClicked: {
-            topItem.state = checked ? "post" : "collapsed"
             accountsButton.checked = false;
+            topItem.state = checked ? "post" : "collapsed"
             return;
             //topItem.state = "collapsed";
             if (checked) {
@@ -134,8 +134,8 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: _s
         onClicked: {
-            topItem.state = checked ? "accounts" : "collapsed";
             postButton.checked = false;
+            topItem.state = checked ? "accounts" : "collapsed";
             return;
             if (checked) {
                 topItem.visible = true;
@@ -155,6 +155,8 @@ Item {
     PlasmaCore.FrameSvgItem {
         id: topItem
         property string expandedHeight: topView.contentHeight + _s*2
+        clip: true
+        visible: state != "collapsed"
         //objectName: "frame"
         enabledBorders: "BottomBorder"
         //anchors.fill: parent
@@ -187,11 +189,11 @@ Item {
             },
             State {
                 name: "timelines"
-                PropertyChanges { target: topItem; height: 160}
+                PropertyChanges { target: topItem; height: 180}
             },
             State {
                 name: "post"
-                PropertyChanges { target: topItem; height: 160 }
+                PropertyChanges { target: topItem; height: 180 }
             }
         ]
 
@@ -209,8 +211,11 @@ Item {
         PlasmaComponents.PageStack {
             id: topStack
             anchors.fill: parent
+//             visible: topItem.state == "timelines"
+            initialPage: timelinesList
             PlasmaComponents.Page {
                 id: timelinesList
+                //anchors.fill: parent
                 ListView {
                     id: topView
                     anchors.fill: parent
@@ -221,21 +226,24 @@ Item {
             }
             Accounts {
                 id: accountsDialog
-                anchors.fill: parent
-                height: visible ? 400 : 0;
-                visible: false
-                anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+                //anchors.fill: parent
+//                 visible: topItem.state == "accounts"
+//                 height: 400
+                //visible: false
+                //anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
             }
 
             PostingWidget {
                 id: postingWidget;
-                height: visible ? 160 : 0
+//                 height: 160
+                //anchors.fill: parent
+//                 visible: topItem.state == "post"
 
                 Behavior on height {
                     NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
                 }
 
-                anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+                //anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
             }
         }
 
