@@ -41,7 +41,7 @@ Image {
         anchors.right: mainWidget.right
         clip: true
 
-        tools: toolbarlayout
+//         tools: toolbarlayout
         content: mainFlickable
         navigation: sideBar
         navigationWidth: 300
@@ -50,8 +50,10 @@ Image {
             id: toolbarlayout
             spacing: 24
             height: 48
+            width: myApp.width
 //             anchors.rightMargin: 0
             z: 10
+//             width: parent.width
             PlasmaComponents.ToolButton {
                 id: iconItem
                 width: 48
@@ -129,12 +131,10 @@ Image {
                 print(" XXX tOllbarlayout created.");
             }
         }
-        Component.onCompleted: {
-            myApp.tools = toolbarlayout
-        }
 
         AccountsPopup {
             id: accountsPopup
+            anchors { right: parent.right; top: parent.top; }
         }
 
         SideBar {
@@ -227,6 +227,10 @@ Image {
         searchtimeline.source = tl;
         searchQuery = txt;
 //         feedsList.positionViewAtIndex(feedsList.count-1, ListView.Visible);
+    }
+    Component.onCompleted: {
+        print("!!!!!!!!!!!!! Setting tools: " + toolbarlayout.height + " w:" + toolbarlayout.width);
+        myApp.tools = toolbarlayout;
     }
 
 
