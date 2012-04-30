@@ -18,9 +18,7 @@
  */
 
 import QtQuick 1.1
-import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -37,7 +35,7 @@ Item {
     property string __userName
 
     onStateChanged: {
-        main.authorized = authStatusWidget.state == "Ok"
+        main.authorized = authStatusWidget.state == "Ok" // TODO remove and make unnecessary
     }
     states: [
         State {

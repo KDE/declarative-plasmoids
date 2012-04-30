@@ -51,6 +51,7 @@ Image {
             spacing: 24
             height: 48
 //             anchors.rightMargin: 0
+            z: 10
             PlasmaComponents.ToolButton {
                 id: iconItem
                 width: 48
@@ -105,25 +106,37 @@ Image {
                     onClicked: searchTimeline(txtEdit.text)
                 }
             }
-
-            AuthorizationWidget {
+            PlasmaComponents.ToolButton {
                 id: authStatusWidget
-                anchors { top: parent.top; right: parent.right; rightMargin: -12; }
-                height: 48
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        var componentObject = configComponent.createObject(mainWidget);
-                    }
-                    onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
-                    onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
-                }
-
+                text: "accounts"
+                onClicked: accountsPopup.state = "expanded"
+            }
+//             AuthorizationWidget {
+//                 id: authStatusWidget
+//                 anchors { top: parent.top; right: parent.right; rightMargin: -12; }
+//                 height: 48
+//                 MouseArea {
+//                     anchors.fill: parent
+//                     onClicked: {
+//                         var componentObject = configComponent.createObject(mainWidget);
+//                     }
+//                     onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
+//                     onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
+//                 }
+// 
+//             }
+            Component.onCompleted: {
+                print(" XXX tOllbarlayout created.");
             }
         }
         Component.onCompleted: {
             myApp.tools = toolbarlayout
         }
+
+        AccountsPopup {
+            id: accountsPopup
+        }
+
         SideBar {
             id: sideBar
             width: myApp.navigationWidth
