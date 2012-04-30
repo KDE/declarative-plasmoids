@@ -69,13 +69,14 @@ PlasmaComponents.Page {
         // We have to define at least one item to fix property names
         // these can't be changed afterwards. The list is cleared though,
         // so none of this data should ever end up in the UI.
-        ListElement { serviceUrl: "https://api.twitter.com/"; userName: ""; identifier: "" }
+        ListElement { serviceUrl: ""; userName: ""; identifier: "" }
     }
 
     Column {
         spacing: _m
         anchors { fill: parent; margins: _m*2; }
-        PlasmaExtras.Title {
+        PlasmaExtras.Heading {
+            level: 3
             text: i18n("Accounts")
             width: parent.width
         }
@@ -104,7 +105,6 @@ PlasmaComponents.Page {
         }
     }
     Component.onCompleted: {
-        accountsModel.clear();
         print("Accounts.qml completed");
     }
 }

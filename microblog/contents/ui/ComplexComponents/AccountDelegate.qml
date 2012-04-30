@@ -26,17 +26,15 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 PlasmaComponents.ListItem {
     id: accountDelegate
     enabled: true
-
     property string accountServiceUrl: serviceUrl
     property string accountUserName: userName
     property string identifier: userName+"@"+serviceUrl
     property string __previousStatusSource
 
-
-    onAccountServiceUrlChanged: print("Acount Srvice url changed: " + accountServiceUrl + accountUserName) ;
+//     onAccountServiceUrlChanged: print("Acount Srvice url changed: " + accountServiceUrl + accountUserName) ;
     property int _h: 76
 
-    state: "Ok"
+    state: "Idle"
 
 
     Behavior on height { NumberAnimation { duration: 450; easing.type: Easing.OutExpo; } }
@@ -65,6 +63,7 @@ PlasmaComponents.ListItem {
             PropertyChanges { target: accountDelegate; height: loginWidget.height; }
         }
     ]
+
     Item {
         anchors.fill: parent
         visible: accountDelegate.state != "Idle"
@@ -134,21 +133,14 @@ PlasmaComponents.ListItem {
         ScriptAction { script: activate() }
         PlasmaExtras.DisappearAnimation { targetItem: accountsWidget }
     }
-    Component.onCompleted: {
-//         for (k in accountDelegate.data) {
-//             print("     - " + k);
-//         }
-        if (accountUserName == "" || accountServiceUrl == "") {
-            state = "Idle";
-        }
-    }
+
     PlasmaCore.DataSource {
         id: statusSource
         engine: "microblog"
         interval: 0
         onSourceAdded: {
             var src = "Status:"+accountDelegate.identifier;
-            if (source == src) {
+            if (accountDelegate.identifier != "@" && source == src) {
                 print("sourceAdded " + source);
                 connectSource(src);
             }
@@ -196,5 +188,14 @@ PlasmaComponents.ListItem {
         print("state changed: " + accountDelegate.state);
         accountAuthWidget.state == accountDelegate.state
         
+    }
+
+    Component.onCompleted: {
+        print("New One: " + accountUserName + " " + accountServiceUrl + " " + identifier);
+        if (accountUserName == "" || accountServiceUrl == "") {
+            state = "Idle";
+        }
+        ///state = "Ok";
+        print("Accountdelegate.qml completed: " + identifier);
     }
 }

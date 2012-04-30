@@ -168,7 +168,7 @@ Item {
         anchors.right: parent.right
         anchors.top: timelineTitle.bottom
         Behavior on height {
-            NumberAnimation { duration: 3000; easing.type: Easing.OutExpo; }
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
         }
         //visible: height > 20
         z: 1
@@ -218,7 +218,7 @@ Item {
 
         Timer {
             id: clearPsTimer
-            interval: 3000
+            interval: 300
             onTriggered: {
                 print("clear()");
                 topStack.clear();
@@ -311,7 +311,6 @@ Item {
 //         }
     }
 
-    //Component.onCompleted: accountsDialog.visible = true
 //     MessageList {
 //         id: timelinewithfriends
 //         anchors.left: mainFlickable.left
