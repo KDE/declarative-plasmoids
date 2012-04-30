@@ -137,42 +137,38 @@ Item {
             postButton.checked = false;
             topItem.state = checked ? "accounts" : "collapsed";
             return;
-            if (checked) {
-                topItem.visible = true;
-                topItem.state = "expanded"
-                topView.visible = false;
-                accountsDialog.visible = true;
-                topItem.expandedHeight = 400;
-                postingWidget.visible = false;
-
-            } else {
-                topItem.state = "collapsed";
-            }
+//             if (checked) {
+//                 topItem.visible = true;
+//                 topItem.state = "expanded"
+//                 topView.visible = false;
+//                 accountsDialog.visible = true;
+//                 topItem.expandedHeight = 400;
+//                 postingWidget.visible = false;
+// 
+//             } else {
+//                 topItem.state = "collapsed";
+//             }
             //PlasmaExtras.AppearAnimation { targetItem: accountsDialog }
         }
     }
 
-    PlasmaCore.FrameSvgItem {
+    Item {
         id: topItem
         property string expandedHeight: topView.contentHeight + _s*2
         clip: true
-        visible: state != "collapsed"
+        //visible: state != "collapsed"
         //objectName: "frame"
-        enabledBorders: "BottomBorder"
+        //enabledBorders: "BottomBorder"
         //anchors.fill: parent
-        imagePath: "dialogs/background"
+        //imagePath: "dialogs/background"
         //color: "yellow"
         anchors.leftMargin: -5
         anchors.rightMargin: -5
-        //width: parent.width
         anchors.left: parent.left
         anchors.right: parent.right
-        //width: topView.contentWidth
         anchors.top: timelineTitle.bottom
-        //height: topView.contentHeight
-        //height: (state == "collapsed") ? 0 : expandedHeight
         Behavior on height {
-            NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+            NumberAnimation { duration: 3000; easing.type: Easing.OutExpo; }
         }
         //visible: height > 20
         z: 1
@@ -198,52 +194,65 @@ Item {
         ]
 
         onStateChanged: {
-            print("State changed to: " + state);
+            clearPsTimer.running = false
+            print("State changed to:::: " + state);
+            if (state != "collapsed") {
+                topStack.clear();
+            }
+            print(" is accounts?????? " + (topStack.currentPage == accountsComponent));
             if (state == "accounts") {
-                topStack.replace(accountsDialog);
+                if (topStack.currentPage != accountsComponent) topStack.push(accountsComponent);
+                print(" is accounts?????? " + (topStack.currentPage == accountsComponent));
             } else if (state == "post") {
-                topStack.replace(postingWidget);
+                if (topStack.currentPage != postComponent) topStack.push(postComponent);
+//                 topStack.replace(postingWidget);
             } else if (state == "timelines") {
-                topStack.replace(timelinesList);
+                if (topStack.currentPage != timelinesComponent) topStack.push(timelinesComponent);
+//                 topStack.replace(timelinesList);
+            } else {
+//                 print("clear()");
+                //topStack.clear();
+                clearPsTimer.running = true
+            }
+        }
+
+        Timer {
+            id: clearPsTimer
+            interval: 3000
+            onTriggered: {
+                print("clear()");
+                topStack.clear();
             }
         }
 
         PlasmaComponents.PageStack {
             id: topStack
             anchors.fill: parent
-//             visible: topItem.state == "timelines"
-            initialPage: timelinesList
-            PlasmaComponents.Page {
-                id: timelinesList
-                //anchors.fill: parent
-                ListView {
-                    id: topView
-                    anchors.fill: parent
-                    anchors.margins: _s
-                    model: topModel
-                    interactive: false
+            initialPage: Item {}
+            Component {
+                id: timelinesComponent
+                PlasmaComponents.Page {
+                    id: timelinesList
+                    ListView {
+                        id: topView
+                        anchors.fill: parent
+                        anchors.margins: _s
+                        model: topModel
+                        interactive: false
+                    }
                 }
             }
-            Accounts {
-                id: accountsDialog
-                //anchors.fill: parent
-//                 visible: topItem.state == "accounts"
-//                 height: 400
-                //visible: false
-                //anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
-            }
-
-            PostingWidget {
-                id: postingWidget;
-//                 height: 160
-                //anchors.fill: parent
-//                 visible: topItem.state == "post"
-
-                Behavior on height {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo; }
+            Component {
+                id: accountsComponent
+                Accounts {
+                    id: accountsDialog
                 }
-
-                //anchors { left: parent.left; right: parent.right; top: timelineTitle.bottom; bottomMargin: _s}
+            }
+            Component {
+                id: postComponent
+                PostingWidget {
+                    id: postingWidget;
+                }
             }
         }
 
@@ -302,7 +311,7 @@ Item {
 //         }
     }
 
-    Component.onCompleted: accountsDialog.visible = true
+    //Component.onCompleted: accountsDialog.visible = true
 //     MessageList {
 //         id: timelinewithfriends
 //         anchors.left: mainFlickable.left

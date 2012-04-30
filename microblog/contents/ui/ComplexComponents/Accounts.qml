@@ -105,5 +105,6 @@ PlasmaComponents.Page {
     }
     Component.onCompleted: {
         accountsModel.clear();
+        print("Accounts.qml completed");
     }
 }

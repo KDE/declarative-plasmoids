@@ -248,4 +248,7 @@ PlasmaComponents.Page {
 //     Component.onCompleted: {
 //         //topItem.height = 120
 //     }
+    Component.onCompleted: {
+        print("PostingWidget.onCompleted:");
+    }
 }
