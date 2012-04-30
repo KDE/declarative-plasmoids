@@ -42,7 +42,14 @@ PlasmaComponents.Page {
         engine: "microblog"
         interval: 0
         //connectedSources: ["Accounts"]
-        Component.onCompleted: connectSource("Accounts")
+//         Component.onCompleted: connectSource("Accounts")
+
+//         Timer {
+//             id: connectTimer;
+//             onTriggered: connectSource("Accounts");
+//             running: true
+//         }
+
         onDataChanged: {
 //             print("Data changed." + data)
             accountsModel.clear();
