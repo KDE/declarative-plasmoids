@@ -162,8 +162,8 @@ Item {
         //anchors.fill: parent
         //imagePath: "dialogs/background"
         //color: "yellow"
-        anchors.leftMargin: -5
-        anchors.rightMargin: -5
+        anchors.leftMargin: -10
+        anchors.rightMargin: -10
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: timelineTitle.bottom
