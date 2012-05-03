@@ -36,7 +36,9 @@ PlasmaComponents.Page {
     //anchors.centerIn: parent
 //     anchors.margins: -_m-2
     //width: (parent.width) > 540 ? 540 : parent.width
-    Rectangle { color: "orange"; opacity: 0.5; anchors.fill: parent; }
+//     width: 400
+//     height: 400
+//     Rectangle { color: "orange"; opacity: 0.2; anchors.fill: parent; }
 
     PlasmaCore.DataSource {
         id: accountsSource
