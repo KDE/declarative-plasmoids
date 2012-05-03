@@ -71,10 +71,10 @@ Image {
 
             Item {
                 id: searchHeader
-                //x: 200
+                x: iconItem.width + _m
                 height: childrenRect.height
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: iconItem.right
+                //anchors.left: iconItem.right
                 PlasmaComponents.ToolButton {
                     id: searchToolButton
                     iconSource: "edit-find"
@@ -108,33 +108,28 @@ Image {
                     onClicked: searchTimeline(txtEdit.text)
                 }
             }
-            PlasmaComponents.ToolButton {
-                id: authStatusWidget
-                text: "accounts"
-                onClicked: accountsPopup.state = "expanded"
-            }
-//             AuthorizationWidget {
+//             PlasmaComponents.ToolButton {
 //                 id: authStatusWidget
-//                 anchors { top: parent.top; right: parent.right; rightMargin: -12; }
-//                 height: 48
-//                 MouseArea {
-//                     anchors.fill: parent
-//                     onClicked: {
-//                         var componentObject = configComponent.createObject(mainWidget);
-//                     }
-//                     onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
-//                     onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
-//                 }
-// 
+//                 text: "accounts"
+//                 onClicked: accountsPopup.state = "expanded"
 //             }
-            Component.onCompleted: {
-                print(" XXX tOllbarlayout created.");
-            }
-        }
+            AuthorizationWidget {
+                id: authStatusWidget
+                //anchors { top: parent.top; right: parent.right; rightMargin: -12; }
+                height: 48
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        //var componentObject = configComponent.createObject(mainWidget);
+                        print("Show accounts popup");
+                        accountsPopup.state = accountsPopup.state == "expanded" ? "collapsed" : "expanded"
+                    }
+                    onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
+                    onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
+                }
 
-        AccountsPopup {
-            id: accountsPopup
-            anchors { right: parent.right; top: parent.top; }
+            }
+            Component.onCompleted: myApp.tools = toolbarlayout
         }
 
         SideBar {
@@ -208,6 +203,14 @@ Image {
                 }
             }
         }
+
+        AccountsPopup {
+            id: accountsPopup
+//             width: 400
+//             height: 400
+            anchors { right: parent.right; top: toolbarlayout.bottom; }
+        }
+
     }
 
     function showMessage(item) {
@@ -228,12 +231,6 @@ Image {
         searchQuery = txt;
 //         feedsList.positionViewAtIndex(feedsList.count-1, ListView.Visible);
     }
-    Component.onCompleted: {
-        print("!!!!!!!!!!!!! Setting tools: " + toolbarlayout.height + " w:" + toolbarlayout.width);
-        myApp.tools = toolbarlayout;
-    }
-
-
     MessageWidgetDetails {
         id: messageDetails
         anchors.fill: parent

@@ -33,9 +33,10 @@ PlasmaComponents.Page {
     property bool isFavorite
     property string selectedService
     property string status
-//     anchors.centerIn: parent
+    //anchors.centerIn: parent
 //     anchors.margins: -_m-2
     //width: (parent.width) > 540 ? 540 : parent.width
+    Rectangle { color: "orange"; opacity: 0.5; anchors.fill: parent; }
 
     PlasmaCore.DataSource {
         id: accountsSource
@@ -112,6 +113,6 @@ PlasmaComponents.Page {
         }
     }
     Component.onCompleted: {
-        print("Accounts.qml completed");
+        print(" =====> Accounts.qml completed");
     }
 }

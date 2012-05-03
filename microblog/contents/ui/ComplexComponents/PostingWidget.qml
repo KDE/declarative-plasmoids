@@ -85,7 +85,7 @@ PlasmaComponents.Page {
 //         anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
 //         //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
 //     }
-        visible: main.authorized
+    //    visible: main.authorized
 
 //     PlasmaCore.FrameSvgItem {
 //         id: postWidget
@@ -141,7 +141,7 @@ PlasmaComponents.Page {
                 //refresh();
                 //print(" should lose focus here: imlement");
                 print("Enter");
-                post();
+                //post();
             } else if (txt.length == 0) {
                 inReplyToStatusId = ""
             }
@@ -194,7 +194,7 @@ PlasmaComponents.Page {
     PlasmaComponents.Button {
         id: sendButton
         text: i18n("Post")
-        visible: postTextEdit.text != "" && main.authorized
+        visible: postTextEdit.text != ""
         anchors { bottom: parent.bottom; right: postTextEdit.right; topMargin: 12; }
         onClicked: {
             print("button clicked");

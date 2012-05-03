@@ -139,7 +139,7 @@ PlasmaComponents.ListItem {
         engine: "microblog"
         interval: 0
         onSourceAdded: {
-            print("     New Source appeared: " + source);
+//             print("     New Source appeared: " + source);
             var src = "Status:"+accountDelegate.identifier;
             if (accountDelegate.identifier != "@" && source == src) {
                 print("sourceAdded " + source);
