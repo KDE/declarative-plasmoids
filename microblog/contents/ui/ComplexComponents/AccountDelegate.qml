@@ -127,6 +127,11 @@ PlasmaComponents.ListItem {
         print("Index is now: " + index);
         accountsList.currentIndex = index;
         topItem.state = "collapsed";
+        accountsWidget.visible = true;
+        if (typeof(accountsButton) != "undefined") {
+            accountsButton.checked = false;
+        }
+
     }
 
     onClicked: ParallelAnimation {
@@ -187,8 +192,7 @@ PlasmaComponents.ListItem {
 //     }
     onStateChanged: {
         print("state changed: " + accountDelegate.state);
-        accountAuthWidget.state == accountDelegate.state
-        
+        accountAuthWidget.state == accountDelegate.state;
     }
 
     Component.onCompleted: {

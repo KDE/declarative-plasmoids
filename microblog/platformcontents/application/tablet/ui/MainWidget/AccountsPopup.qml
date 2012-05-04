@@ -41,19 +41,19 @@ PlasmaCore.FrameSvgItem {
         State {
             name: "collapsed"
             PropertyChanges { target: topItem; y: -expandedHeight; }
-            PropertyChanges { target: topItem; visible: true; }
+            PropertyChanges { target: accountsWidget; visible: true; }
         },
         State {
             name: "expanded"
             PropertyChanges { target: topItem; y: 64; }
-            PropertyChanges { target: topItem; visible: true; }
+            PropertyChanges { target: accountsWidget; visible: true; }
         }
     ]
 
     Accounts {
         anchors.fill: accountsPopup;
-        id: accountsItem
-        visible: true
+        id: accountsWidget
+//         visible: true
     }
 
     Component.onCompleted: {

@@ -25,7 +25,6 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 PlasmaComponents.Page {
     id: accountsWidget
-    //imagePath: "widgets/background"
 
     property string messageId
     property string user
@@ -33,40 +32,25 @@ PlasmaComponents.Page {
     property bool isFavorite
     property string selectedService
     property string status
-    //anchors.centerIn: parent
-//     anchors.margins: -_m-2
-    //width: (parent.width) > 540 ? 540 : parent.width
-//     width: 400
-//     height: 400
-//     Rectangle { color: "orange"; opacity: 0.2; anchors.fill: parent; }
 
     PlasmaCore.DataSource {
         id: accountsSource
         engine: "microblog"
         interval: 0
-        //connectedSources: ["Accounts"]
         Component.onCompleted: connectSource("Accounts")
 
-//         Timer {
-//             id: connectTimer;
-//             onTriggered: connectSource("Accounts");
-//             running: true
-//         }
-
         onDataChanged: {
-//             print("Data changed." + data)
             accountsModel.clear();
             for (d in data["Accounts"]) {
-//                 print("  d: " + d + " " + data["Accounts"][d]);
                 var _d = d.split('@');
                 var u = _d[0];
                 var s = _d[1];
                 accountsModel.append({"userName": u, "serviceUrl": s, "identifier": d})
-//                 print("  U: " + d + " " + u + " " + s);
-
+                if (main.serviceUrl == s && main.userName == u) {
+                    accountsList.currentIndex = accountsList.count -1;
+                }
             }
         }
-//         onDataUpdated: print("Data updated.")
     }
     MouseArea {
         anchors.fill: parent
@@ -98,7 +82,6 @@ PlasmaComponents.Page {
             cacheBuffer: 800
             highlightRangeMode: ListView.ApplyRange
             interactive: height < contentHeight
-//             spacing: _m
             model: accountsModel
             delegate: AccountDelegate {}
             currentIndex: -1
@@ -108,7 +91,6 @@ PlasmaComponents.Page {
                 anchors.right: parent.right
                 onClicked: {
                     accountsModel.append({"userName": "", "serviceUrl": "", "identifier": ""});
-//                     print("Setting current index: " + accountsModel.count-1);
                     accountsList.currentIndex = accountsModel.count-1;
                 }
             }

@@ -49,12 +49,8 @@ Image {
 
         PlasmaComponents.ToolBarLayout {
             id: toolbarlayout
-            spacing: 24
-            height: 48
             width: myApp.width
-//             anchors.rightMargin: 0
             z: 10
-//             width: parent.width
             PlasmaComponents.ToolButton {
                 id: iconItem
                 width: 48
@@ -122,8 +118,8 @@ Image {
                     anchors.fill: parent
                     onClicked: {
                         //var componentObject = configComponent.createObject(mainWidget);
-                        print("Show accounts popup");
                         accountsPopup.state = accountsPopup.state == "expanded" ? "collapsed" : "expanded"
+//                         print("Show accounts popup " + accountsPopup.state);
                     }
                     onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
                     onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
@@ -157,6 +153,7 @@ Image {
                 spacing: 12
                 model: feedsModel
             }
+
             function colWidth(mainWidth) {
                 var cols = Math.round(Math.max(1, (mainWidth/450)));
                 var w = (mainWidth/cols);
@@ -207,8 +204,6 @@ Image {
 
         AccountsPopup {
             id: accountsPopup
-//             width: 400
-//             height: 400
             anchors { right: parent.right; top: toolbarlayout.bottom; }
         }
 
