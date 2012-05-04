@@ -44,6 +44,8 @@ Item {
     signal retweetAsked(string id)
     signal favoriteAsked(string id, bool isFavorite)
 
+    property string __previousUrl
+
     Component.onCompleted: {
         plasmoid.addEventListener('ConfigChanged', configChanged);
         plasmoid.configurationRequired = true
@@ -125,9 +127,21 @@ Item {
         interval: 0
 
         Component.onCompleted: {
-            if (serviceUrl) {
-                imageSource.connectSource("UserImages:"+serviceUrl)
+            if (serviceUrl != "") {
+                print("Connecting IMagesource:" + serviceUrl);
+                imageSource.connectSource("UserImages:"+serviceUrl);
+                __previousUrl = "UserImages:"+serviceUrl;
             }
+        }
+    }
+
+    onServiceUrlChanged: {
+        if (serviceUrl != "") {
+            print("REConnecting IMagesource:" + serviceUrl);
+            if (__previousUrl) {
+                imageSource.disconnectSource(__previousUrl);
+            }
+            imageSource.connectSource("UserImages:"+serviceUrl)
         }
     }
 

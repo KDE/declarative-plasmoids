@@ -24,7 +24,7 @@ QtExtraComponents.QImageItem {
     id: userIcon
 
     property string userId: user
-//     property string serviceUrl
+//     property string serviceUrl: main.serviceUrl
 
     width: 48
     height: 48
@@ -39,11 +39,12 @@ QtExtraComponents.QImageItem {
             typeof(d[userId]) != "undefined") {
             return d[userId];
         } else {
-            //print("returning default image for " + userId + " ");
+//             print("returning default image for " + userId + " ");
             //for (k in imageSource.data) print(" K " + k);
             return microblogSource.data["Defaults"]["UserImage"];
         }
     }
+
     MouseArea {
         anchors.fill: parent
         onClicked: {

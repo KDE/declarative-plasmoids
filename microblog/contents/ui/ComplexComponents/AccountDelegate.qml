@@ -48,42 +48,56 @@ PlasmaComponents.ListItem {
         State {
             name: "Ok"
             PropertyChanges { target: accountDelegate; height: _h}
+            PropertyChanges { target: statusIcon; icon: "task-complete"}
+            PropertyChanges { target: busyWidget; running: false; }
         },
         State {
             name: "Busy"
             PropertyChanges { target: accountDelegate; height: _h}
+            PropertyChanges { target: busyWidget; running: true; }
         },
         State {
             name: "Waiting"
             PropertyChanges { target: accountDelegate; height: _h}
+            PropertyChanges { target: busyWidget; running: true; }
         },
         State {
             name: "Error"
             PropertyChanges { target: accountDelegate; height: loginWidget.height;}
+            PropertyChanges { target: statusIcon; icon: "task-reject"}
+            PropertyChanges { target: busyWidget; running: false; }
         },
         State {
             name: "Idle"
             PropertyChanges { target: accountDelegate; height: loginWidget.height; }
+            PropertyChanges { target: statusIcon; icon: "task-ongoing"}
+            PropertyChanges { target: busyWidget; running: false; }
         }
     ]
 
     Item {
         anchors.fill: parent
         visible: accountDelegate.state != "Idle"
+        Avatar {
+            id: accountAvatar
+            userId: accountUserName
+            height: 48; width: height
+        }
         Image {
             id: serviceIcon
             source: isTwitter ? "plasmapackage:/images/twitter.png" : "plasmapackage:/images/identica.png"
-            height: 48; width: height
+            anchors { right: accountAvatar.right; bottom: accountAvatar.bottom; rightMargin: -4; bottomMargin: -4; }
+            height: 24; width: height
         }
         PlasmaExtras.Heading {
             id: delegateHead
-            anchors { left: serviceIcon.right; top: serviceIcon.top; leftMargin: _m }
+            anchors { left: accountAvatar.right; top: accountAvatar.top; leftMargin: _m }
             text: accountUserName
             level: 3
         }
         PlasmaComponents.Label {
             id: subtitleLabel
-            anchors { left: serviceIcon.right; top: delegateHead.bottom; leftMargin: _m }
+            anchors { left: accountAvatar.right; top: delegateHead.bottom; leftMargin: _m }
             text: isTwitter ? i18n("Twitter") : i18n("Identi.ca")
             opacity: 0.7
         }
@@ -100,9 +114,26 @@ PlasmaComponents.ListItem {
         id: accountAuthWidget
         height: 48
         width: 48
-        visible: true
+        visible: false
         text: accountDelegate.state
         anchors { top: parent.top; right: parent.right;}
+    }
+    PlasmaComponents.BusyIndicator {
+        id: busyWidget
+        height: 48
+        width: 48
+        visible: accountDelegate.state == "Busy" || accountDelegate.state == "Waiting"
+        //text: accountDelegate.state
+        anchors { top: parent.top; right: parent.right;}
+    }
+    QtExtraComponents.QIconItem {
+        id: statusIcon
+        height: 24
+        width: 24
+        //icon: ""
+        visible: accountDelegate.state == "Ok" || accountDelegate.state == "Error"
+        //text: accountDelegate.state
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right;}
     }
 
     LoginWidget {
@@ -150,7 +181,7 @@ PlasmaComponents.ListItem {
             var src = "Status:"+accountDelegate.identifier;
             if (accountDelegate.identifier != "@" && source == src) {
                 print("sourceAdded " + source);
-                connectSource(src);
+                //connectSource(src);
                 print(" cs: " + connectedSources);
             }
         }

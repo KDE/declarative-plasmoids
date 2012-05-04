@@ -98,5 +98,6 @@ PlasmaComponents.Page {
     }
     Component.onCompleted: {
         print(" =====> Accounts.qml completed");
+        state = "expanded";
     }
 }

@@ -29,9 +29,9 @@ PlasmaCore.FrameSvgItem {
     imagePath: "widgets/background"
     width: 400
     height: expandedHeight
-    y: -expandedHeight
+    //y: -expandedHeight
     enabledBorders: "BottomBorder|LeftBorder"
-    state: "collapsed"
+    state: "expanded"
 
     Behavior on y {
         NumberAnimation { duration: 450; easing.type: Easing.OutExpo; }
@@ -57,6 +57,6 @@ PlasmaCore.FrameSvgItem {
     }
 
     Component.onCompleted: {
-        y = -expandedHeight;
+        //y = -expandedHeight;
     }
 }
