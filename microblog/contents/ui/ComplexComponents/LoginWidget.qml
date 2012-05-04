@@ -167,10 +167,12 @@ Column {
         print("+++++++++++++ Stuff setting " + u + "@" + s);
         accountDelegate.accountUserName = u;
         accountDelegate.accountServiceUrl = s;
+        print("Setting identifier: " + u+"@"+s);
         accountDelegate.identifier = u+"@"+s;
         main.userName = u;
         main.serviceUrl = s;
         main.password = p;
+        print("calling configChanged()");
         configChanged();
         //sideBar.activeUser = userNameEdit.text;
 //         disappearAnimation.running = true;

@@ -36,7 +36,6 @@ PlasmaComponents.ListItem {
 
     state: "Idle"
 
-
     Behavior on height { NumberAnimation { duration: 450; easing.type: Easing.OutExpo; } }
 
     property bool isTwitter: (accountServiceUrl.indexOf("twitter") > -1)
@@ -55,8 +54,12 @@ PlasmaComponents.ListItem {
             PropertyChanges { target: accountDelegate; height: _h}
         },
         State {
-            name: "Error"
+            name: "Waiting"
             PropertyChanges { target: accountDelegate; height: _h}
+        },
+        State {
+            name: "Error"
+            PropertyChanges { target: accountDelegate; height: loginWidget.height;}
         },
         State {
             name: "Idle"
@@ -106,8 +109,7 @@ PlasmaComponents.ListItem {
         id: loginWidget
         height: 220
         width: accountDelegate.width
-//         anchors { left: parent.left; right: parent.right; top: subtitleLabel.bottom; topMargin: _m; }
-        visible: accountDelegate.state == "Idle"
+        visible: accountDelegate.state == "Idle" || accountDelegate.state == "Error"
     }
 
     Connections {
@@ -149,10 +151,11 @@ PlasmaComponents.ListItem {
             if (accountDelegate.identifier != "@" && source == src) {
                 print("sourceAdded " + source);
                 connectSource(src);
+                print(" cs: " + connectedSources);
             }
         }
         onDataChanged: {
-            print("Datachanged:");
+            print("++++> Datachanged:" + accountDelegate.identifier + " S " + connectedSources);
             if (statusSource.data["Status:" + accountDelegate.identifier]) {
                 var src = "Status:"+accountDelegate.identifier;
                 var st = statusSource.data[src]["Authorization"];
@@ -161,7 +164,7 @@ PlasmaComponents.ListItem {
                 print(" == > Datachanged: " + src + " " + st + " " + msg);
             }
         }
-        Component.onCompleted: statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
+        //Component.onCompleted:     statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
 
 //         Connections {
 //             target: accountDelegate
@@ -181,7 +184,7 @@ PlasmaComponents.ListItem {
             //__userName = accountDelegate.accountUserName;
         }
         var src = "Status:"+accountDelegate.identifier;
-        print("AuthWidget.IdentifierChanged: " + src);
+        print("AccountDelegate.IdentifierChanged: " + src);
         statusSource.connectSource(src);
     }
 
