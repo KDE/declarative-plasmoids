@@ -67,7 +67,7 @@ Item {
         if (s != "") {
             serviceUrl = s;
             print(" XXX conenct images....... UserImages:" + s);
-//             imageSource.connectSource("UserImages:"+s)
+            imageSource.connectSource("UserImages:"+s)
         } else {
             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
@@ -89,7 +89,9 @@ Item {
 //         if (u) {
 //             sideBar.activeUser = u;
 //         }
-        userInfo.login = userName;
+        if (typeof(userInfo) != "undefined") { 
+            userInfo.login = userName;
+        }
         imageSource.connectSource("UserImages:"+s)
         print("@@@@@@@@@@@@@@@@@@@@@ cocnfichngee done" + userName + " " + serviceUrl);
     }
@@ -153,9 +155,9 @@ Item {
         if (serviceUrl != "") {
             print("XXXXXXXX --- REConnecting IMagesource:" + serviceUrl);
             if (__previousUrl) {
-                //imageSource.disconnectSource(__previousUrl);
+                imageSource.disconnectSource(__previousUrl);
             }
-            //imageSource.connectSource("UserImages:"+serviceUrl)
+//             imageSource.connectSource("UserImages:"+serviceUrl)
             __previousUrl = "UserImages:"+serviceUrl;
         }
     }

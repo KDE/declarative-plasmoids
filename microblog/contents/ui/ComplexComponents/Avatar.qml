@@ -24,7 +24,7 @@ QtExtraComponents.QImageItem {
     id: userIcon
 
     property string userId: user
-    property string sourceName: "UserImages:" + main.serviceUrl
+//     property string sourceName: "UserImages:" + main.serviceUrl
 //     property string serviceUrl: main.serviceUrl
 
 //     onSourceNameChanged: print("SNCC: " + sourceName);
@@ -34,7 +34,7 @@ QtExtraComponents.QImageItem {
     smooth: true
 
     image: {
-        //var sourceName = "UserImages:"+serviceUrl;
+        var sourceName = "UserImages:"+serviceUrl;
         //print(" avatar for user: ", userId, sourceName);
         //sourceName = sourceName+"/"
         var d = imageSource.data[sourceName];
