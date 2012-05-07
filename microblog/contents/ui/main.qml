@@ -59,22 +59,23 @@ Item {
         //serviceUrl = plasmoid.readConfig("serviceUrl");
         var u = plasmoid.readConfig("userName");
         var s = plasmoid.readConfig("serviceUrl");
-        //print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
+        print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
 
-        if (u) {
+        if (u != "") {
             userName = u;
         }
-        if (s) {
+        if (s != "") {
             serviceUrl = s;
-            //print(" conenct images.......");
-            imageSource.connectSource("UserImages:"+serviceUrl)
+            print(" XXX conenct images....... UserImages:" + s);
+//             imageSource.connectSource("UserImages:"+s)
         } else {
             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
+            print("fallbk eserice identi");
         }
 //         print( "    Read serviceUrl user and password from config: " + serviceUrl + " : "  + userName + " : " + password);
         if (serviceUrl != "" && userName != "") {
-//             print("Requesting ... " + userName + "@" + serviceUrl);
+            print("Requesting ... " + userName + "@" + serviceUrl);
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
         //microblogSource.connectSource("UserImages:"+serviceUrl)
@@ -88,6 +89,9 @@ Item {
 //         if (u) {
 //             sideBar.activeUser = u;
 //         }
+        userInfo.login = userName;
+        imageSource.connectSource("UserImages:"+s)
+        print("@@@@@@@@@@@@@@@@@@@@@ cocnfichngee done" + userName + " " + serviceUrl);
     }
 
     Timer {
@@ -128,20 +132,31 @@ Item {
 
         Component.onCompleted: {
             if (serviceUrl != "") {
-                print("Connecting IMagesource:" + serviceUrl);
-                imageSource.connectSource("UserImages:"+serviceUrl);
+                print("XXXXXXXXXXXXX Connecting IMagesource:" + serviceUrl);
+                //imageSource.connectSource("UserImages:"+serviceUrl);
                 __previousUrl = "UserImages:"+serviceUrl;
             }
+        }
+        onSourceAdded: {
+            if ("UserImages:"+serviceUrl == source) {
+                print("XXXXXXXXXXXXX CONNECT NEW s : " + source + " all: " + connectedSources);
+                imageSource.connectSource(source);
+
+            }
+        }
+        onDataChanged: {
+            print(" XXXXXXXXXXXXXXXXXXXXXXXXXXXX IMAGES data changed!")
         }
     }
 
     onServiceUrlChanged: {
         if (serviceUrl != "") {
-            print("REConnecting IMagesource:" + serviceUrl);
+            print("XXXXXXXX --- REConnecting IMagesource:" + serviceUrl);
             if (__previousUrl) {
-                imageSource.disconnectSource(__previousUrl);
+                //imageSource.disconnectSource(__previousUrl);
             }
-            imageSource.connectSource("UserImages:"+serviceUrl)
+            //imageSource.connectSource("UserImages:"+serviceUrl)
+            __previousUrl = "UserImages:"+serviceUrl;
         }
     }
 

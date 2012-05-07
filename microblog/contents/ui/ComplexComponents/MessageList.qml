@@ -54,7 +54,7 @@ ListView {
             microblogSource.disconnectSource(previousSource);
         }
         if (userName && timelineType && url) {
-            //print("######## Connecting Timeline source: " + source);
+            print("TL ######## Connecting Timeline source: " + source);
             microblogSource.connectSource(source)
             previousSource = source
         }
@@ -197,7 +197,7 @@ ListView {
     function refresh() {
         var src = source;
         //var src = timelineType + ":" + userName + "@" + serviceUrl;
-        print("Refreshing" + src + "'");
+        print("TTTTTTL Refreshing" + src + "'");
         function result(job) {
             enabled = true;
             refreshBusy.running = false;

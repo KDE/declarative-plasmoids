@@ -73,11 +73,12 @@ PlasmaComponents.Page {
             level: 3
             text: i18n("Accounts")
             width: parent.width
+            height: 20
         }
         ListView {
             id: accountsList
             width: parent.width
-            height: parent.height - 48
+            height: parent.height
             clip: true
             cacheBuffer: 800
             highlightRangeMode: ListView.ApplyRange

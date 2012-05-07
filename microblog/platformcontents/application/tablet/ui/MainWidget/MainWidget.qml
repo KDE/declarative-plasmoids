@@ -139,7 +139,7 @@ Image {
             id: mainFlickable
             clip: false
             width: myApp.contentWidth
-            height: myApp.height-toolbarlayout.height
+            height: myApp.height-toolbarlayout.height-48
             property int columnWidth: colWidth(mainFlickable.width)
 
             ListView {
@@ -152,6 +152,20 @@ Image {
                 anchors.fill: parent
                 spacing: 12
                 model: feedsModel
+                PlasmaComponents.ScrollBar {
+                    id: scrollBar
+                    orientation: Qt.Horizontal
+                    flickableItem: feedsList
+//                     stepSize: 100
+//                     scrollButtonInterval: 100
+                    interactive: true
+                    z: 10
+                    anchors {
+                        left: entryList.left
+                        right: entryList.right
+                        top: entryList.bottom
+                    }
+                }
             }
 
             function colWidth(mainWidth) {

@@ -40,7 +40,7 @@ PlasmaComponents.Page {
     //signal itemClicked(variant item)
 
     property string timelineType: "User"
-    property string login: userName
+    property string login
     property string url: serviceUrl
     property string source: timelineType+":"+login+"@"+url
 

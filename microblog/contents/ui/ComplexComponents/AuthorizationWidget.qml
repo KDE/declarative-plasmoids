@@ -46,7 +46,7 @@ Item {
         },
         State {
             name: "Idle"
-            PropertyChanges { target: accountDelegate; height: loginWidget.height; }
+            //PropertyChanges { target: accountDelegate; height: loginWidget.height; }
         }
     ]
 

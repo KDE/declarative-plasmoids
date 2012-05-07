@@ -155,8 +155,12 @@ PlasmaComponents.ListItem {
     }
 
     function activate() {
+        print(" =========================================");
         main.userName = accountUserName;
         main.serviceUrl = accountServiceUrl;
+        plasmoid.writeConfig("userName", accountUserName);
+        plasmoid.writeConfig("serviceUrl", accountServiceUrl);
+        configChanged();
         print("Index is now: " + index);
         accountsList.currentIndex = index;
         topItem.state = "collapsed";
@@ -164,6 +168,7 @@ PlasmaComponents.ListItem {
         if (typeof(accountsButton) != "undefined") {
             accountsButton.checked = false;
         }
+        print("TTTTTTTL wrote config" + accountUserName + "@" + accountServiceUrl);
 
     }
 
@@ -186,7 +191,7 @@ PlasmaComponents.ListItem {
             }
         }
         onDataChanged: {
-            print("++++> Datachanged:" + accountDelegate.identifier + " S " + connectedSources);
+            //print("++++> Datachanged:" + accountDelegate.identifier + " S " + connectedSources);
             if (statusSource.data["Status:" + accountDelegate.identifier]) {
                 var src = "Status:"+accountDelegate.identifier;
                 var st = statusSource.data[src]["Authorization"];

@@ -24,7 +24,7 @@ import "plasmapackage:/ui/ComplexComponents"
 
 PlasmaCore.FrameSvgItem {
     id: topItem
-    property string expandedHeight: 400 + _s*2
+    property int expandedHeight: 440 + _s*2
     clip: true
     imagePath: "widgets/background"
     width: 400
