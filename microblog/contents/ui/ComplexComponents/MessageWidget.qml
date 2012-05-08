@@ -73,6 +73,7 @@ ListItem {
         anchors.bottomMargin: 6
         text: formatMessage(message)
         wrapMode: Text.WordWrap
+        onLinkActivated: handleLinkClicked(link)
     }
     PlasmaComponents.Label {
         id: infoLabel
