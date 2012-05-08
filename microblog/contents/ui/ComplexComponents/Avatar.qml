@@ -24,26 +24,17 @@ QtExtraComponents.QImageItem {
     id: userIcon
 
     property string userId: user
-//     property string sourceName: "UserImages:" + main.serviceUrl
-//     property string serviceUrl: main.serviceUrl
-
-//     onSourceNameChanged: print("SNCC: " + sourceName);
-
     width: 48
     height: 48
     smooth: true
 
     image: {
         var sourceName = "UserImages:"+serviceUrl;
-        //print(" avatar for user: ", userId, sourceName);
-        //sourceName = sourceName+"/"
         var d = imageSource.data[sourceName];
         if (typeof(d) != "undefined" &&
             typeof(d[userId]) != "undefined") {
             return d[userId];
         } else {
-//             print("returning default image for " + userId + " ");
-            //for (k in imageSource.data) print(" K " + k);
             return microblogSource.data["Defaults"]["UserImage"];
         }
     }
@@ -51,11 +42,9 @@ QtExtraComponents.QImageItem {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            print("Avatar clicked: " + userId + "@" + serviceUrl);
-            //userInfo.login = userId
+            //print("Avatar clicked: " + userId + "@" + serviceUrl);
             sideBar.activePage = "UserInfo"
             sideBar.activeUser = userId
-            //userInfo.login = userId
         }
     }
 }

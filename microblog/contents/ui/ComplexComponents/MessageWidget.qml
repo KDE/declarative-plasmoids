@@ -71,7 +71,7 @@ ListItem {
         anchors.right: parent.right
         anchors.top: fromLabel.bottom
         anchors.bottomMargin: 6
-        text: message
+        text: formatMessage(message)
         wrapMode: Text.WordWrap
     }
     PlasmaComponents.Label {

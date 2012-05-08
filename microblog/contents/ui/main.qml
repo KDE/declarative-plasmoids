@@ -30,7 +30,8 @@ Item {
     id: main
     width: 200
     height: 300
-
+    property int minimumWidth: 300
+    property int minimumHeight: 300
     property int _s: 12
     property int _m: 12
 
@@ -50,7 +51,6 @@ Item {
         plasmoid.addEventListener('ConfigChanged', configChanged);
         plasmoid.configurationRequired = true
         Logic.messagesDataSource = microblogSource
-        //print("MDS: " + Logic.messagesDataSource);
         configChanged()
     }
 
@@ -66,19 +66,15 @@ Item {
         }
         if (s != "") {
             serviceUrl = s;
-//             print(" XXX conenct images....... UserImages:" + s);
             imageSource.connectSource("UserImages:"+s)
         } else {
             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
             print("fallbk eserice identi");
         }
-//         print( "    Read serviceUrl user and password from config: " + serviceUrl + " : "  + userName + " : " + password);
         if (serviceUrl != "" && userName != "") {
-//             print("Requesting ... " + userName + "@" + serviceUrl);
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
-        //microblogSource.connectSource("UserImages:"+serviceUrl)
 
         Logic.userName = userName;
         Logic.serviceUrl = serviceUrl;
@@ -86,14 +82,10 @@ Item {
         if (serviceUrl && userName && password) {
             authTimer.running = true
         }
-//         if (u) {
-//             sideBar.activeUser = u;
-//         }
         if (typeof(userInfo) != "undefined") { 
             userInfo.login = userName;
         }
         imageSource.connectSource("UserImages:"+s)
-//         print("@@@@@@@@@@@@@@@@@@@@@ cocnfichngee done" + userName + " " + serviceUrl);
     }
 
     Timer {
@@ -103,7 +95,6 @@ Item {
         onTriggered: {
             if (userName == "" || password == "") return;
             var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-//             print(" XXXX Logging in ..." + password + " source: " + src);
             var service = microblogSource.serviceForSource(src);
             var operation = service.operationDescription("auth");
             operation.password = password
@@ -134,14 +125,11 @@ Item {
 
         Component.onCompleted: {
             if (serviceUrl != "") {
-//                 print("XXXXXXXXXXXXX Connecting IMagesource:" + serviceUrl);
-                //imageSource.connectSource("UserImages:"+serviceUrl);
                 __previousUrl = "UserImages:"+serviceUrl;
             }
         }
         onSourceAdded: {
             if ("UserImages:"+serviceUrl == source) {
-//                 print("XXXXXXXXXXXXX CONNECT NEW s : " + source + " all: " + connectedSources);
                 imageSource.connectSource(source);
 
             }
@@ -150,7 +138,6 @@ Item {
 
     onServiceUrlChanged: {
         if (serviceUrl != "") {
-            print("XXXXXXXX --- REConnecting IMagesource:" + serviceUrl);
             if (__previousUrl) {
                 imageSource.disconnectSource(__previousUrl);
             }
