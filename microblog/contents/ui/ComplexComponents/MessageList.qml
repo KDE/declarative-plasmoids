@@ -54,7 +54,7 @@ ListView {
             microblogSource.disconnectSource(previousSource);
         }
         if (userName && timelineType && url) {
-            print("TL ######## Connecting Timeline source: " + source);
+//             print("TL ######## Connecting Timeline source: " + source);
             microblogSource.connectSource(source)
             previousSource = source
         }

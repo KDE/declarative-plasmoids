@@ -155,20 +155,20 @@ PlasmaComponents.ListItem {
     }
 
     function activate() {
-        print(" =========================================");
+//         print(" =========================================");
         main.userName = accountUserName;
         main.serviceUrl = accountServiceUrl;
         plasmoid.writeConfig("userName", accountUserName);
         plasmoid.writeConfig("serviceUrl", accountServiceUrl);
         configChanged();
-        print("Index is now: " + index);
+//         print("Index is now: " + index);
         accountsList.currentIndex = index;
         topItem.state = "collapsed";
         accountsWidget.visible = true;
         if (typeof(accountsButton) != "undefined") {
             accountsButton.checked = false;
         }
-        print("TTTTTTTL wrote config" + accountUserName + "@" + accountServiceUrl);
+//         print("TTTTTTTL wrote config" + accountUserName + "@" + accountServiceUrl);
 
     }
 
@@ -185,9 +185,9 @@ PlasmaComponents.ListItem {
 //             print("     New Source appeared: " + source);
             var src = "Status:"+accountDelegate.identifier;
             if (accountDelegate.identifier != "@" && source == src) {
-                print("sourceAdded " + source);
+//                 print("sourceAdded " + source);
                 //connectSource(src);
-                print(" cs: " + connectedSources);
+//                 print(" cs: " + connectedSources);
             }
         }
         onDataChanged: {
@@ -197,7 +197,7 @@ PlasmaComponents.ListItem {
                 var st = statusSource.data[src]["Authorization"];
                 var msg = statusSource.data[src]["AuthorizationMessage"];
                 accountDelegate.state = st;
-                print(" == > Datachanged: " + src + " " + st + " " + msg);
+//                 print(" == > Datachanged: " + src + " " + st + " " + msg);
             }
         }
         //Component.onCompleted:     statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
@@ -220,7 +220,7 @@ PlasmaComponents.ListItem {
             //__userName = accountDelegate.accountUserName;
         }
         var src = "Status:"+accountDelegate.identifier;
-        print("AccountDelegate.IdentifierChanged: " + src);
+//         print("AccountDelegate.IdentifierChanged: " + src);
         statusSource.connectSource(src);
     }
 
@@ -230,16 +230,16 @@ PlasmaComponents.ListItem {
 //         onStateChanged: accountAuthWidget.state == accountDelegate.state
 //     }
     onStateChanged: {
-        print("state changed: " + accountDelegate.state);
+//         print("state changed: " + accountDelegate.state);
         accountAuthWidget.state == accountDelegate.state;
     }
 
     Component.onCompleted: {
-        print("New One: " + accountUserName + " " + accountServiceUrl + " " + identifier);
+//         print("New One: " + accountUserName + " " + accountServiceUrl + " " + identifier);
         if (accountUserName == "" || accountServiceUrl == "") {
             state = "Idle";
         }
         ///state = "Ok";
-        print("Accountdelegate.qml completed: " + identifier);
+//         print("Accountdelegate.qml completed: " + identifier);
     }
 }

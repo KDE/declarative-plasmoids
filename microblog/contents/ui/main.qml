@@ -59,14 +59,14 @@ Item {
         //serviceUrl = plasmoid.readConfig("serviceUrl");
         var u = plasmoid.readConfig("userName");
         var s = plasmoid.readConfig("serviceUrl");
-        print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
+//         print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
 
         if (u != "") {
             userName = u;
         }
         if (s != "") {
             serviceUrl = s;
-            print(" XXX conenct images....... UserImages:" + s);
+//             print(" XXX conenct images....... UserImages:" + s);
             imageSource.connectSource("UserImages:"+s)
         } else {
             serviceUrl = "https://identi.ca/api/"
@@ -75,7 +75,7 @@ Item {
         }
 //         print( "    Read serviceUrl user and password from config: " + serviceUrl + " : "  + userName + " : " + password);
         if (serviceUrl != "" && userName != "") {
-            print("Requesting ... " + userName + "@" + serviceUrl);
+//             print("Requesting ... " + userName + "@" + serviceUrl);
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
         }
         //microblogSource.connectSource("UserImages:"+serviceUrl)
@@ -93,7 +93,7 @@ Item {
             userInfo.login = userName;
         }
         imageSource.connectSource("UserImages:"+s)
-        print("@@@@@@@@@@@@@@@@@@@@@ cocnfichngee done" + userName + " " + serviceUrl);
+//         print("@@@@@@@@@@@@@@@@@@@@@ cocnfichngee done" + userName + " " + serviceUrl);
     }
 
     Timer {
@@ -103,7 +103,7 @@ Item {
         onTriggered: {
             if (userName == "" || password == "") return;
             var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-            print(" XXXX Logging in ..." + password + " source: " + src);
+//             print(" XXXX Logging in ..." + password + " source: " + src);
             var service = microblogSource.serviceForSource(src);
             var operation = service.operationDescription("auth");
             operation.password = password
@@ -134,20 +134,17 @@ Item {
 
         Component.onCompleted: {
             if (serviceUrl != "") {
-                print("XXXXXXXXXXXXX Connecting IMagesource:" + serviceUrl);
+//                 print("XXXXXXXXXXXXX Connecting IMagesource:" + serviceUrl);
                 //imageSource.connectSource("UserImages:"+serviceUrl);
                 __previousUrl = "UserImages:"+serviceUrl;
             }
         }
         onSourceAdded: {
             if ("UserImages:"+serviceUrl == source) {
-                print("XXXXXXXXXXXXX CONNECT NEW s : " + source + " all: " + connectedSources);
+//                 print("XXXXXXXXXXXXX CONNECT NEW s : " + source + " all: " + connectedSources);
                 imageSource.connectSource(source);
 
             }
-        }
-        onDataChanged: {
-            print(" XXXXXXXXXXXXXXXXXXXXXXXXXXXX IMAGES data changed!")
         }
     }
 
