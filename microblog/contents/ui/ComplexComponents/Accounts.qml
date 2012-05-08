@@ -32,6 +32,7 @@ PlasmaComponents.Page {
     property bool isFavorite
     property string selectedService
     property string status
+    property bool isInitial: true
 
     PlasmaCore.DataSource {
         id: accountsSource
@@ -42,6 +43,10 @@ PlasmaComponents.Page {
         onDataChanged: {
             accountsModel.clear();
             for (d in data["Accounts"]) {
+                if (isInitial) {
+                    topItem.state = "collapsed";
+                    isInitial = false;
+                }
                 var _d = d.split('@');
                 var u = _d[0];
                 var s = _d[1];
