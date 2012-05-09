@@ -52,26 +52,29 @@ Image {
             width: myApp.width
             z: 10
             PlasmaComponents.ToolButton {
-                id: iconItem
+                id: postButton
                 width: 48
                 height: 48
                 iconSource: "story-editor"
-                checked: sideBar.activePage == "PostingWidget"
+                checked: sideBar.activePage == "PostingWidget" && myApp.navigationWidth > 72
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: sideBar.activePage = "PostingWidget"
-                    onPressed: PlasmaExtras.PressedAnimation { targetItem: iconItem }
-                    onReleased: PlasmaExtras.ReleasedAnimation { targetItem: iconItem }
+                    onClicked: {
+                        myApp.navigationWidth = 300;
+                        sideBar.activePage = "PostingWidget";
+                    }
+                    onPressed: PlasmaExtras.PressedAnimation { targetItem: postButton }
+                    onReleased: PlasmaExtras.ReleasedAnimation { targetItem: postButton }
                 }
             }
 
             Item {
                 id: searchHeader
-                x: iconItem.width + _m
+                x: postButton.width + _m
                 height: childrenRect.height
                 anchors.verticalCenter: parent.verticalCenter
-                //anchors.left: iconItem.right
+                //anchors.left: postButton.right
                 PlasmaComponents.ToolButton {
                     id: searchToolButton
                     iconSource: "edit-find"
@@ -140,6 +143,7 @@ Image {
                 anchors { right: parent.right; bottom: parent.bottom; }
                 iconSource: !exp ? "arrow-right" : "arrow-left"
                 onClicked: {
+                    //postButton.checked = false
                     myApp.navigationWidth = exp ? 0 : 300
                     //sideBar.contentOpacity = exp ? 1.0 : 0
                 }
