@@ -35,10 +35,8 @@ PlasmaComponents.Page {
     property bool isFavorite
     property string message
 
-    QtExtraComponents.QImageItem {
+    Avatar {
         id: userIcon
-        smooth: true
-        x: 24; y: 24;
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.top: parent.top
@@ -46,17 +44,9 @@ PlasmaComponents.Page {
         anchors.rightMargin: 12
         width: 96
         height: 96
-        image: {
-            var sourceName = "UserImages:"+serviceUrl;
-            if (typeof(imageSource.data[sourceName]) != "undefined" &&
-                typeof(imageSource.data[sourceName][user]) != "undefined") {
-                return imageSource.data[sourceName][user];
-            } else {
-                return microblogSource.data["Defaults"]["UserImage"];
-            }
-        }
-
+        //login: messageDetails.user
     }
+
     PlasmaExtras.Heading {
         id: infoLabel
         level: 3
@@ -70,7 +60,7 @@ PlasmaComponents.Page {
 
     PlasmaExtras.Heading {
         id: bodyText
-        level: 2
+        level: 3
         anchors.rightMargin: 12
         anchors.left: userIcon.left
         anchors.right: parent.right

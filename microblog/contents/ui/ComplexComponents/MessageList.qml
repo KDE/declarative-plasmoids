@@ -30,8 +30,8 @@ ListView {
 
     clip: false
     snapMode: ListView.SnapToItem
-    highlightRangeMode: ListView.ApplyRange
-
+    //highlightRangeMode: ListView.ApplyRange
+    highlightMoveDuration: 2000
     spacing: 2
     currentIndex: -1
     cacheBuffer: 500

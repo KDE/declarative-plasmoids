@@ -22,6 +22,7 @@ import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
+import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -106,6 +107,19 @@ Item {
             return;
         }
     }
+    QtExtraComponents.QIconItem {
+        width: 32; height: width
+        icon: "arrow-up"
+        opacity: topItem.state == "userinfo" || topItem.state == "message" ? 1.0 : 0
+        anchors { top: accountsButton.bottom; horizontalCenter: accountsButton.horizontalCenter; margins: 12 }
+        Behavior on opacity {
+            NumberAnimation { duration: 200; }
+        }
+        MouseArea {
+            anchors.fill: parent;
+            onClicked: topItem.state = "collapsed"
+        }
+    }
 
     Item {
         id: topItem
@@ -188,6 +202,8 @@ Item {
             id: topStack
             anchors.fill: parent
             initialPage: Item {}
+            anchors.rightMargin: _s
+            anchors.leftMargin: _s
             Component {
                 id: timelinesComponent
                 PlasmaComponents.Page {
@@ -270,7 +286,7 @@ Item {
 
     function showUserInfo(userId) {
         if (topItem.state == "userinfo" && userInfo.login == userId) {
-            topItem.state = "collapsed";
+            //topItem.state = "collapsed";
             return;
         }
         print("ShowUserInfo(" + userId + ")");
