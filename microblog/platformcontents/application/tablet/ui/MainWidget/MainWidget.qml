@@ -226,7 +226,7 @@ Image {
     function showMessage(item) {
             sideBar.user = item.user
             sideBar.dateTime = item.dateTime
-            sideBar.source = item.source
+            sideBar.source = stripHtml(item.source)
             sideBar.isFavorite = item.isFavorite
             sideBar.activePage = "MessageDetails"
             sideBar.messageId = item.messageId

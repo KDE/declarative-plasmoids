@@ -183,6 +183,12 @@ Item {
         return msg.replace(/(http:\/\/\S+)/g, " <a href='$1'>$1</a>").replace("'>http://", "'>")
     }
 
+    function stripHtml(html) {
+        print("html:" + html);
+        html = html.replace(/<\/?[a-z][a-z0-9]*[^<>]*>/ig, "");
+        return html;
+    }
+
     function handleLinkClicked(link) {
         print("Link clicked:" + link);
         if (link.indexOf("internal://") == 0) {

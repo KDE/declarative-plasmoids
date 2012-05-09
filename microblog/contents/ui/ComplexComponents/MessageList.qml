@@ -70,7 +70,7 @@ ListView {
             keyRoleFilter: "[\\d]*"
         }
     }
-
+    highlight: PlasmaComponents.Highlight {}
     footer: tfoot
     Component {
         id: tfoot
@@ -129,7 +129,12 @@ ListView {
     }
     delegate: MessageWidget {
         id: messageWidget
-        onClicked: showMessage(messageWidget)
+        onClicked: {
+            print("Index is now: " + index);
+            entryList.currentIndex = index;
+            entryList.positionViewAtIndex ( index, ListView.Contain)
+            showMessage(messageWidget);
+        }
     }
     PlasmaComponents.ScrollBar {
         id: scrollBar

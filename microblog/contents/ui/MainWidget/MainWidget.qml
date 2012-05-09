@@ -229,6 +229,8 @@ Item {
         }
     }
 
+    function showMessage(item) {}
+
     MessageList {
         id: timelinewithfriends
         clip: true

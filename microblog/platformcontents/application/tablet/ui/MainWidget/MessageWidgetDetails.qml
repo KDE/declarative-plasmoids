@@ -148,7 +148,7 @@ Rectangle {
                 //font.pointSize: 15
             }
             PlasmaComponents.Label {
-                text: i18n("%1 from %2", friendlyDate(dateTime), source)
+                text: i18n("%1 from %2", friendlyDate(dateTime), stripHtml(source))
                 height: 20
                 anchors { top: infoLabel.bottom; left: infoLabel.left; right: infoLabel.right; }
             }

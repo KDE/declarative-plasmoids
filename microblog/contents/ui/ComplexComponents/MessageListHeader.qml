@@ -29,7 +29,6 @@ Item {
     height: 48
 
     PlasmaExtras.Title {
-        //y: 12
         id: titleItem
         anchors { top: parent.top; left: titlespacerleft.right; right: parent.right; }
     }

@@ -29,6 +29,7 @@ ListItem {
     id: messageWidget
     height: childrenRect.height
     width: entryList.width-scrollBar.width-4
+    state: (entryList.currentIndex == index) ? "expanded" : "collapsed"
 
     property string messageId: model["Id"]
     property string user: model["User"]
@@ -36,6 +37,20 @@ ListItem {
     property string dateTime: model["created_at"]
     property bool isFavorite: model["favorited"]
     property string message: model["Status"]
+
+    states: [
+        State {
+            name: "collapsed"
+            PropertyChanges { target: contextBar; height: 0; }
+            PropertyChanges { target: contextBar; opacity: 0; }
+        },
+        State {
+            name: "expanded"
+            PropertyChanges { target: contextBar; height: 72; }
+            PropertyChanges { target: contextBar; opacity: 1.0; }
+        }
+    ]
+
 
     Avatar {
         id: userIcon
@@ -87,4 +102,44 @@ ListItem {
     }
 
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
+    Row {
+        id: contextBar
+        anchors.right: parent.right
+        anchors.top: bodyText.bottom
+        anchors.rightMargin: _m
+        spacing: 12
+        visible: messageWidget.state == "expanded"
+        ServiceJobButton {
+            id: favoriteButton
+//                     text: "♥"
+//                     font.pointSize: 24
+//                     width: 48
+//                     height: 48
+//                     checked: isFavorite
+//                     onClicked: {
+//                         main.favoriteAsked(messageId, isFavorite != "true");
+//                     }
+        }
+        PlasmaComponents.ToolButton {
+            id: replyButton
+            text: "@"
+            font.pointSize: 24
+            width: 48
+            height: 48
+            onClicked: {
+                main.replyAsked(messageId, "@" + user + ": ");
+            }
+        }
+        PlasmaComponents.ToolButton {
+            id: repeatButton
+            text: "♻"
+            font.pointSize: 24
+            width: 48
+            height: 48
+            onClicked: {
+                print("message ID: " + messageId);
+                main.retweetAsked(messageId);
+            }
+        }
+    }
 }
