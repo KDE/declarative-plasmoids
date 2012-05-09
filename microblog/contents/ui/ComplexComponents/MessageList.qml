@@ -70,7 +70,7 @@ ListView {
             keyRoleFilter: "[\\d]*"
         }
     }
-    highlight: PlasmaComponents.Highlight {}
+    highlight: PlasmaComponents.Highlight { width: mainFlickable.columnWidth; }
     footer: tfoot
     Component {
         id: tfoot

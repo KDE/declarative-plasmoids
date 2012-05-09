@@ -45,7 +45,7 @@ Image {
 //         tools: toolbarlayout
         content: mainFlickable
         navigation: sideBar
-        navigationWidth: 300
+        navigationWidth: 0
 
         PlasmaComponents.ToolBarLayout {
             id: toolbarlayout
@@ -133,6 +133,17 @@ Image {
             id: sideBar
             width: myApp.navigationWidth
             clip: false
+            PlasmaComponents.ToolButton {
+                property bool exp: myApp.navigationWidth > 72
+                width: 48
+                height: 48
+                anchors { right: parent.right; bottom: parent.bottom; }
+                iconSource: !exp ? "arrow-right" : "arrow-left"
+                onClicked: {
+                    myApp.navigationWidth = exp ? 0 : 300
+                    //sideBar.contentOpacity = exp ? 1.0 : 0
+                }
+            }
         }
 
         Item {
@@ -224,16 +235,18 @@ Image {
     }
 
     function showMessage(item) {
-            sideBar.user = item.user
-            sideBar.dateTime = item.dateTime
-            sideBar.source = stripHtml(item.source)
-            sideBar.isFavorite = item.isFavorite
-            sideBar.activePage = "MessageDetails"
-            sideBar.messageId = item.messageId
-            sideBar.message = item.message
+        myApp.navigationWidth = 300;
+        sideBar.user = item.user
+        sideBar.dateTime = item.dateTime
+        sideBar.source = stripHtml(item.source)
+        sideBar.isFavorite = item.isFavorite
+        sideBar.activePage = "MessageDetails"
+        sideBar.messageId = item.messageId
+        sideBar.message = item.message
     }
 
     function showUserInfo(userId) {
+        myApp.navigationWidth = 300;
         sideBar.activePage = "UserInfo"
         sideBar.activeUser = userId
     }

@@ -29,6 +29,7 @@ PlasmaComponents.PageStack {
 
     //clip: true
     initialPage: userInfo
+    property real contentOpacity: myApp.navigationWidth > 72 ? 1.0 : 0.0
 
     // Forward props of UserInfo
     property alias activeUser: userInfo.login
@@ -43,20 +44,29 @@ PlasmaComponents.PageStack {
     property alias isFavorite: messageDetails.isFavorite
     property alias message: messageDetails.message
 
+    Behavior on contentOpacity {
+        NumberAnimation { duration: 250; easing.type: Easing.InOutExpo; }
+    }
+    Behavior on width {
+        NumberAnimation { duration: 250; easing.type: Easing.InOutExpo; }
+    }
     UserInfo {
         id: userInfo
         width: myApp.navigationWidth
+        opacity: contentOpacity
 //        clip: false
     }
 
     MessageDetails {
         id: messageDetails
+        opacity: contentOpacity
     }
 
     PostingWidget {
         id: postingWidget
         title: i18n("Posting as " + userName)
         visible: false
+        opacity: contentOpacity
     }
 
     onActivePageChanged: {
