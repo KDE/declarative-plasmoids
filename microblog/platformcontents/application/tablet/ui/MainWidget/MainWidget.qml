@@ -233,6 +233,11 @@ Image {
             sideBar.message = item.message
     }
 
+    function showUserInfo(userId) {
+        sideBar.activePage = "UserInfo"
+        sideBar.activeUser = userId
+    }
+
     function searchTimeline(txt) {
         //print("Loading timeline: " + txt);
         var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":"+txt;

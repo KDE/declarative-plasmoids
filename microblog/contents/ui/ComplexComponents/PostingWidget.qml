@@ -195,6 +195,7 @@ PlasmaComponents.Page {
         id: sendButton
         text: i18n("Post")
         visible: postTextEdit.text != ""
+        enabled: characterCountLabel.characterCount <= 140
         anchors { bottom: parent.bottom; right: postTextEdit.right; topMargin: 12; }
         onClicked: {
             print("button clicked");

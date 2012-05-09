@@ -42,9 +42,8 @@ QtExtraComponents.QImageItem {
     MouseArea {
         anchors.fill: parent
         onClicked: {
+            showUserInfo(userId);
             //print("Avatar clicked: " + userId + "@" + serviceUrl);
-            sideBar.activePage = "UserInfo"
-            sideBar.activeUser = userId
         }
     }
 }

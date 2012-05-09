@@ -62,6 +62,8 @@ Item {
                     topItem.state = "expanded"
                     accountsButton.checked = false;
                     postingWidget.visible = false;
+                    userInfo.visible = false;
+                    messageDetails.visible = false;
 
                     topView.visible = true;
                     accountsDialog.visible = false;
@@ -108,6 +110,7 @@ Item {
     Item {
         id: topItem
         property string expandedHeight: topView.contentHeight + _s*2
+        property string activeUser: "PlasmaActive"
         clip: true
         anchors.leftMargin: -10
         anchors.rightMargin: -10
@@ -123,19 +126,27 @@ Item {
         states: [
             State {
                 name: "collapsed"
-                PropertyChanges { target: topItem; height: 0}
+                PropertyChanges { target: topItem; height: 0 }
             },
             State {
                 name: "accounts"
-                PropertyChanges { target: topItem; height: 400}
+                PropertyChanges { target: topItem; height: 400 }
             },
             State {
                 name: "timelines"
-                PropertyChanges { target: topItem; height: 180}
+                PropertyChanges { target: topItem; height: 180 }
+            },
+            State {
+                name: "message"
+                PropertyChanges { target: topItem; height: 280}
             },
             State {
                 name: "post"
                 PropertyChanges { target: topItem; height: 180 }
+            },
+            State {
+                name: "userinfo"
+                PropertyChanges { target: topItem; height: 420 }
             }
         ]
 
@@ -148,20 +159,27 @@ Item {
             if (state == "accounts") {
                 if (topStack.currentPage != accountsComponent) topStack.push(accountsComponent);
                 //print(" is accounts?????? " + (topStack.currentPage == accountsComponent));
+            } else if (state == "message") {
+                if (topStack.currentPage != messageDetails) topStack.push(messageDetails);
             } else if (state == "post") {
                 if (topStack.currentPage != postComponent) topStack.push(postComponent);
             } else if (state == "timelines") {
                 if (topStack.currentPage != timelinesComponent) topStack.push(timelinesComponent);
+            } else if (state == "userinfo") {
+                if (topStack.currentPage != userInfo) topStack.push(userInfo);
             } else {
                 clearPsTimer.running = true
             }
+        }
+        onActiveUserChanged: {
+            print("Active user: " + topItem.activeUser);
         }
 
         Timer {
             id: clearPsTimer
             interval: 300
             onTriggered: {
-                print("clear()");
+                //print("clear()");
                 topStack.clear();
             }
         }
@@ -194,6 +212,16 @@ Item {
                 PostingWidget {
                     id: postingWidget;
                 }
+            }
+            UserInfo {
+                id: userInfo
+                anchors.margins: _s
+                //login: topItem.activeUser
+            }
+            MessageDetails {
+                id: messageDetails
+                anchors.margins: _s
+                //login: topItem.activeUser
             }
         }
     }
@@ -229,7 +257,28 @@ Item {
         }
     }
 
-    function showMessage(item) {}
+    function showMessage(item) {
+            topItem.state = "message"
+            messageDetails.user = item.user
+            messageDetails.dateTime = item.dateTime
+            messageDetails.source = stripHtml(item.source)
+            messageDetails.isFavorite = item.isFavorite
+            //messageDetails.activePage = "MessageDetails"
+            messageDetails.messageId = item.messageId
+            messageDetails.message = item.message
+    }
+
+    function showUserInfo(userId) {
+        if (topItem.state == "userinfo" && userInfo.login == userId) {
+            topItem.state = "collapsed";
+            return;
+        }
+        print("ShowUserInfo(" + userId + ")");
+        //topItem.activeUser = userId;
+        userInfo.login = userId;
+        topItem.state = "userinfo";
+    }
+
 
     MessageList {
         id: timelinewithfriends

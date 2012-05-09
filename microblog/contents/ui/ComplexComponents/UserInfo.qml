@@ -26,18 +26,9 @@ import "plasmapackage:/ui/BasicComponents"
 
 PlasmaComponents.Page {
     id: userInfo
-    //imagePath: "widgets/frame"
-    //prefix: "plain"
     opacity: realNameLabel.text != "" ? 1 : 0.1;
     anchors.rightMargin: 12
-
-
     clip: true
-//     snapMode: ListView.SnapToItem
-//     spacing: 2
-//     cacheBuffer: 5
-
-    //signal itemClicked(variant item)
 
     property string timelineType: "User"
     property string login
