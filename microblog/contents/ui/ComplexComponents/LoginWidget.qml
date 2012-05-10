@@ -93,7 +93,8 @@ Column {
                 width: 140
                 height: 30
                 text: "Twitter"
-                property string apiUrl: "https://twitter.com/"
+                property string apiUrl: "https://api.twitter.com/1/"
+                //property string apiUrl: "https://twitter.com/"
                 checked: (selectedService == apiUrl)
 
                 onCheckedChanged: {

@@ -8,7 +8,7 @@
   <group name="General">
     <entry name="serviceUrl" type="String">
       <label>Microblog service</label>
-      <default>https://twitter.com/</default>
+      <default>https://api.twitter.com/1/</default>
     </entry>
     <entry name="userName" type="String">
       <label>User name</label>
