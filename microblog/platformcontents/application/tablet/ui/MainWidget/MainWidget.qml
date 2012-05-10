@@ -108,11 +108,6 @@ Image {
                     onClicked: searchTimeline(txtEdit.text)
                 }
             }
-//             PlasmaComponents.ToolButton {
-//                 id: authStatusWidget
-//                 text: "accounts"
-//                 onClicked: accountsPopup.state = "expanded"
-//             }
             AuthorizationWidget {
                 id: authStatusWidget
                 //anchors { top: parent.top; right: parent.right; rightMargin: -12; }
@@ -120,14 +115,11 @@ Image {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        //var componentObject = configComponent.createObject(mainWidget);
                         accountsPopup.state = accountsPopup.state == "expanded" ? "collapsed" : "expanded"
-//                         print("Show accounts popup " + accountsPopup.state);
                     }
                     onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
                     onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
                 }
-
             }
             Component.onCompleted: myApp.tools = toolbarlayout
         }

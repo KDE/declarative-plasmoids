@@ -26,7 +26,7 @@ import "plasmapackage:/ui/BasicComponents"
 Item {
     id: authStatusWidget
     width: 140
-    state: "Idle"
+    state: main.authorizationStatus
 //     height: 48
     property alias statusMessage: statusLabel.text
 //     property string status: "Idle"
@@ -35,7 +35,8 @@ Item {
     property string __userName
 
     onStateChanged: {
-        main.authorized = authStatusWidget.state == "Ok" // TODO remove and make unnecessary
+        print("state changed to: " + state);
+        //main.authorized = authStatusWidget.state == "Ok" // TODO remove and make unnecessary
     }
     states: [
         State {
@@ -70,23 +71,14 @@ Item {
         width: parent.height/1.5
         anchors { right: avispacer.left; verticalCenter: parent.verticalCenter; leftMargin: 12;}
         visible: authStatusWidget.state == "Ok"
-        userId: accountDelegate.accountUserName
+        userId: main.userName
     }
 
     PlasmaComponents.Label {
         id: statusLabel
         height: parent.height
         anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 8; }
-        text: authStatusWidget.state == "Busy" ? i18n("Logging in...") : authStatusWidget.state == "Ok" ? accountDelegate.accountUserName : "Idle";
+        text: authStatusWidget.state == "Busy" ? i18n("Logging in...") : authStatusWidget.state == "Ok" ? main.userName : i18n("Sign in");
     }
-
-//     MouseArea {
-//         anchors.fill: parent
-//         onClicked: {
-//             var componentObject = configComponent.createObject(mainWidget);
-//         }
-//         onPressed: PlasmaExtras.PressedAnimation { targetItem: authStatusWidget }
-//         onReleased: PlasmaExtras.ReleasedAnimation { targetItem: authStatusWidget }
-//     }
 }
 

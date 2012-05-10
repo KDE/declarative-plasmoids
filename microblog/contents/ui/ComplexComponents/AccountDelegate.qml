@@ -168,6 +168,7 @@ PlasmaComponents.ListItem {
         if (typeof(accountsButton) != "undefined") {
             accountsButton.checked = false;
         }
+        main.authorizationStatus = "Ok";
 //         print("TTTTTTTL wrote config" + accountUserName + "@" + accountServiceUrl);
 
     }

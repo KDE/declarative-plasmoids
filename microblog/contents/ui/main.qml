@@ -39,6 +39,7 @@ Item {
     property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
     property string password
     property bool authorized: false
+    property string authorizationStatus: "Idle"
     property string searchQuery
 
     signal replyAsked(string id, string message)
@@ -73,7 +74,8 @@ Item {
             print("fallbk eserice identi");
         }
         if (serviceUrl != "" && userName != "") {
-            microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl)
+            microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl);
+            main.authorizationStatus = "Ok";
         }
 
         Logic.userName = userName;
