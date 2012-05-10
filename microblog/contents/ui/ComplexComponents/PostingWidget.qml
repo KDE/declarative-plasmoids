@@ -48,7 +48,14 @@ PlasmaComponents.Page {
 
         print("Posting update: " + postTextEdit.text);
         var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-        print("posting to " + src);
+        print("posting to " + src + " in reply to " + inReplyToStatusId);
+
+//             postTextEdit.enabled = true;
+//             postTextEdit.text = "";
+//             inReplyToStatusId = "";
+//             sendButton.enabled = true;
+//             return;
+
         var service = microblogSource.serviceForSource(src)
         var operation = service.operationDescription("update");
         operation.status = postTextEdit.text;
@@ -117,16 +124,29 @@ PlasmaComponents.Page {
             }
         }
 
-        onActiveFocusChanged: {
-            print("Focus " + activeFocus);
-            activeFocus ? pwItem.state = "active" : pwItem.state = "inactive";
+//         onActiveFocusChanged: {
+//             print("Focus " + activeFocus);
+//             //activeFocus ? pwItem.state = "active" : pwItem.state = "inactive";
+//         }
+
+        Timer {
+            id: focusTimer
+            interval: 200
+            onTriggered: {
+                print("Focusing");
+                postTextEdit.forceActiveFocus();
+                postTextEdit.cursorPosition = postTextEdit.text.length;
+            }
         }
 
         Connections {
             target: main
             onReplyAsked: {
-                inReplyToStatusId = id
-                postTextEdit.text = message
+                inReplyToStatusId = id;
+                postTextEdit.text = message;
+                showPostingWidget();
+                //postTextEdit.forceActiveFocus();
+                focusTimer.running = true;
             }
             onRetweetAsked: {
                 Logic.retweet(id)
@@ -166,11 +186,18 @@ PlasmaComponents.Page {
         text: i18n("Post")
         visible: postTextEdit.text != ""
         enabled: characterCountLabel.characterCount <= 140
-        anchors { bottom: parent.bottom; right: postTextEdit.right; topMargin: 12; }
+        anchors { bottom: filler.top; right: postTextEdit.right; topMargin: 12; }
         onClicked: {
             print("button clicked");
             post();
         }
+    }
+
+    Item {
+        id: filler
+        height: parent.height-160
+        anchors { bottom: parent.bottom; right: postTextEdit.right; topMargin: 12; }
+
     }
     Timer {
         id: refreshTimer

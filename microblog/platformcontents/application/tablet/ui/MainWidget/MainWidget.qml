@@ -141,12 +141,8 @@ Image {
                 width: 48
                 height: 48
                 anchors { right: parent.right; bottom: parent.bottom; }
-                iconSource: !exp ? "arrow-right" : "arrow-left"
-                onClicked: {
-                    //postButton.checked = false
-                    myApp.navigationWidth = exp ? 0 : 300
-                    //sideBar.contentOpacity = exp ? 1.0 : 0
-                }
+                iconSource: "arrow-left"
+                onClicked: myApp.navigationWidth = exp ? 0 : 300
             }
         }
 
@@ -176,9 +172,9 @@ Image {
                     interactive: true
                     z: 10
                     anchors {
-                        left: entryList.left
-                        right: entryList.right
-                        top: entryList.bottom
+                        left: feedsList.left
+                        right: feedsList.right
+                        top: feedsList.bottom
                     }
                 }
             }
@@ -236,6 +232,9 @@ Image {
             anchors { right: parent.right; top: toolbarlayout.bottom; }
         }
 
+    }
+    function showPostingWidget() {
+        sideBar.activePage = "PostingWidget";
     }
 
     function showMessage(item) {

@@ -115,6 +115,7 @@ PlasmaComponents.Page {
             height: 48
             onClicked: {
                 main.replyAsked(messageId, "@" + user + ": ");
+                showPostingWidget();
             }
         }
         PlasmaComponents.ToolButton {
