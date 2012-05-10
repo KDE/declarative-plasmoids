@@ -38,24 +38,17 @@ PlasmaComponents.Page {
 
     property string inReplyToStatusId: ""
 
-    function refresh()
-    {
-        //postTextEdit.text = ""
+    function refresh() {
         Logic.refresh()
-//         plasmoid.busy = true
     }
     function post() {
-//         Logic.userName = userName;
-//         Logic.serviceUrl = serviceUrl;
-//         Logic.update(postTextEdit.text, inReplyToStatusId);
-        //Logic.refresh();
         postStatusLabel.text = i18n("Sending tweet...")
         postTextEdit.enabled = false
         sendButton.enabled = false
-        //refreshTimer.running = true;
 
         print("Posting update: " + postTextEdit.text);
         var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+        print("posting to " + src);
         var service = microblogSource.serviceForSource(src)
         var operation = service.operationDescription("update");
         operation.status = postTextEdit.text;
@@ -79,29 +72,6 @@ PlasmaComponents.Page {
         var serviceJob = service.startOperationCall(operation);
         serviceJob.finished.connect(result);
     }
-
-//     AuthorizationWidget {
-//         id: authStatusWidget
-//         anchors { left: parent.left; right: postWidget.left; verticalCenter: postWidget.verticalCenter; }
-//         //Rectangle { anchors.fill: postWidget; color: "blue"; opacity: 0.3 }
-//     }
-    //    visible: main.authorized
-
-//     PlasmaCore.FrameSvgItem {
-//         id: postWidget
-//         height: 200
-//         anchors.left: parent.left
-//         anchors.right: parent.right
-//         //imagePath: "widgets/frame"
-//         //prefix: "plain"
-//         visible: authStatusWidget.status == "Ok"
-//         property alias textWidth: postTextEdit.width
-//         anchors.horizontalCenter: parent.horizontalCenter
-// 
-// //         PlasmaComponents.Label {
-// //             anchors.top: profileIcon.bottom
-// //             text: userName
-// //         }
 
     PlasmaExtras.Heading {
         height: text != "" ? 32 : 0
@@ -215,40 +185,6 @@ PlasmaComponents.Page {
         }
     }
 
-//     states: [
-//         State {
-//             name: "active"
-// //             PropertyChanges { target: topItem; height: 120 }
-//             PropertyChanges { target: pwItem; width: 384 }
-// //             PropertyChanges { target: authStatusWidget; height: 64 }
-//         },
-//         State {
-//             name: "inactive"
-// //             PropertyChanges { target: topItem; height: 64 }
-//             PropertyChanges { target: pwItem; width: 320 }
-// //             PropertyChanges { target: authStatusWidget; height: 32 }
-//         }
-//     ]
-// 
-//     property int animation_duration: 150
-// 
-//     transitions: [
-//         Transition {
-//             from: "inactive"; to: "active"
-// //             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
-//             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
-// //             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
-//         },
-//         Transition {
-//             from: "active"; to: "inactive"
-// //             PropertyAnimation { target: topItem; properties: "height"; duration: animation_duration }
-//             PropertyAnimation { target: pwItem; properties: "width"; duration: animation_duration }
-// //             PropertyAnimation { target: authStatusWidget; properties: "height"; duration: animation_duration }
-//         }
-//     ]
-//     Component.onCompleted: {
-//         //topItem.height = 120
-//     }
     Component.onCompleted: {
         print("PostingWidget.onCompleted:");
     }
