@@ -60,7 +60,7 @@ Item {
         //serviceUrl = plasmoid.readConfig("serviceUrl");
         var u = plasmoid.readConfig("userName");
         var s = plasmoid.readConfig("serviceUrl");
-//         print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
+        print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
 
         if (u != "") {
             userName = u;
@@ -75,13 +75,14 @@ Item {
         }
         if (serviceUrl != "" && userName != "") {
             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl);
-            main.authorizationStatus = "Ok";
+            main.authorizationStatus = "Ok"; // fixme: should only be done once authTimer returns
         }
 
         Logic.userName = userName;
         Logic.serviceUrl = serviceUrl;
 
         if (serviceUrl && userName && password) {
+            print("start authtimer");
             authTimer.running = true
         }
         if (typeof(userInfo) != "undefined") { 
@@ -96,6 +97,7 @@ Item {
         repeat: false
         onTriggered: {
             if (userName == "" || password == "") return;
+            print("starting authTimer" + userName + ":" + password);
             var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
             var service = microblogSource.serviceForSource(src);
             var operation = service.operationDescription("auth");

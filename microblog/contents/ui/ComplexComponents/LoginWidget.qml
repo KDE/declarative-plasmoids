@@ -151,6 +151,7 @@ Column {
         var s = selectedService;
         var u = userNameEdit.text;
         var p = passwordEdit.text;
+        main.password = p;
         print(" Writing config: ------------------- " );
         print("     user: " + u);
         print("     surl: " + s);
