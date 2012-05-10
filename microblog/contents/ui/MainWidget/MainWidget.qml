@@ -68,7 +68,7 @@ Item {
 
                     topView.visible = true;
                     accountsDialog.visible = false;
-                    topItem.expandedHeight = 160;
+//                     topItem.expandedHeight = 160;
                 } else {
                     topItem.visible = false;
                     topItem.state = "collapsed"
@@ -81,7 +81,13 @@ Item {
         width: 48
         height: 48
         iconSource: "story-editor"
-        checked: postingWidget.visible
+        checked: {
+            if (typeof(postingWidget) != "undefined") {
+                postingWidget.visible;
+            } else {
+                false;
+            }
+        }
         anchors.verticalCenter: timelineTitle.verticalCenter
         anchors.right: accountsButton.left
         checkable: true
@@ -123,7 +129,7 @@ Item {
 
     Item {
         id: topItem
-        property string expandedHeight: topView.contentHeight + _s*2
+//         property string expandedHeight: topView.contentHeight + _s*2
         property string activeUser: "PlasmaActive"
         clip: true
         anchors.leftMargin: -10
@@ -176,7 +182,7 @@ Item {
             } else if (state == "message") {
                 if (topStack.currentPage != messageDetails) topStack.push(messageDetails);
             } else if (state == "post") {
-                if (topStack.currentPage != postComponent) topStack.push(postComponent);
+                if (topStack.currentPage != postingWidget) topStack.push(postingWidget);
             } else if (state == "timelines") {
                 if (topStack.currentPage != timelinesComponent) topStack.push(timelinesComponent);
             } else if (state == "userinfo") {
@@ -223,11 +229,8 @@ Item {
                     id: accountsDialog
                 }
             }
-            Component {
-                id: postComponent
-                PostingWidget {
-                    id: postingWidget;
-                }
+            PostingWidget {
+                id: postingWidget;
             }
             UserInfo {
                 id: userInfo
@@ -271,6 +274,10 @@ Item {
                 timelinewithfriends.timelineType = "Timeline"
             }
         }
+    }
+
+    function showPostingWidget() {
+        topItem.state = "post";
     }
 
     function showMessage(item) {

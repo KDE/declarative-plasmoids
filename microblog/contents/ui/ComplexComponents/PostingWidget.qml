@@ -143,6 +143,7 @@ PlasmaComponents.Page {
             target: main
             onReplyAsked: {
                 inReplyToStatusId = id;
+                print("PostingWidget Message: " + message + " " + id);
                 postTextEdit.text = message;
                 showPostingWidget();
                 //postTextEdit.forceActiveFocus();

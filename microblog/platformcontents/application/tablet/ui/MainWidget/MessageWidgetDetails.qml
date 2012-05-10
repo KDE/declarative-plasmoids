@@ -219,6 +219,8 @@ Rectangle {
                     width: 48
                     height: 48
                     onClicked: {
+                        print("Message*Widget*Details.reply(" + messageId + ", " + "@"+user+": " + ")");
+
                         main.replyAsked(messageId, "@" + user + ": ");
                     }
                 }

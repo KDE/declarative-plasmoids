@@ -114,6 +114,7 @@ PlasmaComponents.Page {
             width: 48
             height: 48
             onClicked: {
+                print("MessageDetails.reply(" + messageId + ", " + "@"+user+": " + ")");
                 main.replyAsked(messageId, "@" + user + ": ");
                 showPostingWidget();
             }
