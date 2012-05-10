@@ -131,6 +131,7 @@ PlasmaComponents.ListItem {
         height: 24
         width: 24
         //icon: ""
+        opacity: accountsList.currentIndex == index ? 1.0 : 0.2
         visible: accountDelegate.state == "Ok" || accountDelegate.state == "Error"
         //text: accountDelegate.state
         anchors { verticalCenter: parent.verticalCenter; right: parent.right;}
@@ -182,15 +183,15 @@ PlasmaComponents.ListItem {
         id: statusSource
         engine: "microblog"
         interval: 0
-        onSourceAdded: {
-//             print("     New Source appeared: " + source);
-            var src = "Status:"+accountDelegate.identifier;
-            if (accountDelegate.identifier != "@" && source == src) {
-//                 print("sourceAdded " + source);
-                //connectSource(src);
-//                 print(" cs: " + connectedSources);
-            }
-        }
+//         onSourceAdded: {
+// //             print("     New Source appeared: " + source);
+//             var src = "Status:"+accountDelegate.identifier;
+//             if (accountDelegate.identifier != "@" && source == src) {
+// //                 print("sourceAdded " + source);
+//                 //connectSource(src);
+// //                 print(" cs: " + connectedSources);
+//             }
+//         }
         onDataChanged: {
             //print("++++> Datachanged:" + accountDelegate.identifier + " S " + connectedSources);
             if (statusSource.data["Status:" + accountDelegate.identifier]) {
@@ -198,15 +199,8 @@ PlasmaComponents.ListItem {
                 var st = statusSource.data[src]["Authorization"];
                 var msg = statusSource.data[src]["AuthorizationMessage"];
                 accountDelegate.state = st;
-//                 print(" == > Datachanged: " + src + " " + st + " " + msg);
             }
         }
-        //Component.onCompleted:     statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
-
-//         Connections {
-//             target: accountDelegate
-//             onAccountServiceUrlChanged: statusSource.connectSource("Status:"+accountDelegate.accountUserName+"@"+accountDelegate.accountServiceUrl);
-//         }
     }
 
     onIdentifierChanged: {
@@ -221,26 +215,16 @@ PlasmaComponents.ListItem {
             //__userName = accountDelegate.accountUserName;
         }
         var src = "Status:"+accountDelegate.identifier;
-//         print("AccountDelegate.IdentifierChanged: " + src);
         statusSource.connectSource(src);
     }
 
-    
-//     Connections {
-//         target: accountAuthWidget
-//         onStateChanged: accountAuthWidget.state == accountDelegate.state
-//     }
     onStateChanged: {
-//         print("state changed: " + accountDelegate.state);
         accountAuthWidget.state == accountDelegate.state;
     }
 
     Component.onCompleted: {
-//         print("New One: " + accountUserName + " " + accountServiceUrl + " " + identifier);
         if (accountUserName == "" || accountServiceUrl == "") {
             state = "Idle";
         }
-        ///state = "Ok";
-//         print("Accountdelegate.qml completed: " + identifier);
     }
 }

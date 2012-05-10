@@ -81,6 +81,10 @@ Item {
         width: 48
         height: 48
         iconSource: "story-editor"
+        opacity: main.authorizationStatus == "Ok" ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation { duration: 200; }
+        }
         checked: {
             if (typeof(postingWidget) != "undefined") {
                 postingWidget.visible;
@@ -104,6 +108,10 @@ Item {
         height: 48
         iconSource: "system-users"
         checkable: true
+        opacity: main.authorizationStatus != "Ok" ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation { duration: 200; }
+        }
         anchors.verticalCenter: timelineTitle.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: _s
@@ -112,6 +120,28 @@ Item {
             topItem.state = checked ? "accounts" : "collapsed";
             return;
         }
+    }
+    Avatar {
+        id: accountsAvatar
+        width: 32
+        height: 32
+        userId: main.userName
+        opacity: main.authorizationStatus == "Ok" ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation { duration: 200; }
+        }
+        anchors.verticalCenter: timelineTitle.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: _s
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                postButton.checked = false;
+                topItem.state = topItem.state != "accounts" ? "accounts" : "collapsed";
+                return;
+            }
+        }
+        
     }
     QtExtraComponents.QIconItem {
         width: 32; height: width

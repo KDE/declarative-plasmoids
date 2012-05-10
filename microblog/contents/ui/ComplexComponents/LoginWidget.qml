@@ -67,13 +67,7 @@ Column {
             anchors.right: parent.horizontalCenter
             anchors.left: parent.left
             anchors.rightMargin: 24
-            //text: i18n("Service URL:")
         }
-    //                     PlasmaComponents.TextField {
-    //                         id: serviceUrlEdit
-    //                         text: "https://identi.ca/api/"
-    //                         Keys.onTabPressed: userNameEdit.forceActiveFocus()
-    //                     }
         Column {
             id: radioCol
             PlasmaComponents.RadioButton {

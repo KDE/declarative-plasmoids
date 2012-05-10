@@ -19,6 +19,7 @@
 
 import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/ComplexComponents"
 import "plasmapackage:/ui/BasicComponents"
@@ -47,7 +48,6 @@ Item {
         },
         State {
             name: "Idle"
-            //PropertyChanges { target: accountDelegate; height: loginWidget.height; }
         }
     ]
 
@@ -74,8 +74,9 @@ Item {
         userId: main.userName
     }
 
-    PlasmaComponents.Label {
+    PlasmaExtras.Heading {
         id: statusLabel
+        level: 3
         height: parent.height
         anchors { right: busyIndicator.left; verticalCenter: busyIndicator.verticalCenter; rightMargin: 8; }
         text: authStatusWidget.state == "Busy" ? i18n("Logging in...") : authStatusWidget.state == "Ok" ? main.userName : i18n("Sign in");
