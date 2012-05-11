@@ -30,7 +30,7 @@ MessageList {
     timelineType: "SearchTimeline"
     //source: timelineType+":"+userName+"@"+url
 
-    property string src: timelineType+":"+userName+"@"+url+":president"
+    property string src: timelineType+":"+userName+"@"+url+":q=president"
     source : src
 
     header: searchHeader
@@ -60,7 +60,7 @@ MessageList {
     }
     function loadTimeline(txt) {
         //print("Loading timeline: " + txt);
-        var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":"+txt;
+        var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":q="+txt;
         src = tl;
     }
 

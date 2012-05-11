@@ -210,7 +210,7 @@ Image {
                     id: searchtimeline
                     title: searchQuery == "" ? i18n("Search") : searchQuery
                     timelineType: "SearchTimeline"
-                    source: timelineType+":"+userName+"@"+url+":" + searchQuery
+                    source: timelineType+":"+userName+"@"+url+":q=" + searchQuery
                     height: mainFlickable.height
                     header: MessageListHeader {
                         text: searchtimeline.title
@@ -248,7 +248,7 @@ Image {
 
     function searchTimeline(txt) {
         //print("Loading timeline: " + txt);
-        var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":"+txt;
+        var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":q="+txt;
         //src = tl;
         searchtimeline.source = tl;
         searchQuery = txt;
