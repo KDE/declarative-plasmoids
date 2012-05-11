@@ -105,6 +105,7 @@ Item {
             operation.user = userName
             service.startOperationCall(operation);
             plasmoid.configurationRequired = false
+            main.password = "";
             //plasmoid.busy = true
         }
     }
