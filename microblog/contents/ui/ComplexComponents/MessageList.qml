@@ -79,7 +79,7 @@ ListView {
             height: 96
             width: 300
             PlasmaComponents.ToolButton {
-                visible: y > 300 && loadingIndicator.running == false // only show when there are items in the list
+//                 visible: y > 300 && loadingIndicator.running == false // only show when there are items in the list
                 id: loadMoreButton
                 text: i18n("load more...")
                 anchors.right: parent.right
@@ -218,14 +218,17 @@ ListView {
         var src = source;
         print(" load more: " + contentY + " " + contentHeight + " " + (contentHeight-entryList.height));
         //var src = timelineType + ":" + userName + "@" + serviceUrl;
-        return;
+        //return;
         print("loadMore" + src + "'");
         function result(job) {
             enabled = true;
             loadMoreBusy.running = false;
+            loadMoreButton.opacity = 0.7;
+            print("loadmore done.");
         }
         enabled = false;
-        refreshBusy.running = true;
+        loadMoreBusy.running = true;
+        loadMoreButton.opacity = 0;
         var service = microblogSource.serviceForSource(src);
         var operation = service.operationDescription("loadMore");
         operation.before_id = "";
