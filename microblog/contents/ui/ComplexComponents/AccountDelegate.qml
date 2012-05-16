@@ -48,7 +48,7 @@ PlasmaComponents.ListItem {
         State {
             name: "Ok"
             PropertyChanges { target: accountDelegate; height: _h}
-            PropertyChanges { target: statusIcon; icon: "task-complete"}
+            PropertyChanges { target: statusIcon; iconSource: "list-remove-user"}
             PropertyChanges { target: busyWidget; running: false; }
         },
         State {
@@ -64,13 +64,13 @@ PlasmaComponents.ListItem {
         State {
             name: "Error"
             PropertyChanges { target: accountDelegate; height: loginWidget.height;}
-            PropertyChanges { target: statusIcon; icon: "task-reject"}
+            PropertyChanges { target: statusIcon; iconSource: "task-reject"}
             PropertyChanges { target: busyWidget; running: false; }
         },
         State {
             name: "Idle"
             PropertyChanges { target: accountDelegate; height: loginWidget.height; }
-            PropertyChanges { target: statusIcon; icon: "task-ongoing"}
+            PropertyChanges { target: statusIcon; iconSource: "task-ongoing"}
             PropertyChanges { target: busyWidget; running: false; }
         }
     ]
@@ -126,15 +126,33 @@ PlasmaComponents.ListItem {
         //text: accountDelegate.state
         anchors { top: parent.top; right: parent.right;}
     }
-    QtExtraComponents.QIconItem {
+    PlasmaComponents.ToolButton {
         id: statusIcon
-        height: 24
-        width: 24
+        height: 48
+        width: 48
         //icon: ""
         opacity: accountsList.currentIndex == index ? 1.0 : 0.2
         visible: accountDelegate.state == "Ok" || accountDelegate.state == "Error"
         //text: accountDelegate.state
         anchors { verticalCenter: parent.verticalCenter; right: parent.right;}
+        onClicked: {
+            print("remove account " + identifier);
+            enabled = false;
+            var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
+            var service = microblogSource.serviceForSource(src)
+
+            function result(job) {
+                print(" Forget-Result: " + job.result + " op: " + job.operationName);
+                enabled = true;
+                //accountDelegate.destroy();
+            }
+
+            var operation = service.operationDescription("forget");
+            operation.user = userName;
+            operation.serviceUrl = serviceUrl;
+            var serviceJob = service.startOperationCall(operation);
+            serviceJob.finished.connect(result);
+        }
     }
 
     LoginWidget {
@@ -156,12 +174,13 @@ PlasmaComponents.ListItem {
     }
 
     function activate() {
-//         print(" =========================================");
-        main.userName = accountUserName;
-        main.serviceUrl = accountServiceUrl;
+         print(" =========================================" + accountUserName + " " + accountServiceUrl);
+        
+//         main.userName = accountUserName;
+//         main.serviceUrl = accountServiceUrl;
         plasmoid.writeConfig("userName", accountUserName);
         plasmoid.writeConfig("serviceUrl", accountServiceUrl);
-        configChanged();
+        main.configChanged();
 //         print("Index is now: " + index);
         accountsList.currentIndex = index;
         topItem.state = "collapsed";

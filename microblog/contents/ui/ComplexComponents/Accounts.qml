@@ -95,6 +95,7 @@ PlasmaComponents.Page {
                 iconSource: "list-add-user";
                 width: 48; height: 48;
                 anchors.right: parent.right
+                anchors.rightMargin: 8
                 onClicked: {
                     accountsModel.append({"userName": "", "serviceUrl": "", "identifier": ""});
                     accountsList.currentIndex = accountsModel.count-1;
