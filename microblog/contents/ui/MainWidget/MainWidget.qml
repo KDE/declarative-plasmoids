@@ -30,19 +30,6 @@ import "plasmapackage:/ui/BasicComponents"
 Item {
     id: mainFlickable
 
-    function typeToTitle(tType) {
-        if (tType == "TimelineWithFriends") {
-            return i18n("Timeline");
-        } else if (tType == "Timeline") {
-            return i18n("My tweets");
-        } else if (tType == "Replies") {
-            return i18n("Replies");
-        } else if (tType == "SearchTimeline") {
-            return i18n("Search for " + main.searchQuery);
-        } else {
-            return i18n("Tweets");
-        }
-    }
     PlasmaExtras.Title {
         id: timelineTitle
         text: typeToTitle(timelinewithfriends.timelineType)

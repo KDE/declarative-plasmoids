@@ -208,4 +208,30 @@ Item {
             Qt.openUrlExternally(link);
         }
     }
+    function typeToTitle(tType) {
+        if (tType == "TimelineWithFriends") {
+            return i18n("Home");
+        } else if (tType == "Timeline") {
+            return i18n("My tweets");
+        } else if (tType == "Replies") {
+            return i18n("Mentions");
+        } else if (tType == "SearchTimeline") {
+            return i18n("Search for " + main.searchQuery);
+        } else {
+            return i18n("Tweets");
+        }
+    }
+    function typeToDescription(tType) {
+        if (tType == "TimelineWithFriends") {
+            return i18n("Timeline of followed users");
+        } else if (tType == "Timeline") {
+            return i18n("Sent tweets");
+        } else if (tType == "Replies") {
+            return i18n("Tweets mentioning you");
+        } else if (tType == "SearchTimeline") {
+            return i18n("Find Tweets");
+        } else {
+            return i18n("");
+        }
+    }
 }
