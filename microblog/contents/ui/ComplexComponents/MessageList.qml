@@ -41,7 +41,7 @@ ListView {
     signal itemClicked(variant item)
 
     property string timelineType
-    property string title: "Tit3l"
+    property string title: typeToTitle(timelineType)
     property string url: serviceUrl
     property string source: timelineType+":"+main.userName+"@"+url
     property string previousSource
@@ -72,8 +72,7 @@ ListView {
         }
     }
     highlight: PlasmaComponents.Highlight { width: mainFlickable.columnWidth; }
-    footer: tfoot
-    Component {
+    footer: Item {
         id: tfoot
         Item {
             id: footerItem
@@ -89,7 +88,7 @@ ListView {
                 height: 48
                 opacity: 0.6
                 onClicked: {
-                    timelinewithfriends.loadMore();
+                    loadMore();
 //                     print("TODO: load more ... ");
 //                     isLoading = true;
 //                     //loadingTimer.running = !visible;

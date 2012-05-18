@@ -181,7 +181,6 @@ Image {
                 id: feedsModel
                 MessageList {
                     id: timelinewithfriends
-                    title: i18n("Timeline")
                     timelineType: "TimelineWithFriends"
                     height: mainFlickable.height
                     header: MessageListHeader {
@@ -190,7 +189,6 @@ Image {
                 }
                 MessageList {
                     id: mytimeline
-                    title: i18n("My tweets")
                     timelineType: "Timeline"
                     height: mainFlickable.height
                     header: MessageListHeader {
@@ -199,7 +197,6 @@ Image {
                 }
                 MessageList {
                     id: repliestimeline
-                    title: i18n("Replies")
                     timelineType: "Replies"
                     height: mainFlickable.height
                     header: MessageListHeader {
@@ -212,6 +209,7 @@ Image {
                     timelineType: "SearchTimeline"
                     source: timelineType+":"+userName+"@"+url+":q=" + searchQuery
                     height: mainFlickable.height
+                    visible: searchQuery != ""
                     header: MessageListHeader {
                         text: searchtimeline.title
                     }
