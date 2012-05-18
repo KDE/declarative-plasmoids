@@ -99,50 +99,28 @@ PlasmaComponents.Page {
             function result(job) {
                 print(" Result: " + job.result + " op: " + job.operationName);
                 enabled = true;
-                //refreshBusy.running = false;
+                if (!job.result) {
+                    return;
+                }
+                var f = (job.operationName == "friendships/create");
+                followButton.iconSource = f ? "list-remove-user" : "list-add-user";
+                followButton.text = f ? i18n("Unfollow") : i18n("Follow");
+                userInfo.following = f;
             }
             var o = "friendships/create";
             if (userInfo.following) {
-                print("Unfollow " + login);
                 o = "friendships/destroy";
             } else {
-                print("Follow " + login);
                 o = "friendships/create";
             }
-            var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
             enabled = false;
+
+            var src = "TimelineWithFriends:" + userName + "@" + serviceUrl; // FIXME: use current timelinetype
             var service = microblogSource.serviceForSource(src);
             var operation = service.operationDescription(o);
             operation.screen_name = login;
-            print("operation: " + o + "::" + operation.screen_name + "::" + src);
             var j = service.startOperationCall(operation);
             j.finished.connect(result);
-
-            return;
-            enabled = false;
-            var operation;
-            if (userInfo.following) {
-                print("Unfollow " + login);
-                operation = "friendships/destroy";
-            } else {
-                print("Follow " + login);
-                operation = "friendships/create";
-            }
-            var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-            var service = microblogSource.serviceForSource(src)
-            print("operation: " + operation + "::" + screen_name + "::" + src);
-            function result(job) {
-                print(" Result: " + job.result + " op: " + job.operationName);
-                //print("  following? " + checked);
-                //text = job.result ? "OK" : ":("
-                //isFavorite = checked;
-                enabled = true;
-            }
-
-            var operationDescription = service.operationDescription(operation);
-            operationDescription.screen_name = login;
-            var serviceJob = service.startOperationCall(operationDescription);
-            serviceJob.finished.connect(result);
         }
     }
 
@@ -205,12 +183,13 @@ PlasmaComponents.Page {
 
         infoText.text = info;
         labelText.text = labels
-        if (typeof(data.following) != "undefined") {
-            userInfo.following = data.following
-            //isFollowing.text = data.following ? i18n("Your are following " + login) : "";
-            followButton.iconSource = data.following ? "list-remove-user" : "list-add-user";
-            followButton.text = data.following ? i18n("Unfollow") : i18n("Follow");
-        }
+        var f = (typeof(data.following) != "undefined") ? data.following : false;
+        //if (typeof(data.following) != "undefined") {
+        userInfo.following = f
+        //isFollowing.text = data.following ? i18n("Your are following " + login) : "";
+        followButton.iconSource = f ? "list-remove-user" : "list-add-user";
+        followButton.text = f ? i18n("Unfollow") : i18n("Follow");
+        //}
         var output = "";
         for (k in data) {
             output += "<strong>" + k + "</strong>: " + data[k] + br;
