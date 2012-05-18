@@ -43,21 +43,22 @@ ListView {
     property string timelineType
     property string title: "Tit3l"
     property string url: serviceUrl
-    property string source: timelineType+":"+userName+"@"+url
+    property string source: timelineType+":"+main.userName+"@"+url
     property string previousSource
     property bool isRefreshing: false
     property bool isLoadingMore: false
 
     onSourceChanged: {
         if (previousSource && previousSource != source) {
-            //print("######################### source changed from " + previousSource + " to " + source);
+            print("######################### source changed from " + previousSource + " to " + source);
             microblogSource.disconnectSource(previousSource);
         }
         if (userName && timelineType && url) {
-//             print("TL ######## Connecting Timeline source: " + source);
-            microblogSource.connectSource(source)
-            previousSource = source
+            print("TL ######## Connecting Timeline source: " + source);
+            microblogSource.connectSource(source);
+            previousSource = source;
         }
+        print(" CoNNECTED: " + microblogSource.connectedSources);
     }
 
     model: PlasmaCore.SortFilterModel {

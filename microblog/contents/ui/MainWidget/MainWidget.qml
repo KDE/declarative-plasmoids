@@ -160,7 +160,7 @@ Item {
     Item {
         id: topItem
 //         property string expandedHeight: topView.contentHeight + _s*2
-        property string activeUser: "PlasmaActive"
+        property string activeUser: main.userName
         clip: true
         anchors.leftMargin: -10
         anchors.rightMargin: -10
@@ -188,7 +188,7 @@ Item {
             },
             State {
                 name: "message"
-                PropertyChanges { target: topItem; height: 280}
+                PropertyChanges { target: topItem; height: 340}
             },
             State {
                 name: "post"
