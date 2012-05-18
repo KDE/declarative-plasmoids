@@ -51,22 +51,6 @@ Item {
                 accountsButton.checked = false;
                 postButton.checked = false;
                 topItem.state = (topItem.state != "timelines") ? "timelines" : "collapsed"
-                return;
-                if (topItem.state == "collapsed") {
-                    topItem.visible = true;
-                    topItem.state = "expanded"
-                    accountsButton.checked = false;
-                    postingWidget.visible = false;
-                    userInfo.visible = false;
-                    messageDetails.visible = false;
-
-                    topView.visible = true;
-                    accountsDialog.visible = false;
-//                     topItem.expandedHeight = 160;
-                } else {
-                    topItem.visible = false;
-                    topItem.state = "collapsed"
-                }
             }
         }
     }
@@ -335,9 +319,6 @@ Item {
             onClicked: {
                 topItem.state = "collapsed";
                 timelinewithfriends.timelineType = timelineType
-//                 if (timelineType == "SearchTimeline") {
-//                     timelinewithfriends.args = "q=linux";
-//                 }
             }
         }
     }
@@ -389,8 +370,6 @@ Item {
         clip: true
         title: i18n("Timeline")
         timelineType: "TimelineWithFriends"
-        //height: mainFlickable.height - tabBar.height - topItem.height - _s*2
-        //width: mainFlickable.width
         anchors { top: topItem.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; margins: _s }
     }
 
