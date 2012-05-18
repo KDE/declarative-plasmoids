@@ -41,12 +41,17 @@ ListView {
     signal itemClicked(variant item)
 
     property string timelineType
+    property string args: ""
     property string title: typeToTitle(timelineType)
     property string url: serviceUrl
-    property string source: timelineType+":"+main.userName+"@"+url
+    property string source: timelineType+":"+main.userName+"@"+url+":"+args
     property string previousSource
     property bool isRefreshing: false
     property bool isLoadingMore: false
+
+    onArgsChanged: {
+        print("new query: " + args);
+    }
 
     onSourceChanged: {
         if (previousSource && previousSource != source) {

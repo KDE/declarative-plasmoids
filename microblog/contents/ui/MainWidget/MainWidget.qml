@@ -32,7 +32,14 @@ Item {
 
     PlasmaExtras.Title {
         id: timelineTitle
-        text: typeToTitle(timelinewithfriends.timelineType)
+        text: {
+            if (timelinewithfriends.timelineType != "SearchTimeline") {
+
+                typeToTitle(timelinewithfriends.timelineType)
+            } else {
+                ""
+            }
+        }
         anchors.top: parent.top
         anchors.topMargin: _s
         anchors.leftMargin: _s
@@ -62,6 +69,60 @@ Item {
                 }
             }
         }
+    }
+
+    Item {
+        visible: timelinewithfriends.timelineType == "SearchTimeline"
+        anchors.fill: timelineTitle
+        anchors.leftMargin: 48
+        anchors.rightMargin: 96
+        PlasmaComponents.ToolButton {
+            iconSource: (topItem.state != "timelines") ? "arrow-down" : "arrow-up"
+            height: searchButton.height
+            anchors { right: searchInput.left;
+                    leftMargin: 24; rightMargin: 12 }
+            onClicked: {
+                accountsButton.checked = false;
+                postButton.checked = false;
+                topItem.state = (topItem.state != "timelines") ? "timelines" : "collapsed"
+            }
+        }
+        PlasmaComponents.TextField {
+            id: searchInput
+            height: searchButton.height*1.1
+            visible: searchToolButton.checked
+            anchors { left: searchToolButton.right;
+                    leftMargin: 24; rightMargin: 12 }
+            anchors.verticalCenter: parent.verticalCenter
+            onTextChanged: searchTimer.restart()
+            Keys.onReturnPressed: searchTimeline(searchInput.text);
+        }
+        PlasmaComponents.Button {
+            id: searchButton
+            text: i18n("Search")
+            visible: searchToolButton.checked
+            width: 96
+            height: 32
+            anchors { left: searchInput.right;
+                    leftMargin: 12; rightMargin: 24 }
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: searchTimeline(searchInput.text)
+        }
+        Timer {
+            id: searchTimer
+            interval: 800
+            onTriggered: {
+                searchTimeline(searchInput.text);
+            }
+        }
+
+    }
+
+    function searchTimeline(query) {
+        var searchQuery = "q=" + searchInput.text;
+        main.searchQuery = searchInput.text;
+        //print("Search for " + searchQuery);
+        timelinewithfriends.args = searchQuery;
     }
     PlasmaComponents.ToolButton {
         id: postButton
@@ -171,7 +232,7 @@ Item {
             },
             State {
                 name: "timelines"
-                PropertyChanges { target: topItem; height: 180 }
+                PropertyChanges { target: topItem; height: 220 }
             },
             State {
                 name: "message"
@@ -235,7 +296,8 @@ Item {
                         id: topView
                         anchors.fill: parent
                         anchors.margins: _s
-                        model: topModel
+                        model: timelinesModel
+                        delegate: timelineDelegate
                         interactive: false
                     }
                 }
@@ -261,38 +323,40 @@ Item {
             }
         }
     }
-    VisualItemModel {
-        id: topModel
 
-        PlasmaComponents.ToolButton {
-            text: typeToTitle("TimelineWithFriends")
-            font.pointSize: timelineTitle.font.pointSize
-            height: _s*4
-            onClicked: {
-                topItem.state = "collapsed"
-                timelinewithfriends.timelineType = "TimelineWithFriends"
+    Component {
+        id: timelineDelegate
+        PlasmaComponents.ListItem {
+            enabled: true
+            PlasmaExtras.Heading {
+                level: 3
+                text: typeToTitle(timelineType)
             }
-        }
-        PlasmaComponents.ToolButton {
-            text: typeToTitle("Replies");
-            font.pointSize: timelineTitle.font.pointSize
-            height: _s*4
             onClicked: {
-                topItem.state = "collapsed"
-                timelinewithfriends.timelineType = "Replies"
-            }
-        }
-        PlasmaComponents.ToolButton {
-            text: typeToTitle("Timeline");
-            font.pointSize: timelineTitle.font.pointSize
-            height: _s*4
-            onClicked: {
-                topItem.state = "collapsed"
-                timelinewithfriends.timelineType = "Timeline"
+                topItem.state = "collapsed";
+                timelinewithfriends.timelineType = timelineType
+//                 if (timelineType == "SearchTimeline") {
+//                     timelinewithfriends.args = "q=linux";
+//                 }
             }
         }
     }
+    ListModel {
+        id: timelinesModel
 
+        ListElement {
+            timelineType: "TimelineWithFriends"
+        }
+        ListElement {
+            timelineType: "Replies"
+        }
+        ListElement {
+            timelineType: "Timeline"
+        }
+        ListElement {
+            timelineType: "SearchTimeline"
+        }
+    }
     function showPostingWidget() {
         topItem.state = "post";
     }

@@ -245,10 +245,8 @@ Image {
     }
 
     function searchTimeline(txt) {
-        //print("Loading timeline: " + txt);
         var tl = "SearchTimeline:"+userName+"@"+serviceUrl+":q="+txt;
-        //src = tl;
-        searchtimeline.source = tl;
+        searchtimeline.args = "q="+txt;
         searchQuery = txt;
 //         feedsList.positionViewAtIndex(feedsList.count-1, ListView.Visible);
     }
