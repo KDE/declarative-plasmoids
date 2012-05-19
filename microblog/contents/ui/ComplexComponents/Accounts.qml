@@ -98,7 +98,7 @@ PlasmaComponents.Page {
                 anchors.rightMargin: 8
                 onClicked: {
                     accountsModel.append({"userName": "", "serviceUrl": "", "identifier": ""});
-                    accountsList.currentIndex = accountsModel.count-1;
+                    //accountsList.currentIndex = accountsModel.count-1;
                 }
             }
         }

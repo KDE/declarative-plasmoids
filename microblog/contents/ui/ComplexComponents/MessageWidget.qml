@@ -37,6 +37,7 @@ ListItem {
     property string dateTime: model["created_at"]
     property bool isFavorite: model["favorited"]
     property string message: model["Status"]
+    property int retweetCount: model["retweet_count"]
 
     Avatar {
         id: userIcon
@@ -85,6 +86,16 @@ ListItem {
         font.pointSize: theme.smallestFont.pointSize
         styleColor: theme.backgroundColor
         text: friendlyDate(dateTime)
+    }
+
+    QtExtraComponents.QIconItem {
+        anchors { top: parent.top; right: parent.right; }
+        width: 16
+        opacity: 0.3
+        anchors.margins: 4
+        height: width
+        visible: retweetCount > 0
+        icon: "mail-forward"
     }
 
     Item { height: 12; anchors.top: bodyText.bottom; z: -1 }
