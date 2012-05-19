@@ -202,21 +202,22 @@ PlasmaComponents.ListItem {
         id: statusSource
         engine: "microblog"
         interval: 0
-//         onSourceAdded: {
-// //             print("     New Source appeared: " + source);
-//             var src = "Status:"+accountDelegate.identifier;
-//             if (accountDelegate.identifier != "@" && source == src) {
-// //                 print("sourceAdded " + source);
-//                 //connectSource(src);
-// //                 print(" cs: " + connectedSources);
-//             }
-//         }
+        onSourceAdded: {
+            var src = "Status:"+accountDelegate.identifier;
+            //print("     New Source appeared: " + source + " == " + src);
+            if (accountDelegate.identifier[0] != "@" && source == src) {
+                print("!!!!!!!!!!!!!!!!!!!! sourceAdded " + source);
+                connectSource(src);
+//                 print(" cs: " + connectedSources);
+            }
+        }
         onDataChanged: {
-            //print("++++> Datachanged:" + accountDelegate.identifier + " S " + connectedSources);
             if (statusSource.data["Status:" + accountDelegate.identifier]) {
+                print("++++> Datachanged:" + accountDelegate.identifier + " S " + connectedSources);
                 var src = "Status:"+accountDelegate.identifier;
                 var st = statusSource.data[src]["Authorization"];
                 var msg = statusSource.data[src]["AuthorizationMessage"];
+                print("!!!!! State is now : " + st);
                 accountDelegate.state = st;
             }
         }
@@ -234,6 +235,7 @@ PlasmaComponents.ListItem {
             //__userName = accountDelegate.accountUserName;
         }
         var src = "Status:"+accountDelegate.identifier;
+        print(" ********** connect status " + src);
         statusSource.connectSource(src);
     }
 

@@ -130,6 +130,7 @@ Column {
             id: passwordEdit
             echoMode: TextInput.Password
             Keys.onReturnPressed: loginWidget.acceptConfig()
+            Keys.onTabPressed: buttonsRow.forceActiveFocus()
         }
     }
     PlasmaComponents.Button {
@@ -170,6 +171,8 @@ Column {
         main.password = p;
         print("calling configChanged()");
         configChanged();
+        print("Connecting status");
+        statusSource.connectSource("Status:" + u + "@" + s);
         //sideBar.activeUser = userNameEdit.text;
 //         disappearAnimation.running = true;
     }
