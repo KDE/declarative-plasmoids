@@ -62,7 +62,7 @@ Item {
         anchors.rightMargin: 96
         PlasmaComponents.ToolButton {
             iconSource: (topItem.state != "timelines") ? "arrow-down" : "arrow-up"
-            height: searchButton.height
+            height: searchInput.height
             anchors { right: searchInput.left;
                     leftMargin: 24; rightMargin: 12 }
             onClicked: {
@@ -73,25 +73,17 @@ Item {
         }
         PlasmaComponents.TextField {
             id: searchInput
-            height: searchButton.height*1.1
-            visible: searchToolButton.checked
-            anchors { left: searchToolButton.right;
-                    leftMargin: 24; rightMargin: 12 }
+            anchors { rightMargin: 12 }
             anchors.verticalCenter: parent.verticalCenter
-            onTextChanged: searchTimer.restart()
+            onTextChanged: {
+                if (text != "") {
+                    searchTimer.restart();
+                } else {
+                    searchTimer.stop();
+                }
+            }
             Keys.onReturnPressed: searchTimeline(searchInput.text);
         }
-//         PlasmaComponents.Button {
-//             id: searchButton
-//             text: i18n("Search")
-//             visible: searchToolButton.checked
-//             width: 96
-//             height: 32
-//             anchors { left: searchInput.right;
-//                     leftMargin: 12; rightMargin: 24 }
-//             anchors.verticalCenter: parent.verticalCenter
-//             onClicked: searchTimeline(searchInput.text)
-//         }
         Timer {
             id: searchTimer
             interval: 800

@@ -94,18 +94,21 @@ Image {
                     anchors { left: searchToolButton.right;
                             leftMargin: 24; rightMargin: 12 }
                     anchors.verticalCenter: parent.verticalCenter
+                    onTextChanged: {
+                        if (text != "") {
+                            searchTimer.restart();
+                        } else {
+                            searchTimer.stop();
+                        }
+                    }
                     Keys.onReturnPressed: searchTimeline(txtEdit.text);
                 }
-                PlasmaComponents.Button {
-                    id: searchButton
-                    text: i18n("Search")
-                    visible: searchToolButton.checked
-                    width: 96
-                    height: 32
-                    anchors { left: txtEdit.right;
-                            leftMargin: 12; rightMargin: 24 }
-                    anchors.verticalCenter: parent.verticalCenter
-                    onClicked: searchTimeline(txtEdit.text)
+                Timer {
+                    id: searchTimer
+                    interval: 800
+                    onTriggered: {
+                        searchTimeline(txtEdit.text);
+                    }
                 }
             }
             AuthorizationWidget {
