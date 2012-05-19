@@ -43,6 +43,8 @@ PlasmaComponents.PageStack {
     property alias dateTime: messageDetails.dateTime
     property alias isFavorite: messageDetails.isFavorite
     property alias message: messageDetails.message
+    property alias realName: messageDetails.realName
+    property alias retweetCount: messageDetails.retweetCount
 
     Behavior on contentOpacity {
         NumberAnimation { duration: 250; easing.type: Easing.InOutExpo; }

@@ -30,6 +30,8 @@ PlasmaComponents.Page {
 
     property string messageId
     property string user
+    property string realName
+    property int retweetCount
     property string source
     property string dateTime
     property bool isFavorite
@@ -55,7 +57,7 @@ PlasmaComponents.Page {
         anchors.leftMargin: 12
         anchors.right: parent.right
         anchors.top: userIcon.top
-        text: user
+        text: realName
     }
 
     PlasmaExtras.Heading {

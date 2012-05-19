@@ -131,7 +131,7 @@ PlasmaComponents.ListItem {
         height: 48
         width: 48
         //icon: ""
-        opacity: accountsList.currentIndex == index ? 1.0 : 0.2
+        opacity: accountsList.currentIndex == index ? 1.0 : 0.0
         visible: accountDelegate.state == "Ok" || accountDelegate.state == "Error"
         //text: accountDelegate.state
         anchors { verticalCenter: parent.verticalCenter; right: parent.right;}

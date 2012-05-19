@@ -337,6 +337,8 @@ Item {
     function showMessage(item) {
             topItem.state = "message"
             messageDetails.user = item.user
+            messageDetails.realName = item.realName
+            messageDetails.retweetCount = item.retweetCount
             messageDetails.dateTime = item.dateTime
             messageDetails.source = stripHtml(item.source)
             messageDetails.isFavorite = item.isFavorite

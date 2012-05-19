@@ -233,6 +233,8 @@ Image {
     function showMessage(item) {
         myApp.navigationWidth = 300;
         sideBar.user = item.user
+        sideBar.realName = item.realName
+        sideBar.retweetCount = item.retweetCount
         sideBar.dateTime = item.dateTime
         sideBar.source = stripHtml(item.source)
         sideBar.isFavorite = item.isFavorite

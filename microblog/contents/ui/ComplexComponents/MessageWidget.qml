@@ -33,6 +33,7 @@ ListItem {
 
     property string messageId: model["Id"]
     property string user: model["User"]
+    property string realName: model["name"]
     property string source: model["source"]
     property string dateTime: model["created_at"]
     property bool isFavorite: model["favorited"]
@@ -58,13 +59,15 @@ ListItem {
         elide: Text.ElideRight
         font.pointSize: theme.defaultFont.pointSize + 4
         styleColor: theme.backgroundColor
-        text: user
+        text: realName
         MouseArea {
             anchors.fill: parent
-            onClicked: sideBar.activeUser = user
+            onClicked: showUserInfo(user);
+
         }
 
     }
+
     PlasmaComponents.Label {
         id: bodyText
         anchors.leftMargin: 12
