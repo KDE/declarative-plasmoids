@@ -89,7 +89,7 @@ Image {
                 }
                 PlasmaComponents.TextField {
                     id: txtEdit
-                    height: searchButton.height*1.1
+                    //height: searchButton.height*1.1
                     visible: searchToolButton.checked
                     anchors { left: searchToolButton.right;
                             leftMargin: 24; rightMargin: 12 }
