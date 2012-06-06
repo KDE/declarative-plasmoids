@@ -32,20 +32,18 @@ PlasmaComponents.ListItem {
         id : delegateLayout
         width: parent.width
         spacing: 5
-        anchors.left: listItem.padding.left
-        anchors.right: listItem.padding.right
-        anchors.top: listItem.padding.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
         opacity: articleRead?0.5:1
 
-        Text {
+        PlasmaComponents.Label  {
             width: delegateLayout.width
-            color: theme.textColor
             wrapMode: Text.WordWrap
             textFormat: Text.RichText
             text: listItem.text
         }
-        Text {
-            color: theme.textColor
+        PlasmaComponents.Label  {
             width: delegateLayout.width
             horizontalAlignment: Text.AlignRight
             text: '<em><small>'+listItem.date+'</em></small>&nbsp;'

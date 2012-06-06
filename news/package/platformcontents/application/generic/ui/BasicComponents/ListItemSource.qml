@@ -37,13 +37,12 @@ PlasmaComponents.ListItem {
         Image {
             source: icon
         }
-        Text {
-            color: theme.textColor
+        PlasmaComponents.Label  {
             text: listItem.text
         }
     }
-    Text {
-        color: theme.textColor
+
+    PlasmaComponents.Label {
         text: unread
         anchors {
             right: parent.right
