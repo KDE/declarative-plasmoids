@@ -63,6 +63,17 @@ PlasmaComponents.Page {
         font.pointSize: theme.defaultFont.pointSize * 1.5
         anchors { left: userIcon.right; right: parent.right;  top: userIcon.top; leftMargin: 12; }
     }
+    QtExtraComponents.QIconItem {
+        id: verifiedIcon
+        icon: "task-complete"
+        width: 16
+        height: width
+        anchors {
+            left: realNameLabel.left
+            leftMargin: realNameLabel.paintedWidth + 2
+            top: realNameLabel.top
+        }
+    }
     PlasmaComponents.Label {
         id: userIdLabel
         text: userInfo.login ? "@" + userInfo.login : ""
@@ -195,6 +206,7 @@ PlasmaComponents.Page {
             output += "<strong>" + k + "</strong>: " + data[k] + br;
         }
         mainText.text = output;
+        verifiedIcon.visible = data.verified;
     }
 
     Connections {
