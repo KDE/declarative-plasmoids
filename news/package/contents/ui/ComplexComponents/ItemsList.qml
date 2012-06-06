@@ -61,6 +61,7 @@ ListView {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: sectionDelegate.padding.left
             anchors.right: sectionDelegate.padding.right
+            anchors.leftMargin: 8
             text: section
             level: 3
         }
@@ -70,7 +71,7 @@ ListView {
         id: feedItem
         text: title
         date: Utils.date(time)
-        author: feedItem.author
+        //author: feedItem.author
         state: (list.currentIndex == index)?"sunken":"normal"
 
         Component.onCompleted: {
@@ -87,7 +88,7 @@ ListView {
 
             list.currentIndex = index;
             bodyView.articleUrl = link;
-            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + "</style></head><body><h2>" + title + "</h2><em>by " + author + "</em><br />"  + description + "</body></html>";
+            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + " h1 {   font-weight: normal; }; p { text-align: \"justify\" } </style></head><body><h1>" + title + "</h1><em>by " + author + "</em><br /><p>"  + description + "</p></body></html>";
             bodyView.articleHtml = parsedHtml;
             list.itemClicked();
         }

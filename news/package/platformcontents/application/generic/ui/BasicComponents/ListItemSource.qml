@@ -18,8 +18,8 @@
  */
 import QtQuick 1.0
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 PlasmaComponents.ListItem {
     id: listItem
@@ -38,7 +38,8 @@ PlasmaComponents.ListItem {
         Image {
             source: icon
         }
-        PlasmaComponents.Label  {
+        PlasmaExtras.Heading {
+            level: 3
             text: listItem.text
         }
     }

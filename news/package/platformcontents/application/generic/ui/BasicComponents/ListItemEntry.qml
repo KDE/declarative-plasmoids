@@ -25,18 +25,18 @@ PlasmaComponents.ListItem {
     id: listItem
     property string text
     property string date
-    property string author
+    //property string author
     property bool articleRead: false
     enabled: true
     opacity: articleRead?0.5:1
 
     PlasmaComponents.Label  {
         id: titleLabel
-        width: parent.width
+        width: parent.width - 24
         wrapMode: Text.WordWrap
         textFormat: Text.RichText
         text: listItem.text
-        anchors { bottomMargin: 12; }
+        anchors { leftMargin: 12; bottomMargin: 12; }
     }
     PlasmaComponents.Label  {
         width: parent.width
@@ -49,8 +49,8 @@ PlasmaComponents.ListItem {
     PlasmaComponents.Label  {
         width: parent.width
         font.pointSize: theme.smallestFont.pointSize
-        text: author
-        opacity: 0.5
+        text: i18n("by %1", author)
+//         opacity: 0.5
         anchors { top: titleLabel.bottom; left: titleLabel.left; }
     }
 }
