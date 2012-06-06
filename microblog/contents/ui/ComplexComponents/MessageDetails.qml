@@ -73,7 +73,7 @@ PlasmaComponents.Page {
             findUrls(message);
             return formatMessage(message);
         }
-        wrapMode: Text.WordWrap
+        wrapMode: Text.Wrap
         onLinkActivated: {
             handleLinkClicked("internal://showuser/PlasmaActive/foobar");
             handleLinkClicked(link);
