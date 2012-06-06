@@ -70,6 +70,7 @@ ListView {
         id: feedItem
         text: title
         date: Utils.date(time)
+        author: feedItem.author
         state: (list.currentIndex == index)?"sunken":"normal"
 
         Component.onCompleted: {

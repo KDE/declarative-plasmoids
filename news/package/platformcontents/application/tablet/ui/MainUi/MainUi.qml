@@ -19,8 +19,8 @@
 
 import QtQuick 1.0
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.core 0.1 as PlasmaExtras
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/ui/ComplexComponents"
@@ -123,10 +123,18 @@ Image {
                         anchors.fill:parent
 
                         PlasmaCore.SvgItem {
-                            width: 32
-                            height: feedList.height
+                            width: feedList.width
+                            height: 32
                             svg: shadowSvg
-                            elementId: "right"
+                            elementId: "bottom"
+                        }
+                        PlasmaCore.SvgItem {
+                            width: 32
+                            anchors.top: parent.top
+                            anchors.right: parent.right
+                            anchors.bottom: parent.bottom
+                            svg: shadowSvg
+                            elementId: "left"
                         }
                     }
                 }
@@ -143,14 +151,6 @@ Image {
                         NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
                     }
 
-                    PlasmaCore.SvgItem {
-                        width: 32
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.bottom: parent.bottom
-                        svg: shadowSvg
-                        elementId: "right"
-                    }
                 }
 
                 Rectangle {

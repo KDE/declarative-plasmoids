@@ -25,7 +25,7 @@ PlasmaComponents.ListItem {
     id: listItem
     property string text
     property string date
-    property string author: "Author"
+    property string author
     property bool articleRead: false
     enabled: true
     opacity: articleRead?0.5:1
@@ -49,7 +49,7 @@ PlasmaComponents.ListItem {
     PlasmaComponents.Label  {
         width: parent.width
         font.pointSize: theme.smallestFont.pointSize
-        text: listItem.author
+        text: author
         opacity: 0.5
         anchors { top: titleLabel.bottom; left: titleLabel.left; }
     }
