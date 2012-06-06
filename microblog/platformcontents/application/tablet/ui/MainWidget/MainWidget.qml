@@ -131,14 +131,6 @@ Image {
             id: sideBar
             width: myApp.navigationWidth
             clip: false
-            PlasmaComponents.ToolButton {
-                property bool exp: myApp.navigationWidth > 72
-                width: 48
-                height: 48
-                anchors { right: parent.right; bottom: parent.bottom; }
-                iconSource: "arrow-left"
-                onClicked: myApp.navigationWidth = exp ? 0 : 300
-            }
         }
 
         Item {
@@ -224,6 +216,40 @@ Image {
             id: accountsPopup
             anchors { right: parent.right; top: toolbarlayout.bottom; }
         }
+        
+        PlasmaCore.FrameSvgItem {
+            id: handleGraphics
+            imagePath: "dialogs/background"
+            enabledBorders: "LeftBorder|TopBorder|BottomBorder"
+            width: handleIcon.width + margins.left + margins.right + 4
+            height: handleIcon.width * 1.6 + margins.top + margins.bottom + 4
+            x: myApp.navigationWidth - width - 1
+            y: parent.height - 96
+            Behavior on x {
+                NumberAnimation { duration: 250; easing.type: Easing.InOutExpo; }
+            }
+
+            PlasmaCore.SvgItem {
+                id: handleIcon
+                svg: PlasmaCore.Svg {imagePath: "widgets/arrows"}
+                elementId: "left-arrow"
+                x: parent.margins.left
+                y: parent.margins.top
+                width: theme.smallMediumIconSize
+                height: width
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+        MouseArea {
+            anchors {
+                fill: handleGraphics
+                margins: -8
+            }
+            onReleased: {
+                myApp.navigationWidth = sideBar.open ? 0 : 300
+            }
+        }
+
 
     }
     function showPostingWidget() {

@@ -185,7 +185,8 @@ Item {
             //print("bla .. ." + msg);
             return msg;
         }
-        return msg.replace(/(http:\/\/\S+)/g, " <a href='$1'>$1</a>").replace("'>http://", "'>")
+        var m = msg.replace(/(http:\/\/\S+)/g, " <a href='$1'>$1</a>").replace("'>http://", "'>");
+        return m;
     }
 
     function stripHtml(html) {
@@ -216,7 +217,11 @@ Item {
         } else if (tType == "Replies") {
             return i18n("Mentions");
         } else if (tType == "SearchTimeline") {
-            return i18n("Search for " + main.searchQuery);
+            if (main.searchQuery == "") {
+                return i18n("Search");
+            } else {
+                return i18n("Search for " + main.searchQuery);
+            }
         } else {
             return i18n("Tweets");
         }

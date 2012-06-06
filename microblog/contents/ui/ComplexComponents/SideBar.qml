@@ -18,25 +18,21 @@
  */
 
 import QtQuick 1.1
-//import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
-//import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 import "plasmapackage:/ui/BasicComponents"
 
 PlasmaComponents.PageStack {
     id: sideBar
-
-    //clip: true
     initialPage: userInfo
     property real contentOpacity: myApp.navigationWidth > 72 ? 1.0 : 0.0
 
     // Forward props of UserInfo
     property alias activeUser: userInfo.login
-//                userInfo.login = userId
 
     // Forward properties of messageDetails widget
     property string activePage: "UserInfo"
+    property bool open: myApp.navigationWidth > 72
     property alias messageId: messageDetails.messageId
     property alias user: messageDetails.user
     property alias source: messageDetails.source
@@ -54,9 +50,8 @@ PlasmaComponents.PageStack {
     }
     UserInfo {
         id: userInfo
-        width: myApp.navigationWidth
+        width: myApp.navigationWidth - 12
         opacity: contentOpacity
-//        clip: false
     }
 
     MessageDetails {
