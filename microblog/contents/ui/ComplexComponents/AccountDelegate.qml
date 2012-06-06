@@ -82,6 +82,7 @@ PlasmaComponents.ListItem {
             id: accountAvatar
             userId: accountUserName
             height: 48; width: height
+            interactive: false
         }
         Image {
             id: serviceIcon

@@ -150,20 +150,6 @@ Image {
                 anchors.fill: parent
                 spacing: 12
                 model: feedsModel
-                PlasmaComponents.ScrollBar {
-                    id: scrollBar
-                    orientation: Qt.Horizontal
-                    flickableItem: feedsList
-//                     stepSize: 100
-//                     scrollButtonInterval: 100
-                    interactive: true
-                    z: 10
-                    anchors {
-                        left: feedsList.left
-                        right: feedsList.right
-                        top: feedsList.bottom
-                    }
-                }
             }
 
             function colWidth(mainWidth) {

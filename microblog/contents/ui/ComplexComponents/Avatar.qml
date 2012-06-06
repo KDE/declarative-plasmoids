@@ -24,6 +24,7 @@ QtExtraComponents.QImageItem {
     id: userIcon
 
     property string userId: user
+    property bool interactive: true
     width: 48
     height: 48
     smooth: true
@@ -40,6 +41,7 @@ QtExtraComponents.QImageItem {
     }
 
     MouseArea {
+        visible: interactive
         anchors.fill: parent
         onClicked: {
             showUserInfo(userId);
