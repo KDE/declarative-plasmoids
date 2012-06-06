@@ -24,15 +24,16 @@ import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 PlasmaComponents.ListItem {
     id: listItem
     property string text
+    property string author
     property string icon
     property int unread
     enabled: true
 
-    Row{
+    Row {
         id: delegateLayout
-        anchors.left: listItem.padding.left
-        anchors.right: listItem.padding.right
-        anchors.verticalCenter: listItem.verticalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
 
         Image {
             source: icon
@@ -47,7 +48,7 @@ PlasmaComponents.ListItem {
         anchors {
             right: parent.right
             rightMargin: 10
-            verticalCenter: listItem.verticalCenter
+            verticalCenter: parent.verticalCenter
         }
     }
 }

@@ -1,6 +1,7 @@
 /*
  *   Copyright 2010 Marco Martin <notmart@gmail.com>
- *
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
+ * 
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
  *   published by the Free Software Foundation; either version 2, or
@@ -16,38 +17,40 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 PlasmaComponents.ListItem {
     id: listItem
-    property string text;
-    property string date;
+    property string text
+    property string date
+    property string author: "Author"
     property bool articleRead: false
     enabled: true
+    opacity: articleRead?0.5:1
 
-    Column {
-        id : delegateLayout
+    PlasmaComponents.Label  {
+        id: titleLabel
         width: parent.width
-        spacing: 5
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        opacity: articleRead?0.5:1
-
-        PlasmaComponents.Label  {
-            width: delegateLayout.width
-            wrapMode: Text.WordWrap
-            textFormat: Text.RichText
-            text: listItem.text
-        }
-        PlasmaComponents.Label  {
-            width: delegateLayout.width
-            horizontalAlignment: Text.AlignRight
-            text: '<em><small>'+listItem.date+'</em></small>&nbsp;'
-        }
-
+        wrapMode: Text.WordWrap
+        textFormat: Text.RichText
+        text: listItem.text
+        anchors { bottomMargin: 12; }
+    }
+    PlasmaComponents.Label  {
+        width: parent.width
+        horizontalAlignment: Text.AlignRight
+        font.pointSize: theme.smallestFont.pointSize
+        text: listItem.date
+        opacity: 0.5
+        anchors { top: titleLabel.bottom; right: titleLabel.right; }
+    }
+    PlasmaComponents.Label  {
+        width: parent.width
+        font.pointSize: theme.smallestFont.pointSize
+        text: listItem.author
+        opacity: 0.5
+        anchors { top: titleLabel.bottom; left: titleLabel.left; }
     }
 }

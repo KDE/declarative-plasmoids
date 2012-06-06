@@ -19,6 +19,7 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/code/bookkeeping.js" as BookKeeping
@@ -55,15 +56,13 @@ ListView {
     section.delegate: ListItem {
         id: sectionDelegate
         state: "section"
-        implicitHeight: sectionText.height
-        Text {
+        PlasmaExtras.Heading {
             id: sectionText
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: sectionDelegate.padding.left
             anchors.right: sectionDelegate.padding.right
-            color: theme.textColor
             text: section
-            font.bold: true
+            level: 3
         }
     }
 
