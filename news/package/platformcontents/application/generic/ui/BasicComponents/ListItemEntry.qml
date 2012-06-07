@@ -40,14 +40,24 @@ PlasmaComponents.ListItem {
         anchors { leftMargin: 12; bottomMargin: 6; }
     }
     PlasmaComponents.Label  {
+        id: dateLabel
         width: parent.width
         horizontalAlignment: Text.AlignRight
         font.pointSize: theme.smallestFont.pointSize
         text: listItem.date
         opacity: 0.5
+        visible: {
+//             var _w = listItem.width;
+//             var _a = authorLabel.paintedWidth;
+//             var _d = dateLabel.paintedWidth;
+            0 < listItem.width - authorLabel.paintedWidth - paintedWidth - 48;
+//             //print(" WW: " + author + " "  + _w + " " + _a + " " + _d + " = " + _s + " ===> " + (_s>0));
+//             return _s > 0
+        }
         anchors { top: titleLabel.bottom; right: titleLabel.right; }
     }
     PlasmaComponents.Label  {
+        id: authorLabel
         width: parent.width
         font.pointSize: theme.smallestFont.pointSize
         text: i18n("by %1", author)

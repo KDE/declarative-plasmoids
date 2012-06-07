@@ -18,9 +18,11 @@
  */
 
 import QtQuick 1.0
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+//import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.core 0.1 as PlasmaExtras
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/ui/ComplexComponents"
@@ -84,7 +86,13 @@ Image {
             enabledBorders: "BottomBorder"
             z: mainView.z+1
             onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
-            //onBackRequested: bodyView.html = bodyView.articleHtml
+            onBackRequested: {
+                if (mainWidget.browserMode) {
+                    bodyView.back();
+                } else {
+                    bodyView.html = bodyView.articleHtml
+                }
+            }
         }
 
         Flickable {
@@ -121,23 +129,53 @@ Image {
 
                     FeedList {
                         id: feedList
+//                         anchors {
+//                             top: parent.top
+//                             left: parent.left
+//                             right: parent.right
+//                         }
                         anchors.fill:parent
 
                         PlasmaCore.SvgItem {
                             width: feedList.width
-                            height: 32
+                            height: 16
+                            opacity: 0.5
                             svg: shadowSvg
                             elementId: "bottom"
                         }
                         PlasmaCore.SvgItem {
-                            width: 32
+                            width: 16
+                            opacity: 0.5
                             anchors.top: parent.top
                             anchors.right: parent.right
                             anchors.bottom: parent.bottom
                             svg: shadowSvg
                             elementId: "left"
                         }
+                        footer: PlasmaComponents.ToolButton {
+                            id: configButton
+                            iconSource: "format-list-unordered"
+                            height: 32
+                            width: height
+//                             iconSize: 22
+//                             svg: PlasmaCore.Svg {
+//                                 imagePath: "widgets/configuration-icons"
+//                             }
+//                             elementId: "configure"
+                            anchors {
+                                top: feedList.bottom
+                                right: parent.right
+                                topMargin: 8
+                                rightMargin: 8
+                            }
+                            onClicked: {
+                                var object = configComponent.createObject(mainWidget);
+                                print(component.errorString())
+                            }
+                        }
+
                     }
+
                 }
 
                 ItemsList {

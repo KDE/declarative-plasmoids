@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
@@ -26,7 +26,7 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 PlasmaCore.FrameSvgItem {
     id: toolbarFrame
     width: mainUi.width
-    height: Math.max(backButton.height, configButton.height) + margins.top + margins.bottom
+    height: Math.max(backButton.height, browserModeButton.height) + margins.top + margins.bottom
     clip: true
 
     imagePath: "widgets/toolbar"
@@ -38,9 +38,9 @@ PlasmaCore.FrameSvgItem {
     property bool searchEnabled: true
     property string searchQuery
 
-    PlasmaComponents.Button {
+    PlasmaComponents.ToolButton {
         id: backButton
-        text: i18n("Back")
+        iconSource: "go-previous-view"
 
         x: toolbarFrame.margins.left + 8
         y: backEnabled?toolbarFrame.height/2-height/2:-height-5
@@ -52,28 +52,10 @@ PlasmaCore.FrameSvgItem {
                 } else if (mainUi.state == "items") {
                     mainUi.state = "feeds"
                 }
+            } else {
+                backRequested()
             }
-            backRequested()
         }
-
-        Behavior on y {
-            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
-        }
-    }
-
-    PlasmaComponents.Button {
-        id: openOriginalButton
-        text: i18n("Website")
-        width: 128
-        checkable: true
-
-        anchors {
-            left: backButton.right
-            leftMargin: 12
-        }
-        y: (mainUi.state == "item")?toolbarFrame.height/2-height/2:-height-5
-
-        onClicked: mainWidget.browserMode = checked
 
         Behavior on y {
             NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
@@ -95,21 +77,22 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    MobileComponents.ActionButton {
-        id: configButton
-        iconSize: 22
-        svg: PlasmaCore.Svg {
-            imagePath: "widgets/configuration-icons"
+    PlasmaComponents.ToolButton {
+        id: browserModeButton
+        width: 32
+        height: width
+        iconSource: "internet-web-browser"
+        checkable: true
+        y: backEnabled?toolbarFrame.height/2-height/2:-height-5
+        Behavior on y {
+            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
         }
-        elementId: "configure"
+
         anchors {
-            verticalCenter: parent.verticalCenter
+            //verticalCenter: parent.verticalCenter
             right: parent.right
             rightMargin: 8
         }
-        onClicked: {
-            var object = configComponent.createObject(mainWidget);
-            print(component.errorString())
-        }
+        onClicked: mainWidget.browserMode = checked
     }
 }

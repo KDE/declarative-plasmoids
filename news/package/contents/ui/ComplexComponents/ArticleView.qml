@@ -31,11 +31,11 @@ PlasmaWidgets.WebView {
     onArticleHtmlChanged: html = articleHtml
     property bool customUrl: false
     onUrlChanged: {
-        customUrl = (url != "about:blank")
+        customUrl = ((url != "about:blank") && (articleUrl != url))
     }
 
     onLoadProgress: {
-        progressBar.y = parent.height - 32
+        progressBar.y = parent.height - progressBar.height
         progressBar.value = percent
     }
     onLoadFinished: {
@@ -46,14 +46,10 @@ PlasmaWidgets.WebView {
         id: progressBar
         minimumValue: 0
         maximumValue: 100
-        //x: opacity == 0 ? 32 : 0
         anchors.left: bodyView.left
         anchors.right: bodyView.right
-        //anchors.bottom: bodyView.bottom
         height: 32
 
-//        svg: "widgets/bar_meter_horizontal"
-  //      meterType: PlasmaWidgets.Meter.BarMeterHorizontal
         Behavior on y {
             NumberAnimation {duration: 150; easing.type: Easing.InOutQuad}
         }
