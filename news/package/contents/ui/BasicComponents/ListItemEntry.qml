@@ -16,38 +16,46 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import QtQuick 1.1
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 
 ListItem {
     id: listItem
     property string text;
     property string date;
     property bool articleRead: false
+    Item {
+        anchors.leftMargin: 12
+        height: titleLabel.height + authorLabel.height
+        width: parent.width - 24
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
-    Column {
-        id : delegateLayout
-        width: parent.width
-        spacing: 5
-        anchors.left: listItem.padding.left
-        anchors.right: listItem.padding.right
-        anchors.top: listItem.padding.top
-        opacity: articleRead?0.5:1
-
-        Text {
-            width: delegateLayout.width
-            color: theme.textColor
+        PlasmaComponents.Label  {
+            id: titleLabel
+            width: parent.width - 24
+            wrapMode: Text.WordWrap
             textFormat: Text.RichText
             text: listItem.text
+            anchors { leftMargin: 12; bottomMargin: 2; topMargin: 2; top: parent.top; }
         }
-        Text {
-            color: theme.textColor
-            width: delegateLayout.width
+        PlasmaComponents.Label  {
+            id: dateLabel
+            width: parent.width
             horizontalAlignment: Text.AlignRight
-            text: '<em><small>'+listItem.date+'</em></small>&nbsp;'
+            font.pointSize: theme.smallestFont.pointSize
+            text: listItem.date
+            opacity: 0.5
+            visible: 0 < listItem.width - authorLabel.paintedWidth - paintedWidth - 48;
+            anchors { top: titleLabel.bottom; right: titleLabel.right; }
         }
-
+        PlasmaComponents.Label  {
+            id: authorLabel
+            width: parent.width
+            font.pointSize: theme.smallestFont.pointSize
+            text: i18n("by %1", author)
+            anchors { top: titleLabel.bottom; left: titleLabel.left; }
+        }
     }
 }
