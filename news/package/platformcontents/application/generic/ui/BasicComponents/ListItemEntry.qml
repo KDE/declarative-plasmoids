@@ -25,7 +25,6 @@ PlasmaComponents.ListItem {
     id: listItem
     property string text
     property string date
-    //property string author
     property bool articleRead: false
     enabled: true
     anchors.margins: 0
@@ -46,14 +45,7 @@ PlasmaComponents.ListItem {
         font.pointSize: theme.smallestFont.pointSize
         text: listItem.date
         opacity: 0.5
-        visible: {
-//             var _w = listItem.width;
-//             var _a = authorLabel.paintedWidth;
-//             var _d = dateLabel.paintedWidth;
-            0 < listItem.width - authorLabel.paintedWidth - paintedWidth - 48;
-//             //print(" WW: " + author + " "  + _w + " " + _a + " " + _d + " = " + _s + " ===> " + (_s>0));
-//             return _s > 0
-        }
+        visible: 0 < listItem.width - authorLabel.paintedWidth - paintedWidth - 48;
         anchors { top: titleLabel.bottom; right: titleLabel.right; }
     }
     PlasmaComponents.Label  {
@@ -61,7 +53,6 @@ PlasmaComponents.ListItem {
         width: parent.width
         font.pointSize: theme.smallestFont.pointSize
         text: i18n("by %1", author)
-//         opacity: 0.5
         anchors { top: titleLabel.bottom; left: titleLabel.left; }
     }
 }

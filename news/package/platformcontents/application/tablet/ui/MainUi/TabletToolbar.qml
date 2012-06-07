@@ -93,6 +93,6 @@ PlasmaCore.FrameSvgItem {
             right: parent.right
             rightMargin: 8
         }
-        onClicked: mainWidget.browserMode = checked
+        onClicked: mainWindow.browserMode = checked
     }
 }

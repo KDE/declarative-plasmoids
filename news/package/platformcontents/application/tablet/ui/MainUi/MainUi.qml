@@ -30,7 +30,7 @@ import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
 
 Image {
-    id: mainWidget
+    id: mainWindow
     source: "image://appbackgrounds/standard"
     fillMode: Image.Tile
     width: 800
@@ -87,7 +87,7 @@ Image {
             z: mainView.z+1
             onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
             onBackRequested: {
-                if (mainWidget.browserMode) {
+                if (mainWindow.browserMode) {
                     bodyView.back();
                 } else {
                     bodyView.html = bodyView.articleHtml
@@ -169,7 +169,7 @@ Image {
                                 rightMargin: 8
                             }
                             onClicked: {
-                                var object = configComponent.createObject(mainWidget);
+                                var object = configComponent.createObject(mainWindow);
                                 print(component.errorString())
                             }
                         }
@@ -199,7 +199,7 @@ Image {
                     ArticleView {
                         id : bodyView
                         anchors.fill: parent
-                        anchors.leftMargin: mainWidget.browserMode ? 4 : 16
+                        anchors.leftMargin: mainWindow.browserMode ? 4 : 16
 
                         Behavior on anchors.leftMargin {
                             NumberAnimation {duration: 100; easing.type: Easing.InOutQuad}
@@ -218,9 +218,9 @@ Image {
         }
     }
     Connections {
-        target: mainWidget
+        target: mainWindow
         onBrowserModeChanged: {
-            if (mainWidget.browserMode) {
+            if (mainWindow.browserMode) {
                 bodyView.url = Url(bodyView.articleUrl);
             } else {
                 bodyView.html = bodyView.articleHtml;

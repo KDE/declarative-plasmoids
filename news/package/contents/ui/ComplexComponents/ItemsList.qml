@@ -90,7 +90,7 @@ ListView {
             bodyView.articleUrl = link;
             var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + " h1 {   font-weight: normal; }; p { text-align: \"justify\" } </style></head><body><h1>" + title + "</h1><em>by " + author + "</em><br /><p>"  + description + "</p></body></html>";
             bodyView.articleHtml = parsedHtml;
-            if (mainWidget.browserMode) {
+            if (mainWindow.browserMode) {
                 bodyView.url = Url(bodyView.articleUrl)
             }
             list.itemClicked();

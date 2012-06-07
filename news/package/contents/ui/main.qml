@@ -24,7 +24,7 @@ import "plasmapackage:/ui/MainUi"
 import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
 Item {
-    id: mainWindow;
+    id: mainWindow
     width: 250
     height: 400
     state: "items"
