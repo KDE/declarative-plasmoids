@@ -58,7 +58,7 @@ Column {
 
         onCurrentChanged: {
             toolbarFrame.backEnabled = currentIndex > 0
-            toolbarFrame.searchEnabled = currentIndex < 2
+            toolbarFrame.searchEnabled = currentIndex == 1
         }
 
         QGraphicsWidget {

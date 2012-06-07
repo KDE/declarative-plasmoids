@@ -16,10 +16,9 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-import Qt 4.7
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
-import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
+import QtQuick 1.1
+import org.kde.plasma.extras 0.1 as PlasmaExtras
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 ListItem {
     id: listItem
@@ -36,13 +35,12 @@ ListItem {
         Image {
             source: icon
         }
-        Text {
-            color: theme.textColor
+        PlasmaExtras.Heading {
+            level: 4
             text: listItem.text
         }
     }
-    Text {
-        color: theme.textColor
+    PlasmaComponents.Label {
         text: unread
         anchors.right: listItem.padding.right
         anchors.verticalCenter: listItem.verticalCenter

@@ -74,16 +74,16 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    PlasmaComponents.Button {
+    PlasmaComponents.ToolButton {
         id: openOriginalButton
-        text: i18n("Open original")
+        iconSource: "internet-web-browser"
 
-        anchors.left: backButton.right
+        anchors.right: parent.right
+        anchors.rightMargin: 12
+
         y: (mainUi.state == "item")?toolbarFrame.margins.top:-height-5
 
-        onClicked: {
-            openOriginalRequested();
-        }
+        onClicked: Qt.openUrlExternally(bodyView.articleUrl)
 
         Behavior on y {
             NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
