@@ -65,6 +65,7 @@ PlasmaCore.FrameSvgItem {
         id: openOriginalButton
         text: i18n("Website")
         width: 128
+        checkable: true
 
         anchors {
             left: backButton.right
@@ -72,9 +73,7 @@ PlasmaCore.FrameSvgItem {
         }
         y: (mainUi.state == "item")?toolbarFrame.height/2-height/2:-height-5
 
-        onClicked: {
-            openOriginalRequested();
-        }
+        onClicked: mainWidget.browserMode = checked
 
         Behavior on y {
             NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}

@@ -28,6 +28,7 @@ PlasmaComponents.ListItem {
     //property string author
     property bool articleRead: false
     enabled: true
+    anchors.margins: 0
     opacity: articleRead?0.5:1
 
     PlasmaComponents.Label  {
@@ -36,7 +37,7 @@ PlasmaComponents.ListItem {
         wrapMode: Text.WordWrap
         textFormat: Text.RichText
         text: listItem.text
-        anchors { leftMargin: 12; bottomMargin: 12; }
+        anchors { leftMargin: 12; bottomMargin: 6; }
     }
     PlasmaComponents.Label  {
         width: parent.width

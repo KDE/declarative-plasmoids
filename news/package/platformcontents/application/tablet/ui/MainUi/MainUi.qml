@@ -33,6 +33,7 @@ Image {
     fillMode: Image.Tile
     width: 800
     height: 480
+    property bool browserMode: false
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
     Column {
@@ -160,16 +161,28 @@ Image {
                     ArticleView {
                         id : bodyView
                         anchors.fill: parent
+                        anchors.leftMargin: mainWidget.browserMode ? 0: 32
 
-                        PlasmaCore.SvgItem {
-                            width: 32
-                            height: bodyView.height
-                            svg: shadowSvg
-                            elementId: "right"
-                        }
+                    }
+                    PlasmaCore.SvgItem {
+                        width: 32
+                        height: bodyView.height
+                        svg: shadowSvg
+                        elementId: "right"
                     }
                 }
             }
         }
     }
+    Connections {
+        target: mainWidget
+        onBrowserModeChanged: {
+            if (mainWidget.browserMode) {
+                bodyView.url = Url(bodyView.articleUrl);
+            } else {
+                bodyView.html = bodyView.articleHtml;
+            }
+        }
+    }
+
 }
