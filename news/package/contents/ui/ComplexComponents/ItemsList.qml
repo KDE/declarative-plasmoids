@@ -19,6 +19,7 @@
 
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "plasmapackage:/ui/BasicComponents"
@@ -93,6 +94,16 @@ ListView {
                 bodyView.url = Url(bodyView.articleUrl)
             }
             list.itemClicked();
+        }
+    }
+    PlasmaComponents.ScrollBar {
+        id: scrollBar
+        orientation: Qt.Vertical
+        flickableItem: parent
+        anchors {
+            top: parent.top
+            right: parent.right
+            bottom: parent.bottom
         }
     }
 }
