@@ -19,6 +19,7 @@
 
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 
 PlasmaWidgets.WebView {
@@ -34,27 +35,27 @@ PlasmaWidgets.WebView {
     }
 
     onLoadProgress: {
-        progressBar.opacity = 1
+        progressBar.y = parent.height - 32
         progressBar.value = percent
     }
     onLoadFinished: {
-        progressBar.opacity = 0
+        progressBar.y = parent.height
     }
 
-    PlasmaWidgets.Meter {
+    PlasmaComponents.ProgressBar {
         id: progressBar
-        minimum: 0
-        maximum: 100
+        minimumValue: 0
+        maximumValue: 100
+        //x: opacity == 0 ? 32 : 0
         anchors.left: bodyView.left
         anchors.right: bodyView.right
-        anchors.bottom: bodyView.bottom
+        //anchors.bottom: bodyView.bottom
         height: 32
 
-        svg: "widgets/bar_meter_horizontal"
-        meterType: PlasmaWidgets.Meter.BarMeterHorizontal
-        Behavior on opacity {
-            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+//        svg: "widgets/bar_meter_horizontal"
+  //      meterType: PlasmaWidgets.Meter.BarMeterHorizontal
+        Behavior on y {
+            NumberAnimation {duration: 150; easing.type: Easing.InOutQuad}
         }
-        
     }
 }
