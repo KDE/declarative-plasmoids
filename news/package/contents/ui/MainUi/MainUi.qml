@@ -28,6 +28,7 @@ import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 Column {
     id: mainUi
     state: "items"
+    clip: true
 
     states: [
         State {
