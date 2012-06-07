@@ -34,11 +34,11 @@ PlasmaWidgets.WebView {
     }
 
     onLoadProgress: {
-        progressBar.visible = true
+        progressBar.opacity = 1
         progressBar.value = percent
     }
     onLoadFinished: {
-        progressBar.visible = false
+        progressBar.opacity = 0
     }
 
     PlasmaWidgets.Meter {
@@ -52,5 +52,9 @@ PlasmaWidgets.WebView {
 
         svg: "widgets/bar_meter_horizontal"
         meterType: PlasmaWidgets.Meter.BarMeterHorizontal
+        Behavior on opacity {
+            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+        }
+        
     }
 }

@@ -84,7 +84,7 @@ Image {
             enabledBorders: "BottomBorder"
             z: mainView.z+1
             onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
-            onBackRequested: bodyView.html = bodyView.articleHtml
+            //onBackRequested: bodyView.html = bodyView.articleHtml
         }
 
         Flickable {
@@ -161,11 +161,16 @@ Image {
                     ArticleView {
                         id : bodyView
                         anchors.fill: parent
-                        anchors.leftMargin: mainWidget.browserMode ? 0: 32
+                        anchors.leftMargin: mainWidget.browserMode ? 4 : 16
+
+                        Behavior on anchors.leftMargin {
+                            NumberAnimation {duration: 100; easing.type: Easing.InOutQuad}
+                        }
 
                     }
                     PlasmaCore.SvgItem {
-                        width: 32
+                        width: 16
+                        opacity: 0.5
                         height: bodyView.height
                         svg: shadowSvg
                         elementId: "right"
