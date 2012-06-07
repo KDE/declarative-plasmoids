@@ -51,9 +51,9 @@ PlasmaCore.FrameSvgItem {
         }
     }
 
-    PlasmaComponents.Button {
+    PlasmaComponents.ToolButton {
         id: backButton
-        text: i18n("Back")
+        iconSource: "go-previous-view"
 
         x: toolbarFrame.margins.left
         y: backEnabled?toolbarFrame.margins.top:-height-5
@@ -94,8 +94,8 @@ PlasmaCore.FrameSvgItem {
         id: searchBox
         clearButtonShown: true
         anchors.right: parent.right
-        anchors.top: parent.top
-        y: searchEnabled?toolbarFrame.margins.top:-height-5
+        //anchors.top: parent.top
+        y: searchEnabled?toolbarFrame.margins.top:-height-50
         anchors.rightMargin: toolbarFrame.margins.right
         anchors.topMargin: toolbarFrame.margins.top
         onTextChanged: {

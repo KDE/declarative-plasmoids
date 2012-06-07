@@ -1,5 +1,6 @@
 /*
  *   Copyright 2010 Marco Martin <notmart@gmail.com>
+ *   Copyright 2012 Sebastian Kügler <sebas@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -25,6 +26,8 @@ ListItem {
     property string text;
     property string date;
     property bool articleRead: false
+    height: childrenRect.height
+
     Item {
         anchors.leftMargin: 12
         height: titleLabel.height + authorLabel.height
