@@ -111,6 +111,18 @@ void RssNow2::createConfigurationInterface(KConfigDialog* parent)
     connect(m_feedsConfig.addFeed, SIGNAL(released()), this, SLOT(addFeed()));
     connect(m_feedsConfig.removeFeed, SIGNAL(released()), this, SLOT(removeFeed()));
 
+    //enable the add feed button only when the combobox has a value
+    m_feedsConfig.addFeed->setDisabled(true);
+    connect(m_feedsConfig.feedComboBox, SIGNAL(editTextChanged(QString)), this, SLOT(toogleAddFeed(QString)));
+}
+
+void RssNow2::toogleAddFeed(const QString& text)
+{
+    if (text.isEmpty()) {
+        m_feedsConfig.addFeed->setDisabled(true);
+    } else {
+        m_feedsConfig.addFeed->setEnabled(true);
+    }
 }
 
 void RssNow2::configAccepted()
@@ -135,8 +147,6 @@ void RssNow2::configAccepted()
 
 void RssNow2::configChanged()
 {
-
-
     KConfigGroup cg = config();
 
     m_feeds = cg.readEntry("feeds", "http://planetkde.org/rss20.xml");

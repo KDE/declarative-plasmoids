@@ -53,6 +53,7 @@ protected:
 protected Q_SLOTS:
     void configAccepted();
     void addFeed();
+    void toogleAddFeed(const QString& text);
     void removeFeed();
     void emitChangeConfig(const QString& feed);
     void emitChangeBusy();
