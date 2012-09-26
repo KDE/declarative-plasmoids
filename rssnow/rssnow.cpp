@@ -148,6 +148,8 @@ void RssNow2::configAccepted()
 
 void RssNow2::configChanged()
 {
+    //gives the new config data to the plasmoid every time
+    //that they change
     KConfigGroup cg = config();
 
     m_feeds = cg.readEntry("feeds", "http://planetkde.org/rss20.xml");
@@ -156,11 +158,16 @@ void RssNow2::configChanged()
     m_updateInterval = cg.readEntry("interval", 10);
     m_switchInterval =  cg.readEntry("switchInterval", 10);
 
+    //its has been connected with the QML and it passes the config data into the QML
    emit reloadConfig(m_feeds, m_switchInterval, m_updateInterval, m_logo, m_showDropTarget);
 }
 
 void RssNow2::connectToQML()
 {
+    //it will give the data to the QML, only the first time.
+    //Q: what's wrong with the reloadConfig signal? Why the signal doesn't do the job?
+    //A: The signal can be emited after the Component.onCompleted, so in the initialize
+    //of the plasmoid we won't have any data
     QDeclarativeContext *rootComponent = m_declarativeWidget->engine()->rootContext();
 
     rootComponent->setContextProperty("_feeds", m_feeds);
@@ -184,6 +191,8 @@ void RssNow2::removeFeed()
 
 void RssNow2::emitChangeConfig(const QString& feed)
 {
+    //we use this signal in QML, in order to add a feed
+    //in our config file
     KConfigGroup cg = config();
     QString feedList = cg.readEntry("feeds", QString());
     feedList.append(",");
@@ -195,6 +204,9 @@ void RssNow2::emitChangeConfig(const QString& feed)
 
 void RssNow2::emitChangeBusy()
 {
+    //its connected with a signal, with which signal
+    //we are able to change the state of the plasmoid
+    //from QML
     setBusy(!isBusy());
 }
 
