@@ -130,8 +130,9 @@ void RssNow2::configAccepted()
     QString feedList;
     for (int i = 0; i < m_feedsConfig.feedList->count(); i++) {
         feedList.append(m_feedsConfig.feedList->item(i)->text());
-
-        feedList.append(",");
+        if (i+1 != m_feedsConfig.feedList->count()) {
+            feedList.append(",");
+        }
     }
 
     KConfigGroup cg = config();
@@ -150,8 +151,8 @@ void RssNow2::configChanged()
     KConfigGroup cg = config();
 
     m_feeds = cg.readEntry("feeds", "http://planetkde.org/rss20.xml");
-    m_logo = cg.readEntry("logo", false);
-    m_showDropTarget = cg.readEntry("droptarget", false);
+    m_logo = cg.readEntry("logo", true);
+    m_showDropTarget = cg.readEntry("droptarget", true);
     m_updateInterval = cg.readEntry("interval", 10);
     m_switchInterval =  cg.readEntry("switchInterval", 10);
 
@@ -189,7 +190,7 @@ void RssNow2::emitChangeConfig(const QString& feed)
     feedList.append(feed);
     cg.writeEntry("feeds", feedList);
 
-    connectToQML();
+    configChanged();
 }
 
 void RssNow2::emitChangeBusy()

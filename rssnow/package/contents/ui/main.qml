@@ -58,12 +58,10 @@ Item {
         console.log("*********************************")
         console.log("Configuration changed: " + source);
         console.log("*********************************")
-        print("before")
-        var tmpStr = source
-        tmpStr = tmpStr.replace(",", " ")
+        var tmpStr = new String(source)
+        tmpStr = tmpStr.split(",")
         feedSource.connectedSources = tmpStr
-        print("after")
-        individualSources = tmpStr.split(" ")
+        individualSources = tmpStr
         repeater.model = individualSources.length
     }
 
@@ -168,7 +166,7 @@ Item {
             DragAndDrop.DropArea {
                 anchors.fill: parent
                 onDrop: {
-                    configChanged("feeds", event.mimeData.url)
+                    changeConfig(event.mimeData.url);
                     mainWindow.configChanged()
                 }
                 states: [
