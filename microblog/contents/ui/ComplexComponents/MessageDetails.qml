@@ -23,6 +23,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
+import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/ui/ComplexComponents"
 
 PlasmaComponents.Page {
@@ -34,41 +35,48 @@ PlasmaComponents.Page {
     property int retweetCount
     property string source
     property string dateTime
+    property string info
     property bool isFavorite
+    property variant replies
     property string message
+    property int akonadiId
+    property variant avatar
 
     Avatar {
         id: userIcon
         anchors.left: parent.left
-        anchors.leftMargin: 12
         anchors.top: parent.top
         anchors.topMargin: 24
         anchors.rightMargin: 12
+        anchors.leftMargin: 12
+        image: avatar
+
         width: 96
         height: 96
-        //login: messageDetails.user
     }
 
     PlasmaExtras.Heading {
-        id: infoLabel
+        id: nameLabel
         level: 3
         //anchors.bottomMargin: 5
         anchors.left: userIcon.right
         anchors.leftMargin: 12
-        anchors.right: parent.right
+        anchors.right: dateTimeLabel.left
         anchors.top: userIcon.top
-        text: realName
+        text: realName + " " + source + ":"
     }
 
     PlasmaExtras.Heading {
         id: bodyText
-        level: 3
-        anchors.rightMargin: 12
-        anchors.left: userIcon.left
+        level: 4
+        anchors.left: userIcon.right
         anchors.right: parent.right
-        anchors.top: userIcon.bottom
-        anchors.topMargin: 20
+        anchors.top: nameLabel.bottom
+//         anchors.topMargin: 20
         anchors.bottomMargin: 5
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
+
         text: {
             findUrls(message);
             return formatMessage(message);
@@ -81,33 +89,49 @@ PlasmaComponents.Page {
     }
     PlasmaComponents.Label {
         id: dateTimeLabel
-        text: i18n("%1 from %2", friendlyDate(dateTime), source)
+        text: dateTime
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignRight
         height: 20
         opacity: 0.6
-        anchors { top: bodyText.bottom; right: bodyText.right; left: bodyText.left; topMargin: 12; }
+        anchors.top: userIcon.top;
+        anchors.right: parent.right;
+//         anchors.left: nameLabel.right;
+//         anchors.topMargin: 12;
+    }
+    PlasmaComponents.Label {
+        id: postInfoLabel
+        text: info
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignLeft
+        opacity: 0.6
+        anchors.top: bodyText.bottom;
+        anchors.right: bodyText.right;
+        anchors.left: userIcon.right;
+        anchors.topMargin: 12;
+        anchors.leftMargin: 12;
     }
     Row {
         id: toolBoxRow
         opacity: 0.8
         anchors.left: userIcon.right
         anchors.leftMargin: 12
-        anchors.bottom: userIcon.bottom
+        //anchors.bottom: userIcon.bottom
+        anchors.top: postInfoLabel.bottom
 //         anchors.horizontalCenter: parent.horizontalCenter
 //         anchors.top: dateTimeLabel.bottom
-        ServiceJobButton {
+        PlasmaComponents.ToolButton {
             id: favoriteButton
-            param: messageId
             checked: isFavorite
-//             text: "♥"
-//             font.pointSize: 24
-//             width: 48
-//             height: 48
-//             checked: isFavorite
-//             onClicked: {
-//                 main.favoriteAsked(messageId, isFavorite != "true");
-//             }
+            text: "♥"
+            font.pointSize: 24
+            width: 48
+            height: 48
+            onClicked: {
+                print("Like...");
+                socialFeed.onLikePost(akonadiId, messageId, isFavorite != "true");
+                //main.favoriteAsked(akonadiId, isFavorite != "true");
+            }
         }
         PlasmaComponents.ToolButton {
             id: replyButton
@@ -133,6 +157,53 @@ PlasmaComponents.Page {
             }
         }
     }
+
+    ListView {
+        id: repliesList
+        anchors.top: postInfoLabel.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.topMargin: 12
+        anchors.leftMargin: 12
+
+        model: replies
+        delegate {
+            ListItem {
+                height: childrenRect.height
+                width: parent.width
+                Rectangle {
+                    id: commentAvatar
+                    width: 32
+                    height: 32
+                    border.color: "black"
+                    anchors.leftMargin: 12
+                    anchors.topMargin: 12
+                }
+                PlasmaComponents.Label {
+                    id: replyUsernamLabel
+                    text: model.modelData.userName
+                    //height: 20
+                    anchors.left: commentAvatar.right
+                    anchors.leftMargin: 12
+//                     anchors.top: parent.top
+                    anchors.right: parent.right
+                    font.pointSize: theme.defaultFont.pointSize + 2
+                }
+                PlasmaComponents.Label {
+                    text: model.modelData.replyText
+                    wrapMode: Text.WordWrap
+                    //height: 20
+                    //width: 50
+                    anchors.left: commentAvatar.right
+                    anchors.top: replyUsernamLabel.bottom
+                    anchors.right: parent.right
+                    anchors.leftMargin: 12
+                }
+            }
+        }
+    }
+
     function findUrls(txt) {
         print( "full text: " + txt);
         var matches = [];

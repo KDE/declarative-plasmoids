@@ -31,133 +31,61 @@ Item {
     id: main
     width: 200
     height: 300
-    property int minimumWidth: 300
+    property int minimumWidth: 200
     property int minimumHeight: 300
     property int _s: 12
     property int _m: 12
 
-    property string serviceUrl
-    property string userName//: "sebasje" // FIXME: remove until config doesn't get nuked all the time
-    property string password
-    property bool authorized: false
-    property string authorizationStatus: "Idle"
     property string searchQuery
 
     signal replyAsked(string id, string message)
     signal retweetAsked(string id)
-    signal favoriteAsked(string id, bool isFavorite)
+    signal favoriteAsked(int id, bool isFavorite)
 
     property string __previousUrl
 
     Component.onCompleted: {
-        plasmoid.addEventListener('ConfigChanged', configChanged);
-        plasmoid.configurationRequired = true
-        Logic.messagesDataSource = microblogSource
-        configChanged()
+//         plasmoid.addEventListener('ConfigChanged', configChanged);
+//         plasmoid.configurationRequired = true
+//         Logic.messagesDataSource = microblogSource
+//         configChanged()
     }
 
     function configChanged()
     {
         //serviceUrl = plasmoid.readConfig("serviceUrl");
-        var u = plasmoid.readConfig("userName");
-        var s = plasmoid.readConfig("serviceUrl");
-        print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
+//         var u = plasmoid.readConfig("userName");
+//         var s = plasmoid.readConfig("serviceUrl");
+//         print(" @@@@@@@@@@@@@@@@@@ configChanged()" + u + " s: " + s);
 
-        if (u != "") {
-            userName = u;
-        }
-        if (s != "") {
-            serviceUrl = s;
-            imageSource.connectSource("UserImages:"+s)
-        } else {
-            serviceUrl = "https://identi.ca/api/"
+//         if (u != "") {
+//             userName = u;
+//         }
+//         if (s != "") {
+//             serviceUrl = s;
+//             imageSource.connectSource("UserImages:"+s)
+//         } else {
+//             serviceUrl = "https://identi.ca/api/"
             //serviceUrl = "https://twitter.com/"
-            print("fallbk eserice identi");
-        }
-        if (serviceUrl != "" && userName != "") {
-            microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl);
-            main.authorizationStatus = "Ok"; // fixme: should only be done once authTimer returns
-        }
-
-        Logic.userName = userName;
-        Logic.serviceUrl = serviceUrl;
-
-        if (serviceUrl && userName && password) {
-            print("start authtimer");
-            authTimer.running = true
-        }
-        if (typeof(userInfo) != "undefined") { 
-            userInfo.login = userName;
-        }
-        imageSource.connectSource("UserImages:"+s)
+//             print("fallbk eserice identi");
+//         }
+//         if (serviceUrl != "" && userName != "") {
+//             microblogSource.connectSource("TimelineWithFriends:"+userName+"@"+serviceUrl);
+//             main.authorizationStatus = "Ok"; // fixme: should only be done once authTimer returns
+//         }
+//
+//         Logic.userName = userName;
+//         Logic.serviceUrl = serviceUrl;
+//
+//         if (serviceUrl && userName && password) {
+//             print("start authtimer");
+//             authTimer.running = true
+//         }
+//         if (typeof(userInfo) != "undefined") {
+//             userInfo.login = userName;
+//         }
+//         imageSource.connectSource("UserImages:"+s)
     }
-
-    Timer {
-        id: authTimer
-        interval: 100
-        repeat: false
-        onTriggered: {
-            if (userName == "" || password == "") return;
-            print("starting authTimer" + userName + ":" + password);
-            var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-            var service = microblogSource.serviceForSource(src);
-            var operation = service.operationDescription("auth");
-            operation.password = password
-            operation.user = userName
-            service.startOperationCall(operation);
-            plasmoid.configurationRequired = false
-            main.password = "";
-            //plasmoid.busy = true
-        }
-    }
-
-    PlasmaCore.DataSource {
-        id: microblogSource
-        engine: "microblog"
-        interval: 600000 // 10 minutes
-
-        onDataUpdated: {
-            plasmoid.busy = false
-        }
-        Component.onCompleted: {
-            microblogSource.connectSource("Defaults")
-        }
-    }
-
-    PlasmaCore.DataSource {
-        id: imageSource
-        engine: "microblog"
-        interval: 0
-
-        Component.onCompleted: {
-            if (serviceUrl != "") {
-                __previousUrl = "UserImages:"+serviceUrl;
-            }
-        }
-        onSourceAdded: {
-            if ("UserImages:"+serviceUrl == source) {
-                imageSource.connectSource(source);
-
-            }
-        }
-    }
-
-    onServiceUrlChanged: {
-        if (serviceUrl != "") {
-            if (__previousUrl) {
-                imageSource.disconnectSource(__previousUrl);
-            }
-//             imageSource.connectSource("UserImages:"+serviceUrl)
-            __previousUrl = "UserImages:"+serviceUrl;
-        }
-    }
-
-    PlasmaCore.DataSource {
-        id: userSource
-        engine: "microblog"
-        interval: 0
-    }
-
 
     MainWidget {
         anchors.fill: main

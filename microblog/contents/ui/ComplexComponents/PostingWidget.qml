@@ -33,51 +33,30 @@ PlasmaComponents.Page {
     //height: 300
 
     property string title
+    property string inReplyToStatusId: ""
+
     state: "inactive"
     anchors.margins: 12
 
-    property string inReplyToStatusId: ""
-
     function refresh() {
-        Logic.refresh()
+//         socialFeed.onResfreshCollections()
     }
     function post() {
-        postStatusLabel.text = i18n("Sending tweet...")
+        postTextOverlay.visible= true
         postTextEdit.enabled = false
         sendButton.enabled = false
+        netsList.enabled = false
 
         print("Posting update: " + postTextEdit.text);
-        var src = "TimelineWithFriends:" + userName + "@" + serviceUrl;
-        print("posting to " + src + " in reply to " + inReplyToStatusId);
-
-//             postTextEdit.enabled = true;
-//             postTextEdit.text = "";
-//             inReplyToStatusId = "";
-//             sendButton.enabled = true;
-//             return;
-
-        var service = microblogSource.serviceForSource(src)
-        var operation = service.operationDescription("update");
-        operation.status = postTextEdit.text;
-        operation.in_reply_to_status_id = inReplyToStatusId
-
-        function result(job) {
-            //print(" XXX Post Result: " + job.result + " op: " + job.operationName);
-            postStatusLabel.text = job.result ? i18n("Tweet posted. Refreshing timeline...") : i18n("Posting failed.")
-            print(" __ " + postStatusLabel.text);
-            postTextEdit.enabled = true;
-            if (job.result) {
-                postTextEdit.text = "";
-                inReplyToStatusId = "";
-            }
-            sendButton.enabled = true;
-            refreshTimer.running = true;
-        }
-
-        //var operation = service.operationDescription(operation);
-//         operation.id = id;
-        var serviceJob = service.startOperationCall(operation);
-        serviceJob.finished.connect(result);
+        socialFeed.onPostMessage(postTextEdit.text)
+    }
+    function postDone() {
+        postTextOverlay.visible = false
+        postTextEdit.enabled = true
+        postTextEdit.text = ""
+        sendButton.enabled = true
+        netsList.enabled = true
+        topItem.state = "collapsed"
     }
 
     PlasmaExtras.Heading {
@@ -124,10 +103,10 @@ PlasmaComponents.Page {
             }
         }
 
-//         onActiveFocusChanged: {
-//             print("Focus " + activeFocus);
-//             //activeFocus ? pwItem.state = "active" : pwItem.state = "inactive";
-//         }
+        onActiveFocusChanged: {
+            print("Focus " + activeFocus);
+            activeFocus ? pwItem.state = "active" : pwItem.state = "inactive";
+        }
 
         Timer {
             id: focusTimer
@@ -162,35 +141,124 @@ PlasmaComponents.Page {
 //             }
         }
     }
+
+    Item {
+        id: postTextOverlay
+        anchors.centerIn: postTextEdit
+        visible: false
+        height: 32
+        width: postSpinner.width + postStatusLabel.implicitWidth
+
+        PlasmaComponents.BusyIndicator {
+            id: postSpinner
+            height: 32
+            width: 32
+            running: true
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                left: parent.left
+            }
+        }
+        PlasmaComponents.Label {
+            id: postStatusLabel
+            font.pointSize: theme.defaultFont.pointSize + 4
+            text: i18n("Updating status...")
+            height: 32
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+                left: postSpinner.right
+                verticalCenter: parent.verticalCenter
+            }
+        }
+    }
+
     PlasmaComponents.Label {
         id: characterCountLabel
         anchors { bottom: postTextEdit.bottom; right: postTextEdit.right; rightMargin: 8 }
         property int characterCount: 0
+        property int maxLength: 65535
         opacity: 0.6
-        visible: (characterCount != 0 && postTextEdit.activeFocus)
+        visible: (maxLength - characterCount < 200) //display the counter only if we have less than 200 chars left
 
         onCharacterCountChanged: {
-            text = 140 - characterCount;
-            if (characterCount <= 140) {
+            text = maxLength - characterCount;
+            if (characterCount <= maxLength) {
                 color = "green"
-            } else {
+            } else if (maxLength - characterCount < 30) {
+                color = "orange"
+            } else if (characterCount > maxLength) {
                 color = "red"
             }
         }
     }
-    PlasmaComponents.Label {
-        id: postStatusLabel
-        anchors { bottom: parent.bottom; left: parent.left; right: sendButton.left; topMargin: 12; }
-    }
+
     PlasmaComponents.Button {
         id: sendButton
         text: i18n("Post")
-        visible: postTextEdit.text != ""
-        enabled: characterCountLabel.characterCount <= 140
-        anchors { bottom: filler.top; right: postTextEdit.right; topMargin: 12; }
+        //visible: postTextEdit.text != ""
+        enabled: characterCountLabel.characterCount <= characterCountLabel.maxLength && characterCountLabel.characterCount > 0
+        anchors {
+            bottom: filler.top;
+            right: postTextEdit.right;
+            topMargin: 12;
+        }
         onClicked: {
-            print("button clicked");
             post();
+        }
+    }
+
+    ListView {
+        id: netsList;
+        orientation: ListView.Horizontal
+        height: 50
+        width: parent.width
+
+        anchors {
+            top: postTextEdit.bottom
+            bottom: filler.top;
+            left: postTextEdit.left;
+            right: sendButton.left;
+        }
+        model: socialFeed.collectionsList
+        delegate {
+            PlasmaComponents.Button {
+                id: iconButton
+                checkable: true
+                checked: model.modelData.checked
+                width: sendButton.height
+                height: sendButton.height
+                property int maxPostLength: 0
+
+                QtExtraComponents.QIconItem {
+                    id: netIcon
+                    icon: model.modelData.icon
+                    width: sendButton.height - 4
+                    height: sendButton.height - 4
+                    state: QtExtraComponents.QIconItem.DisabledState
+                    anchors {
+                        centerIn: parent
+                    }
+                }
+                onClicked: {
+                    socialFeed.smallestMaxPostLength()
+                    netIcon.state = netIcon.state == QtExtraComponents.QIconItem.DisabledState ? QtExtraComponents.QIconItem.DefaultState : QtExtraComponents.QIconItem.DisabledState
+                    model.modelData.checked = iconButton.checked
+                    characterCountLabel.maxLength = socialFeed.smallestMaxPostLength();
+                    characterCountLabel.characterCountChanged();
+                }
+                PlasmaCore.ToolTip {
+                    target: netIcon
+                    mainText: model.modelData.name
+                    //image: model.decoration //FIXME: 4.9 takes only icon name, not QIcon object
+                }
+                Component.onCompleted: {
+                    characterCountLabel.maxLength = socialFeed.smallestMaxPostLength();
+                    characterCountLabel.characterCountChanged();
+                }
+            }
         }
     }
 
@@ -210,6 +278,13 @@ PlasmaComponents.Page {
             postTextEdit.enabled = true
             sendButton.enabled = true
             refresh();
+        }
+    }
+
+    Connections {
+        target: socialFeed
+        onStatusUpdated: {
+            postDone();
         }
     }
 

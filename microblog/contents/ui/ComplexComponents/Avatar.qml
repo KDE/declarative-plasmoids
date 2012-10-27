@@ -29,22 +29,11 @@ QtExtraComponents.QImageItem {
     height: 48
     smooth: true
 
-    image: {
-        var sourceName = "UserImages:"+serviceUrl;
-        var d = imageSource.data[sourceName];
-        if (typeof(d) != "undefined" &&
-            typeof(d[userId]) != "undefined") {
-            return d[userId];
-        } else {
-            return microblogSource.data["Defaults"]["UserImage"];
-        }
-    }
-
     MouseArea {
         visible: interactive
         anchors.fill: parent
         onClicked: {
-            showUserInfo(userId);
+            //TODO: show either user info or just avatar picture
             //print("Avatar clicked: " + userId + "@" + serviceUrl);
         }
     }
