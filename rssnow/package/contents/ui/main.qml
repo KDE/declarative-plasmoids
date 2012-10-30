@@ -37,7 +37,7 @@ Item {
     signal changeBusy(bool busy)
 
     Component.onCompleted: {
-        changeBusy(false)
+        changeBusy(true)
         source = _feeds
         scrollInterval = _switchInterval
         interval = _updateInterval
@@ -72,7 +72,7 @@ Item {
         engine: "rss"
         interval: interval
         onDataChanged: {
-            changeBusy(true)
+            changeBusy(false)
         }
     }
 
