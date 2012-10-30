@@ -16,18 +16,17 @@ kde4_add_ui_files(rssnow_SRCS
     generalConfig.ui
 )
 
-kde4_add_plugin(plasma_applet_rssnow2 ${rssnow_SRCS})
+kde4_add_plugin(plasma_applet_rssnow ${rssnow_SRCS})
 
-target_link_libraries(plasma_applet_rssnow2
+target_link_libraries(plasma_applet_rssnow
     ${KDE4_KDEUI_LIBS}
     ${KDE4_PLASMA_LIBS}
     ${QT_QTDECLARATIVE_LIBRARY}
 )
 
-install(TARGETS plasma_applet_rssnow2 DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES plasma-applet-rssnow2.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS plasma_applet_rssnow DESTINATION ${PLUGIN_INSTALL_DIR})
 
 #QML stuff
-install(DIRECTORY package/ DESTINATION ${DATA_INSTALL_DIR}/plasma/packages/org.kde.rssnow-qml PATTERN .svn EXCLUDE)
-install(FILES plasma-applet-rssnow-qml.desktop
-    DESTINATION ${SERVICES_INSTALL_DIR})
+install(DIRECTORY package/ DESTINATION ${DATA_INSTALL_DIR}/plasma/packages/org.kde.rssnow PATTERN .svn EXCLUDE)
+
+install(FILES plasma-applet-rssnow.desktop DESTINATION ${SERVICES_INSTALL_DIR})

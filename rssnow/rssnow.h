@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RSSNOWAPPLET2_H
-#define RSSNOWAPPLET2_H
+#ifndef RSSNOWAPPLET_H
+#define RSSNOWAPPLET_H
 
 #include <Plasma/Applet>
 
@@ -31,12 +31,12 @@ namespace Plasma {
 
 class QGraphicsLinearLayout;
 
-class RssNow2 : public Plasma::Applet
+class RssNow : public Plasma::Applet
 {
 Q_OBJECT
 public:
-    RssNow2(QObject *parent, const QVariantList &args);
-    ~RssNow2();
+    RssNow(QObject *parent, const QVariantList &args);
+    ~RssNow();
 
     void init();
 
@@ -55,8 +55,8 @@ protected Q_SLOTS:
     void addFeed();
     void toogleAddFeed(const QString& text);
     void removeFeed();
-    void emitChangeConfig(const QString& feed);
-    void emitChangeBusy();
+    void feedAdded(const QString& feed);
+    void busyChanged(bool busy);
 
 private:
     QGraphicsLinearLayout *m_plasmoidLayout;
@@ -70,6 +70,6 @@ private:
     int m_switchInterval;
 };
 
-K_EXPORT_PLASMA_APPLET(rssnow2, RssNow2)
+K_EXPORT_PLASMA_APPLET(rssnow, RssNow)
 
 #endif

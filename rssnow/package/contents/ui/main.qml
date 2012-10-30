@@ -24,6 +24,8 @@ import org.kde.draganddrop 1.0 as DragAndDrop
 
 Item {
     id: mainWindow
+    property int minimumHeight: 200
+    property int minimumWidth: 200
     property string source
     property variant individualSources
     property int scrollInterval
@@ -32,10 +34,10 @@ Item {
     property bool showDropTarget
     signal changeConfig(string feed)
     signal reloadConfig(string feeds, int switchInterval, int updateInterval, bool logo, bool dropTarget)
-    signal changeBusy()
+    signal changeBusy(bool busy)
 
     Component.onCompleted: {
-        changeBusy()
+        changeBusy(false)
         source = _feeds
         scrollInterval = _switchInterval
         interval = _updateInterval
@@ -70,7 +72,7 @@ Item {
         engine: "rss"
         interval: interval
         onDataChanged: {
-            changeBusy()
+            changeBusy(true)
         }
     }
 

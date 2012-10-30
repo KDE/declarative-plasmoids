@@ -29,7 +29,7 @@
 #include <QDeclarativeEngine>
 #include <QGraphicsLinearLayout>
 
-RssNow2::RssNow2(QObject* parent, const QVariantList& args)
+RssNow::RssNow(QObject* parent, const QVariantList& args)
     : Plasma::Applet(parent, args),
     m_plasmoidLayout(0),
     m_declarativeWidget(0)
@@ -38,14 +38,14 @@ RssNow2::RssNow2(QObject* parent, const QVariantList& args)
     configChanged();
 }
 
-RssNow2::~RssNow2()
+RssNow::~RssNow()
 {
 }
 
-void RssNow2::init()
+void RssNow::init()
 {
     Plasma::PackageStructure::Ptr structure = Plasma::PackageStructure::load("Plasma/Generic");
-    Plasma::Package *package = new Plasma::Package(QString(), "org.kde.rssnow-qml", structure);
+    Plasma::Package *package = new Plasma::Package(QString(), "org.kde.rssnow", structure);
     const QString qmlFile = package->filePath("mainscript");
     delete package;
 
@@ -56,12 +56,11 @@ void RssNow2::init()
 
     m_declarativeWidget->setQmlPath(qmlFile);
 
-    connect(m_declarativeWidget->rootObject(), SIGNAL(changeConfig(QString)), this, SLOT(emitChangeConfig(QString)));
+    connect(m_declarativeWidget->rootObject(), SIGNAL(changeConfig(QString)), this, SLOT(feedAdded(QString)));
     connect(this, SIGNAL(reloadConfig(QString, int, int, bool, bool)),
             m_declarativeWidget->rootObject(), SIGNAL(reloadConfig(QString, int, int, bool, bool)));
 
-    connect(m_declarativeWidget->rootObject(), SIGNAL(changeBusy()), this, SLOT(emitChangeBusy()));
-    m_declarativeWidget->setMinimumSize(300, 200);
+    connect(m_declarativeWidget->rootObject(), SIGNAL(changeBusy(bool)), this, SLOT(busyChanged(bool)));
 
     m_plasmoidLayout = new QGraphicsLinearLayout(this);
     m_plasmoidLayout->addItem(m_declarativeWidget);
@@ -69,7 +68,7 @@ void RssNow2::init()
     setLayout(m_plasmoidLayout);
 }
 
-void RssNow2::createConfigurationInterface(KConfigDialog* parent)
+void RssNow::createConfigurationInterface(KConfigDialog* parent)
 {
     QWidget *generalWidget = new QWidget();
     m_generalConfig.setupUi(generalWidget);
@@ -116,8 +115,13 @@ void RssNow2::createConfigurationInterface(KConfigDialog* parent)
     connect(m_feedsConfig.feedComboBox, SIGNAL(editTextChanged(QString)), this, SLOT(toogleAddFeed(QString)));
 }
 
-void RssNow2::toogleAddFeed(const QString& text)
+void RssNow::toogleAddFeed(const QString& text)
 {
+    //check if ptr is evil
+    if (!m_feedsConfig.addFeed) {
+        return;
+    }
+
     if (text.isEmpty()) {
         m_feedsConfig.addFeed->setDisabled(true);
     } else {
@@ -125,7 +129,7 @@ void RssNow2::toogleAddFeed(const QString& text)
     }
 }
 
-void RssNow2::configAccepted()
+void RssNow::configAccepted()
 {
     QString feedList;
     for (int i = 0; i < m_feedsConfig.feedList->count(); i++) {
@@ -146,7 +150,7 @@ void RssNow2::configAccepted()
     configChanged();
 }
 
-void RssNow2::configChanged()
+void RssNow::configChanged()
 {
     //gives the new config data to the plasmoid every time
     //that they change
@@ -162,7 +166,7 @@ void RssNow2::configChanged()
    emit reloadConfig(m_feeds, m_switchInterval, m_updateInterval, m_logo, m_showDropTarget);
 }
 
-void RssNow2::connectToQML()
+void RssNow::connectToQML()
 {
     //it will give the data to the QML, only the first time.
     //Q: what's wrong with the reloadConfig signal? Why the signal doesn't do the job?
@@ -177,19 +181,24 @@ void RssNow2::connectToQML()
     rootComponent->setContextProperty("_dropTarget", m_showDropTarget);
 }
 
-void RssNow2::addFeed()
+void RssNow::addFeed()
 {
+    //check if ptr is evil
+    if (!m_feedsConfig.feedComboBox || !m_feedsConfig.feedList) {
+        return;
+    }
+
     QString newFeed = m_feedsConfig.feedComboBox->currentText();
     m_feedsConfig.feedList->addItem(newFeed);
     m_feedsConfig.feedComboBox->clearEditText();
 }
 
-void RssNow2::removeFeed()
+void RssNow::removeFeed()
 {
     delete m_feedsConfig.feedList->currentItem();
 }
 
-void RssNow2::emitChangeConfig(const QString& feed)
+void RssNow::feedAdded(const QString& feed)
 {
     //we use this signal in QML, in order to add a feed
     //in our config file
@@ -202,12 +211,12 @@ void RssNow2::emitChangeConfig(const QString& feed)
     configChanged();
 }
 
-void RssNow2::emitChangeBusy()
+void RssNow::busyChanged(bool busy)
 {
     //its connected with a signal, with which signal
     //we are able to change the state of the plasmoid
     //from QML
-    setBusy(!isBusy());
+    setBusy(busy);
 }
 
 
