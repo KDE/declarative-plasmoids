@@ -156,7 +156,7 @@ void RssNow::configChanged()
     //that they change
     KConfigGroup cg = config();
 
-    m_feeds = cg.readEntry("feeds", "http://planetkde.org/rss20.xml");
+    m_feeds = cg.readEntry("feeds", DEFAULTFEED);
     m_logo = cg.readEntry("logo", true);
     m_showDropTarget = cg.readEntry("droptarget", true);
     m_updateInterval = cg.readEntry("interval", 10);
@@ -183,12 +183,20 @@ void RssNow::connectToQML()
 
 void RssNow::addFeed()
 {
+    //we use this slot in order to add a new feed
+    //in the config file from the plasmoid's settings
+
     //check if ptr is evil
     if (!m_feedsConfig.feedComboBox || !m_feedsConfig.feedList) {
         return;
     }
 
     QString newFeed = m_feedsConfig.feedComboBox->currentText();
+    //check if the text is valid
+    if (newFeed.isEmpty()) {
+        return;
+    }
+
     m_feedsConfig.feedList->addItem(newFeed);
     m_feedsConfig.feedComboBox->clearEditText();
 }
@@ -200,10 +208,17 @@ void RssNow::removeFeed()
 
 void RssNow::feedAdded(const QString& feed)
 {
-    //we use this signal in QML, in order to add a feed
+    //we use this slot in QML, in order to add a feed
     //in our config file
+
+    if (feed.isEmpty()) {
+        //this isn't a valid feed
+        return;
+    }
+
     KConfigGroup cg = config();
-    QString feedList = cg.readEntry("feeds", QString());
+    QString feedList = cg.readEntry("feeds", DEFAULTFEED);
+
     feedList.append(",");
     feedList.append(feed);
     cg.writeEntry("feeds", feedList);

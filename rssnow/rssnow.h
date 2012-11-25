@@ -31,6 +31,8 @@ namespace Plasma {
 
 class QGraphicsLinearLayout;
 
+static const QString DEFAULTFEED("http://planetkde.org/rss20.xml");
+
 class RssNow : public Plasma::Applet
 {
 Q_OBJECT
