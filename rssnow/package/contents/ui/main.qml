@@ -34,10 +34,10 @@ Item {
     property bool showDropTarget
     signal changeConfig(string feed)
     signal reloadConfig(string feeds, int switchInterval, int updateInterval, bool logo, bool dropTarget)
-    signal changeBusy(bool busy)
+    signal changeBusy(bool busy);
 
     Component.onCompleted: {
-        changeBusy(true)
+        changeBusy(true);
         source = _feeds
         scrollInterval = _switchInterval
         interval = _updateInterval
@@ -71,9 +71,6 @@ Item {
         id: feedSource
         engine: "rss"
         interval: interval
-        onDataChanged: {
-            changeBusy(false)
-        }
     }
 
     PlasmaCore.Theme {
@@ -125,6 +122,7 @@ Item {
                 clip: true
                 highlightMoveDuration: 300
                 property int listIndex: index
+                onListIndexChanged: changeBusy(true);
                 model: PlasmaCore.SortFilterModel {
                     filterRole: "feed_url"
                     filterRegExp: individualSources[listIndex]
@@ -140,6 +138,9 @@ Item {
                     feedUrl: link
                     onClicked: {
                         flickTimer.restart();
+                    }
+                    onDone: {
+                        changeBusy(false);
                     }
                 }
 
