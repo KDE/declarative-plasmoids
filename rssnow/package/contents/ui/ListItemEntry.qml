@@ -26,7 +26,7 @@ ListItem {
     property string iconFile;
     property string feedUrl;
     signal clicked;
-
+    signal done;
     Row {
         id : delegateLayout
         width: entryList.width
@@ -41,8 +41,6 @@ ListItem {
             source: iconFile
             height: parent.height
             width: parent.height / 2
-            anchors.horizontalCenter: width / 2
-            anchors.verticalCenter: height / 2
             fillMode: Image.PreserveAspectFit
             smooth:true
             opacity: 0.8
@@ -64,6 +62,7 @@ ListItem {
             text: '<em><small>'+listItem.date+'</em></small>&nbsp;'
         }*/
         Column {
+            Component.onCompleted: done();
             id: column
             spacing: 5
             PlasmaCore.SvgItem {
