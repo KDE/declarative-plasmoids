@@ -1,21 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=RSSNow
-Name[cs]=RSSNow
-Name[de]=RSSNow
-Name[es]=RSSNow
-Name[et]=RSSNow
-Name[fr]=RSSNow
-Name[hu]=RSSNow
-Name[km]=RSSNow
-Name[nl]=RSSNow
-Name[pl]=RSSNow
-Name[pt]=RSS Agora
-Name[pt_BR]=RSSNow
-Name[sk]=RSSNow
-Name[sv]=RSSNow
-Name[uk]=RSSNow
-Name[x-test]=xxRSSNowxx
 Type=Service
 ServiceTypes=Plasma/Applet,Plasma/PopupApplet
 Icon=akregator
