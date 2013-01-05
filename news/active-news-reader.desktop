@@ -16,6 +16,7 @@ Name[sv]=Nyhetsläsare
 Name[uk]=Читання новин
 Name[x-test]=xxNews Readerxx
 GenericName=Feed Reader
+GenericName[bs]=Čitač dovoda
 GenericName[cs]=Čtečka kanálů
 GenericName[de]=Nachrichtenbetrachter
 GenericName[es]=Lector de fuentes
