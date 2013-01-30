@@ -31,13 +31,14 @@ import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 
 Image {
     id: mainWindow
-    source: "image://appbackgrounds/standard"
+    source: isApplet ? "" : "image://appbackgrounds/contextarea"
     fillMode: Image.Tile
     width: 800
     height: 480
     property bool browserMode: false
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
 
+    property bool isApplet: mainWindow.width < theme.defaultFont.mSize.width * 60
     Column {
         id: mainUi
         anchors.fill: parent
@@ -49,30 +50,26 @@ Image {
             }
         }
 
-        PlasmaCore.Svg {
-            id: shadowSvg
-            imagePath: plasmoid.file("images", "shadow.svgz")
-        }
 
         states: [
             State {
                 name: "feeds"
                 PropertyChanges { target: mainFlickable; contentX: 0 }
-                PropertyChanges { target: itemsList; width: mainWindow.width/4*3}
+                PropertyChanges { target: itemsArea; width: isApplet ? mainWindow.width : mainWindow.width/4*3}
                 PropertyChanges { target: toolbarFrame; backEnabled: false }
                 PropertyChanges { target: bodyView; visible: false}
             },
             State {
                 name: "items"
-                PropertyChanges { target: mainFlickable; contentX: 0 }
-                PropertyChanges { target: itemsList; width: mainWindow.width/4*3}
-                PropertyChanges { target: toolbarFrame; backEnabled: false }
+                PropertyChanges { target: mainFlickable; contentX: isApplet ? mainWindow.width : 0 }
+                PropertyChanges { target: itemsArea; width: isApplet ? mainWindow.width : mainWindow.width/4*3}
+                PropertyChanges { target: toolbarFrame; backEnabled: isApplet }
                 PropertyChanges { target: bodyView; visible: false}
             },
             State {
                 name: "item"
-                PropertyChanges { target: mainFlickable; contentX: mainWindow.width/4}
-                PropertyChanges { target: itemsList; width: mainWindow.width/4}
+                PropertyChanges { target: mainFlickable; contentX: isApplet ? mainWindow.width*2 : mainWindow.width/4*3}
+                PropertyChanges { target: itemsArea; width: isApplet ? mainWindow.width : mainWindow.width/4}
                 PropertyChanges { target: toolbarFrame; backEnabled: true }
                 PropertyChanges { target: bodyView; visible: true}
             }
@@ -97,11 +94,17 @@ Image {
 
         Flickable {
             id: mainFlickable
+            clip: true
             interactive: mainUi.state == "item"
             contentWidth: mainView.width
             contentHeight: mainView.height
-            width: mainWindow.width/4
-            height: mainWindow.height - toolbarFrame.height +9
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: toolbarFrame.bottom
+                bottom: parent.bottom
+                topMargin: -9
+            }
 
             Behavior on contentX {
                 NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
@@ -120,39 +123,43 @@ Image {
                 //width: mainWindow.width
                 height: mainFlickable.height
 
-                Image {
-                    source: "image://appbackgrounds/contextarea"
-                    fillMode: Image.Tile
-                    anchors.top: mainView.top
-                    anchors.bottom: mainView.bottom
-                    width: mainWindow.width/4
-
                     FeedList {
                         id: feedList
-//                         anchors {
-//                             top: parent.top
-//                             left: parent.left
-//                             right: parent.right
-//                         }
-                        anchors.fill:parent
+                        clip: false
+                        anchors {
+                            top: mainView.top
+                            bottom: mainView.bottom
+                        }
+                        width: isApplet ? mainWindow.width : mainWindow.width/4
+                        onItemClicked: mainUi.state = "items"
 
-                        PlasmaCore.SvgItem {
+                        Image {
                             width: feedList.width
                             height: 16
                             opacity: 0.5
-                            svg: shadowSvg
-                            elementId: "bottom"
+                            source: "image://appbackgrounds/shadow-bottom"
                         }
-                        PlasmaCore.SvgItem {
+                        Image {
                             width: 16
                             opacity: 0.5
-                            anchors.top: parent.top
-                            anchors.right: parent.right
-                            anchors.bottom: parent.bottom
-                            svg: shadowSvg
-                            elementId: "left"
+                            anchors {
+                                top: parent.top
+                                right: parent.right
+                                bottom: parent.bottom
+                            }
+                            source: "image://appbackgrounds/shadow-left"
                         }
-                        footer: PlasmaComponents.ToolButton {
+                        Image {
+                            width: 16
+                            opacity: 0.5
+                            anchors {
+                                top: parent.top
+                                right: parent.left
+                                bottom: parent.bottom
+                            }
+                            source: "image://appbackgrounds/shadow-left"
+                        }
+                        PlasmaComponents.ToolButton {
                             id: configButton
                             iconSource: "format-list-unordered"
                             height: 32
@@ -163,10 +170,9 @@ Image {
 //                             }
 //                             elementId: "configure"
                             anchors {
-                                top: feedList.bottom
-                                right: parent.right
-                                topMargin: 8
-                                rightMargin: 8
+                                bottom: feedList.bottom
+                                horizontalCenter: parent.horizontalCenter
+                                bottomMargin: 8
                             }
                             onClicked: {
                                 var object = configComponent.createObject(mainWindow);
@@ -176,25 +182,33 @@ Image {
 
                     }
 
-                }
+                
 
-                ItemsList {
-                    id: itemsList
-                    anchors.top: mainView.top
-                    anchors.bottom: mainView.bottom
-                    width: mainWindow.width/4*3
-
-                    feedCategory: feedList.feedCategory
-                    onItemClicked: mainUi.state = "item"
+                Image {
+                    id: itemsArea
+                    source: isApplet ? "" : "image://appbackgrounds/standard"
+                    fillMode: Image.Tile
+                    anchors {
+                        top: mainView.top
+                        bottom: mainView.bottom
+                    }
+                    width: isApplet ? mainWindow.width : mainWindow.width/4*3
                     Behavior on width {
                         NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
                     }
 
+                    ItemsList {
+                        id: itemsList
+                        anchors.fill: parent
+
+                        feedCategory: feedList.feedCategory
+                        onItemClicked: mainUi.state = "item"
+                    }
                 }
 
                 Rectangle {
                     color: "white"
-                    width: mainWindow.width/4*3
+                    width: isApplet ? mainWindow.width : mainWindow.width/4*3
                     height: parent.height
                     ArticleView {
                         id : bodyView
@@ -206,12 +220,11 @@ Image {
                         }
 
                     }
-                    PlasmaCore.SvgItem {
+                    Image {
                         width: 16
                         opacity: 0.5
                         height: bodyView.height
-                        svg: shadowSvg
-                        elementId: "right"
+                        source: "image://appbackgrounds/shadow-right"
                     }
                 }
             }
