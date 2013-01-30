@@ -21,19 +21,21 @@ import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 
-ListItem {
+PlasmaComponents.ListItem {
     id: listItem
+    enabled: true
     property string text;
     property string date;
     property bool articleRead: false
-    height: childrenRect.height
 
     Item {
-        anchors.leftMargin: 12
-        height: titleLabel.height + authorLabel.height
-        width: parent.width - 24
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors {
+            left: parent.left
+            right: parent.right
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+        }
+        height: childrenRect.height
 
         PlasmaComponents.Label  {
             id: titleLabel

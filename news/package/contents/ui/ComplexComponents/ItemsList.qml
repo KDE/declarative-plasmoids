@@ -54,7 +54,7 @@ ListView {
 
     section.property: "feed_title"
     section.criteria: ViewSection.FullString
-    section.delegate: ListItem {
+    section.delegate: PlasmaComponents.ListItem {
         id: sectionDelegate
         state: "section"
         PlasmaExtras.Heading {

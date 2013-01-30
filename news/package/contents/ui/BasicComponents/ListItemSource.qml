@@ -20,29 +20,40 @@ import QtQuick 1.1
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.plasma.components 0.1 as PlasmaComponents
 
-ListItem {
+PlasmaComponents.ListItem {
     id: listItem
+    enabled: true
     property string text
     property string icon
     property int unread
 
-    Row{
-        id: delegateLayout
-        anchors.left: listItem.padding.left
-        anchors.right: listItem.padding.right
-        anchors.verticalCenter: listItem.verticalCenter
+    Item {
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+        height: childrenRect.height
+        Row {
+            id: delegateLayout
+            anchors {
+                left: parent.left
+                right: parent.right
+                verticalCenter: listItem.verticalCenter
+            }
 
-        Image {
-            source: icon
+            Image {
+                source: icon
+            }
+            PlasmaExtras.Heading {
+                level: 4
+                text: listItem.text
+            }
         }
-        PlasmaExtras.Heading {
-            level: 4
-            text: listItem.text
+        PlasmaComponents.Label {
+            text: unread
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
         }
-    }
-    PlasmaComponents.Label {
-        text: unread
-        anchors.right: listItem.padding.right
-        anchors.verticalCenter: listItem.verticalCenter
     }
 }
