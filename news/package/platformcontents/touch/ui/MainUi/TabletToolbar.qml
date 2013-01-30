@@ -23,13 +23,11 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicslayouts 4.7 as GraphicsLayouts
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
-PlasmaCore.FrameSvgItem {
+PlasmaComponents.ToolBar {
     id: toolbarFrame
     width: mainUi.width
     height: Math.max(backButton.height, browserModeButton.height) + margins.top + margins.bottom
-    clip: true
 
-    imagePath: "widgets/toolbar"
 
     signal openOriginalRequested
     signal backRequested
@@ -40,10 +38,13 @@ PlasmaCore.FrameSvgItem {
 
     PlasmaComponents.ToolButton {
         id: backButton
-        iconSource: "go-previous-view"
+        iconSource: "go-previous"
+        flat: false
 
-        x: toolbarFrame.margins.left + 8
+        x: 8
         y: backEnabled?toolbarFrame.height/2-height/2:-height-5
+        width: theme.iconSizes.toolbar + 12
+        height: width
 
         onClicked: {
             if (!bodyView.customUrl) {

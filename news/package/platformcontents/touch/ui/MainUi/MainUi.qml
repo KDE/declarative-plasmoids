@@ -79,8 +79,7 @@ Image {
         spacing: -toolbarFrame.margins.bottom/2
         TabletToolbar {
             id: toolbarFrame
-            imagePath: "widgets/toolbar"
-            enabledBorders: "BottomBorder"
+
             z: mainView.z+1
             onOpenOriginalRequested: bodyView.url = Url(bodyView.articleUrl)
             onBackRequested: {
