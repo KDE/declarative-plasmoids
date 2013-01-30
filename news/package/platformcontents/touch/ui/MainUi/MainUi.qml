@@ -37,6 +37,7 @@ Image {
     height: 480
     property bool browserMode: false
     property Component configComponent: Qt.createComponent("ConfigWidget.qml")
+    clip: isApplet
 
     property bool isApplet: mainWindow.width < theme.defaultFont.mSize.width * 60
     Column {

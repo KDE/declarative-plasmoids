@@ -26,84 +26,79 @@ import "plasmapackage:/ui/BasicComponents"
 import "plasmapackage:/code/bookkeeping.js" as BookKeeping
 import "plasmapackage:/code/utils.js" as Utils
 
-ListView {
-    id: list
-
-    property string feedCategory
+PlasmaExtras.ScrollArea {
+    id: root
+    property alias feedCategory: list.feedCategory
     signal itemClicked
 
-    snapMode: ListView.SnapToItem
+    ListView {
+        id: list
 
-    clip: true
-    model: PlasmaCore.SortFilterModel {
-        id: postTitleFilter
-        filterRole: "title"
-        sortRole: "time"
-        sortOrder: "DescendingOrder"
-        filterRegExp: toolbarFrame.searchQuery
-        sourceModel: PlasmaCore.SortFilterModel {
-            id: feedCategoryFilter
-            filterRole: "feed_url"
-            filterRegExp: feedCategory.replace(/\?/, "\\?")
-            sourceModel: PlasmaCore.DataModel {
-                dataSource: feedSource
-                keyRoleFilter: "items"
-            }
-        }
-    }
+        property string feedCategory
 
-    section.property: "feed_title"
-    section.criteria: ViewSection.FullString
-    section.delegate: PlasmaComponents.ListItem {
-        id: sectionDelegate
-        state: "section"
-        PlasmaExtras.Heading {
-            id: sectionText
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: sectionDelegate.padding.left
-            anchors.right: sectionDelegate.padding.right
-            anchors.leftMargin: 8
-            text: section
-            level: 3
-        }
-    }
+        snapMode: ListView.SnapToItem
 
-    delegate: ListItemEntry {
-        id: feedItem
-        text: title
-        date: Utils.date(time)
-        state: (list.currentIndex == index)?"sunken":"normal"
-
-        Component.onCompleted: {
-            if (BookKeeping.isArticleRead(link)) {
-                articleRead = true
-            } else {
-                articleRead = false
+        clip: true
+        model: PlasmaCore.SortFilterModel {
+            id: postTitleFilter
+            filterRole: "title"
+            sortRole: "time"
+            sortOrder: "DescendingOrder"
+            filterRegExp: toolbarFrame.searchQuery
+            sourceModel: PlasmaCore.SortFilterModel {
+                id: feedCategoryFilter
+                filterRole: "feed_url"
+                filterRegExp: feedCategory.replace(/\?/, "\\?")
+                sourceModel: PlasmaCore.DataModel {
+                    dataSource: feedSource
+                    keyRoleFilter: "items"
+                }
             }
         }
 
-        onClicked: {
-            BookKeeping.setArticleRead(link, feed_url);
-            articleRead = true;
-
-            list.currentIndex = index;
-            bodyView.articleUrl = link;
-            var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + " h1 {   font-weight: normal; }; p { text-align: \"justify\" } </style></head><body><h1>" + title + "</h1><em>by " + author + "</em><br /><p>"  + description + "</p></body></html>";
-            bodyView.articleHtml = parsedHtml;
-            if (mainWindow.browserMode) {
-                bodyView.url = Url(bodyView.articleUrl)
+        section.property: "feed_title"
+        section.criteria: ViewSection.FullString
+        section.delegate: PlasmaComponents.ListItem {
+            id: sectionDelegate
+            state: "section"
+            PlasmaExtras.Heading {
+                id: sectionText
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: sectionDelegate.padding.left
+                anchors.right: sectionDelegate.padding.right
+                anchors.leftMargin: 8
+                text: section
+                level: 3
             }
-            list.itemClicked();
         }
-    }
-    PlasmaComponents.ScrollBar {
-        id: scrollBar
-        orientation: Qt.Vertical
-        flickableItem: parent
-        anchors {
-            top: parent.top
-            right: parent.right
-            bottom: parent.bottom
+
+        delegate: ListItemEntry {
+            id: feedItem
+            text: title
+            date: Utils.date(time)
+            state: (list.currentIndex == index)?"sunken":"normal"
+
+            Component.onCompleted: {
+                if (BookKeeping.isArticleRead(link)) {
+                    articleRead = true
+                } else {
+                    articleRead = false
+                }
+            }
+
+            onClicked: {
+                BookKeeping.setArticleRead(link, feed_url);
+                articleRead = true;
+
+                list.currentIndex = index;
+                bodyView.articleUrl = link;
+                var parsedHtml = "<html><head><style type=\"text/css\">" + theme.styleSheet + " h1 {   font-weight: normal; }; p { text-align: \"justify\" } </style></head><body><h1>" + title + "</h1><em>by " + author + "</em><br /><p>"  + description + "</p></body></html>";
+                bodyView.articleHtml = parsedHtml;
+                if (mainWindow.browserMode) {
+                    bodyView.url = Url(bodyView.articleUrl)
+                }
+                root.itemClicked();
+            }
         }
     }
 }
