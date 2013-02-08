@@ -42,7 +42,8 @@ PlasmaComponents.ToolBar {
         flat: false
 
         x: 8
-        y: backEnabled?toolbarFrame.height/2-height/2:-height-5
+        y: backEnabled ? (toolbarFrame.height / 2) - (height / 2) : -height - 5
+        opacity: backEnabled ? 1 : 0
         width: theme.iconSizes.toolbar + 12
         height: width
 
@@ -60,6 +61,10 @@ PlasmaComponents.ToolBar {
 
         Behavior on y {
             NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+        }
+
+        Behavior on opacity {
+            NumberAnimation { duration: 250; easing.type: Easing.OutQuad }
         }
     }
 
@@ -84,10 +89,8 @@ PlasmaComponents.ToolBar {
         height: width
         iconSource: "internet-web-browser"
         checkable: true
-        y: backEnabled?toolbarFrame.height/2-height/2:-height-5
-        Behavior on y {
-            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
-        }
+        y: backEnabled ? (toolbarFrame.height / 2) - (height / 2) : -height - 5
+        opacity: backEnabled ? 1 : 0
 
         anchors {
             //verticalCenter: parent.verticalCenter
@@ -95,5 +98,13 @@ PlasmaComponents.ToolBar {
             rightMargin: 8
         }
         onClicked: mainWindow.browserMode = checked
+
+        Behavior on y {
+            NumberAnimation {duration: 250; easing.type: Easing.InOutQuad}
+        }
+
+        Behavior on opacity{
+            NumberAnimation { duration: 250; easing.type: Easing.OutQuad }
+        }
     }
 }
