@@ -20,6 +20,7 @@ Name[tr]=Haber okuyucu (QML)
 Name[uk]=Програма для читання новин (QML)
 Name[x-test]=xxNews reader (QML)xx
 Comment=A proof of concept RSS reader written in qml
+Comment[de]=Ein Konzeptnachweis für einen RSS-Leser geschrieben in QML
 Comment[es]=Una prueba de concepto de lector RSS escrito en QML
 Comment[et]=Põhimõtteline QML-is kirjutatud RSS-voogude luger
 Comment[fr]=Un lecteur de flux RSS, comme démonstrateur de faisabilité, écrit en QML

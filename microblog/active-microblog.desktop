@@ -39,6 +39,7 @@ GenericName[tr]=Mikrogünlük İstemcisi
 GenericName[uk]=Клієнт мікроблогів
 GenericName[x-test]=xxMicroblog Clientxx
 Comment=Active Twitter & Identi.ca client
+Comment[de]=Twitter & Identi.ca Programm für Active
 Comment[es]=Cliente para Active Twitter e Identi.ca
 Comment[et]=Active'i Twitteri ja Identi.ca klient
 Comment[fr]=Client Active pour Twitter et Identi.ca
