@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=News Reader
+Name[bs]=Čitač novosti
 Name[cs]=Klient pro čtení diskusních skupin
 Name[de]=Usenet-Newsreader
 Name[es]=Lector de noticias
@@ -41,6 +42,7 @@ GenericName[tr]=Besleme Okuyucu
 GenericName[uk]=Програма для читання подач
 GenericName[x-test]=xxFeed Readerxx
 Comment=A news feed reader for touch tablets
+Comment[bs]=Čitač izvora novosti za tablete na dodir
 Comment[de]=Ein Nachrichtensammler für Touch-Tabletts
 Comment[es]=Un lector de fuentes de noticias para tabletas digitales
 Comment[et]=Uudistevoogude lugeja puuteekraaniga tahvelarvutitele

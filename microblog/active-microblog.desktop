@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Microblog
+Name[bs]=Mikroblog
 Name[cs]=Mikroblog
 Name[de]=Microblog
 Name[es]=Microblog
@@ -20,6 +21,7 @@ Name[ug]=مىكروبلوگ
 Name[uk]=Мікроблог
 Name[x-test]=xxMicroblogxx
 GenericName=Microblog Client
+GenericName[bs]=Mikroblog klijent
 GenericName[cs]=Klient pro mikroblogování
 GenericName[de]=Microblog-Client
 GenericName[es]=Cliente Microblog
@@ -39,6 +41,7 @@ GenericName[tr]=Mikrogünlük İstemcisi
 GenericName[uk]=Клієнт мікроблогів
 GenericName[x-test]=xxMicroblog Clientxx
 Comment=Active Twitter & Identi.ca client
+Comment[bs]=Aktivni Twitter i Identi.ca klijent
 Comment[de]=Twitter & Identi.ca Programm für Active
 Comment[es]=Cliente para Active Twitter e Identi.ca
 Comment[et]=Active'i Twitteri ja Identi.ca klient

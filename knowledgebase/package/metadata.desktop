@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Knowledge base (QML)
+Name[bs]=Baza znanja (QML)
 Name[de]=Wissensdatenbank (QML)
 Name[es]=Base de conocimientos (QML)
 Name[et]=Teadmusbaas (QML)
@@ -18,6 +19,7 @@ Name[tr]=Bilgi bankası (QML)
 Name[uk]=База знань (QML)
 Name[x-test]=xxKnowledge base (QML)xx
 Comment=Open Collaboration Service Knowledge base client
+Comment[bs]=Korisnička baza znanja otvorena za saradnju
 Comment[de]=Wissensbasis-Programm für den Open-Collaboration-Dienst
 Comment[es]=Cliente de base de conocimientos para el servicio de colaboración abierta
 Comment[et]=Avatud koostööteenuste teadmusbaasi klient
